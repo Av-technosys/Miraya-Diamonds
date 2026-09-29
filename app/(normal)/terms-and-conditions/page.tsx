@@ -1,9 +1,9 @@
 import { Container } from "@/components/container";
 
-export default function aboutPage() {
+export default function terms_and_conditionsPage() {
   return (
     <Container className="py-12">
-      <h1 className="text-3xl font-bold capitalize">about</h1>
+      <h1 className="text-3xl font-bold capitalize">terms and conditions</h1>
       <p className="mt-4 text-zinc-600">Coming soon.</p>
     </Container>
   );
