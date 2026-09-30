@@ -1,10 +1,19 @@
-import { Container } from "@/components/container";
+import { ContactHero } from "@/components/contact/contact-hero";
+import { QuickContact } from "@/components/contact/quick-contact";
+import { ConsultationBooking } from "@/components/contact/consultation-booking";
+import { FaqSection } from "@/components/contact/faq-section";
+import { DirectInquirySection } from "@/components/contact/direct-inquiry-section";
+import { HeirloomBanner } from "@/components/contact/heirloom-banner";
 
-export default function contactPage() {
+export default function ContactPage() {
   return (
-    <Container className="py-12">
-      <h1 className="text-3xl font-bold capitalize">contact</h1>
-      <p className="mt-4 text-zinc-600">Coming soon.</p>
-    </Container>
+    <main>
+      <ContactHero />
+      <QuickContact />
+      <ConsultationBooking />
+      <FaqSection />
+      <DirectInquirySection />
+      <HeirloomBanner />
+    </main>
   );
 }
