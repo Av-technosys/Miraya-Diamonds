@@ -1,4 +1,5 @@
-import { Phone, Mail, Video, ArrowRight, Calendar } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Calendar } from "lucide-react";
 
 export function QuickContact() {
   return (
@@ -9,7 +10,7 @@ export function QuickContact() {
         <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
           {/* Icon Container */}
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
-            <Phone className="w-[22px] h-[22px] text-[#CB485E]" strokeWidth={1.5} />
+            <Image src="/contact/phone_icon.png" alt="Phone" width={22} height={22} className="object-contain" />
           </div>
 
           {/* Subheading */}
@@ -36,10 +37,10 @@ export function QuickContact() {
           </button>
         </div>
 
-        {/* Card 2 (Placeholder setup based on visual, awaiting exact details) */}
+        {/* Card 2 */}
         <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
-            <Mail className="w-[22px] h-[22px] text-[#CB485E]" strokeWidth={1.5} />
+            <Image src="/contact/mail_icon.png" alt="Mail" width={22} height={22} className="object-contain" />
           </div>
           <span className="font-sans font-semibold text-[14px] leading-[18px] tracking-[1.24px] text-[#CB485E] uppercase mb-4">
             Email Concierge
@@ -58,10 +59,10 @@ export function QuickContact() {
           </button>
         </div>
 
-        {/* Card 3 (Placeholder setup based on visual, awaiting exact details) */}
+        {/* Card 3 */}
         <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
-            <Video className="w-[22px] h-[22px] text-[#CB485E]" strokeWidth={1.5} />
+            <Image src="/contact/video_icon.png" alt="Video" width={22} height={22} className="object-contain" />
           </div>
           <span className="font-sans font-semibold text-[14px] leading-[18px] tracking-[1.24px] text-[#CB485E] uppercase mb-4">
             1-on-1 Virtual Experience

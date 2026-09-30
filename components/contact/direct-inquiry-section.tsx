@@ -1,4 +1,5 @@
-import { ArrowRight, Lock, Monitor, Package, Pen, ShieldCheck, CalendarDays, MessageSquare } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 
 export function DirectInquirySection() {
   return (
@@ -107,7 +108,7 @@ export function DirectInquirySection() {
 
                   {/* Confidential Inquiry */}
                   <div className="flex items-center gap-[6.75px]">
-                    <Lock className="w-[12px] h-[15.75px] text-[#7C571E]" strokeWidth={1.5} />
+                    <Image src="/contact/inquiry-lock_icon.png" alt="Lock" width={12} height={16} style={{ width: '12px', height: '15.75px' }} className="object-contain" />
                     <span className="font-sans font-normal text-[12px] leading-[20.25px] text-[#574143]" style={{ letterSpacing: "0.13px" }}>
                       Confidential Inquiry
                     </span>
@@ -150,7 +151,7 @@ export function DirectInquirySection() {
             {/* Feature 1 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
-                <Monitor className="w-[18.75px] h-[15px] text-[#CB485E]" strokeWidth={1.5} />
+                <Image src="/contact/video_icon.png" alt="Video" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
@@ -165,7 +166,7 @@ export function DirectInquirySection() {
             {/* Feature 2 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
-                <Package className="w-[18.75px] h-[15px] text-[#CB485E]" strokeWidth={1.5} />
+                <Image src="/contact/van-icon.png" alt="Delivery" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
@@ -180,7 +181,7 @@ export function DirectInquirySection() {
             {/* Feature 3 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
-                <Pen className="w-[18.75px] h-[15px] text-[#CB485E]" strokeWidth={1.5} />
+                <Image src="/contact/pen-icon.png" alt="Custom" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
@@ -195,7 +196,7 @@ export function DirectInquirySection() {
             {/* Feature 4 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-[18.75px] h-[15px] text-[#CB485E]" strokeWidth={1.5} />
+                <Image src="/contact/Lock_Icon.png" alt="Certified" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
@@ -213,11 +214,11 @@ export function DirectInquirySection() {
             <div className="border-t-[1.13px] border-[#CB485E33] pt-[17px] flex items-center gap-[13.5px]">
               <button className="bg-[#CB485E] rounded-[54px] py-[13.5px] px-[18px] flex items-center gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]">
                 <span className="font-sans font-semibold text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize">Schedule Live Call</span>
-                <CalendarDays className="w-[13.5px] h-[15px] text-white" strokeWidth={1.5} />
+                <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain" />
               </button>
               <button className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-[13.5px] px-[18px] flex items-center gap-[6.74px]">
                 <span className="font-sans font-semibold text-[14px] leading-[18px] text-[#CB485E]">Whatsapp</span>
-                <MessageSquare className="w-[15px] h-[15px] text-[#CB485E]" strokeWidth={1.5} />
+                <Image src="/contact/message-icon.png" alt="Message" width={15} height={15} className="object-contain" />
               </button>
             </div>
           </div>

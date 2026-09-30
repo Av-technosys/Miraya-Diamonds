@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { BadgeCheck, Clock, Lock, ChevronRight } from "lucide-react";
+import { BadgeCheck, Clock, ChevronRight } from "lucide-react";
 
 export function ContactHero() {
   return (
-    <section className="w-full max-w-[1620px] mx-auto py-[30px] px-4 md:px-8 bg-white">
+    <section className="w-full max-w-[1620px] mx-auto py-[30px] px-4 md:px-8 bg-white min-h-[calc(100vh-80px)]">
       {/* Inner Container */}
       <div className="w-full max-w-[1240px] mx-auto">
         
@@ -66,11 +66,10 @@ export function ContactHero() {
                 src="/contact/heroSection.jpg" 
                 alt="Fine Jewellery Studio" 
                 fill 
-                className="object-cover"
+                className="object-cover object-center"
                 priority
               />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[rgba(49,48,48,0.6)] via-[transparent_50%] to-transparent pointer-events-none" />
+
             </div>
 
             {/* Floating Glass Card Overlay (Hanging off the bottom right) */}
@@ -83,7 +82,7 @@ export function ContactHero() {
                   Private Virtual Appointments
                 </span>
               </div>
-              <Lock className="w-[26.5px] h-[34.8px] text-[#861632]" strokeWidth={1.5} />
+              <Image src="/contact/Lock_Icon.png" alt="Lock" width={20} height={26} style={{ width: '20px', height: '26px' }} className="object-contain" />
             </div>
           </div>
           
