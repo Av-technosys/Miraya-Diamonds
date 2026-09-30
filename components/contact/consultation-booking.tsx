@@ -1,7 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { Heart, Sparkles, Gift, Calendar, Clock, User, Phone, Mail, ArrowRight } from "lucide-react";
+import { Heart, Sparkles, Gift, Calendar, Clock, User, Phone, Mail, ArrowRight, ChevronDown } from "lucide-react";
 
 export function ConsultationBooking() {
+  const [experience, setExperience] = useState<"in-store" | "virtual">("in-store");
+  const [category, setCategory] = useState<"engagement" | "bridal" | "custom" | "gifting">("engagement");
+
   return (
     <section className="w-full bg-white py-[60px] px-4 md:px-[100px]">
       <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-[30px]">
@@ -11,40 +17,62 @@ export function ConsultationBooking() {
           <h2 className="font-serif font-bold text-[32px] leading-[100%] tracking-[-0.02em] text-black text-center">
             Let's Find the Perfect Piece, Together
           </h2>
-          <p className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575] text-center max-w-[629px] mt-2">
+          <p className="font-sans font-normal text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575] text-center max-w-[629px] mt-2">
             Choose a private consultation and let our jewellery experts guide you through the pieces made for your moment.
           </p>
         </div>
 
         {/* Main Content (Form + Image) */}
-        <div className="flex flex-col lg:flex-row gap-[58px] w-full">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-[58px] w-full">
           
           {/* Left Form Section */}
-          <div className="flex flex-col gap-[8px] w-full lg:w-[643px] pt-1">
+          <div className="flex flex-col gap-[8px] w-full lg:w-[643px] border-[1.5px] border-[#D6D3D1] shadow-sm rounded-[16px] p-5 lg:border-none lg:shadow-none lg:p-0 pt-5 lg:pt-1">
             
             {/* Experience Type Selection */}
             <div className="flex flex-col gap-[9px]">
               <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] leading-[20.25px] text-[#292524]">
                 Choose Your Experience
               </label>
-              <div className="flex flex-col sm:flex-row gap-[13.5px]">
+              <div className="flex flex-row gap-[13.5px]">
                 {/* In-Store Option */}
-                <button className="flex-1 flex flex-col items-center justify-center gap-1 bg-[#FCE9EC] border-[2.25px] border-[#CB485E] rounded-[8px] py-[18px]">
+                <button 
+                  onClick={() => setExperience("in-store")}
+                  className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
+                    experience === "in-store" 
+                      ? "bg-[#FCE9EC] border-[2.25px] border-[#CB485E]" 
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
                   <Image src="/contact/in-store_icon.png" alt="In-Store" width={22} height={22} className="object-contain" />
-                  <span className="font-sans font-bold text-[14px] text-[#CB485E] uppercase tracking-[0.65px] mt-1">
+                  <span className={`font-sans font-bold text-[14px] uppercase tracking-[0.65px] mt-1 ${
+                    experience === "in-store" ? "text-[#CB485E]" : "text-[#292524]"
+                  }`}>
                     In-Store
                   </span>
-                  <span className="font-[family-name:var(--font-montserrat)] font-normal text-[12px] text-[#78716C]">
+                  <span className={`font-[family-name:var(--font-montserrat)] font-normal text-[12px] ${
+                    experience === "in-store" ? "text-[#78716C]" : "text-[#A8A29E]"
+                  }`}>
                     Visit our studio
                   </span>
                 </button>
                 {/* Virtual Option */}
-                <button className="flex-1 flex flex-col items-center justify-center gap-1 bg-white border-[1.13px] border-[#E7E5E4] rounded-[8px] py-[18px]">
+                <button 
+                  onClick={() => setExperience("virtual")}
+                  className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
+                    experience === "virtual" 
+                      ? "bg-[#FCE9EC] border-[2.25px] border-[#CB485E]" 
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
                   <Image src="/contact/virtual_icon.png" alt="Virtual" width={22} height={22} className="object-contain" />
-                  <span className="font-sans font-bold text-[14px] text-[#292524] uppercase tracking-[0.65px] mt-1">
+                  <span className={`font-sans font-bold text-[14px] uppercase tracking-[0.65px] mt-1 ${
+                    experience === "virtual" ? "text-[#CB485E]" : "text-[#292524]"
+                  }`}>
                     Virtual
                   </span>
-                  <span className="font-[family-name:var(--font-montserrat)] font-normal text-[12px] text-[#A8A29E] text-center">
+                  <span className={`font-[family-name:var(--font-montserrat)] font-normal text-[12px] text-center ${
+                    experience === "virtual" ? "text-[#78716C]" : "text-[#A8A29E]"
+                  }`}>
                     Video consultation<br/>from anywhere
                   </span>
                 </button>
@@ -56,25 +84,53 @@ export function ConsultationBooking() {
               <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] leading-[20.25px] text-[#292524]">
                 What are you looking for?
               </label>
-              <div className="flex flex-wrap gap-[9px]">
-                <button className="flex items-center gap-[6px] bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] rounded-[8px] px-[12px] py-[9px]">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="8" cy="10" r="4.5" stroke="#A43048" strokeWidth="1.18" />
-                    <path d="M5.5 5.5L8 2L10.5 5.5H5.5Z" stroke="#A43048" strokeWidth="1.18" />
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-[9px]">
+                <button 
+                  onClick={() => setCategory("engagement")}
+                  className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
+                    category === "engagement"
+                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
+                    <circle cx="8" cy="10" r="4.5" stroke={category === "engagement" ? "#A43048" : "#A8A29E"} strokeWidth="1.18" />
+                    <path d="M5.5 5.5L8 2L10.5 5.5H5.5Z" stroke={category === "engagement" ? "#A43048" : "#A8A29E"} strokeWidth="1.18" />
                   </svg>
-                  <span className="font-sans font-medium text-[14px] text-[#A43048]">Engagement</span>
+                  <span className={`font-sans font-medium text-[12px] sm:text-[14px] whitespace-nowrap ${category === "engagement" ? "text-[#A43048]" : "text-[#57534E]"}`}>Engagement</span>
                 </button>
-                <button className="flex items-center gap-[6px] bg-white border-[1.13px] border-[#E7E5E4] rounded-[8px] px-[12px] py-[9px]">
-                  <Heart className="w-4 h-4 text-[#A8A29E]" strokeWidth={1.5} />
-                  <span className="font-sans font-medium text-[14px] text-[#57534E]">Bridal</span>
+                <button 
+                  onClick={() => setCategory("bridal")}
+                  className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
+                    category === "bridal"
+                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
+                  <Heart className={`w-4 h-4 shrink-0 ${category === "bridal" ? "text-[#A43048]" : "text-[#A8A29E]"}`} strokeWidth={1.5} />
+                  <span className={`font-sans font-medium text-[12px] sm:text-[14px] ${category === "bridal" ? "text-[#A43048]" : "text-[#57534E]"}`}>Bridal</span>
                 </button>
-                <button className="flex items-center gap-[6px] bg-white border-[1.13px] border-[#E7E5E4] rounded-[8px] px-[12px] py-[9px]">
-                  <Sparkles className="w-4 h-4 text-[#A8A29E]" strokeWidth={1.5} />
-                  <span className="font-sans font-medium text-[14px] text-[#57534E]">Custom</span>
+                <button 
+                  onClick={() => setCategory("custom")}
+                  className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
+                    category === "custom"
+                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
+                  <Sparkles className={`w-4 h-4 shrink-0 ${category === "custom" ? "text-[#A43048]" : "text-[#A8A29E]"}`} strokeWidth={1.5} />
+                  <span className={`font-sans font-medium text-[12px] sm:text-[14px] ${category === "custom" ? "text-[#A43048]" : "text-[#57534E]"}`}>Custom</span>
                 </button>
-                <button className="flex items-center gap-[6px] bg-white border-[1.13px] border-[#E7E5E4] rounded-[8px] px-[12px] py-[9px]">
-                  <Gift className="w-4 h-4 text-[#A8A29E]" strokeWidth={1.5} />
-                  <span className="font-sans font-medium text-[14px] text-[#57534E]">Gifting</span>
+                <button 
+                  onClick={() => setCategory("gifting")}
+                  className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
+                    category === "gifting"
+                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      : "bg-white border-[1.13px] border-[#E7E5E4]"
+                  }`}
+                >
+                  <Gift className={`w-4 h-4 shrink-0 ${category === "gifting" ? "text-[#A43048]" : "text-[#A8A29E]"}`} strokeWidth={1.5} />
+                  <span className={`font-sans font-medium text-[12px] sm:text-[14px] ${category === "gifting" ? "text-[#A43048]" : "text-[#57534E]"}`}>Gifting</span>
                 </button>
               </div>
             </div>
@@ -84,15 +140,33 @@ export function ConsultationBooking() {
               <div className="flex-1 flex flex-col gap-2">
                 <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Preferred Date</label>
                 <div className="relative">
-                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                  <input type="text" placeholder="Select a date" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]" />
+                  <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" />
+                  <input 
+                    type="text" 
+                    placeholder="Select a date" 
+                    onFocus={(e) => (e.target.type = "date")}
+                    onBlur={(e) => {
+                      if (!e.target.value) e.target.type = "text";
+                    }}
+                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] cursor-pointer" 
+                  />
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" strokeWidth={1.5} />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-2">
                 <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Preferred Time</label>
                 <div className="relative">
-                  <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                  <input type="text" placeholder="Select a time" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]" />
+                  <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" />
+                  <input 
+                    type="text" 
+                    placeholder="Select a time" 
+                    onFocus={(e) => (e.target.type = "time")}
+                    onBlur={(e) => {
+                      if (!e.target.value) e.target.type = "text";
+                    }}
+                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] cursor-pointer" 
+                  />
+                  <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" strokeWidth={1.5} />
                 </div>
               </div>
             </div>
@@ -159,12 +233,12 @@ export function ConsultationBooking() {
           </div>
 
           {/* Right Image Section */}
-          <div className="relative w-full lg:w-[533px] h-[600px] lg:h-[774px] rounded-[12px] overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,0.05)] bg-[#F5F5F5] shrink-0">
+          <div className="relative w-full aspect-[533/774] lg:aspect-auto lg:w-[533px] lg:h-[774px] rounded-[12px] overflow-hidden shadow-[0px_0px_10px_rgba(0,0,0,0.05)] bg-[#F5F5F5] shrink-0">
             <Image 
               src="/contact/consultant-booking.png" 
               alt="Consultation Booking" 
               fill 
-              className="object-cover" 
+              className="object-cover object-center" 
             />
 
             {/* Content overlay */}

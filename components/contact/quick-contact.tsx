@@ -4,10 +4,10 @@ import { ArrowRight, Calendar } from "lucide-react";
 export function QuickContact() {
   return (
     <section className="w-full bg-[#FCE9EC] py-[54px] px-4 md:px-[100px]">
-      <div className="w-full max-w-[1240px] mx-auto flex flex-col lg:flex-row gap-[17px] justify-between">
+      <div className="w-full max-w-[1240px] mx-auto flex flex-row overflow-x-auto lg:overflow-visible gap-[17px] justify-start lg:justify-between snap-x snap-mandatory pb-4 lg:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
         
         {/* Card 1 */}
-        <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
+        <div className="w-[85vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
           {/* Icon Container */}
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
             <Image src="/contact/phone_icon.png" alt="Phone" width={22} height={22} className="object-contain" />
@@ -38,7 +38,7 @@ export function QuickContact() {
         </div>
 
         {/* Card 2 */}
-        <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
+        <div className="w-[85vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
             <Image src="/contact/mail_icon.png" alt="Mail" width={22} height={22} className="object-contain" />
           </div>
@@ -60,7 +60,7 @@ export function QuickContact() {
         </div>
 
         {/* Card 3 */}
-        <div className="w-full lg:w-[402px] h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[31px] flex flex-col">
+        <div className="w-[85vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
           <div className="w-[63px] h-[63px] bg-[#FCE9EC] rounded-full flex items-center justify-center mb-5">
             <Image src="/contact/video_icon.png" alt="Video" width={22} height={22} className="object-contain" />
           </div>

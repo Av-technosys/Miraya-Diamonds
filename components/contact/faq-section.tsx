@@ -38,10 +38,10 @@ export function FaqSection() {
 
   return (
     <section
-      className="w-full py-[60px] px-4 md:px-[97px]"
-      style={{ backgroundColor: "#FFFFFFB8" }}
+      className="w-full pt-0 pb-[20px] md:py-[60px] px-4 md:px-[97px]"
+      style={{ backgroundColor: "#FFFFFF" }}
     >
-      <div className="w-full max-w-[1243px] mx-auto flex flex-col gap-[30.07px]">
+      <div className="w-full max-w-[1243px] mx-auto flex flex-col gap-[20px] md:gap-[30.07px]">
         {/* Header */}
         <div className="flex flex-col items-center justify-center gap-[5.01px]">
           <h2 className="font-serif font-bold text-[32px] leading-[100%] tracking-[-0.02em] text-black text-center">
@@ -53,17 +53,16 @@ export function FaqSection() {
         </div>
 
         {/* Category Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-[10.02px]">
+        <div className="flex flex-row md:flex-wrap items-center justify-start md:justify-center overflow-x-auto md:overflow-visible snap-x scrollbar-hide gap-[10.02px] pb-2 md:pb-0" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className="h-[33.08px] rounded-[84.2px] px-[24.06px] py-[8.02px] text-[14px] leading-[100%] tracking-[-0.02em] text-center font-sans cursor-pointer transition-colors duration-300"
-              style={{
-                fontWeight: activeCategory === cat ? 600 : 500,
-                backgroundColor: activeCategory === cat ? "#CB485E" : "#FFFFFF",
-                color: activeCategory === cat ? "#FFFFFF" : "#373737",
-              }}
+              className={`shrink-0 snap-center h-[33.08px] rounded-[84.2px] px-[24.06px] py-[8.02px] text-[14px] leading-[100%] tracking-[-0.02em] text-center font-sans cursor-pointer transition-colors duration-300 ${
+                activeCategory === cat
+                  ? "bg-[#CB485E] text-white font-semibold"
+                  : "bg-white text-[#CB485E] border border-[#CB485E] font-medium"
+              }`}
             >
               {cat}
             </button>
@@ -75,23 +74,23 @@ export function FaqSection() {
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              className="w-full rounded-[20px] border-[1.5px] border-[#CB485E] bg-white overflow-hidden transition-all duration-300"
+              className="w-full rounded-[32px] border-[1.5px] border-[#CB485E] bg-white overflow-hidden transition-all duration-300"
             >
               {/* Question Row */}
               <button
                 onClick={() => toggleFaq(idx)}
-                className="w-full flex items-center justify-between py-[15px] pr-[18px] pl-[25px] cursor-pointer"
+                className="w-full flex items-start justify-between py-[15px] pr-[18px] pl-[25px] cursor-pointer"
               >
-                <div className="flex items-center gap-[10px]">
-                  <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#CB485E]">
+                <div className="flex items-start gap-[10px]">
+                  <span className="font-sans font-medium text-[14px] leading-[20px] tracking-[-0.02em] text-[#CB485E]">
                     {idx + 1}.
                   </span>
-                  <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#454545] text-left">
+                  <span className="font-sans font-medium text-[14px] leading-[20px] tracking-[-0.02em] text-[#454545] text-left pr-2">
                     {faq.question}
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-[24px] h-[24px] shrink-0 text-[#CB485E] transition-transform duration-300 ${openIndex === idx ? "rotate-180" : ""}`}
+                  className={`w-[20px] h-[20px] shrink-0 text-[#CB485E] transition-transform duration-300 mt-[1px] ${openIndex === idx ? "rotate-180" : ""}`}
                   strokeWidth={1.5}
                 />
               </button>
