@@ -152,9 +152,13 @@ export function Header() {
                 <button className="hover:text-[#CB485E]/80 transition-colors">
                   <Heart size={22} strokeWidth={1.5} />
                 </button>
-                <button className="hover:text-[#CB485E]/80 transition-colors">
+                <Link
+                  href="/dashboard"
+                  aria-label="Go to dashboard"
+                  className="hover:text-[#CB485E]/80 transition-colors"
+                >
                   <User size={22} strokeWidth={1.5} />
-                </button>
+                </Link>
                 <button className="hover:text-[#CB485E]/80 transition-colors">
                   <ShoppingBag size={22} strokeWidth={1.5} />
                 </button>

@@ -107,7 +107,7 @@ export function TestimonialsHero() {
                   backdropFilter: "blur(3.97px)",
                 }}
               >
-                <p className="font-sans font-medium text-[8px] md:text-[9.93px] leading-[12px] md:leading-[16.14px] tracking-[1.5px] md:tracking-[2.48px] text-[#554E4A] text-right uppercase w-[70px] md:w-[86px]">
+                <p className="font-sans font-medium text-[8px] md:text-xs leading-[12px] md:leading-[16.14px] tracking-[1.5px] md:tracking-[2.48px] text-[#554E4A] text-right uppercase w-[70px] md:w-[86px]">
                   MORE THAN JEWELLERY A PART OF YOUR STORY
                 </p>
                 {/* Horizontal Divider */}

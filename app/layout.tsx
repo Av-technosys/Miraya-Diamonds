@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Infant, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import { Inter, Cormorant_Infant, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/common/header";
+import { ConditionalFooter } from "@/components/common/conditional-footer";
+import { cn } from "@/lib/utils";
+
+const geist = Geist({subsets:['latin'],variable:'--font-sans'});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -47,12 +51,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorantGaramond.variable} ${montserrat.variable} ${alexBrush.variable} ${playfairDisplay.variable} ${plusJakartaSans.variable} h-full antialiased`}
+      className={cn("h-full", "antialiased", inter.variable, cormorantGaramond.variable, montserrat.variable, alexBrush.variable, playfairDisplay.variable, plusJakartaSans.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <Header />
-        {children}
+        <div className="flex-1">{children}</div>
+        <ConditionalFooter />
       </body>
     </html>
   );
