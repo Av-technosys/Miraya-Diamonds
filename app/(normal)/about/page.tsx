@@ -1,10 +1,25 @@
-import { Container } from "@/components/container";
+import { AboutHero } from "@/components/about/about-hero";
+import { BrandIntroduction } from "@/components/about/brand-introduction";
+import { OurStoryAndTimeline } from "@/components/about/our-story-timeline";
+import { OurValues } from "@/components/about/our-values";
+import { ArtOfCraftsmanship } from "@/components/about/art-of-craftsmanship";
+import { CollectionPhilosophy } from "@/components/about/collection-philosophy";
+import { TrustAndCredibility } from "@/components/about/trust-credibility";
+import { ConfidencePledge } from "@/components/about/confidence-pledge";
+import { FinalCTA } from "@/components/about/final-cta";
 
-export default function aboutPage() {
+export default function AboutPage() {
   return (
-    <Container className="py-12">
-      <h1 className="text-3xl font-bold capitalize">about</h1>
-      <p className="mt-4 text-zinc-600">Coming soon.</p>
-    </Container>
+    <main className="bg-white min-h-screen">
+      <AboutHero />
+      <BrandIntroduction />
+      <OurStoryAndTimeline />
+      <OurValues />
+      <ArtOfCraftsmanship />
+      <CollectionPhilosophy />
+      <TrustAndCredibility />
+      <ConfidencePledge />
+      <FinalCTA />
+    </main>
   );
 }
