@@ -47,7 +47,7 @@ export function TestimonialsHero() {
 
               {/* Description */}
               <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#757575] max-w-[553px] mt-[4px] md:mt-0">
-                Real stories. Real moments. Real people. Discover how our jewellery becomes a part of life's most beautiful chapters.
+                Real stories. Real moments. Real people. Discover how our jewellery becomes a part of life&apos;s most beautiful chapters.
               </p>
             </div>
 

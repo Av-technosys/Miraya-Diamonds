@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Star, ArrowRight } from "lucide-react";
+import { Star } from "lucide-react";
 
 const filterPills = ["All Reviews", "Rings", "Earrings", "Necklaces", "Bracelets", "Bespoke"];
 
@@ -225,12 +225,12 @@ export function TestimonialsContent() {
 
             {/* Heading */}
             <h2 className="font-serif font-bold text-[28px] md:text-[40px] leading-[32px] md:leading-[40.77px] text-[#231F1D]">
-              "A Piece for a Moment<br />I'll Always Cherish"
+              &quot;A Piece for a Moment<br />I&apos;ll Always Cherish&quot;
             </h2>
 
             {/* Description */}
             <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[20px] text-[#5E544F] pt-[5.61px] max-w-[488px]">
-              "My engagement ring from Miraya is more than just a piece of jewellery — it's a symbol of our journey. The entire experience was so personal and memorable. I couldn't have asked for anything more perfect."
+              &quot;My engagement ring from Miraya is more than just a piece of jewellery — it&apos;s a symbol of our journey. The entire experience was so personal and memorable. I couldn&apos;t have asked for anything more perfect.&quot;
             </p>
           </div>
 
@@ -275,4 +275,3 @@ export function TestimonialsContent() {
     </div>
   );
 }
-

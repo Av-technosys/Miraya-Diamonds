@@ -15,7 +15,7 @@ export function ConsultationBooking() {
         {/* Header Section */}
         <div className="flex flex-col items-center justify-center gap-1">
           <h2 className="font-serif font-bold text-[32px] leading-[100%] tracking-[-0.02em] text-black text-center">
-            Let's Find the Perfect Piece, Together
+            Let&apos;s Find the Perfect Piece, Together
           </h2>
           <p className="font-sans font-normal text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575] text-center max-w-[629px] mt-2">
             Choose a private consultation and let our jewellery experts guide you through the pieces made for your moment.
@@ -200,10 +200,10 @@ export function ConsultationBooking() {
 
             {/* Textarea */}
             <div className="flex flex-col gap-2 mt-2">
-              <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Anything you'd like us to know?</label>
+              <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Anything you&apos;d like us to know?</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-[14px] w-4 h-4 text-[#A8A29E]" />
-                <textarea rows={4} placeholder="Tell us about your requirements, occasion, or any specific designs you're interested in..." className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] resize-none"></textarea>
+                <textarea rows={4} placeholder="Tell us about your requirements, occasion, or any specific designs you&apos;re interested in..." className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] resize-none"></textarea>
               </div>
             </div>
 
@@ -225,7 +225,7 @@ export function ConsultationBooking() {
               <div className="flex items-center justify-center pt-1">
                 <Calendar className="w-[15.75px] h-[15.75px] text-[#78716C]" strokeWidth={1.18} />
                 <span className="font-[family-name:var(--font-montserrat)] font-normal text-[12.38px] leading-[18.56px] text-[#78716C] pl-[6.75px]">
-                  We'll confirm your appointment shortly.
+                  We&apos;ll confirm your appointment shortly.
                 </span>
               </div>
             </div>
@@ -253,7 +253,7 @@ export function ConsultationBooking() {
                   A More Personal Experience
                 </h3>
                 <p className="font-sans font-normal text-[14px] leading-[20.11px] text-[#757575] mt-[-1px]">
-                  Discover exquisite jewellery with dedicated guidance from our experts, in a setting that's private, relaxed and entirely about you.
+                  Discover exquisite jewellery with dedicated guidance from our experts, in a setting that&apos;s private, relaxed and entirely about you.
                 </p>
               </div>
 
@@ -286,7 +286,7 @@ export function ConsultationBooking() {
                   </div>
                   <div className="flex flex-col gap-[1.39px]">
                     <span className="font-[family-name:var(--font-montserrat)] font-semibold text-[14px] leading-[17.79px] text-[#292524]">In-store or virtual</span>
-                    <span className="font-sans font-normal text-[12px] leading-[14.06px] text-[#757575]">Choose what's most convenient for you.</span>
+                    <span className="font-sans font-normal text-[12px] leading-[14.06px] text-[#757575]">Choose what&apos;s most convenient for you.</span>
                   </div>
                 </div>
               </div>

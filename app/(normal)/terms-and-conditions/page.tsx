@@ -1,4 +1,4 @@
-import { Container } from "@/components/container";
+import { Container } from "@/components/common/container";
 
 export default function terms_and_conditionsPage() {
   return (
