@@ -58,7 +58,7 @@ export function BrandIntroduction() {
           {/* Quote Box - Mobile */}
           <div className="md:hidden w-full bg-[#FCF5F7] border-l-[2px] border-[#CB485E] rounded-r-[12px] p-[20px] flex flex-col gap-[12px] mb-[30px]">
             <p className="font-serif font-normal italic text-[14px] leading-[18px] text-[#454545]">
-              "Diamonds are nature's most enduring poetry, sculpted to reflect the subtle brilliance of the woman who wears them."
+              &quot;Diamonds are nature&apos;s most enduring poetry, sculpted to reflect the subtle brilliance of the woman who wears them.&quot;
             </p>
             <span className="font-sans font-bold text-[10px] tracking-[1.2px] uppercase text-[#CB485E]">
               — MIRAYA DESIGN ARTIST
@@ -68,7 +68,7 @@ export function BrandIntroduction() {
           {/* Quote Box - Desktop */}
           <div className="hidden md:flex w-full bg-[#FBF4F6] border-[1.05px] border-[#F3E5EC] rounded-[17px] p-[25px] flex-col gap-[12.66px] mb-[40px]">
             <p className="font-serif font-medium italic text-[16px] leading-[20px] text-[#454545]">
-              "Diamonds are nature's most enduring poetry. Our joy lies in sculpting them to reflect the subtle brilliance of the woman who wears them."
+              &quot;Diamonds are nature&apos;s most enduring poetry. Our joy lies in sculpting them to reflect the subtle brilliance of the woman who wears them.&quot;
             </p>
             <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#CB485E]">
               — MIRAYA DESIGN ARTIST

@@ -38,6 +38,7 @@ export function FaqSection() {
 
   return (
     <section
+      id="faq"
       className="w-full pt-0 pb-[20px] md:py-[60px] px-4 md:px-[97px]"
       style={{ backgroundColor: "#FFFFFF" }}
     >

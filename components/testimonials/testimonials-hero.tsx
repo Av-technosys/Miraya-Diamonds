@@ -47,7 +47,7 @@ export function TestimonialsHero() {
 
               {/* Description */}
               <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#757575] max-w-[553px] mt-[4px] md:mt-0">
-                Real stories. Real moments. Real people. Discover how our jewellery becomes a part of life's most beautiful chapters.
+                Real stories. Real moments. Real people. Discover how our jewellery becomes a part of life&apos;s most beautiful chapters.
               </p>
             </div>
 
@@ -107,8 +107,8 @@ export function TestimonialsHero() {
                   backdropFilter: "blur(3.97px)",
                 }}
               >
-                <p className="font-sans font-medium text-[8px] md:text-[9.93px] leading-[12px] md:leading-[16.14px] tracking-[1.5px] md:tracking-[2.48px] text-[#554E4A] text-right uppercase w-[70px] md:w-[86px]">
-                  MORE THAN<br />JEWELLERY<br />A PART OF<br />YOUR STORY
+                <p className="font-sans font-medium text-[8px] md:text-xs leading-[12px] md:leading-[16.14px] tracking-[1.5px] md:tracking-[2.48px] text-[#554E4A] text-right uppercase w-[70px] md:w-[86px]">
+                  MORE THAN JEWELLERY A PART OF YOUR STORY
                 </p>
                 {/* Horizontal Divider */}
                 <div className="w-[20px] md:w-[31.78px] h-[1.5px] md:h-[1.99px] bg-[#A8354C] self-end" />
