@@ -142,7 +142,7 @@ export function TestimonialsContent() {
             filteredTestimonials.map((card, idx) => (
               <div
                 key={idx}
-                className="relative flex flex-col justify-between rounded-[16.19px] border-[1.01px] border-[#EDE7E3] bg-white p-[16.19px] w-[88vw] max-w-[340px] sm:w-[350px] lg:w-auto shrink-0 snap-center"
+                className="relative flex flex-col justify-between rounded-[16.19px] border-[1.01px] border-[#EDE7E3] bg-white p-[10px] sm:p-[16.19px] w-[78vw] max-w-[420px] sm:w-[350px] lg:w-auto shrink-0 snap-center"
                 style={{
                   boxShadow: "0px 4.05px 20.24px 0px rgba(0,0,0,0.05)",
                 }}
@@ -150,7 +150,7 @@ export function TestimonialsContent() {
                 {/* Top Content */}
                 <div className="flex flex-col gap-[9.31px] pb-[16.19px]">
                   {/* Product Image */}
-                  <div className="w-full aspect-[256.59/210.51] rounded-[12.14px] bg-[#F6F2EF] overflow-hidden relative">
+                  <div className="w-full aspect-[16/10] sm:aspect-[256.59/210.51] rounded-[12.14px] bg-[#F6F2EF] overflow-hidden relative">
                     <Image src={card.image} alt={card.product} fill className="object-cover" />
                   </div>
 

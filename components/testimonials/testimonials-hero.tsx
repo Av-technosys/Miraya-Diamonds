@@ -4,7 +4,7 @@ import { Star, ChevronRight } from "lucide-react";
 export function TestimonialsHero() {
   return (
     <section className="w-full bg-white">
-      <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 pt-[30px]">
+      <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 pt-[13px] md:pt-[40px]">
 
         {/* Breadcrumb */}
         <div className="flex items-center justify-between">
@@ -20,7 +20,7 @@ export function TestimonialsHero() {
         </div>
 
         {/* Hero Section */}
-        <div className="relative mt-[16px] flex flex-col lg:flex-row justify-between items-start">
+        <div className="relative mt-[6px] flex flex-col lg:flex-row justify-between items-start">
 
           {/* Left Hero Content */}
           <div className="w-full lg:w-[553px] pt-[16px] md:pt-[32px] flex flex-col gap-[12px] md:gap-[27px]">

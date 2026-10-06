@@ -6,7 +6,7 @@ export function BrandIntroduction() {
       <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 flex flex-col-reverse lg:flex-row items-center gap-6 lg:gap-[60px]">
         
         {/* Left Image */}
-        <div className="w-full lg:w-[590px] relative">
+        <div className="hidden md:block w-full lg:w-[590px] relative">
           {/* Image container */}
           <div
             className="relative w-full aspect-[590/462] rounded-[25px] overflow-hidden border-[4.22px] border-white shadow-[0px_4px_30px_rgba(0,0,0,0.06)]"
@@ -41,9 +41,8 @@ export function BrandIntroduction() {
           </div>
 
           {/* Heading */}
-          <h2 className="font-serif font-bold text-[32px] md:text-[40px] leading-[1.1] md:leading-[42.2px] text-[#454545] mb-[24px]">
-            More Than Jewellery.<br className="hidden md:block" />
-            <span className="text-[#CB485E] italic"> A Reflection of You.</span>
+          <h2 className="font-serif font-bold text-[28px] md:text-[40px] leading-[1.2] md:leading-[42.2px] text-[#454545] mb-[16px] md:mb-[24px]">
+            More Than Jewellery. <span className="text-[#CB485E] italic">A Reflection of You.</span>
           </h2>
 
           {/* Mobile Description */}
@@ -57,7 +56,7 @@ export function BrandIntroduction() {
           </p>
 
           {/* Quote Box - Mobile */}
-          <div className="md:hidden w-full bg-[#FCF5F7] border-l-[3px] border-[#CB485E] rounded-r-[12px] p-[16px] flex flex-col gap-[12px] mb-[24px]">
+          <div className="md:hidden w-full bg-[#FCF5F7] border-l-[2px] border-[#CB485E] rounded-r-[12px] p-[20px] flex flex-col gap-[12px] mb-[30px]">
             <p className="font-serif font-normal italic text-[14px] leading-[18px] text-[#454545]">
               &quot;Diamonds are nature&apos;s most enduring poetry, sculpted to reflect the subtle brilliance of the woman who wears them.&quot;
             </p>
@@ -77,18 +76,18 @@ export function BrandIntroduction() {
           </div>
 
           {/* Stats - Mobile */}
-          <div className="flex md:hidden flex-row items-stretch justify-between gap-[8px] mb-0">
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[16px] px-[4px] flex flex-col items-center justify-center gap-[4px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[13px] text-[#111827]">100%</span>
-              <span className="font-sans font-normal text-[9px] uppercase tracking-wide text-[#6B7280] text-center">Conflict-Free</span>
+          <div className="flex md:hidden flex-row items-stretch justify-between gap-[10px] mb-[20px]">
+            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">100%</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Conflict-Free</span>
             </div>
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[16px] px-[4px] flex flex-col items-center justify-center gap-[4px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[13px] text-[#111827]">18KT & PT</span>
-              <span className="font-sans font-normal text-[9px] uppercase tracking-wide text-[#6B7280] text-center">Precious Metals</span>
+            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">18KT & PT</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Precious Metals</span>
             </div>
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[16px] px-[4px] flex flex-col items-center justify-center gap-[4px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[13px] text-[#111827]">Lifetime</span>
-              <span className="font-sans font-normal text-[9px] uppercase tracking-wide text-[#6B7280] text-center">Warranty</span>
+            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Lifetime</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Warranty</span>
             </div>
           </div>
 

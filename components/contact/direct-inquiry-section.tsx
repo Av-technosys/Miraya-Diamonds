@@ -212,11 +212,11 @@ export function DirectInquirySection() {
           {/* Bottom Buttons */}
           <div className="pt-[18px]">
             <div className="border-t-[1.13px] border-[#CB485E33] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
-              <button className="bg-[#CB485E] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-full">
+              <button className="bg-[#CB485E] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
                 <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Schedule Live Call</span>
                 <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </button>
-              <button className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-full">
+              <button className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-[41%] lg:w-auto lg:flex-none">
                 <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#CB485E] whitespace-nowrap">Whatsapp</span>
                 <Image src="/contact/message-icon.png" alt="Message" width={15} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-[15px] sm:h-[15px]" />
               </button>
