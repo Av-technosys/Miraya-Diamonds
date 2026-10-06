@@ -148,7 +148,7 @@ function ReturnContent() {
 
             {/* Content */}
             <div className="flex flex-col gap-2 w-full pt-[2px]">
-              <h2 className="font-serif font-medium text-[20px] md:text-[24px] leading-[1.2] md:leading-[32px] text-[#171717]">
+              <h2 className="font-sans md:font-serif font-semibold md:font-medium text-[16px] md:text-[24px] leading-[1.2] md:leading-[32px] text-[#171717]">
                 {section.title}
               </h2>
               {section.isContact ? (
