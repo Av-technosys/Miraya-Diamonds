@@ -27,44 +27,50 @@ export function OurStoryAndTimeline() {
             The Story Behind <span className="text-[#CB485E]">Miraya</span>
           </h2>
 
-          {/* Description */}
-          <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
-            Miraya Diamonds was created with a simple vision — to bring together the brilliance of exceptional diamonds with thoughtful design and timeless craftsmanship. Our journey is driven by a passion for creating jewellery that feels personal, sophisticated, and effortlessly beautiful.
+          {/* Mobile Description */}
+          <p className="md:hidden font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
+            Miraya Diamonds brings together the brilliance of exceptional diamonds with thoughtful design and timeless Indian craftsmanship.
           </p>
 
-          <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
-            From the first sketch to the final polish, every detail is carefully considered to create pieces celebrating life&apos;s most meaningful milestones.
-          </p>
+          {/* Desktop Description */}
+          <div className="hidden md:block">
+            <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px] mb-[21px]">
+              Miraya Diamonds was created with a simple vision — to bring together the brilliance of exceptional diamonds with thoughtful design and timeless craftsmanship. Our journey is driven by a passion for creating jewellery that feels personal, sophisticated, and effortlessly beautiful.
+            </p>
+            <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
+              From the first sketch to the final polish, every detail is carefully considered to create pieces celebrating life's most meaningful milestones.
+            </p>
+          </div>
 
           {/* OUR CREATIVE JOURNEY */}
           <div className="flex flex-col gap-[12.66px] pt-[17px]">
-            <span className="font-sans font-bold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#454545]">
+            <span className="hidden md:block font-sans font-bold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#454545]">
               OUR CREATIVE JOURNEY
             </span>
 
             {/* Timeline cards */}
-            <div className="flex items-center gap-[10.55px]">
+            <div className="flex items-center gap-[6px] md:gap-[10.55px] w-full">
               {timelineSteps.map((step) => (
                 <div
                   key={step.num}
-                  className={`flex flex-col items-center gap-[2px] w-[142px] pt-[21px] pr-[15px] pb-[15px] pl-[15px] rounded-[13px] border-[1.05px] ${
+                  className={`flex flex-col flex-1 items-center gap-[2px] md:w-[142px] pt-[16px] md:pt-[21px] px-[2px] md:px-[15px] pb-[12px] md:pb-[15px] rounded-[10px] md:rounded-[13px] border-[1.05px] ${
                     step.highlighted
                       ? "bg-[#F7E6ECCC] border-[#FF86B466]"
-                      : "bg-[#FFFDFC] border-[#F3E5EC]"
+                      : "bg-[#F7E6ECCC] md:bg-[#FFFDFC] border-[#FF86B466] md:border-[#F3E5EC]"
                   }`}
                   style={{
                     boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D",
                   }}
                 >
-                  <span className="font-serif font-bold text-[20px] leading-[17px] text-[#CB485E] text-center">
+                  <span className="font-serif font-bold text-[18px] md:text-[20px] leading-[1] md:leading-[17px] text-[#CB485E] text-center">
                     {step.num}
                   </span>
-                  <div className="pt-[2px]">
-                    <span className="font-serif font-bold text-[16px] leading-[21px] tracking-[-0.15px] text-[#454545] text-center block">
+                  <div className="pt-[4px] md:pt-[2px]">
+                    <span className="font-serif font-bold text-[13px] md:text-[16px] leading-[1] md:leading-[21px] tracking-[-0.15px] text-[#454545] text-center block">
                       {step.title}
                     </span>
                   </div>
-                  <span className={`font-sans text-[12px] leading-[16px] text-[#CB485E] text-center ${step.highlighted ? "font-medium" : "font-normal"}`}>
+                  <span className={`font-sans text-[9px] md:text-[12px] leading-[14px] md:leading-[16px] text-[#CB485E] text-center ${step.highlighted ? "font-medium" : "font-normal"} mt-1 md:mt-0`}>
                     {step.sub}
                   </span>
                 </div>
@@ -76,19 +82,38 @@ export function OurStoryAndTimeline() {
         {/* Right Image */}
         <div className="w-full lg:w-[582px] relative pb-[25px]">
           {/* Image with border */}
-          <div className="relative w-full aspect-[582/489] rounded-[12px] overflow-hidden border-[1.05px] border-[#FCE9EC]">
+          <div className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full aspect-[582/489] rounded-[20px] md:rounded-[12px] overflow-hidden border-[1.05px] border-[#FCE9EC]">
+            {/* Mobile Image */}
+            <Image
+              src="/about/intro.jpg"
+              alt="Mobile hero"
+              fill
+              className="object-cover md:hidden"
+              sizes="100vw"
+            />
+            {/* Desktop Image */}
             <Image
               src="/about/master.jpg"
               alt="Master artisan jeweller setting diamond into rose gold ring"
               fill
-              className="object-cover"
+              className="object-cover hidden md:block"
               sizes="(max-width: 1024px) 100vw, 582px"
             />
           </div>
 
-          {/* Floating card - HANDMADE IN INDIA */}
+          {/* Floating Badge (Bottom Right) - Mobile only */}
           <div
-            className="absolute bottom-0 right-[16px] flex items-center gap-[12.66px] p-[17px] rounded-[17px] border-[1.05px] border-[#FCE9EC] max-w-[264px] z-20"
+            className="md:hidden absolute -bottom-[15px] right-[10px] flex flex-col items-center justify-center w-[84px] h-[84px] rounded-full bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] z-20 shadow-sm"
+          >
+            <span className="text-[19px] leading-[29.5px] text-[#CB485E]">✨</span>
+            <span className="font-sans font-semibold text-[8.44px] leading-[12.66px] tracking-[0.84px] uppercase text-[#3B2A30]">
+              High-end
+            </span>
+          </div>
+
+          {/* Floating card - HANDMADE IN INDIA - Desktop only */}
+          <div
+            className="hidden md:flex absolute bottom-0 right-[16px] items-center gap-[12.66px] p-[17px] rounded-[17px] border-[1.05px] border-[#FCE9EC] max-w-[264px] z-20"
             style={{
               background: "#FFFDFCD1",
               backdropFilter: "blur(14.77px)",

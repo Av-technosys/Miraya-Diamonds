@@ -26,7 +26,7 @@ export function ConsultationBooking() {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-[58px] w-full">
           
           {/* Left Form Section */}
-          <div className="flex flex-col gap-[8px] w-full lg:w-[643px] border-[1.5px] border-[#D6D3D1] shadow-sm rounded-[16px] p-5 lg:border-none lg:shadow-none lg:p-0 pt-5 lg:pt-1">
+          <div className="flex flex-col gap-[8px] w-full lg:w-[643px] lg:pt-1">
             
             {/* Experience Type Selection */}
             <div className="flex flex-col gap-[9px]">
@@ -135,8 +135,11 @@ export function ConsultationBooking() {
               </div>
             </div>
 
-            {/* Date and Time */}
-            <div className="flex flex-col sm:flex-row gap-[16px] mt-2">
+            {/* Date and Time & Below Wrapped in Border for Mobile */}
+            <div className="flex flex-col gap-[8px] border-[1.5px] border-[#D6D3D1] shadow-sm rounded-[16px] p-5 lg:border-none lg:shadow-none lg:p-0 mt-2 lg:mt-0">
+              
+              {/* Date and Time */}
+              <div className="flex flex-col sm:flex-row gap-[16px] mt-2">
               <div className="flex-1 flex flex-col gap-2">
                 <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Preferred Date</label>
                 <div className="relative">
@@ -212,7 +215,7 @@ export function ConsultationBooking() {
               <button className="relative w-full h-[46px] rounded-full group outline-none">
                 {/* Shadow overlay matching the spec */}
                 <div className="absolute inset-0 bg-[#FFFFFF01] rounded-[56px] shadow-[0px_2.25px_4.5px_-2.25px_rgba(0,0,0,0.1),0px_4.5px_6.75px_-1.13px_rgba(0,0,0,0.1)] pointer-events-none" />
-                <div className="absolute inset-0 bg-[#CB485E] group-hover:bg-[#a83647] transition-colors rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
+                <div className="absolute inset-0 bg-[#CB485E] rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
                   <div className="flex items-center justify-center">
                     <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center">Confirm Appointment</span>
                     <div className="pl-[9px] flex items-center justify-center">
@@ -229,6 +232,8 @@ export function ConsultationBooking() {
                 </span>
               </div>
             </div>
+            
+            </div> {/* End of Date and Time & Below Wrapped in Border for Mobile */}
 
           </div>
 

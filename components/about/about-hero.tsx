@@ -12,11 +12,11 @@ export function AboutHero() {
 
 
       {/* Main Container */}
-      <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 md:px-0 pt-12 md:pt-[60px] pb-6 md:pb-[30px] flex flex-col lg:flex-row items-center gap-8 lg:gap-[60px]">
+      <div className="relative z-10 w-full max-w-[1240px] mx-auto px-4 md:px-0 pt-6 md:pt-[60px] pb-6 md:pb-[30px] flex flex-col lg:flex-row items-center gap-8 lg:gap-[60px]">
         {/* Left Content */}
         <div className="w-full lg:w-[590px] flex flex-col pr-0 lg:pr-[25px]">
           {/* Mobile Breadcrumb */}
-          <div className="flex md:hidden items-center gap-[6px] mb-[20px]">
+          <div className="flex md:hidden items-center gap-[6px] mb-[12px]">
             <span className="font-sans font-normal text-[12px] text-[#757575]">Home</span>
             <span className="font-sans font-normal text-[10px] text-[#CB485E]">{'>'}</span>
             <span className="font-sans font-normal text-[12px] text-[#757575]">About Us</span>
@@ -32,7 +32,7 @@ export function AboutHero() {
 
           {/* Heading */}
           <h1 className="font-serif font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[40px] text-[#454545] mb-[21px]">
-            Where Every <span className="text-[#CB485E] italic">Diamond</span> Tells a
+            Where Every <span className="text-[#CB485E]">Diamond</span> Tells a
             <br className="hidden md:block" /> Story
           </h1>
 
@@ -87,7 +87,7 @@ export function AboutHero() {
           </div>
 
           {/* Patrons Section - Mobile */}
-          <div className="flex md:hidden items-center gap-[12px] border-[1.05px] border-[#FCE9EC] rounded-[16px] px-[14px] py-[10px] w-max bg-[#FFF9FA]/50 mt-[5px]">
+          <div className="flex md:hidden items-center gap-[12px] border border-[#FFE4E699] rounded-[16px] px-[14px] py-[10px] w-max bg-[#FFF1F266] mt-[5px]">
             {/* Avatars */}
             <div className="flex items-center -space-x-[6px]">
               <div className="w-[28px] h-[28px] rounded-full bg-[#CB485E] flex items-center justify-center border-[1.5px] border-white relative z-[4]">
@@ -115,7 +115,7 @@ export function AboutHero() {
         <div className="w-full lg:w-[590px] relative pb-[8px]">
           {/* Image container with border and shadow */}
           <div
-            className="relative w-full aspect-[590/462] rounded-[25px] overflow-hidden border-[4px] border-white"
+            className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full aspect-[590/462] rounded-[20px] md:rounded-[25px] overflow-hidden border-[4px] border-white"
             style={{
               boxShadow: "0px 21.1px 47.47px -15.82px #C96F911F",
             }}

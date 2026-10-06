@@ -65,14 +65,14 @@ export function CollectionPhilosophy() {
         </div>
 
         {/* Collection Cards Grid */}
-        <div className="w-full flex flex-row overflow-x-auto snap-x snap-mandatory md:flex-row items-stretch md:justify-center gap-[16px] md:gap-[33px] pt-[8px] pb-4 md:pb-0 hide-scrollbar">
+        <div className="w-[calc(100%+32px)] -mx-4 px-4 md:w-full md:mx-0 flex flex-row overflow-x-auto snap-x snap-mandatory md:flex-row items-stretch md:justify-center gap-[12px] md:gap-[33px] pt-[8px] pb-4 md:pb-0 hide-scrollbar">
           {collections.map((item) => (
             <div 
               key={item.title}
-              className="w-[260px] md:w-auto md:flex-1 snap-center shrink-0 bg-[#FFFDFC] md:bg-[#FCF9F8] border-[1.05px] border-[#F3E5EC] rounded-[16px] md:rounded-[25px] p-0 md:p-[25px] flex flex-col"
+              className="w-[72vw] min-w-[260px] md:min-w-0 md:w-auto md:flex-1 snap-center shrink-0 bg-[#FFFDFC] md:bg-[#FCF9F8] border-[1.05px] border-[#F3E5EC] rounded-[16px] md:rounded-[25px] p-0 md:p-[25px] flex flex-col"
             >
               {/* Image Box */}
-              <div className="relative w-full aspect-[352/337] rounded-t-[16px] md:rounded-[16.88px] overflow-hidden bg-[#FFFDFC] mb-0 md:mb-[25px]">
+              <div className="relative w-full aspect-[4/3] md:aspect-[352/337] rounded-t-[16px] md:rounded-[16.88px] overflow-hidden bg-[#FFFDFC] mb-0 md:mb-[25px]">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -83,13 +83,13 @@ export function CollectionPhilosophy() {
                 
                 {/* Badge */}
                 <div 
-                  className="absolute top-[12px] right-[12px] md:top-[12px] md:right-[12px] py-[4px] px-[8px] md:px-[10px] rounded-[6px] md:rounded-full z-10"
+                  className="absolute top-[12px] right-[12px] py-[2px] px-[6px] md:py-[4px] md:px-[10px] rounded-[4px] md:rounded-full z-10 flex items-center justify-center"
                   style={{
                     background: "#000000B3",
                     backdropFilter: "blur(4.22px)"
                   }}
                 >
-                  <span className="font-sans font-semibold text-[9px] md:text-[10.55px] leading-[15.82px] tracking-[0.53px] uppercase text-white">
+                  <span className="font-sans font-semibold text-[9px] md:text-[10.55px] leading-none md:leading-[15.82px] tracking-[0.53px] uppercase text-white mt-[1px] md:mt-0">
                     {item.badge}
                   </span>
                 </div>
@@ -97,20 +97,20 @@ export function CollectionPhilosophy() {
 
               {/* Text Content */}
               <div className="flex flex-col items-center flex-1 p-[20px] md:p-0">
-                <h3 className="font-serif font-medium md:font-bold text-[24px] leading-[33.76px] tracking-[-0.25px] text-[#3B2A30] text-center mb-[4px] md:mb-[8px]">
+                <h3 className="font-serif font-bold md:font-bold text-[20px] md:text-[24px] leading-[26px] md:leading-[33.76px] tracking-[-0.25px] text-[#111827] md:text-[#3B2A30] text-center mb-[8px] md:mb-[8px]">
                   {item.title}
                 </h3>
-                <p className="font-sans font-light md:font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#806A72] text-center max-w-[315px] mb-[16px] flex-1">
+                <p className="font-sans font-light md:font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#6B7280] md:text-[#806A72] text-center max-w-[315px] mb-[16px] flex-1">
                   {item.description}
                 </p>
                 <Link 
                   href={item.linkUrl}
-                  className="inline-flex items-center gap-[4px] group"
+                  className="inline-flex items-center gap-[4px] group pb-[4px] md:pb-0"
                 >
-                  <span className="font-sans font-semibold text-[14px] leading-[16.88px] tracking-[1.27px] uppercase text-[#CB485E]">
+                  <span className="font-sans font-bold md:font-semibold text-[12px] md:text-[14px] leading-[16.88px] tracking-[1.27px] uppercase text-[#CB485E]">
                     {item.linkText}
                   </span>
-                  <span className="font-sans font-semibold text-[16px] leading-[16.88px] tracking-[1.27px] uppercase text-[#C96F91] transition-transform group-hover:translate-x-1">
+                  <span className="font-sans font-bold md:font-semibold text-[13px] md:text-[16px] leading-[16.88px] tracking-[1.27px] uppercase text-[#CB485E] md:text-[#C96F91] transition-transform group-hover:translate-x-1">
                     →
                   </span>
                 </Link>
