@@ -8,13 +8,13 @@ export function ArtOfCraftsmanship() {
         {/* Text */}
         <div className="flex flex-col">
           <div className="flex items-center gap-[8px] mb-[12px]">
-            <div className="w-[34px] h-[1px] bg-[#CB485E]" />
-            <span className="font-sans font-bold text-[9px] tracking-[2.5px] uppercase text-[#CB485E]">
+            <div className="w-[34px] h-[1px] bg-[#214E34]" />
+            <span className="font-sans font-bold text-[9px] tracking-[2.5px] uppercase text-[#214E34]">
               THE ATELIER PROCESS
             </span>
           </div>
           <h2 className="font-serif font-medium text-[26px] leading-[30px] tracking-[-0.38px] text-[#111827] mb-[10px]">
-            The Art Behind <span className="text-[#CB485E] italic">Every Sparkle</span>
+            The Art Behind <span className="text-[#214E34] italic">Every Sparkle</span>
           </h2>
           <p className="font-sans font-light text-[13px] leading-[18px] text-[#757575] max-w-[290px]">
             Behind every Miraya Diamonds creation is precision, imagination, and patience.
@@ -33,8 +33,8 @@ export function ArtOfCraftsmanship() {
 
         {/* Stats */}
         <div className="grid grid-cols-2 gap-[12px]">
-          <div className="bg-[#FFFDFC] border-[1px] border-[#FCE9EC] rounded-[16px] p-[16px] flex flex-col shadow-sm">
-            <span className="font-serif font-bold text-[22px] leading-[26px] text-[#CB485E] mb-[4px]">
+          <div className="bg-[#FFFDFC] border-[1px] border-[#E7FFE6] rounded-[16px] p-[16px] flex flex-col shadow-sm">
+            <span className="font-serif font-bold text-[22px] leading-[26px] text-[#214E34] mb-[4px]">
               34+ Hrs
             </span>
             <span className="font-sans font-medium text-[12px] leading-[14px] text-[#3B2A30] mb-[2px]">
@@ -44,8 +44,8 @@ export function ArtOfCraftsmanship() {
               Per bespoke solitaire
             </span>
           </div>
-          <div className="bg-[#FFFDFC] border-[1px] border-[#FCE9EC] rounded-[16px] p-[16px] flex flex-col shadow-sm">
-            <span className="font-serif font-bold text-[22px] leading-[26px] text-[#CB485E] mb-[4px]">
+          <div className="bg-[#FFFDFC] border-[1px] border-[#E7FFE6] rounded-[16px] p-[16px] flex flex-col shadow-sm">
+            <span className="font-serif font-bold text-[22px] leading-[26px] text-[#214E34] mb-[4px]">
               100%
             </span>
             <span className="font-sans font-medium text-[12px] leading-[14px] text-[#3B2A30] mb-[2px]">
@@ -101,7 +101,7 @@ export function ArtOfCraftsmanship() {
               boxShadow: "0px 21.1px 47.47px -15.82px #C96F911F"
             }}
           >
-            <div className="w-[8.44px] h-[8.44px] rounded-full bg-[#CB485E]" />
+            <div className="w-[8.44px] h-[8.44px] rounded-full bg-[#214E34]" />
             <span className="font-sans font-semibold text-[12.66px] leading-[16.88px] tracking-[0.63px] text-[#3B2A30]">
               Zero-Tolerance Setting Precision
             </span>
@@ -114,15 +114,15 @@ export function ArtOfCraftsmanship() {
           
           {/* Label */}
           <div className="flex items-center gap-[8px] mb-[21px]">
-            <div className="w-[34px] h-[1px] bg-[#CB485E]" />
-            <span className="font-sans font-semibold text-[12.66px] leading-[16.88px] tracking-[3.16px] uppercase text-[#CB485E]">
+            <div className="w-[34px] h-[1px] bg-[#214E34]" />
+            <span className="font-sans font-semibold text-[12.66px] leading-[16.88px] tracking-[3.16px] uppercase text-[#214E34]">
               THE ATELIER PROCESS
             </span>
           </div>
 
           {/* Heading */}
           <h2 className="font-serif font-semibold text-[40px] leading-[42.2px] tracking-[-0.38px] text-[#454545] mb-[24px]">
-            The Art Behind <span className="text-[#CB485E]">Every Sparkle</span>
+            The Art Behind <span className="text-[#214E34]">Every Sparkle</span>
           </h2>
 
           {/* Description */}
@@ -142,7 +142,7 @@ export function ArtOfCraftsmanship() {
               className="flex-1 bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] rounded-[16.88px] p-[21.1px] flex flex-col"
               style={{ boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D" }}
             >
-              <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#CB485E] mb-[6px]">
+              <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#214E34] mb-[6px]">
                 34+ Hrs
               </span>
               <span className="font-sans font-medium text-[14px] leading-[16.88px] text-[#3B2A30] mb-[2px]">
@@ -158,7 +158,7 @@ export function ArtOfCraftsmanship() {
               className="flex-1 bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] rounded-[16.88px] p-[21.1px] flex flex-col"
               style={{ boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D" }}
             >
-              <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#CB485E] mb-[6px]">
+              <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#214E34] mb-[6px]">
                 100%
               </span>
               <span className="font-sans font-medium text-[14px] leading-[16.88px] text-[#3B2A30] mb-[2px]">

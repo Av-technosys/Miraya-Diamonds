@@ -30,7 +30,7 @@ const cards = [
 
 export function TrustAndCredibility() {
   return (
-    <section className="w-full bg-[#FFFDFC] border-t-[1.05px] border-b-[1.05px] border-[#FCE9EC] pt-[20px] md:pt-[40px] pb-[20px] md:pb-[60px]">
+    <section className="w-full bg-[#FFFDFC] border-t-[1.05px] border-b-[1.05px] border-[#E7FFE6] pt-[20px] md:pt-[40px] pb-[20px] md:pb-[60px]">
       <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 flex flex-col gap-[24px] md:gap-[30px]">
         
         {/* Header */}
@@ -67,7 +67,7 @@ export function TrustAndCredibility() {
 
                 {/* Content */}
                 <div className="flex flex-col pt-[16px] px-[16px] md:px-[4px]">
-                  <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[20px] tracking-[0.35px] text-[#CB485E] mb-[4px] md:mb-[2px]">
+                  <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[20px] tracking-[0.35px] text-[#214E34] mb-[4px] md:mb-[2px]">
                     {card.num}
                   </span>
                   <h3 className="font-serif font-medium md:font-semibold text-[22px] md:text-[24px] leading-[26px] md:leading-[33px] text-[#111827] md:text-[#454545] mb-[6px] md:mb-[4px]">
@@ -82,15 +82,15 @@ export function TrustAndCredibility() {
               {/* Card Footer */}
               <div className="w-full flex items-center justify-between mt-[16px] md:mt-[24px] pb-[16px] md:pb-0 pt-0 md:pt-[14px] px-[16px] md:px-[4px]">
                 <Link href="#" className="flex items-center gap-[6px]">
-                  <span className="font-sans font-semibold text-[11px] leading-[16.5px] tracking-[1.76px] uppercase text-[#CB485E]">
+                  <span className="font-sans font-semibold text-[11px] leading-[16.5px] tracking-[1.76px] uppercase text-[#214E34]">
                     LEARN MORE
                   </span>
-                  <span className="font-sans font-bold text-[11px] leading-[16.5px] tracking-[1.76px] uppercase text-[#CB485E]">
+                  <span className="font-sans font-bold text-[11px] leading-[16.5px] tracking-[1.76px] uppercase text-[#214E34]">
                     →
                   </span>
                 </Link>
                 
-                <div className="w-[36px] h-[36px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+                <div className="w-[36px] h-[36px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
                   <svg 
                     width="12" 
                     height="10" 
@@ -99,7 +99,7 @@ export function TrustAndCredibility() {
                     xmlns="http://www.w3.org/2000/svg"
                     className="ml-[2px]"
                   >
-                    <path d="M1 5H11M11 5L7 1M11 5L7 9" stroke="#CB485E" strokeWidth="1.17" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M1 5H11M11 5L7 1M11 5L7 9" stroke="#214E34" strokeWidth="1.17" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
               </div>

@@ -35,7 +35,7 @@ export default function SavedAddressPage() {
             <h1 className="font-serif text-[24px] font-bold leading-none text-[#3F3A39] md:text-[28px]">
               Saved Addresses
             </h1>
-            <span className="rounded-full bg-[#FCE3E8] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[#CB485E]">
+            <span className="rounded-full bg-[#FCE3E8] px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-[#214E34]">
               2 Destinations
             </span>
           </div>
@@ -46,7 +46,7 @@ export default function SavedAddressPage() {
 
         <Link
           href="/dashboard/address/new"
-          className="mt-4 flex h-10 items-center justify-center gap-2 rounded-full bg-[#CB485E] px-5 text-[12px] font-semibold text-white shadow-sm md:mt-0"
+          className="mt-4 flex h-10 items-center justify-center gap-2 rounded-full bg-[#214E34] px-5 text-[12px] font-semibold text-white shadow-sm md:mt-0"
         >
           <Plus size={15} />
           Add New Addresses
@@ -64,18 +64,18 @@ export default function SavedAddressPage() {
             >
               <div className="flex flex-wrap items-center justify-between gap-3">
                 {address.default ? (
-                  <span className="flex h-7 items-center gap-1.5 rounded-full bg-[#CB485E] px-3 text-[11px] font-bold text-white">
+                  <span className="flex h-7 items-center gap-1.5 rounded-full bg-[#214E34] px-3 text-[11px] font-bold text-white">
                     <CheckCircle2 size={12} />
                     Default
                   </span>
                 ) : (
-                  <span className="flex h-7 items-center gap-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-[#CB485E]">
-                    <span className="h-2.5 w-2.5 rounded-full border border-[#CB485E]" />
+                  <span className="flex h-7 items-center gap-1.5 rounded-full text-[11px] font-bold uppercase tracking-wide text-[#214E34]">
+                    <span className="h-2.5 w-2.5 rounded-full border border-[#214E34]" />
                     Set as Default
                   </span>
                 )}
 
-                <span className="flex h-7 items-center gap-1.5 rounded-full bg-[#FFF0F2] px-3 text-[11px] font-bold uppercase text-[#CB485E]">
+                <span className="flex h-7 items-center gap-1.5 rounded-full bg-[#FFF0F2] px-3 text-[11px] font-bold uppercase text-[#214E34]">
                   <Icon size={12} />
                   {address.type}
                 </span>
@@ -103,7 +103,7 @@ export default function SavedAddressPage() {
                 <div className="flex flex-col gap-4 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between">
                   <span className="text-[12px] text-[#807777]">{address.mode}</span>
                   <div className="grid grid-cols-2 gap-2 min-[420px]:flex">
-                    <button className="flex h-8 items-center justify-center gap-2 rounded-full bg-[#FFF0F2] px-4 text-[12px] font-semibold text-[#CB485E] shadow-sm">
+                    <button className="flex h-8 items-center justify-center gap-2 rounded-full bg-[#FFF0F2] px-4 text-[12px] font-semibold text-[#214E34] shadow-sm">
                       <Edit3 size={12} />
                       Edit
                     </button>

@@ -18,7 +18,7 @@ export function AccountSidebar() {
   return (
     <div className="w-full shrink-0 flex flex-col gap-4 lg:max-w-[280px] lg:gap-6">
       {/* User Card */}
-      <div className="w-full bg-gradient-to-br from-[#CB485E] to-[#FF9193] rounded-lg p-4 text-[#FFC7CC] shadow-sm relative overflow-hidden lg:rounded-2xl lg:p-6">
+      <div className="w-full bg-gradient-to-br from-[#214E34] to-[#FF9193] rounded-lg p-4 text-[#FFC7CC] shadow-sm relative overflow-hidden lg:rounded-2xl lg:p-6">
         <div className="absolute right-4 top-4 h-[22px] w-[38px] opacity-70">
           <Image
             src="/Images/starsProfile.png"
@@ -49,7 +49,7 @@ export function AccountSidebar() {
                 href={item.href}
                 className={`flex min-h-[72px] flex-col items-center justify-center gap-2 rounded-xl border px-1 py-2.5 text-center text-[11px] font-medium leading-[12px] shadow-[0_3px_12px_rgba(0,0,0,0.08)] transition-colors min-[380px]:min-h-[78px] min-[380px]:px-1.5 min-[380px]:py-3 min-[380px]:text-[12px] min-[380px]:leading-[13px] lg:min-h-0 lg:flex-row lg:justify-start lg:gap-3 lg:rounded-xl lg:border-0 lg:px-4 lg:py-2.5 lg:text-left lg:text-[15px] lg:leading-normal lg:shadow-none ${
                   isActive 
-                    ? "border-[#FFC7CC] bg-[#FFF0F2] text-[#CB485E]" 
+                    ? "border-[#FFC7CC] bg-[#FFF0F2] text-[#214E34]" 
                     : "border-white bg-white text-[#3F3A3A] hover:bg-gray-50 lg:border-0 lg:bg-transparent lg:text-gray-500"
                 }`}
               >

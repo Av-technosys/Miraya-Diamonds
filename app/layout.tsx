@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Infant, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
+import { Inter, Cormorant_Garamond, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/common/header";
 import { ConditionalFooter } from "@/components/common/conditional-footer";
@@ -12,7 +12,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const cormorantGaramond = Cormorant_Infant({
+const cormorantGaramond = Cormorant_Garamond({
   variable: "--font-cormorant-garamond",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],

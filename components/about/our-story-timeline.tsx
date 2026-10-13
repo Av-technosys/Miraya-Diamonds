@@ -16,15 +16,15 @@ export function OurStoryAndTimeline() {
         <div className="w-full lg:w-[598px] flex flex-col gap-[21px]">
           {/* Label */}
           <div className="flex items-center gap-[8px]">
-            <div className="w-[34px] h-[1px] bg-[#CB485E]" />
-            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#CB485E]">
+            <div className="w-[34px] h-[1px] bg-[#214E34]" />
+            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#214E34]">
               ORIGIN &amp; HERITAGE
             </span>
           </div>
 
           {/* Heading */}
           <h2 className="font-serif font-bold text-[32px] md:text-[40px] leading-[42.2px] text-[#454545]">
-            The Story Behind <span className="text-[#CB485E]">Miraya</span>
+            The Story Behind <span className="text-[#214E34]">Miraya</span>
           </h2>
 
           {/* Mobile Description */}
@@ -62,7 +62,7 @@ export function OurStoryAndTimeline() {
                     boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D",
                   }}
                 >
-                  <span className="font-serif font-bold text-[18px] md:text-[20px] leading-[1] md:leading-[17px] text-[#CB485E] text-center">
+                  <span className="font-serif font-bold text-[18px] md:text-[20px] leading-[1] md:leading-[17px] text-[#214E34] text-center">
                     {step.num}
                   </span>
                   <div className="pt-[4px] md:pt-[2px]">
@@ -70,7 +70,7 @@ export function OurStoryAndTimeline() {
                       {step.title}
                     </span>
                   </div>
-                  <span className={`font-sans text-[9px] md:text-[12px] leading-[14px] md:leading-[16px] text-[#CB485E] text-center ${step.highlighted ? "font-medium" : "font-normal"} mt-1 md:mt-0`}>
+                  <span className={`font-sans text-[9px] md:text-[12px] leading-[14px] md:leading-[16px] text-[#214E34] text-center ${step.highlighted ? "font-medium" : "font-normal"} mt-1 md:mt-0`}>
                     {step.sub}
                   </span>
                 </div>
@@ -82,7 +82,7 @@ export function OurStoryAndTimeline() {
         {/* Right Image */}
         <div className="w-full lg:w-[582px] relative pb-[25px]">
           {/* Image with border */}
-          <div className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full aspect-[582/489] rounded-[20px] md:rounded-[12px] overflow-hidden border-[1.05px] border-[#FCE9EC]">
+          <div className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full aspect-[582/489] rounded-[20px] md:rounded-[12px] overflow-hidden border-[1.05px] border-[#E7FFE6]">
             {/* Mobile Image */}
             <Image
               src="/about/intro.jpg"
@@ -105,7 +105,7 @@ export function OurStoryAndTimeline() {
           <div
             className="md:hidden absolute -bottom-[15px] right-[10px] flex flex-col items-center justify-center w-[84px] h-[84px] rounded-full bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] z-20 shadow-sm"
           >
-            <span className="text-[19px] leading-[29.5px] text-[#CB485E]">✨</span>
+            <span className="text-[19px] leading-[29.5px] text-[#214E34]">✨</span>
             <span className="font-sans font-semibold text-[8.44px] leading-[12.66px] tracking-[0.84px] uppercase text-[#3B2A30]">
               High-end
             </span>
@@ -113,7 +113,7 @@ export function OurStoryAndTimeline() {
 
           {/* Floating card - HANDMADE IN INDIA - Desktop only */}
           <div
-            className="hidden md:flex absolute bottom-0 right-[16px] items-center gap-[12.66px] p-[17px] rounded-[17px] border-[1.05px] border-[#FCE9EC] max-w-[264px] z-20"
+            className="hidden md:flex absolute bottom-0 right-[16px] items-center gap-[12.66px] p-[17px] rounded-[17px] border-[1.05px] border-[#E7FFE6] max-w-[264px] z-20"
             style={{
               background: "#FFFDFCD1",
               backdropFilter: "blur(14.77px)",
@@ -121,7 +121,7 @@ export function OurStoryAndTimeline() {
             }}
           >
             {/* Tick icon circle */}
-            <div className="w-[34px] h-[34px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+            <div className="w-[34px] h-[34px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
               <svg
                 width="13"
                 height="13"
@@ -131,7 +131,7 @@ export function OurStoryAndTimeline() {
               >
                 <path
                   d="M2 6.5L5.5 10L11 3"
-                  stroke="#CB485E"
+                  stroke="#214E34"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

@@ -23,7 +23,7 @@ export function BrandIntroduction() {
           <div
             className="absolute -bottom-[25px] right-[20px] md:right-[40px] flex flex-col items-center justify-center w-[84px] h-[84px] rounded-full bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] z-20 shadow-sm"
           >
-            <span className="text-[19px] leading-[29.5px] text-[#CB485E]">✨</span>
+            <span className="text-[19px] leading-[29.5px] text-[#214E34]">✨</span>
             <span className="font-sans font-semibold text-[8.44px] leading-[12.66px] tracking-[0.84px] uppercase text-[#3B2A30]">
               High-end
             </span>
@@ -34,15 +34,15 @@ export function BrandIntroduction() {
         <div className="w-full lg:w-[590px] flex flex-col pt-0 lg:pt-[9px]">
           {/* Label */}
           <div className="flex items-center gap-[8px] mb-[21px]">
-            <div className="w-[34px] h-[1px] bg-[#CB485E]" />
-            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#CB485E]">
+            <div className="w-[34px] h-[1px] bg-[#214E34]" />
+            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#214E34]">
               THE MIRAYA ESSENCE
             </span>
           </div>
 
           {/* Heading */}
           <h2 className="font-serif font-bold text-[28px] md:text-[40px] leading-[1.2] md:leading-[42.2px] text-[#454545] mb-[16px] md:mb-[24px]">
-            More Than Jewellery. <span className="text-[#CB485E] italic">A Reflection of You.</span>
+            More Than Jewellery. <span className="text-[#214E34] italic">A Reflection of You.</span>
           </h2>
 
           {/* Mobile Description */}
@@ -56,11 +56,11 @@ export function BrandIntroduction() {
           </p>
 
           {/* Quote Box - Mobile */}
-          <div className="md:hidden w-full bg-[#FCF5F7] border-l-[2px] border-[#CB485E] rounded-r-[12px] p-[20px] flex flex-col gap-[12px] mb-[30px]">
+          <div className="md:hidden w-full bg-[#FCF5F7] border-l-[2px] border-[#214E34] rounded-r-[12px] p-[20px] flex flex-col gap-[12px] mb-[30px]">
             <p className="font-serif font-normal italic text-[14px] leading-[18px] text-[#454545]">
               &quot;Diamonds are nature&apos;s most enduring poetry, sculpted to reflect the subtle brilliance of the woman who wears them.&quot;
             </p>
-            <span className="font-sans font-bold text-[10px] tracking-[1.2px] uppercase text-[#CB485E]">
+            <span className="font-sans font-bold text-[10px] tracking-[1.2px] uppercase text-[#214E34]">
               — MIRAYA DESIGN ARTIST
             </span>
           </div>
@@ -70,22 +70,22 @@ export function BrandIntroduction() {
             <p className="font-serif font-medium italic text-[16px] leading-[20px] text-[#454545]">
               &quot;Diamonds are nature&apos;s most enduring poetry. Our joy lies in sculpting them to reflect the subtle brilliance of the woman who wears them.&quot;
             </p>
-            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#CB485E]">
+            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#214E34]">
               — MIRAYA DESIGN ARTIST
             </span>
           </div>
 
           {/* Stats - Mobile */}
           <div className="flex md:hidden flex-row items-stretch justify-between gap-[10px] mb-[20px]">
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+            <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
               <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">100%</span>
               <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Conflict-Free</span>
             </div>
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+            <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
               <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">18KT & PT</span>
               <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Precious Metals</span>
             </div>
-            <div className="flex-1 bg-white border-[1px] border-[#FCE9EC] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
+            <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
               <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Lifetime</span>
               <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Warranty</span>
             </div>

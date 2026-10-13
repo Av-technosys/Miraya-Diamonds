@@ -4,11 +4,11 @@ export function FinalCTA() {
   return (
     <section className="w-full bg-white md:bg-[#FBEFF3]/70 py-[30px] md:py-[60px] px-[12px] md:px-[216px] flex items-center justify-center">
       <div 
-        className="w-full max-w-[1003px] bg-[#FFF1F266] md:bg-[#FFFDFC] border-[1px] border-[#FFE4E6] md:border-[#FCE9EC] md:border-[1.05px] rounded-[16px] md:rounded-[25.32px] flex flex-col items-center text-center pt-[30px] md:pt-[73px] pb-[30px] md:pb-[67px] px-[16px] md:px-[67px]"
+        className="w-full max-w-[1003px] bg-[#FFF1F266] md:bg-[#FFFDFC] border-[1px] border-[#FFE4E6] md:border-[#E7FFE6] md:border-[1.05px] rounded-[16px] md:rounded-[25.32px] flex flex-col items-center text-center pt-[30px] md:pt-[73px] pb-[30px] md:pb-[67px] px-[16px] md:px-[67px]"
         style={{ boxShadow: "0px 21.1px 47.47px -15.82px rgba(201, 111, 145, 0.12)" }}
       >
         {/* Label */}
-        <span className="font-sans font-medium text-[10px] md:text-[12.66px] leading-[16.88px] tracking-[2px] md:tracking-[3.16px] uppercase text-[#CB485E] mb-[8px]">
+        <span className="font-sans font-medium text-[10px] md:text-[12.66px] leading-[16.88px] tracking-[2px] md:tracking-[3.16px] uppercase text-[#214E34] mb-[8px]">
           YOUR JOURNEY BEGINS HERE
         </span>
         
@@ -25,8 +25,8 @@ export function FinalCTA() {
         {/* Buttons */}
         <div className="flex flex-row items-center justify-center gap-[8px] md:gap-[16.88px] pt-[2px] md:pt-[16px] w-full max-w-[340px] md:max-w-none">
           <Link
-            href="/collections"
-            className="flex-1 md:flex-none inline-flex items-center justify-center rounded-full bg-[#CB485E] text-white py-[12px] md:py-[16.88px] px-[10px] md:px-[33.76px]"
+            href="/collection"
+            className="flex-1 md:flex-none inline-flex items-center justify-center rounded-full bg-[#214E34] text-white py-[12px] md:py-[16.88px] px-[10px] md:px-[33.76px]"
             style={{ boxShadow: "0px 21.1px 47.47px -15.82px rgba(201, 111, 145, 0.12)" }}
           >
             <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[16.88px] whitespace-nowrap">

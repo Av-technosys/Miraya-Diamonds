@@ -37,12 +37,12 @@ export function CollectionPhilosophy() {
         <div className="flex md:hidden w-full flex-col mb-0">
           <div className="flex items-center justify-between w-full mb-[6px]">
             <div className="flex items-center gap-[6px]">
-              <div className="w-[20px] h-[1px] bg-[#CB485E]" />
-              <span className="font-sans font-bold text-[9px] tracking-[1.5px] uppercase text-[#CB485E]">
+              <div className="w-[20px] h-[1px] bg-[#214E34]" />
+              <span className="font-sans font-bold text-[9px] tracking-[1.5px] uppercase text-[#214E34]">
                 CURATED COLLECTIONS
               </span>
             </div>
-            <Link href="/collections" className="font-sans font-bold text-[9px] uppercase text-[#CB485E]">
+            <Link href="/collection" className="font-sans font-bold text-[9px] uppercase text-[#214E34]">
               VIEW ALL →
             </Link>
           </div>
@@ -107,10 +107,10 @@ export function CollectionPhilosophy() {
                   href={item.linkUrl}
                   className="inline-flex items-center gap-[4px] group pb-[4px] md:pb-0"
                 >
-                  <span className="font-sans font-bold md:font-semibold text-[12px] md:text-[14px] leading-[16.88px] tracking-[1.27px] uppercase text-[#CB485E]">
+                  <span className="font-sans font-bold md:font-semibold text-[12px] md:text-[14px] leading-[16.88px] tracking-[1.27px] uppercase text-[#214E34]">
                     {item.linkText}
                   </span>
-                  <span className="font-sans font-bold md:font-semibold text-[13px] md:text-[16px] leading-[16.88px] tracking-[1.27px] uppercase text-[#CB485E] md:text-[#C96F91] transition-transform group-hover:translate-x-1">
+                  <span className="font-sans font-bold md:font-semibold text-[13px] md:text-[16px] leading-[16.88px] tracking-[1.27px] uppercase text-[#214E34] md:text-[#C96F91] transition-transform group-hover:translate-x-1">
                     →
                   </span>
                 </Link>
@@ -122,8 +122,8 @@ export function CollectionPhilosophy() {
         {/* Explore All Button - Desktop Only (Mobile has View All in Header) */}
         <div className="hidden md:flex w-full justify-center mt-[10px]">
           <Link
-            href="/collections"
-            className="inline-flex items-center gap-[10px] py-[16px] px-[24px] rounded-full bg-[#CB485E] shadow-sm"
+            href="/collection"
+            className="inline-flex items-center gap-[10px] py-[16px] px-[24px] rounded-full bg-[#214E34] shadow-sm"
           >
             <span className="font-sans font-semibold text-[14px] leading-[16px] text-white">
               Explore All Collection

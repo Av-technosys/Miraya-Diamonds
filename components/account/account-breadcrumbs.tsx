@@ -23,17 +23,17 @@ export function AccountBreadcrumbs() {
         <Link href="/" className="transition-colors hover:text-gray-800">
           Home
         </Link>
-        <ChevronRight size={12} className="text-[#CB485E] md:size-3.5" />
+        <ChevronRight size={12} className="text-[#214E34] md:size-3.5" />
         <Link href="/dashboard" className="transition-colors hover:text-gray-800">
           My Account
         </Link>
-        <ChevronRight size={12} className="text-[#CB485E] md:size-3.5" />
+        <ChevronRight size={12} className="text-[#214E34] md:size-3.5" />
         {pathname === "/dashboard/address/new" ? (
           <>
             <Link href="/dashboard/address" className="transition-colors hover:text-gray-800">
               Saved Address
             </Link>
-            <ChevronRight size={12} className="text-[#CB485E] md:size-3.5" />
+            <ChevronRight size={12} className="text-[#214E34] md:size-3.5" />
           </>
         ) : null}
         <span className="font-medium text-gray-800">{currentLabel}</span>

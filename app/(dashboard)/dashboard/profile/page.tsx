@@ -12,7 +12,7 @@ export default function ProfilePage() {
           <h1 className="font-serif text-[24px] font-medium leading-none text-[#3F3A39] md:text-[28px]">
             My Profile
           </h1>
-          <button className="flex h-8 items-center gap-2 rounded-full bg-[#F7F4F1] px-4 text-[12px] font-semibold text-[#CB485E]">
+          <button className="flex h-8 items-center gap-2 rounded-full bg-[#F7F4F1] px-4 text-[12px] font-semibold text-[#214E34]">
             <Edit3 size={13} />
             Edit
           </button>
@@ -27,7 +27,7 @@ export default function ProfilePage() {
           <label className="flex flex-col gap-2">
             <span className="text-[12px] font-medium text-[#454545]">Phone Number*</span>
             <div className="grid grid-cols-[78px_1fr] gap-2 min-[380px]:grid-cols-[92px_1fr]">
-              <div className="flex h-11 items-center justify-center gap-1.5 rounded-lg bg-[#F4F2EF] px-2 text-[12px] text-[#CB485E] shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)] min-[380px]:gap-2 min-[380px]:px-3 min-[380px]:text-[13px]">
+              <div className="flex h-11 items-center justify-center gap-1.5 rounded-lg bg-[#F4F2EF] px-2 text-[12px] text-[#214E34] shadow-[inset_0_1px_3px_rgba(0,0,0,0.06)] min-[380px]:gap-2 min-[380px]:px-3 min-[380px]:text-[13px]">
                 <span className="text-[12px]">🇮🇳</span>
                 <span>(+91)</span>
               </div>
@@ -59,12 +59,12 @@ export default function ProfilePage() {
                 <button
                   key={gender}
                   className={`flex h-11 items-center justify-center gap-1.5 rounded-lg text-[12px] font-medium min-[380px]:gap-2 min-[380px]:text-[13px] ${
-                    index === 0 ? "bg-[#FFE4E8] text-[#CB485E]" : "bg-[#FBE3E8] text-[#CB485E]/80"
+                    index === 0 ? "bg-[#FFE4E8] text-[#214E34]" : "bg-[#FBE3E8] text-[#214E34]/80"
                   }`}
                 >
                   <span
                     className={`flex h-3.5 w-3.5 items-center justify-center rounded-full ${
-                      index === 0 ? "bg-[#CB485E]" : "bg-white"
+                      index === 0 ? "bg-[#214E34]" : "bg-white"
                     }`}
                   >
                     {index === 0 ? <span className="h-1.5 w-1.5 rounded-full bg-white" /> : null}
@@ -111,7 +111,7 @@ export default function ProfilePage() {
           </label>
         </div>
 
-        <button className="mt-7 h-11 rounded-full bg-[#CB485E] px-9 text-[13px] font-semibold text-white shadow-[0_8px_16px_rgba(203,72,94,0.22)]">
+        <button className="mt-7 h-11 rounded-full bg-[#214E34] px-9 text-[13px] font-semibold text-white shadow-[0_8px_16px_rgba(203,72,94,0.22)]">
           Save Special Date
         </button>
       </section>
@@ -120,7 +120,7 @@ export default function ProfilePage() {
         <button className="h-11 rounded-full bg-white px-7 text-[13px] font-semibold text-[#454545] shadow-sm">
           Discard Changes
         </button>
-        <button className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#CB485E] px-8 text-[13px] font-semibold text-white shadow-sm">
+        <button className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#214E34] px-8 text-[13px] font-semibold text-white shadow-sm">
           <Check size={14} />
           Save Changes
         </button>

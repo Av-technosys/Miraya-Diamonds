@@ -9,7 +9,7 @@ export function ConsultationBooking() {
   const [category, setCategory] = useState<"engagement" | "bridal" | "custom" | "gifting">("engagement");
 
   return (
-    <section className="w-full bg-white py-[60px] px-4 md:px-[100px]">
+    <section id="consultation-booking" className="w-full bg-white py-[60px] px-4 md:px-[100px]">
       <div className="w-full max-w-[1240px] mx-auto flex flex-col gap-[30px]">
         
         {/* Header Section */}
@@ -39,13 +39,13 @@ export function ConsultationBooking() {
                   onClick={() => setExperience("in-store")}
                   className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
                     experience === "in-store" 
-                      ? "bg-[#FCE9EC] border-[2.25px] border-[#CB485E]" 
+                      ? "bg-[#E7FFE6] border-[2.25px] border-[#214E34]" 
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
                   <Image src="/contact/in-store_icon.png" alt="In-Store" width={22} height={22} className="object-contain" />
                   <span className={`font-sans font-bold text-[14px] uppercase tracking-[0.65px] mt-1 ${
-                    experience === "in-store" ? "text-[#CB485E]" : "text-[#292524]"
+                    experience === "in-store" ? "text-[#214E34]" : "text-[#292524]"
                   }`}>
                     In-Store
                   </span>
@@ -60,13 +60,13 @@ export function ConsultationBooking() {
                   onClick={() => setExperience("virtual")}
                   className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
                     experience === "virtual" 
-                      ? "bg-[#FCE9EC] border-[2.25px] border-[#CB485E]" 
+                      ? "bg-[#E7FFE6] border-[2.25px] border-[#214E34]" 
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
                   <Image src="/contact/virtual_icon.png" alt="Virtual" width={22} height={22} className="object-contain" />
                   <span className={`font-sans font-bold text-[14px] uppercase tracking-[0.65px] mt-1 ${
-                    experience === "virtual" ? "text-[#CB485E]" : "text-[#292524]"
+                    experience === "virtual" ? "text-[#214E34]" : "text-[#292524]"
                   }`}>
                     Virtual
                   </span>
@@ -89,7 +89,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("engagement")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "engagement"
-                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -103,7 +103,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("bridal")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "bridal"
-                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -114,7 +114,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("custom")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "custom"
-                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -125,7 +125,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("gifting")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "gifting"
-                      ? "bg-[#FCE9EC] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -151,7 +151,7 @@ export function ConsultationBooking() {
                     onBlur={(e) => {
                       if (!e.target.value) e.target.type = "text";
                     }}
-                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] cursor-pointer" 
+                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] cursor-pointer" 
                   />
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" strokeWidth={1.5} />
                 </div>
@@ -167,7 +167,7 @@ export function ConsultationBooking() {
                     onBlur={(e) => {
                       if (!e.target.value) e.target.type = "text";
                     }}
-                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] cursor-pointer" 
+                    className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[36px] text-[14px] font-sans placeholder:text-[#57534E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] cursor-pointer" 
                   />
                   <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E] pointer-events-none" strokeWidth={1.5} />
                 </div>
@@ -177,27 +177,27 @@ export function ConsultationBooking() {
             {/* Name and Phone */}
             <div className="flex flex-col sm:flex-row gap-[16px] mt-2">
               <div className="flex-1 flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Full Name <span className="text-[#CB485E]">*</span></label>
+                <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Full Name <span className="text-[#214E34]">*</span></label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                  <input type="text" placeholder="Enter your full name" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]" />
+                  <input type="text" placeholder="Enter your full name" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]" />
                 </div>
               </div>
               <div className="flex-1 flex flex-col gap-2">
-                <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Phone Number <span className="text-[#CB485E]">*</span></label>
+                <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Phone Number <span className="text-[#214E34]">*</span></label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                  <input type="text" placeholder="+91 98765 43210" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#292524] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]" />
+                  <input type="text" placeholder="+91 98765 43210" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#292524] text-[#292524] outline-none focus:ring-1 ring-[#214E34]" />
                 </div>
               </div>
             </div>
 
             {/* Email */}
             <div className="flex flex-col gap-2 mt-2">
-              <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Email Address <span className="text-[#CB485E]">*</span></label>
+              <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Email Address <span className="text-[#214E34]">*</span></label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                <input type="email" placeholder="you@example.com" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]" />
+                <input type="email" placeholder="you@example.com" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]" />
               </div>
             </div>
 
@@ -206,7 +206,7 @@ export function ConsultationBooking() {
               <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Anything you&apos;d like us to know?</label>
               <div className="relative">
                 <Calendar className="absolute left-3 top-[14px] w-4 h-4 text-[#A8A29E]" />
-                <textarea rows={4} placeholder="Tell us about your requirements, occasion, or any specific designs you&apos;re interested in..." className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] resize-none"></textarea>
+                <textarea rows={4} placeholder="Tell us about your requirements, occasion, or any specific designs you&apos;re interested in..." className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] resize-none"></textarea>
               </div>
             </div>
 
@@ -215,7 +215,7 @@ export function ConsultationBooking() {
               <button className="relative w-full h-[46px] rounded-full group outline-none">
                 {/* Shadow overlay matching the spec */}
                 <div className="absolute inset-0 bg-[#FFFFFF01] rounded-[56px] shadow-[0px_2.25px_4.5px_-2.25px_rgba(0,0,0,0.1),0px_4.5px_6.75px_-1.13px_rgba(0,0,0,0.1)] pointer-events-none" />
-                <div className="absolute inset-0 bg-[#CB485E] rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
+                <div className="absolute inset-0 bg-[#214E34] rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
                   <div className="flex items-center justify-center">
                     <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center">Confirm Appointment</span>
                     <div className="pl-[9px] flex items-center justify-center">
@@ -251,7 +251,7 @@ export function ConsultationBooking() {
               
               {/* Sidebar Eyebrow & Title */}
               <div className="flex flex-col gap-[4.5px]">
-                <span className="font-[family-name:var(--font-montserrat)] font-bold text-[12px] leading-[16.88px] text-[#CB485E] uppercase">
+                <span className="font-[family-name:var(--font-montserrat)] font-bold text-[12px] leading-[16.88px] text-[#214E34] uppercase">
                   YOUR TIME, YOUR SPACE
                 </span>
                 <h3 className="font-serif font-bold text-[24px] leading-[33.75px] text-[#1C1917]">

@@ -33,7 +33,7 @@ export function OurValues() {
       <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 flex flex-col items-center gap-[30px] md:gap-[50px]">
         {/* Header */}
         <div className="flex flex-col items-center pt-[6px] max-w-[709px]">
-          <span className="font-sans font-semibold text-[13px] leading-[17px] tracking-[3.16px] uppercase text-[#CB485E] text-center">
+          <span className="font-sans font-semibold text-[13px] leading-[17px] tracking-[3.16px] uppercase text-[#214E34] text-center">
             THE PILLARS OF MIRAYA
           </span>
           <h2 className="font-serif font-medium md:font-bold text-[26px] md:text-[40px] leading-[32px] md:leading-[50.64px] tracking-[-0.51px] text-[#3B2A30] text-center pt-[6px]">
@@ -49,13 +49,13 @@ export function OurValues() {
           {values.map((value) => (
             <div
               key={value.title}
-              className="relative w-[42vw] min-w-[160px] md:min-w-0 md:w-auto md:flex-1 snap-center shrink-0 bg-[#FBF4F6] border-[1.05px] border-[#FCE9EC] rounded-[20px] md:rounded-[25px] flex flex-col items-center pt-[24px] md:pt-[43px] pb-[28px] md:pb-[40px] px-[10px] md:px-[36px]"
+              className="relative w-[42vw] min-w-[160px] md:min-w-0 md:w-auto md:flex-1 snap-center shrink-0 bg-[#FBF4F6] border-[1.05px] border-[#E7FFE6] rounded-[20px] md:rounded-[25px] flex flex-col items-center pt-[24px] md:pt-[43px] pb-[28px] md:pb-[40px] px-[10px] md:px-[36px]"
               style={{
                 boxShadow: "0px 21.1px 47.47px -15.82px #C96F911F",
               }}
             >
               {/* Icon */}
-              <div className="w-[44px] h-[44px] md:w-[59px] md:h-[59px] rounded-full md:rounded-[17px] bg-white md:bg-[#FCE9EC] shadow-[0px_2px_8px_rgba(0,0,0,0.06)] md:shadow-none flex items-center justify-center mb-[16px] md:mb-[25px]">
+              <div className="w-[44px] h-[44px] md:w-[59px] md:h-[59px] rounded-full md:rounded-[17px] bg-white md:bg-[#E7FFE6] shadow-[0px_2px_8px_rgba(0,0,0,0.06)] md:shadow-none flex items-center justify-center mb-[16px] md:mb-[25px]">
                 {/* Mobile Icon */}
                 <Image
                   src={value.iconMobile}
