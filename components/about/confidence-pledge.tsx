@@ -25,7 +25,7 @@ const pledgeCards = [
 
 export function ConfidencePledge() {
   return (
-    <section className="w-full bg-[#FCF9F8] md:bg-[#FFFDFC] border-b-[1.05px] border-[#FCE9EC] pt-[20px] md:pt-[30px] pb-[20px] md:pb-[60px]">
+    <section className="w-full bg-[#FCF9F8] md:bg-[#FFFDFC] border-b-[1.05px] border-[#E7FFE6] pt-[20px] md:pt-[30px] pb-[20px] md:pb-[60px]">
       <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 flex flex-col gap-[16px] md:gap-[30px]">
         
         {/* Header */}
@@ -43,11 +43,11 @@ export function ConfidencePledge() {
           {pledgeCards.map((card) => (
             <div 
               key={card.title}
-              className="w-[280px] md:w-auto snap-center shrink-0 flex flex-col items-center bg-[#FFFDFC] md:bg-[#FCF9F8] border-[1px] border-[#FCE9EC] md:border-[1.05px] rounded-[16px] md:rounded-[16.88px] p-[24px] md:p-[25.32px]"
+              className="w-[280px] md:w-auto snap-center shrink-0 flex flex-col items-center bg-[#FFFDFC] md:bg-[#FCF9F8] border-[1px] border-[#E7FFE6] md:border-[1.05px] rounded-[16px] md:rounded-[16.88px] p-[24px] md:p-[25.32px]"
             >
               
               {/* Icon */}
-              <div className="w-[50.64px] h-[50.64px] rounded-full bg-[#FCE9EC] flex items-center justify-center mb-[16.88px]">
+              <div className="w-[50.64px] h-[50.64px] rounded-full bg-[#E7FFE6] flex items-center justify-center mb-[16.88px]">
                 <div className="relative w-[25px] h-[25px]">
                   <Image
                     src={card.icon}

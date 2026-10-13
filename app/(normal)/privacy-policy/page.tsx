@@ -90,8 +90,8 @@ function PrivacyHero() {
         {/* Breadcrumbs */}
         <div className="flex items-center gap-[6px] mb-1 md:mb-[17px]">
           <span className="font-sans font-medium text-[12px] md:text-[16px] leading-[21.6px] text-[#757575] md:text-[#6F6A68]">Home</span>
-          <ChevronRight className="w-3 h-3 md:w-[14px] md:h-[14px] text-[#757575] md:text-[#CB485E]" strokeWidth={2} />
-          <span className="font-sans font-medium text-[12px] md:text-[16px] leading-[21.6px] text-[#CB485E] md:text-[#6F6A68]">Privacy Policy</span>
+          <ChevronRight className="w-3 h-3 md:w-[14px] md:h-[14px] text-[#757575] md:text-[#214E34]" strokeWidth={2} />
+          <span className="font-sans font-medium text-[12px] md:text-[16px] leading-[21.6px] text-[#214E34] md:text-[#6F6A68]">Privacy Policy</span>
         </div>
 
         {/* Title */}
@@ -100,7 +100,7 @@ function PrivacyHero() {
         </h1>
 
         {/* Red Line */}
-        <div className="w-[60px] md:w-[131px] h-0 border-[1.5px] md:border-[2px] border-[#CB485E] mb-2 md:mb-[24px]" />
+        <div className="w-[60px] md:w-[131px] h-0 border-[1.5px] md:border-[2px] border-[#214E34] mb-2 md:mb-[24px]" />
 
         {/* Subtitle */}
         <p className="font-sans font-medium text-[12px] md:text-[16px] leading-[18px] md:leading-[20px] text-[#757575]">
@@ -142,8 +142,8 @@ function PrivacyContent() {
               className={`flex items-start gap-4 md:gap-[20px] scroll-mt-24 ${index !== 0 ? "pt-[30px] border-t-[1px] border-[#E8E4E2]" : ""} pb-[30px]`}
             >
             {/* Circle Number */}
-            <div className="w-[36px] h-[36px] rounded-full bg-[#FFF4F5] border-[1px] border-[#CB485E1A] flex items-center justify-center shrink-0">
-              <span className="font-sans font-semibold text-[14px] text-[#CB485E]">{section.id}</span>
+            <div className="w-[36px] h-[36px] rounded-full bg-[#FFF4F5] border-[1px] border-[#214E341A] flex items-center justify-center shrink-0">
+              <span className="font-sans font-semibold text-[14px] text-[#214E34]">{section.id}</span>
             </div>
 
             {/* Content */}
@@ -154,7 +154,7 @@ function PrivacyContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about this Privacy Policy, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#CB485E]">support@mirayadiamonds.com</a>.
+                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#214E34]">support@mirayadiamonds.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -188,9 +188,9 @@ function PrivacySidebar() {
 
         {/* Mobile Header */}
         <div className="flex lg:hidden items-center justify-between mb-2">
-          <span className="font-sans uppercase font-medium text-[12px] text-[#CB485E] tracking-[2px] flex items-center gap-2">
+          <span className="font-sans uppercase font-medium text-[12px] text-[#214E34] tracking-[2px] flex items-center gap-2">
             <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 1H13M1 5H13M1 9H13" stroke="#CB485E" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M1 1H13M1 5H13M1 9H13" stroke="#214E34" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
             ON THIS PAGE
           </span>
@@ -211,11 +211,11 @@ function PrivacySidebar() {
                 }}
                 className={`flex-shrink-0 lg:w-full text-center lg:text-left rounded-full lg:rounded-[8px] py-[8px] px-[18px] lg:py-[10px] lg:px-0 lg:pl-[14px] cursor-pointer transition-colors outline-none ${
                   isActive 
-                    ? "bg-[#FFF4F5] border-[1px] lg:border-0 lg:border-l-[4px] border-[#CB485E33] lg:border-[#9E384B]" 
+                    ? "bg-[#FFF4F5] border-[1px] lg:border-0 lg:border-l-[4px] border-[#214E3433] lg:border-[#9E384B]" 
                     : "bg-[#F8F6F5] lg:bg-transparent border-[1px] lg:border-0 border-[#E8E4E2]"
                 }`}
               >
-                <span className={`font-sans text-[13px] lg:text-[14px] leading-[16px] whitespace-nowrap ${isActive ? "font-medium lg:font-semibold text-[#CB485E] lg:text-[#9E384B]" : "font-normal text-[#6F6A68]"}`}>
+                <span className={`font-sans text-[13px] lg:text-[14px] leading-[16px] whitespace-nowrap ${isActive ? "font-medium lg:font-semibold text-[#214E34] lg:text-[#9E384B]" : "font-normal text-[#6F6A68]"}`}>
                   <span className="lg:hidden">{item.label}</span>
                   <span className="hidden lg:block">{item.desktopLabel}</span>
                 </span>
@@ -237,7 +237,7 @@ function PrivacySidebar() {
         <div className="flex flex-col gap-4 mb-[25px]">
           {/* Email */}
           <div className="flex items-start gap-4">
-            <div className="w-[36px] h-[36px] bg-[#FFF4F5] rounded-full flex items-center justify-center shrink-0 border-[1px] border-[#CB485E33]">
+            <div className="w-[36px] h-[36px] bg-[#FFF4F5] rounded-full flex items-center justify-center shrink-0 border-[1px] border-[#214E3433]">
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
@@ -248,7 +248,7 @@ function PrivacySidebar() {
 
           {/* Phone */}
           <div className="flex items-start gap-4">
-            <div className="w-[36px] h-[36px] bg-[#FFF4F5] rounded-full flex items-center justify-center shrink-0 border-[1px] border-[#CB485E33]">
+            <div className="w-[36px] h-[36px] bg-[#FFF4F5] rounded-full flex items-center justify-center shrink-0 border-[1px] border-[#214E3433]">
               <Image src="/privacy-policy/phone-icon.png" alt="Phone" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
@@ -259,19 +259,19 @@ function PrivacySidebar() {
         </div>
 
         {/* Contact Us Button */}
-        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#CB485E33] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
+        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
           <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#9E384B]">Contact Us</span>
           <ArrowRight className="w-[14px] h-[14px] text-[#9E384B]" strokeWidth={2} />
         </button>
       </div>
 
       {/* Privacy Commitment Badge */}
-      <div className="w-full order-4 lg:order-none bg-[#FFF4F5] border-[1px] border-[#CB485E1A] rounded-[16px] py-[21px] px-[21px] flex items-center gap-4">
+      <div className="w-full order-4 lg:order-none bg-[#FFF4F5] border-[1px] border-[#214E341A] rounded-[16px] py-[21px] px-[21px] flex items-center gap-4">
         {/* Shield Icon */}
-        <div className="w-[32px] h-[32px] bg-white border-[1px] border-[#CB485E33] rounded-full shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] flex items-center justify-center shrink-0">
+        <div className="w-[32px] h-[32px] bg-white border-[1px] border-[#214E3433] rounded-full shadow-[0px_1px_2px_0px_rgba(0,0,0,0.05)] flex items-center justify-center shrink-0">
           <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M6 1L1 3V6C1 8.76142 3.23858 11 6 11C8.76142 11 11 8.76142 11 6V3L6 1Z" stroke="#CB485E" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
-            <path d="M4 6L5.5 7.5L8 4.5" stroke="#CB485E" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M6 1L1 3V6C1 8.76142 3.23858 11 6 11C8.76142 11 11 8.76142 11 6V3L6 1Z" stroke="#214E34" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M4 6L5.5 7.5L8 4.5" stroke="#214E34" strokeWidth="1.33" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
         

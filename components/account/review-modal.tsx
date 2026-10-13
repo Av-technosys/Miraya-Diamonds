@@ -233,7 +233,7 @@ export function ReviewModalTrigger({ className = "" }: { className?: string }) {
             </div>
 
             <label className="mt-5 flex items-start gap-3 md:mt-4">
-              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-[#CB485E] text-white">
+              <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-[#214E34] text-white">
                 <CheckIcon />
               </span>
               <span>
@@ -257,7 +257,7 @@ export function ReviewModalTrigger({ className = "" }: { className?: string }) {
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="h-11 rounded-full bg-[#CB485E] text-[13px] font-semibold text-white"
+                className="h-11 rounded-full bg-[#214E34] text-[13px] font-semibold text-white"
               >
                 Submit Review
               </button>

@@ -10,7 +10,7 @@ export function ContactHero() {
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 mb-4 md:mb-[60px] text-[#757575] font-sans text-sm">
           <span>Home</span>
-          <ChevronRight className="w-4 h-4 text-[#CB485E]" />
+          <ChevronRight className="w-4 h-4 text-[#214E34]" />
           <span>Contact Us</span>
         </div>
 
@@ -22,7 +22,7 @@ export function ContactHero() {
             
             {/* Top Pill */}
             <div className="inline-flex items-center w-fit bg-[#FDECEF] px-[10px] md:px-[12px] py-[4px] md:py-[6px] rounded-full mb-4 md:mb-6">
-              <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#CB485E] uppercase tracking-wide">
+              <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase tracking-wide">
                 Client Concierge & Assistance
               </span>
             </div>
@@ -31,7 +31,7 @@ export function ContactHero() {
             <h1 className="font-serif font-bold text-[40px] md:text-[64px] leading-[44px] md:leading-[71px] tracking-[-1px] md:tracking-[-1.57px] text-[#313030] mb-3 md:mb-6">
               We Are Here<br />
               <span 
-                className="italic font-serif font-bold text-[40px] md:text-[96px] md:leading-[71px] text-[#CB485E] block mt-[-4px] md:-mt-[15px] align-middle"
+                className="italic font-serif font-bold text-[40px] md:text-[96px] md:leading-[71px] text-[#214E34] block mt-[-4px] md:-mt-[15px] align-middle"
                 style={{ letterSpacing: "-1.57px" }}
               >
                 To Assist You
@@ -47,14 +47,14 @@ export function ContactHero() {
             {/* Scrollable on mobile to match image 1 */}
             <div className="flex flex-row items-center gap-[25px] md:gap-8 mt-3 md:mt-auto pb-4 md:pb-4 overflow-x-auto whitespace-nowrap scrollbar-hide snap-x -mr-4 pr-4 md:mr-0 md:pr-0">
               <div className="flex items-center gap-[4px] md:gap-[6px] shrink-0 snap-start">
-                <BadgeCheck className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#CB485E] shrink-0" strokeWidth={1.5} />
-                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#CB485E] uppercase">
+                <BadgeCheck className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#214E34] shrink-0" strokeWidth={1.5} />
+                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase">
                   IGI & GIA Certified Staff
                 </span>
               </div>
               <div className="flex items-center gap-[4px] md:gap-[6px] shrink-0 snap-start">
-                <Clock className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#CB485E] shrink-0" strokeWidth={1.5} />
-                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#CB485E] uppercase">
+                <Clock className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#214E34] shrink-0" strokeWidth={1.5} />
+                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase">
                   Typical Atelier Reply: &lt; 4 Hours
                 </span>
               </div>

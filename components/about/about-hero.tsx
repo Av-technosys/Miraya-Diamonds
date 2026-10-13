@@ -18,21 +18,21 @@ export function AboutHero() {
           {/* Mobile Breadcrumb */}
           <div className="flex md:hidden items-center gap-[6px] mb-[12px]">
             <span className="font-sans font-normal text-[12px] text-[#757575]">Home</span>
-            <span className="font-sans font-normal text-[10px] text-[#CB485E]">{'>'}</span>
+            <span className="font-sans font-normal text-[10px] text-[#214E34]">{'>'}</span>
             <span className="font-sans font-normal text-[12px] text-[#757575]">About Us</span>
           </div>
 
           {/* Label */}
           <div className="flex items-center gap-[8px] mb-[21px]">
-            <div className="w-[34px] h-[1px] bg-[#CB485E]" />
-            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#CB485E]">
+            <div className="w-[34px] h-[1px] bg-[#214E34]" />
+            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#214E34]">
               THE MIRAYA CRAFTSMANSHIP
             </span>
           </div>
 
           {/* Heading */}
           <h1 className="font-serif font-bold text-[32px] md:text-[40px] leading-[36px] md:leading-[40px] text-[#454545] mb-[21px]">
-            Where Every <span className="text-[#CB485E]">Diamond</span> Tells a
+            Where Every <span className="text-[#214E34]">Diamond</span> Tells a
             <br className="hidden md:block" /> Story
           </h1>
 
@@ -44,13 +44,13 @@ export function AboutHero() {
           </p>
 
           {/* Patrons Section - Desktop */}
-          <div className="hidden md:block border-t-[1px] border-[#FCE9EC] pt-[17px]">
+          <div className="hidden md:block border-t-[1px] border-[#E7FFE6] pt-[17px]">
             <div className="flex items-center gap-[17px]">
               {/* Avatar circles */}
               <div className="flex items-center -space-x-[6px]">
                 {/* M */}
-                <div className="w-[42px] h-[42px] rounded-full bg-[#FCE9EC] flex items-center justify-center shadow-[0px_0px_0px_2.11px_#FFFFFF] relative z-[4]">
-                  <span className="font-serif font-bold text-[13px] leading-[17px] text-[#CB485E]">
+                <div className="w-[42px] h-[42px] rounded-full bg-[#E7FFE6] flex items-center justify-center shadow-[0px_0px_0px_2.11px_#FFFFFF] relative z-[4]">
+                  <span className="font-serif font-bold text-[13px] leading-[17px] text-[#214E34]">
                     M
                   </span>
                 </div>
@@ -67,8 +67,8 @@ export function AboutHero() {
                   </span>
                 </div>
                 {/* + */}
-                <div className="w-[42px] h-[42px] rounded-full bg-[#FCE9EC] flex items-center justify-center shadow-[0px_0px_0px_2.11px_#FFFFFF] relative z-[1]">
-                  <span className="font-sans font-bold text-[11px] leading-[16px] text-[#CB485E]">
+                <div className="w-[42px] h-[42px] rounded-full bg-[#E7FFE6] flex items-center justify-center shadow-[0px_0px_0px_2.11px_#FFFFFF] relative z-[1]">
+                  <span className="font-sans font-bold text-[11px] leading-[16px] text-[#214E34]">
                     +
                   </span>
                 </div>
@@ -90,7 +90,7 @@ export function AboutHero() {
           <div className="flex md:hidden items-center gap-[12px] border border-[#FFE4E699] rounded-[16px] px-[14px] py-[10px] w-max bg-[#FFF1F266] mt-[5px]">
             {/* Avatars */}
             <div className="flex items-center -space-x-[6px]">
-              <div className="w-[28px] h-[28px] rounded-full bg-[#CB485E] flex items-center justify-center border-[1.5px] border-white relative z-[4]">
+              <div className="w-[28px] h-[28px] rounded-full bg-[#214E34] flex items-center justify-center border-[1.5px] border-white relative z-[4]">
                 <span className="font-sans font-bold text-[10px] text-white">M</span>
               </div>
               <div className="w-[28px] h-[28px] rounded-full bg-[#D97706] flex items-center justify-center border-[1.5px] border-white relative z-[3]">
@@ -139,7 +139,7 @@ export function AboutHero() {
 
           {/* Floating card - half inside, half outside image */}
           <div
-            className="absolute -bottom-[8px] left-0 md:left-auto md:right-4 flex items-center gap-[12px] px-[19px] py-[12px] rounded-[11px] border-[1.22px] border-[#FCE9EC] z-20"
+            className="absolute -bottom-[8px] left-0 md:left-auto md:right-4 flex items-center gap-[12px] px-[19px] py-[12px] rounded-[11px] border-[1.22px] border-[#E7FFE6] z-20"
             style={{
               background: "#FFFDFCD1",
               backdropFilter: "blur(17.14px)",
@@ -147,7 +147,7 @@ export function AboutHero() {
             }}
           >
             {/* Star icon circle */}
-            <div className="w-[39px] h-[39px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+            <div className="w-[39px] h-[39px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
               <svg
                 width="20"
                 height="20"
@@ -157,7 +157,7 @@ export function AboutHero() {
               >
                 <path
                   d="M10 1.5L12.47 7.03L18.5 7.91L14.25 12.05L15.18 18.05L10 15.27L4.82 18.05L5.75 12.05L1.5 7.91L7.53 7.03L10 1.5Z"
-                  fill="#CB485E"
+                  fill="#214E34"
                 />
               </svg>
             </div>

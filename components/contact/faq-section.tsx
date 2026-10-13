@@ -61,8 +61,8 @@ export function FaqSection() {
               onClick={() => setActiveCategory(cat)}
               className={`shrink-0 snap-center h-[33.08px] rounded-[84.2px] px-[24.06px] py-[8.02px] text-[14px] leading-[100%] tracking-[-0.02em] text-center font-sans cursor-pointer transition-colors duration-300 ${
                 activeCategory === cat
-                  ? "bg-[#CB485E] text-white font-semibold"
-                  : "bg-white text-[#CB485E] border border-[#CB485E] font-medium"
+                  ? "bg-[#214E34] text-white font-semibold"
+                  : "bg-white text-[#214E34] border border-[#214E34] font-medium"
               }`}
             >
               {cat}
@@ -75,7 +75,7 @@ export function FaqSection() {
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              className="w-full rounded-[32px] border-[1.5px] border-[#CB485E] bg-white overflow-hidden transition-all duration-300"
+              className="w-full rounded-[32px] border-[1.5px] border-[#214E34] bg-white overflow-hidden transition-all duration-300"
             >
               {/* Question Row */}
               <button
@@ -83,7 +83,7 @@ export function FaqSection() {
                 className="w-full flex items-start justify-between py-[15px] pr-[18px] pl-[25px] cursor-pointer"
               >
                 <div className="flex items-start gap-[10px]">
-                  <span className="font-sans font-medium text-[14px] leading-[20px] tracking-[-0.02em] text-[#CB485E]">
+                  <span className="font-sans font-medium text-[14px] leading-[20px] tracking-[-0.02em] text-[#214E34]">
                     {idx + 1}.
                   </span>
                   <span className="font-sans font-medium text-[14px] leading-[20px] tracking-[-0.02em] text-[#454545] text-left pr-2">
@@ -91,7 +91,7 @@ export function FaqSection() {
                   </span>
                 </div>
                 <ChevronDown
-                  className={`w-[20px] h-[20px] shrink-0 text-[#CB485E] transition-transform duration-300 mt-[1px] ${openIndex === idx ? "rotate-180" : ""}`}
+                  className={`w-[20px] h-[20px] shrink-0 text-[#214E34] transition-transform duration-300 mt-[1px] ${openIndex === idx ? "rotate-180" : ""}`}
                   strokeWidth={1.5}
                 />
               </button>

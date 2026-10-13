@@ -51,7 +51,7 @@ export function AccountShell({ children }: { children: React.ReactNode }) {
                   key={item.title}
                   className="flex min-h-[104px] flex-col items-center rounded-lg bg-white px-2 py-4 text-center shadow-sm md:min-h-0 md:rounded-none md:bg-transparent md:px-0 md:py-0 md:shadow-none"
                 >
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FCE3E8] text-[#CB485E] md:h-[46px] md:w-[46px]">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FCE3E8] text-[#214E34] md:h-[46px] md:w-[46px]">
                     <Icon size={18} strokeWidth={1.8} className="md:h-5 md:w-5" />
                   </div>
                   <h3 className="mt-3 font-serif text-[16px] font-medium leading-none text-[#3F3A39] md:mt-4 md:text-[20px]">

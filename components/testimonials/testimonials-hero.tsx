@@ -12,7 +12,7 @@ export function TestimonialsHero() {
             <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575]">
               Home
             </span>
-            <ChevronRight className="w-[12px] h-[12px] text-[#CB485E]" strokeWidth={2.5} />
+            <ChevronRight className="w-[12px] h-[12px] text-[#214E34]" strokeWidth={2.5} />
             <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575]">
               Testimonials
             </span>
@@ -28,8 +28,8 @@ export function TestimonialsHero() {
             <div className="flex flex-col gap-[8px] md:gap-[20px] max-w-[553px]">
               {/* Badge */}
               <div className="flex">
-                <div className="bg-[#FCE9EC] rounded-full px-[10px] md:px-[13.5px] py-[3px] md:py-[4.5px] flex items-center justify-center">
-                  <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[18px] text-[#CB485E] uppercase">
+                <div className="bg-[#E7FFE6] rounded-full px-[10px] md:px-[13.5px] py-[3px] md:py-[4.5px] flex items-center justify-center">
+                  <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[18px] text-[#214E34] uppercase">
                     Customer Stories
                   </span>
                 </div>
@@ -40,7 +40,7 @@ export function TestimonialsHero() {
                 <span className="font-serif font-bold text-[32px] md:text-[64px] leading-[34px] md:leading-[63px] text-[#454545] block" style={{ letterSpacing: "-1.57px" }}>
                   Loved, Worn &
                 </span>
-                <span className="font-serif font-bold italic text-[32px] md:text-[64px] leading-[34px] md:leading-[72px] text-[#CB485E] block mt-[-4px] md:mt-0" style={{ letterSpacing: "-1.57px" }}>
+                <span className="font-serif font-bold italic text-[32px] md:text-[64px] leading-[34px] md:leading-[72px] text-[#214E34] block mt-[-4px] md:mt-0" style={{ letterSpacing: "-1.57px" }}>
                   Cherished
                 </span>
               </h1>

@@ -91,7 +91,7 @@ export default function OrderDetailsPage() {
               return (
                 <div key={step.label} className="relative flex flex-col items-center text-center">
                   <div
-                    className={`absolute top-[15px] h-0.5 bg-[#CB485E] ${
+                    className={`absolute top-[15px] h-0.5 bg-[#214E34] ${
                       index === 0
                         ? "left-1/2 w-1/2"
                         : index === timeline.length - 1
@@ -99,7 +99,7 @@ export default function OrderDetailsPage() {
                           : "left-0 w-full"
                     }`}
                   />
-                  <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#CB485E] text-white">
+                  <div className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#214E34] text-white">
                     <Icon size={14} className="md:h-4 md:w-4" />
                   </div>
                   <div>
@@ -133,8 +133,8 @@ export default function OrderDetailsPage() {
                 <span>Qty: 1</span>
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
-                <ReviewModalTrigger className="inline-flex h-10 items-center gap-2 rounded-full bg-[#CB485E] px-5 text-[13px] font-bold text-white" />
-                <button className="inline-flex h-10 items-center gap-2 rounded-full border border-[#CB485E] px-5 text-[13px] font-bold text-[#CB485E]">
+                <ReviewModalTrigger className="inline-flex h-10 items-center gap-2 rounded-full bg-[#214E34] px-5 text-[13px] font-bold text-white" />
+                <button className="inline-flex h-10 items-center gap-2 rounded-full border border-[#214E34] px-5 text-[13px] font-bold text-[#214E34]">
                   <ShoppingCart size={14} />
                   Buy Again
                 </button>
@@ -150,8 +150,8 @@ export default function OrderDetailsPage() {
       </section>
 
       <section className="grid grid-cols-2 gap-2 rounded-xl border border-[#ECEEF2] bg-white p-3 shadow-sm min-[380px]:gap-3 md:hidden">
-        <ReviewModalTrigger className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#CB485E] px-2 text-[10px] font-bold text-white min-[380px]:gap-2 min-[380px]:px-4 min-[380px]:text-[11px]" />
-        <button className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full border border-[#CB485E] px-2 text-[10px] font-bold text-[#CB485E] min-[380px]:gap-2 min-[380px]:px-4 min-[380px]:text-[11px]">
+        <ReviewModalTrigger className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full bg-[#214E34] px-2 text-[10px] font-bold text-white min-[380px]:gap-2 min-[380px]:px-4 min-[380px]:text-[11px]" />
+        <button className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full border border-[#214E34] px-2 text-[10px] font-bold text-[#214E34] min-[380px]:gap-2 min-[380px]:px-4 min-[380px]:text-[11px]">
           <ShoppingCart size={13} />
           Buy Again
         </button>
@@ -205,7 +205,7 @@ export default function OrderDetailsPage() {
             Sequel Logistics Express
           </div>
           <p className="mt-4 text-[14px] text-[#6F7785]">Tracking ID: <span className="font-bold text-[#252B36]">SAL48401</span></p>
-          <button className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#CB485E] px-7 text-[13px] font-bold text-[#CB485E]">
+          <button className="mt-6 inline-flex h-11 items-center justify-center gap-2 rounded-full border border-[#214E34] px-7 text-[13px] font-bold text-[#214E34]">
             Track Package
             <ExternalLink size={14} />
           </button>
@@ -215,7 +215,7 @@ export default function OrderDetailsPage() {
       <section className="rounded-xl border border-[#F6D7DF] bg-[#FBE8EE] p-4 shadow-sm md:rounded-2xl md:p-5">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between md:gap-8">
           <div className="flex items-center gap-4">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#CB485E] shadow-sm md:h-14 md:w-14">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white text-[#214E34] shadow-sm md:h-14 md:w-14">
               <Headphones size={23} />
             </div>
             <div className="max-w-[560px]">
@@ -225,7 +225,7 @@ export default function OrderDetailsPage() {
               </p>
             </div>
           </div>
-          <button className="h-11 rounded-xl border border-[#CB485E] bg-white/35 px-7 text-[13px] font-bold text-[#B82E46] transition-colors hover:bg-white md:min-w-[180px]">
+          <button className="h-11 rounded-xl border border-[#214E34] bg-white/35 px-7 text-[13px] font-bold text-[#B82E46] transition-colors hover:bg-white md:min-w-[180px]">
             Contact Support →
           </button>
         </div>

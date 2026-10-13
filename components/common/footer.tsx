@@ -1,9 +1,9 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { IconBrandInstagram, IconBrandX } from "@tabler/icons-react";
 import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import { FacebookIcon } from "@/components/icons/cib-facebook";
@@ -34,7 +34,7 @@ const policyLinks = [
 ];
 
 function FooterItem({ item }: { item: { label: string; href?: string } }) {
-  const className = "transition-colors hover:text-[#E45370]";
+  const className = "transition-colors hover:text-[#E2BD60]";
 
   if (item.href) {
     return (
@@ -58,7 +58,7 @@ function FooterColumn({
 }) {
   return (
     <div className={className}>
-      <h3 className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.19em] text-[#E45370] md:text-[15px]">
+      <h3 className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.19em] text-[#E2BD60] md:text-[15px]">
         {title}
       </h3>
       <div className="mt-5">{children}</div>
@@ -79,7 +79,7 @@ function MobileFooterSection({
   const hasContent = Boolean(children);
 
   return (
-    <div className="border-b border-[#E45370]/80">
+    <div className="border-b border-[#E2BD60]/80">
       <button
         type="button"
         className="flex w-full items-center justify-between py-[18px] text-left"
@@ -89,11 +89,11 @@ function MobileFooterSection({
           }
         }}
       >
-        <span className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.2em] text-[#E45370]">
+        <span className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.2em] text-[#E2BD60]">
           {title}
         </span>
         <ChevronDown
-          className={`h-4 w-4 text-[#E45370] transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`h-4 w-4 text-[#E2BD60] transition-transform ${isOpen ? "rotate-180" : ""}`}
           strokeWidth={1.9}
         />
       </button>
@@ -103,6 +103,10 @@ function MobileFooterSection({
 }
 
 export function Footer() {
+  const ringTrigger = useRef<HTMLDivElement>(null);
+  const ringInView = useInView(ringTrigger, { amount: "all" });
+  const reduceMotion = useReducedMotion();
+
   return (
     <footer className="relative isolate mt-auto min-h-[930px] overflow-hidden bg-[#080000] text-white sm:min-h-[900px] lg:min-h-[695px] lg:bg-[#120100]">
       <Image
@@ -126,11 +130,12 @@ export function Footer() {
       <div className="absolute inset-x-0 top-0 z-[1] hidden h-1/2 bg-gradient-to-b from-[#080000]/95 via-[#100101]/78 to-[#160302]/0 lg:block" />
       <div className="absolute inset-x-0 top-0 z-[1] h-[62%] bg-gradient-to-b from-black via-[#070000]/95 to-[#120100]/15 lg:hidden" />
 
+      <div ref={ringTrigger} aria-hidden="true" className="pointer-events-none absolute bottom-[240px] left-1/2 size-px" />
+
       <motion.div
-        className="absolute bottom-[-170px] left-1/2 z-[2] hidden w-[980px] max-w-[112vw] -translate-x-1/2 lg:block xl:bottom-[-96px] xl:w-[1053px] xl:max-w-[118vw]"
-        initial={{ y: 260, opacity: 0.15 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: false, amount: 0.2 }}
+        className="absolute bottom-[-220px] left-1/2 z-[2] hidden w-[980px] max-w-[112vw] -translate-x-1/2 lg:block xl:bottom-[-150px] xl:w-[1053px] xl:max-w-[118vw]"
+        initial={false}
+        animate={{ y: ringInView || reduceMotion ? 0 : 260, opacity: ringInView || reduceMotion ? 1 : 0.15 }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       >
         <Image
@@ -145,9 +150,8 @@ export function Footer() {
 
       <motion.div
         className="absolute bottom-[28px] left-1/2 z-[2] w-[610px] max-w-[146vw] -translate-x-1/2 sm:bottom-[12px] sm:w-[720px] sm:max-w-[118vw] lg:hidden"
-        initial={{ y: 130, opacity: 0.2 }}
-        whileInView={{ y: 0, opacity: 1 }}
-        viewport={{ once: false, amount: 0.01, margin: "0px 0px 160px 0px" }}
+        initial={false}
+        animate={{ y: ringInView || reduceMotion ? 0 : 130, opacity: ringInView || reduceMotion ? 1 : 0.2 }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
       >
         <Image
@@ -194,7 +198,7 @@ export function Footer() {
           </span>
         </div>
 
-        <div className="mt-[29px] border-t border-[#E45370]/80">
+        <div className="mt-[29px] border-t border-[#E2BD60]/80">
           <MobileFooterSection title="Shop">
             <ul className="space-y-[16px] pb-[14px] font-sans text-[14px] leading-none">
               {shopLinks.map((item) => (
@@ -270,7 +274,7 @@ export function Footer() {
           </div>
         </div>
 
-        <FooterColumn title="Shop" className="border-[#D74B64] lg:border-l lg:pl-6 xl:pl-8">
+        <FooterColumn title="Shop" className="border-[#E2BD60] lg:border-l lg:pl-6 xl:pl-8">
           <ul className="space-y-[13px] font-sans text-[13px] leading-none text-white xl:space-y-[14px] xl:text-[15px]">
             {shopLinks.map((item) => (
               <li key={item.label}>
@@ -300,25 +304,25 @@ export function Footer() {
           </ul>
         </FooterColumn>
 
-        <FooterColumn title="Contact Us" className="border-[#D74B64] lg:border-l lg:pl-6 xl:pl-8">
+        <FooterColumn title="Contact Us" className="border-[#E2BD60] lg:border-l lg:pl-6 xl:pl-8">
           <p className="max-w-[245px] font-sans text-[13px] leading-[1.14] tracking-[-0.02em] xl:max-w-[270px] xl:text-[15px]">
             We&apos;re here to make your shopping experience easier.
           </p>
           <ul className="mt-6 space-y-4 font-sans text-[13px] leading-none xl:mt-7 xl:space-y-[18px] xl:text-[15px]">
             <li className="flex items-center gap-3">
-              <Mail className="h-[18px] w-[18px] shrink-0 text-[#E45370] xl:h-5 xl:w-5" strokeWidth={1.8} />
-              <a href="mailto:miraya.diamond23@gmail.com" className="transition-colors hover:text-[#E45370]">
+              <Mail className="h-[18px] w-[18px] shrink-0 text-[#E2BD60] xl:h-5 xl:w-5" strokeWidth={1.8} />
+              <a href="mailto:miraya.diamond23@gmail.com" className="transition-colors hover:text-[#E2BD60]">
                 miraya.diamond23@gmail.com
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <Phone className="h-[18px] w-[18px] shrink-0 text-[#E45370] xl:h-5 xl:w-5" strokeWidth={1.8} />
-              <a href="tel:+919869698984" className="transition-colors hover:text-[#E45370]">
+              <Phone className="h-[18px] w-[18px] shrink-0 text-[#E2BD60] xl:h-5 xl:w-5" strokeWidth={1.8} />
+              <a href="tel:+919869698984" className="transition-colors hover:text-[#E2BD60]">
                 +91 9869698984
               </a>
             </li>
             <li className="flex items-center gap-3">
-              <MapPin className="h-5 w-5 shrink-0 text-[#E45370] xl:h-[22px] xl:w-[22px]" strokeWidth={1.8} />
+              <MapPin className="h-5 w-5 shrink-0 text-[#E2BD60] xl:h-[22px] xl:w-[22px]" strokeWidth={1.8} />
               <span>23,24 Paradise Heights, Bangalore</span>
             </li>
           </ul>

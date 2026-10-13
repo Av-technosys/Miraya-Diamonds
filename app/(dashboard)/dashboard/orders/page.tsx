@@ -59,7 +59,7 @@ export default function OrdersPage() {
               </span>
             </div>
 
-            <span className="mt-4 inline-flex h-8 w-max items-center gap-2 rounded-full bg-[#FFF0F2] px-3 text-[11px] font-semibold text-[#CB485E] md:hidden">
+            <span className="mt-4 inline-flex h-8 w-max items-center gap-2 rounded-full bg-[#FFF0F2] px-3 text-[11px] font-semibold text-[#214E34] md:hidden">
               <ShieldCheck size={13} />
               Insured Transit
             </span>
@@ -69,7 +69,7 @@ export default function OrdersPage() {
                 <button
                   key={filter}
                   className={`h-9 shrink-0 rounded-lg px-4 text-[12px] font-bold ${
-                    index === 0 ? "bg-[#CB485E] text-white" : "bg-[#FBE3E8] text-[#CB485E]"
+                    index === 0 ? "bg-[#214E34] text-white" : "bg-[#FBE3E8] text-[#214E34]"
                   }`}
                 >
                   {filter}
@@ -78,7 +78,7 @@ export default function OrdersPage() {
             </div>
           </div>
 
-          <span className="hidden h-9 w-max items-center gap-2 rounded-full bg-[#FFF0F2] px-4 text-[12px] font-semibold text-[#CB485E] md:inline-flex">
+          <span className="hidden h-9 w-max items-center gap-2 rounded-full bg-[#FFF0F2] px-4 text-[12px] font-semibold text-[#214E34] md:inline-flex">
             <ShieldCheck size={14} />
             Insured Transit
           </span>
@@ -159,17 +159,17 @@ export default function OrdersPage() {
                         : index === trackerSteps.length - 1
                           ? "right-1/2 w-1/2"
                           : "left-0 w-full"
-                    } ${index < 3 ? "bg-[#CB485E]" : "bg-[#E8E1E1]"}`}
+                    } ${index < 3 ? "bg-[#214E34]" : "bg-[#E8E1E1]"}`}
                   />
                   <div
                     className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                      step.done ? "bg-[#CB485E] text-white" : "bg-[#F4F2EF] text-[#A89D9D]"
+                      step.done ? "bg-[#214E34] text-white" : "bg-[#F4F2EF] text-[#A89D9D]"
                     }`}
                   >
                     <Icon size={13} className="md:h-[15px] md:w-[15px]" />
                   </div>
                   <div>
-                    <p className={`text-[10px] font-bold leading-tight md:text-[14px] ${step.label === "Dispatched" ? "text-[#CB485E]" : "text-[#3F3A39]"}`}>
+                    <p className={`text-[10px] font-bold leading-tight md:text-[14px] ${step.label === "Dispatched" ? "text-[#214E34]" : "text-[#3F3A39]"}`}>
                       {step.label}
                     </p>
                     <p className="mt-1 text-[9px] leading-tight text-[#807777] md:text-[12px]">{step.date}</p>
@@ -189,7 +189,7 @@ export default function OrdersPage() {
               <FileText size={14} />
               View Invoice
             </button>
-            <button className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#CB485E] px-3 text-[10px] font-bold uppercase text-white min-[380px]:px-7 min-[380px]:text-[12px]">
+            <button className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#214E34] px-3 text-[10px] font-bold uppercase text-white min-[380px]:px-7 min-[380px]:text-[12px]">
               <PackageCheck size={14} />
               Track Package
             </button>
@@ -250,7 +250,7 @@ export default function OrdersPage() {
             </p>
             <Link
               href="/dashboard/orders/AJ-984210"
-              className="flex h-11 items-center justify-center rounded-full bg-[#CB485E] px-8 text-[12px] font-bold uppercase text-white md:h-12 md:min-w-[180px] md:px-10 md:text-[13px]"
+              className="flex h-11 items-center justify-center rounded-full bg-[#214E34] px-8 text-[12px] font-bold uppercase text-white md:h-12 md:min-w-[180px] md:px-10 md:text-[13px]"
             >
               View Details
             </Link>

@@ -22,7 +22,7 @@ export function DirectInquirySection() {
             {/* Top Section: Eyebrow + Heading + Description */}
             <div className="flex flex-col gap-[7.31px] pt-0 lg:pt-[6.19px]">
               {/* Eyebrow */}
-              <span className="font-[family-name:var(--font-jakarta)] font-semibold text-[12.38px] leading-[18px] tracking-[2.48px] text-[#CB485E] uppercase">
+              <span className="font-[family-name:var(--font-jakarta)] font-semibold text-[12.38px] leading-[18px] tracking-[2.48px] text-[#214E34] uppercase">
                 DIRECT INQUIRY
               </span>
 
@@ -45,26 +45,26 @@ export function DirectInquirySection() {
                 <div className="flex-1 flex flex-col">
                   <div className="pb-[4.5px]">
                     <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
-                      FULL NAME <span className="text-[#CB485E]">*</span>
+                      FULL NAME <span className="text-[#214E34]">*</span>
                     </label>
                   </div>
                   <input
                     type="text"
                     placeholder="e.g. Maharani Gayatri Devi"
-                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]"
+                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
                 </div>
                 {/* Email Address */}
                 <div className="flex-1 flex flex-col">
                   <div className="pb-[4.5px]">
                     <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
-                      EMAIL ADDRESS <span className="text-[#CB485E]">*</span>
+                      EMAIL ADDRESS <span className="text-[#214E34]">*</span>
                     </label>
                   </div>
                   <input
                     type="email"
                     placeholder="name@aurora-patron.com"
-                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]"
+                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
                 </div>
               </div>
@@ -79,7 +79,7 @@ export function DirectInquirySection() {
                 <input
                   type="text"
                   placeholder="+91 98765 43210"
-                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E]"
+                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                 />
               </div>
 
@@ -87,13 +87,13 @@ export function DirectInquirySection() {
               <div className="flex flex-col mt-[18px]">
                 <div className="pb-[4.5px]">
                   <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
-                    MESSAGE / INQUIRY <span className="text-[#CB485E]">*</span>
+                    MESSAGE / INQUIRY <span className="text-[#214E34]">*</span>
                   </label>
                 </div>
                 <textarea
                   rows={5}
                   placeholder="Describe the piece you envision, preferred gemstones, or any bespoke design requests..."
-                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#CB485E] resize-none"
+                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] resize-none"
                 />
               </div>
 
@@ -101,7 +101,7 @@ export function DirectInquirySection() {
               <div className="pt-8 lg:pt-[18px]">
                 <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4 lg:gap-0 pt-[9px]">
                   {/* Connect Button */}
-                  <button className="bg-[#CB485E] rounded-[49px] py-[15.75px] px-[54px] flex items-center justify-center gap-[13.5px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]">
+                  <button className="bg-[#214E34] rounded-[49px] py-[15.75px] px-[54px] flex items-center justify-center gap-[13.5px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]">
                     <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center whitespace-nowrap">Connect With Miraya</span>
                     <ArrowRight className="w-[12px] h-[12px] text-white shrink-0" strokeWidth={2} />
                   </button>
@@ -122,14 +122,14 @@ export function DirectInquirySection() {
 
         {/* Right Column: Virtual Jewelry Consultation */}
         <div
-          className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#FCE9EC] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
+          className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#E7FFE6] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
         >
           {/* Top Content */}
           <div className="flex flex-col gap-[8.21px] pt-[2.25px] pb-[18px]">
             {/* Badge */}
             <div className="flex">
               <div className="bg-white rounded-full px-[13.5px] py-[4.5px] flex items-center justify-center">
-                <span className="font-sans font-medium text-[12px] leading-[18px] text-[#CB485E] uppercase">
+                <span className="font-sans font-medium text-[12px] leading-[18px] text-[#214E34] uppercase">
                   100% DIGITAL EXPERIENCE
                 </span>
               </div>
@@ -150,7 +150,7 @@ export function DirectInquirySection() {
           <div className="flex flex-col gap-[13.5px]">
             {/* Feature 1 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
                 <Image src="/contact/video_icon.png" alt="Video" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -165,7 +165,7 @@ export function DirectInquirySection() {
 
             {/* Feature 2 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
                 <Image src="/contact/van-icon.png" alt="Delivery" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -180,7 +180,7 @@ export function DirectInquirySection() {
 
             {/* Feature 3 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
                 <Image src="/contact/pen-icon.png" alt="Custom" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -195,7 +195,7 @@ export function DirectInquirySection() {
 
             {/* Feature 4 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#FCE9EC] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
                 <Image src="/contact/Lock_Icon.png" alt="Certified" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -211,13 +211,13 @@ export function DirectInquirySection() {
 
           {/* Bottom Buttons */}
           <div className="pt-[18px]">
-            <div className="border-t-[1.13px] border-[#CB485E33] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
-              <button className="bg-[#CB485E] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
+            <div className="border-t-[1.13px] border-[#214E3433] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
+              <button className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
                 <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Schedule Live Call</span>
                 <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </button>
               <button className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-[41%] lg:w-auto lg:flex-none">
-                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#CB485E] whitespace-nowrap">Whatsapp</span>
+                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#214E34] whitespace-nowrap">Whatsapp</span>
                 <Image src="/contact/message-icon.png" alt="Message" width={15} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-[15px] sm:h-[15px]" />
               </button>
             </div>

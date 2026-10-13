@@ -68,7 +68,7 @@ const testimonials = [
 function VerifiedBadge({ size = 14.17 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="shrink-0">
-      <circle cx="8" cy="8" r="8" fill="#CB485E" />
+      <circle cx="8" cy="8" r="8" fill="#214E34" />
       <path d="M5 8L7 10L11 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -80,7 +80,7 @@ function StarRating() {
       {[...Array(5)].map((_, i) => (
         <Star
           key={i}
-          className="w-[10.65px] h-[10.15px] text-[#CB485E] fill-[#CB485E]"
+          className="w-[10.65px] h-[10.15px] text-[#214E34] fill-[#214E34]"
           strokeWidth={0}
         />
       ))}
@@ -119,14 +119,14 @@ export function TestimonialsContent() {
                 onClick={() => setActiveFilter(pill)}
                 className="h-[36px] md:h-[40px] rounded-full px-[20px] md:px-[28px] py-[8px] md:py-[9px] flex items-center justify-center cursor-pointer shrink-0 snap-start transition-colors duration-300"
                 style={{
-                  backgroundColor: isActive ? "#CB485E" : "#FCE9EC",
-                  border: isActive ? "1.13px solid transparent" : "1.13px solid #CB485E",
+                  backgroundColor: isActive ? "#214E34" : "#E7FFE6",
+                  border: isActive ? "1.13px solid transparent" : "1.13px solid #214E34",
                   boxShadow: isActive ? "0px 1.13px 2.25px 0px rgba(0,0,0,0.05)" : "none",
                 }}
               >
                 <span
                   className="font-sans font-semibold text-[13px] md:text-[14px] leading-[22.5px] text-center whitespace-nowrap transition-colors duration-300"
-                  style={{ color: isActive ? "#FFFFFF" : "#CB485E" }}
+                  style={{ color: isActive ? "#FFFFFF" : "#214E34" }}
                 >
                   {pill}
                 </span>
@@ -168,7 +168,7 @@ export function TestimonialsContent() {
                   {/* Author Row */}
                   <div className="flex items-center gap-[10.12px]">
                     {/* Avatar */}
-                    <div className="w-[32.39px] h-[32.39px] rounded-full bg-[#FCE9EC] overflow-hidden relative shrink-0">
+                    <div className="w-[32.39px] h-[32.39px] rounded-full bg-[#E7FFE6] overflow-hidden relative shrink-0">
                       <Image src={card.avatar} alt={card.name} fill className="object-cover" />
                     </div>
                     {/* Name + Verified */}
@@ -262,7 +262,7 @@ export function TestimonialsContent() {
                 <span className="font-[family-name:var(--font-playfair)] font-normal text-[28px] md:text-[36.7px] leading-[16px] md:leading-[20px] text-[#A8354C66] mr-[8px] md:mr-[12px]">
                   “
                 </span>
-                <span className="font-[family-name:var(--font-script)] font-normal text-[18px] md:text-[24.46px] leading-[18px] md:leading-[24.46px] text-[#CB485E] md:text-[#846B63] whitespace-nowrap text-right">
+                <span className="font-[family-name:var(--font-script)] font-normal text-[18px] md:text-[24.46px] leading-[18px] md:leading-[24.46px] text-[#214E34] md:text-[#846B63] whitespace-nowrap text-right">
                   Beautiful Stories Last Forever
                 </span>
                 <div className="w-[30px] md:w-[40.77px] h-[1.5px] md:h-[2.04px] bg-[#C8526999] mt-[4.08px]" />
