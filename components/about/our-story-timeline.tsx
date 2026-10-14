@@ -38,7 +38,7 @@ export function OurStoryAndTimeline() {
               Miraya Diamonds was created with a simple vision — to bring together the brilliance of exceptional diamonds with thoughtful design and timeless craftsmanship. Our journey is driven by a passion for creating jewellery that feels personal, sophisticated, and effortlessly beautiful.
             </p>
             <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
-              From the first sketch to the final polish, every detail is carefully considered to create pieces celebrating life's most meaningful milestones.
+              From the first sketch to the final polish, every detail is carefully considered to create pieces celebrating life&apos;s most meaningful milestones.
             </p>
           </div>
 

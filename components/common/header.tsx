@@ -1,225 +1,157 @@
 "use client";
 
-import { type ReactNode, useState } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { 
-  Search, Heart, User, ShoppingBag, ChevronDown, ChevronUp, Menu, 
-  ChevronRight, LogOut, Circle, Activity, Square, Diamond, Gem, Gift, Crown,
-  Sparkles
-} from "lucide-react";
-import { Container } from "../common/container";
-import { collectionMenuHref, collectionNavHref } from "@/lib/collection-navigation";
+import { ChevronDown, ChevronRight, Heart, Menu, PhoneCall, Search, X } from "lucide-react";
+import { Container } from "./container";
+import { AccountButton } from "@/components/auth/account-button";
+import { collectionMenuHref } from "@/lib/collection-navigation";
+import { budgetRanges } from "@/components/collection/filter-state";
+import ringImage from "@/public/Images/Header_ring.png";
+import earringImage from "@/public/Images/Header_earring.png";
+import braceletImage from "@/public/Images/Header_bracelet.png";
+import necklaceImage from "@/public/Images/Header_necklace.png";
+import kidsImage from "@/public/Images/Header_kids.png";
 
-const NAV_LINKS = [
-  "Rings",
-  "Ear Rings",
-  "Bracelet",
-  "Bangles",
-  "Pendant",
-  "Necklace",
-  "Gifting",
-  "Bridal",
-  "Collection",
+const categories = [
+  { label: "Rings", nav: "Rings", image: ringImage },
+  { label: "Earrings", nav: "Ear Rings", image: earringImage },
+  { label: "Bracelets", nav: "Bracelet", image: braceletImage },
+  { label: "Pendant", nav: "Pendant", image: necklaceImage },
+  { label: "Kids", nav: "Kids", image: kidsImage },
 ];
 
-const MOBILE_MENU_ICONS: Record<string, ReactNode> = {
-  "Rings": <Circle size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Ear Rings": <Activity size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Bracelet": <Square size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Bangles": <Circle size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Pendant": <Diamond size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Necklace": <Gem size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Gifting": <Gift size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Bridal": <Crown size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-  "Collection": <Heart size={20} strokeWidth={1.5} className="text-[#214E34]" />,
-};
+type MenuGroup = { title: string; items: string[] };
 
-type MegaMenuColumn = {
-  title: string;
-  items: string[];
-};
+function menuColumns(label: string): MenuGroup[][] {
+  return [
+    [{ title: "FEATURED", items: [`All ${label}`, "New Arrival", "Best Seller", "Most Gifted"] }],
+    [
+      { title: "KARATAGE", items: ["14kt", "18kt"] },
+      { title: "SHOP FOR", items: ["Women", "Kids"] },
+    ],
+    [{ title: "OCCASION", items: ["Everyday", "Workwear", "Party", "Proposal", "Engagement"] }],
+    [{ title: "METAL & STONE", items: ["Diamond", "Gold", "White Gold", "Rose Gold"] }],
+  ];
+}
 
-// Reusable placeholder data for all categories to ensure they "work"
-const DEFAULT_MENU_DATA: MegaMenuColumn[] = [
-  { title: "FEATURED", items: ["All Items", "New Arrival", "Best Seller", "Most Gifted"] },
-  { title: "STYLE", items: ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"] },
-  { title: "OCCASION", items: ["Everyday", "Workwear", "Party", "Proposal", "Engagement"] },
-  { title: "METAL & STONE", items: ["Diamond", "Gemstone", "Pearl", "Gold", "Plain Gold", "Rose Gold", "Silver", "Solitaire"] },
-  { title: "PRICE", items: ["Under 10k", "Under 15k", "Under 20k", "Under 30k", "Under 50k", "Under 90k", "Above 90k"] },
-  { title: "KARATAGE", items: ["9kt", "14kt", "18kt", "22kt"] },
-  { title: "SHOP FOR", items: ["Women", "Men", "Unisex"] },
-];
+function Logo({ compact = false }: { compact?: boolean }) {
+  return (
+    <Link href="/" aria-label="Miraya Diamonds home" className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+      <Image src="/Header_logo.png" alt="" width={60} height={60} priority className={`${compact ? "h-8" : "h-10 lg:h-12"} w-auto`} />
+      <Image src="/Header_logo_mb.png" alt="Miraya Diamonds" width={160} height={45} priority className={`${compact ? "h-5" : "h-6 lg:h-7"} w-auto`} />
+    </Link>
+  );
+}
 
-const MEGA_MENU_DATA: Record<string, MegaMenuColumn[]> = {
-  "Rings": [
-    { title: "FEATURED", items: ["All Rings", "New Arrival", "Best Seller", "Most Gifted"] },
-    { title: "STYLE", items: ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"] },
-    { title: "OCCASION", items: ["Everyday", "Workwear", "Party", "Proposal", "Engagement"] },
-    { title: "METAL & STONE", items: ["Diamond", "Gemstone", "Pearl", "Gold", "Plain Gold", "Rose Gold", "Silver", "Solitaire"] },
-    { title: "PRICE", items: ["Under 10k", "Under 15k", "Under 20k", "Under 30k", "Under 50k", "Under 90k", "Above 90k"] },
-    { title: "KARATAGE", items: ["9kt", "14kt", "18kt", "22kt"] },
-    { title: "SHOP FOR", items: ["Women", "Men", "Unisex"] },
-  ],
-  "Ear Rings": DEFAULT_MENU_DATA,
-  "Bracelet": DEFAULT_MENU_DATA,
-  "Bangles": DEFAULT_MENU_DATA,
-  "Pendant": DEFAULT_MENU_DATA,
-  "Necklace": DEFAULT_MENU_DATA,
-  "Gifting": DEFAULT_MENU_DATA,
-  "Bridal": DEFAULT_MENU_DATA,
-  "Collection": DEFAULT_MENU_DATA,
-};
-
-const Logo = ({ className = "", isMobileHeader = false }: { className?: string; isMobileHeader?: boolean }) => (
-  <Link href="/" className={`flex items-center gap-2 md:gap-3 ${className}`}>
-    <Image
-      src="/Header_logo.png"
-      alt="Miraya Diamonds Icon"
-      width={60}
-      height={60}
-      priority
-      className={`${isMobileHeader ? "h-[34px]" : "h-11 md:h-12 lg:h-[52px]"} w-auto object-contain shrink-0 transition-all`}
-    />
-    <Image
-      src="/Header_logo_mb.png"
-      alt="Miraya Diamonds Text"
-      width={160}
-      height={45}
-      priority
-      className={`${isMobileHeader ? "h-6" : "h-8 md:h-9 lg:h-[36px]"} w-auto object-contain shrink-0 transition-all`}
-    />
-  </Link>
-);
+function SearchField({ onSubmit }: { onSubmit?: () => void }) {
+  return (
+    <form action="/collection" role="search" onSubmit={onSubmit} className="relative w-full">
+      <input type="search" name="search" aria-label="Search jewellery" placeholder="Search for rings" className="h-10 w-full rounded-full border border-[#e1e6e2] bg-white pl-4 pr-12 text-sm text-[#454545] outline-none placeholder:text-[#888] focus-visible:ring-2 focus-visible:ring-[#b49b60]" />
+      <button type="submit" aria-label="Search" className="absolute inset-y-0 right-1 grid w-10 place-items-center rounded-full text-[#214E34] focus-visible:outline-2"><Search size={20} strokeWidth={1.8} /></button>
+    </form>
+  );
+}
 
 export function Header() {
-  const isHome = usePathname() === "/";
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
+  const drawerRef = useRef<HTMLDialogElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const activeCategory = categories.find((category) => category.label === activeMenu);
+
+  function closeDrawer() {
+    setIsMobileMenuOpen(false);
+    setExpandedMobileMenu(null);
+  }
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const drawer = drawerRef.current;
+    const previousOverflow = document.body.style.overflow;
+    drawer?.showModal();
+    document.body.style.overflow = "hidden";
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const onResize = () => {
+      if (desktop.matches) {
+        setIsMobileMenuOpen(false);
+        setExpandedMobileMenu(null);
+      }
+    };
+    desktop.addEventListener("change", onResize);
+    return () => {
+      drawer?.close();
+      document.body.style.overflow = previousOverflow;
+      desktop.removeEventListener("change", onResize);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <>
-      <header className={`relative z-40 w-full ${isHome ? "bg-white xl:bg-[#214E34]" : "bg-white"}`}>
-        {/* Top Bar */}
-        <div className="py-4">
+      <header className="relative z-40 w-full bg-white">
+        <div className="bg-[#244e38] py-3">
           <Container>
-            {/* Mobile Layout */}
-            <div className="flex items-center justify-between xl:hidden">
-              <div className="flex items-center gap-4 text-[#214E34]">
-                <button 
-                  className="hover:text-[#214E34]/80 transition-colors"
-                  onClick={() => setIsMobileMenuOpen(true)}
-                >
-                  <Menu size={24} strokeWidth={2} />
-                </button>
-                <button className="hover:text-[#214E34]/80 transition-colors">
-                  <Search size={22} strokeWidth={2} />
-                </button>
-              </div>
-
-              <Logo isMobileHeader className="flex-1 justify-center" />
-
-              <div className="flex items-center gap-4 text-[#214E34]">
-                <button className="hover:text-[#214E34]/80 transition-colors">
-                  <Heart size={22} strokeWidth={2} />
-                </button>
-                <button className="hover:text-[#214E34]/80 transition-colors">
-                  <ShoppingBag size={22} strokeWidth={2} />
-                </button>
-              </div>
+            <div className="flex items-center justify-between gap-3 lg:hidden">
+              <button type="button" aria-label="Open navigation" aria-haspopup="dialog" aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(true)} className="grid size-10 shrink-0 place-items-center text-white"><Menu size={23} /></button>
+              <Logo compact />
+              <Suspense fallback={<span className="size-10 shrink-0" />}><AccountButton /></Suspense>
             </div>
-
-            {/* Desktop Layout */}
-            <div className="hidden xl:flex items-center justify-between gap-8">
-              {/* Logo */}
-              <Logo className="shrink-0" />
-
-              {/* Search Bar */}
-              <div className="flex-1 max-w-2xl">
-                <div className="relative w-full">
-                  <input
-                    type="text"
-                    placeholder="Search for rings"
-                    className="w-full rounded-full border border-[#214E34] py-2.5 pl-5 pr-12 text-sm text-gray-700 outline-none focus:ring-1 focus:ring-[#214E34] placeholder:text-gray-400 bg-white"
-                  />
-                  <button className="absolute right-4 top-1/2 -translate-y-1/2 text-[#214E34] hover:text-[#214E34]/80 transition-colors">
-                    <Search size={20} strokeWidth={1.5} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Icons */}
-              <div className={`flex shrink-0 items-center gap-6 ${isHome ? "text-white" : "text-[#214E34]"}`}>
-                <button className="hover:text-[#214E34]/80 transition-colors">
-                  <Heart size={22} strokeWidth={1.5} />
-                </button>
-                <Link
-                  href="/dashboard"
-                  aria-label="Go to dashboard"
-                  className="hover:text-[#214E34]/80 transition-colors"
-                >
-                  <User size={22} strokeWidth={1.5} />
-                </Link>
-                <button className="hover:text-[#214E34]/80 transition-colors">
-                  <ShoppingBag size={22} strokeWidth={1.5} />
-                </button>
+            <div className="hidden items-center justify-between gap-8 lg:flex">
+              <Logo />
+              <div className="mx-auto w-full max-w-[560px]"><SearchField /></div>
+              <div className="flex shrink-0 items-center gap-5 text-white">
+                <Suspense fallback={<span className="size-10 shrink-0" />}><AccountButton /></Suspense>
+                <button type="button" aria-label="Your wishlist" className="rounded-full hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4"><Heart size={20} strokeWidth={1.5} /></button>
+                <Link href="/contact#consultation-booking" className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-4 text-xs font-medium text-[#214E34] hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><PhoneCall size={15} strokeWidth={1.5} />Schedule a Call<ChevronRight size={14} /></Link>
               </div>
             </div>
           </Container>
         </div>
-
-        <div className={`hidden w-full text-white xl:block ${isHome ? "bg-[#153b29]" : "bg-[#214E34]"}`}>
+        <div className="border-b border-[#f0eeea] px-4 py-2 lg:hidden"><SearchField /></div>
+        <div className="hidden lg:block">
           <Container>
-            <div className="relative w-full" onMouseLeave={() => setActiveMenu(null)}>
-              <nav className="flex items-center justify-center gap-6 py-3">
-                {NAV_LINKS.map((link) => {
-                  const isActive = activeMenu === link;
-                  const hasDropdown = !!MEGA_MENU_DATA[link];
-
-                  return (
-                    <div key={link} className="relative">
-                      <Link
-                        href={collectionNavHref(link)}
-                        className={`flex items-center gap-1 px-4 py-1.5 text-sm text-white transition-colors hover:text-white/90 ${isActive ? "font-semibold" : "font-medium"}`}
-                        onMouseEnter={() => hasDropdown ? setActiveMenu(link) : setActiveMenu(null)}
-                        onFocus={() => hasDropdown && setActiveMenu(link)}
-                        onClick={() => setActiveMenu(null)}
-                      >
-                        {link}
-                        {isActive ? (
-                          <ChevronUp size={16} strokeWidth={2} />
-                        ) : (
-                          <ChevronDown size={16} strokeWidth={2} />
-                        )}
-                      </Link>
-                    </div>
-                  );
-                })}
+            <div ref={navRef} className="relative" onMouseLeave={() => setActiveMenu(null)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setActiveMenu(null); }} onKeyDown={(event) => {
+              if (event.key === "Escape") {
+                const trigger = navRef.current?.querySelector<HTMLButtonElement>('[aria-expanded="true"]');
+                trigger?.focus();
+                setActiveMenu(null);
+              }
+            }}>
+              <nav aria-label="Main navigation" className="flex items-center justify-center gap-8 py-2 xl:gap-12">
+                {[...categories.map(({ label }) => label), "Shop by Budget"].map((label) => (
+                  <div key={label} className={label === "Shop by Budget" ? "relative" : ""}>
+                    <button type="button" aria-expanded={activeMenu === label} aria-controls={label === "Shop by Budget" ? "budget-menu" : "category-menu"} onMouseEnter={() => setActiveMenu(label)} onFocus={() => setActiveMenu(label)} onClick={() => setActiveMenu(label)} className={`flex min-h-8 items-center gap-1 border-b py-1 text-[11px] font-semibold uppercase text-[#214E34] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 ${activeMenu === label ? "border-[#214E34]" : "border-transparent hover:border-[#214E34]"}`}>
+                      {label}<ChevronDown size={13} strokeWidth={1.5} />
+                    </button>
+                    {label === "Shop by Budget" && activeMenu === label && (
+                      <div id="budget-menu" className="absolute left-1/2 top-full z-50 w-[210px] -translate-x-1/2 rounded-b-xl border border-t-0 border-[#eadfdf] bg-white px-5 pb-5 pt-6 shadow-[0_12px_24px_rgba(42,29,29,0.12)]">
+                        <h3 className="mb-3 border-b border-[#efe2e2] pb-2 text-sm font-bold tracking-wide text-[#214E34]">SHOP BY BUDGET</h3>
+                        <ul className="space-y-3">{budgetRanges.map((range) => <li key={range.value}><Link href={`/collection?price=${range.value}`} onClick={() => setActiveMenu(null)} className="block text-sm text-[#555] hover:text-[#214E34]">{range.label}</Link></li>)}</ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+                <Link href="/collection" onMouseEnter={() => setActiveMenu(null)} onFocus={() => setActiveMenu(null)} className="py-2 text-[11px] font-semibold uppercase text-[#214E34]">Diwali</Link>
               </nav>
-
-              {/* Desktop Mega Menu Dropdown */}
-              {activeMenu && MEGA_MENU_DATA[activeMenu] && (
-                <div className="absolute left-0 top-full z-50 w-full overflow-hidden rounded-b-2xl border border-t-0 border-[#eadfdf] bg-white shadow-[0_18px_32px_rgba(42,29,29,0.13)]">
-                  <div className="grid grid-cols-5 gap-10 px-10 py-10">
-                    {[[0], [1, 2], [3], [4], [5, 6]].map((group, index) => (
-                      <div key={index} className="space-y-7">
-                        {group.map((columnIndex) => {
-                          const column = MEGA_MENU_DATA[activeMenu][columnIndex];
-                          return (
-                            <div key={column.title}>
-                              <h3 className="mb-4 border-b border-[#efe2e2] pb-2 text-sm font-bold tracking-wide text-[#214E34]">{column.title}</h3>
-                              <ul className="space-y-3">
-                                {column.items.map((item) => (
-                                  <li key={item}><Link href={collectionMenuHref(activeMenu, column.title, item)} onClick={() => setActiveMenu(null)} className="text-sm text-[#555] transition-colors hover:text-[#214E34]">{item}</Link></li>
-                                ))}
-                              </ul>
-                            </div>
-                          );
-                        })}
+              {activeCategory && (
+                <div id="category-menu" className="absolute inset-x-0 top-full z-50 rounded-b-2xl border border-t-0 border-[#eadfdf] bg-white shadow-[0_18px_32px_rgba(42,29,29,0.13)]">
+                  <div className="grid grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,1.95fr)] items-start gap-7 p-8 xl:gap-10 xl:p-10">
+                    {menuColumns(activeCategory.label).map((groups, index) => (
+                      <div key={index} className="space-y-8">
+                        {groups.map((group) => (
+                          <div key={group.title}>
+                            <h3 className="mb-4 border-b border-[#efe2e2] pb-2 text-xs font-bold tracking-wide text-[#214E34] xl:text-sm">{group.title}</h3>
+                            <ul className="space-y-3">{group.items.map((item) => <li key={item}><Link href={collectionMenuHref(activeCategory.nav, group.title, item)} onClick={() => setActiveMenu(null)} className="block text-xs text-[#555] transition-colors hover:text-[#214E34] xl:text-sm">{item}</Link></li>)}</ul>
+                          </div>
+                        ))}
                       </div>
                     ))}
+                    <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
+                      <Image key={activeCategory.image.src} src={activeCategory.image} alt={`${activeCategory.label} by Miraya Diamonds`} fill sizes="(max-width: 1280px) 25vw, 320px" className="object-cover" />
+                      <Link href="/contact" onClick={() => setActiveMenu(null)} className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34] transition-colors hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">Customize</Link>
+                    </div>
                   </div>
                 </div>
               )}
@@ -228,93 +160,42 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/50 z-50 xl:hidden transition-opacity"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Mobile Menu Drawer */}
-      <div 
-        className={`fixed inset-y-0 left-0 w-[85%] max-w-[340px] bg-white z-50 transform transition-transform duration-300 xl:hidden flex flex-col ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        <div className="p-5 flex flex-col items-center border-b border-gray-100 relative shrink-0">
-          <Logo className="justify-center mb-6 w-full" />
-          
-          <div className="w-full bg-[#E36675] rounded-xl p-5 text-white shadow-sm relative overflow-hidden">
-            <div className="absolute top-3 right-3 text-white/30">
-              <Sparkles size={32} />
-            </div>
-            <p className="text-[11px] font-semibold opacity-90 mb-1 tracking-wider uppercase">Welcome To</p>
-            <h3 className="text-xl font-medium mb-1.5 font-serif">Miraya Diamonds</h3>
-            <p className="text-xs opacity-90 mb-5 leading-relaxed">Sign in to unlock personalized benefits and a seamless jewellery experience.</p>
-            <div className="flex gap-3">
-              <button className="flex-1 py-2 border border-white text-white rounded-full text-sm font-medium hover:bg-white/10 transition-colors">Sign Up</button>
-              <button className="flex-1 py-2 bg-white text-[#214E34] rounded-full text-sm font-medium hover:bg-white/90 transition-colors">Sign In</button>
-            </div>
+      <dialog ref={drawerRef} aria-labelledby="mobile-menu-title" onCancel={closeDrawer} onClick={(event) => { if (event.target === event.currentTarget) closeDrawer(); }} className="fixed inset-y-0 left-0 m-0 h-dvh max-h-none w-[min(90vw,380px)] max-w-none border-0 bg-white p-0 text-[#353333] backdrop:bg-black/45">
+        <div className="flex h-full flex-col">
+          <div className="flex shrink-0 items-center justify-between border-b border-[#eee] p-4">
+            <h2 id="mobile-menu-title" className="sr-only">Shop jewellery</h2>
+            <Logo compact />
+            <button type="button" aria-label="Close navigation" onClick={closeDrawer} className="grid size-10 place-items-center rounded-full text-[#214E34] focus-visible:outline-2"><X size={22} /></button>
           </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto">
-          {NAV_LINKS.map(link => {
-            const hasDropdown = !!MEGA_MENU_DATA[link];
-            const isExpanded = expandedMobileMenu === link;
-
-            return (
-              <div key={link} className="border-b border-gray-100 last:border-0 flex flex-col">
-                <div className="flex items-center justify-between bg-white hover:bg-gray-50">
-                  <Link href={collectionNavHref(link)} onClick={() => { setIsMobileMenuOpen(false); setExpandedMobileMenu(null); }} className="flex min-w-0 flex-1 items-center gap-4 px-6 py-4">
-                    {MOBILE_MENU_ICONS[link] || <Circle size={20} strokeWidth={1.5} className="text-[#214E34]" />}
-                    <span className="text-[15px] text-gray-800 font-serif tracking-wide">{link}</span>
-                  </Link>
-                  {hasDropdown ? (
-                    <button type="button" aria-label={`${isExpanded ? "Collapse" : "Expand"} ${link} menu`} aria-expanded={isExpanded} onClick={() => setExpandedMobileMenu(isExpanded ? null : link)} className="grid size-12 shrink-0 place-items-center text-[#214E34]">
-                      {isExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                    </button>
-                  ) : null}
-                </div>
-
-                {/* Mobile Accordion Dropdown Content */}
-                {isExpanded && hasDropdown && (
-                  <div className="flex flex-col gap-6 border-t border-gray-100 bg-white px-6 py-4 shadow-[inset_0_6px_10px_rgba(42,29,29,0.04)]">
-                    {MEGA_MENU_DATA[link].map(column => (
-                      <div key={column.title}>
-                        <h4 className="text-xs font-bold text-[#214E34] mb-3 uppercase tracking-wide">
-                          {column.title}
-                        </h4>
-                        <ul className="flex flex-col gap-2 pl-1">
-                          {column.items.map(item => (
-                            <li key={item}>
-                              <Link 
-                                href={collectionMenuHref(link, column.title, item)}
-                                onClick={() => { setIsMobileMenuOpen(false); setExpandedMobileMenu(null); }}
-                                className="text-[14px] text-gray-600 py-1 block hover:text-[#214E34] transition-colors"
-                              >
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
+          <div className="flex-1 overflow-y-auto overscroll-contain">
+            {categories.map((category) => (
+              <div key={category.label} className="border-b border-[#eee]">
+                <button type="button" aria-expanded={expandedMobileMenu === category.label} aria-controls={`mobile-${category.nav.replaceAll(" ", "-")}`} onClick={() => setExpandedMobileMenu(expandedMobileMenu === category.label ? null : category.label)} className="flex min-h-14 w-full items-center justify-between px-5 text-sm font-semibold text-[#214E34]">{category.label}<ChevronDown size={16} className={expandedMobileMenu === category.label ? "rotate-180" : ""} /></button>
+                {expandedMobileMenu === category.label && (
+                  <div id={`mobile-${category.nav.replaceAll(" ", "-")}`} className="space-y-6 px-5 pb-6">
+                    {menuColumns(category.label).flat().map((group) => (
+                      <div key={group.title}>
+                        <h3 className="mb-3 border-b border-[#efe2e2] pb-2 text-xs font-bold tracking-wide text-[#214E34]">{group.title}</h3>
+                        <ul>{group.items.map((item) => <li key={item}><Link href={collectionMenuHref(category.nav, group.title, item)} onClick={closeDrawer} className="block py-2 text-sm text-[#555]">{item}</Link></li>)}</ul>
                       </div>
                     ))}
+                    <Link href="/contact" onClick={closeDrawer} className="relative block overflow-hidden rounded-xl">
+                      <Image src={category.image} alt={`${category.label} by Miraya Diamonds`} sizes="330px" className="h-auto w-full" />
+                      <span className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34]">Customize</span>
+                    </Link>
                   </div>
                 )}
               </div>
-            );
-          })}
+            ))}
+            <div className="border-b border-[#eee]">
+              <button type="button" aria-expanded={expandedMobileMenu === "budget"} aria-controls="mobile-budget" onClick={() => setExpandedMobileMenu(expandedMobileMenu === "budget" ? null : "budget")} className="flex min-h-14 w-full items-center justify-between px-5 text-sm font-semibold text-[#214E34]">Shop by Budget<ChevronDown size={16} className={expandedMobileMenu === "budget" ? "rotate-180" : ""} /></button>
+              {expandedMobileMenu === "budget" && <ul id="mobile-budget" className="px-5 pb-4">{budgetRanges.map((range) => <li key={range.value}><Link href={`/collection?price=${range.value}`} onClick={closeDrawer} className="block py-3 text-sm text-[#555]">{range.label}</Link></li>)}</ul>}
+            </div>
+            <Link href="/collection" onClick={closeDrawer} className="block border-b border-[#eee] px-5 py-4 text-sm font-semibold text-[#214E34]">Diwali</Link>
+          </div>
+          <Link href="/contact#consultation-booking" onClick={closeDrawer} className="m-5 inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-[#214E34] px-5 py-3 text-sm font-medium text-white"><PhoneCall size={16} />Schedule a Call<ChevronRight size={16} /></Link>
         </div>
-
-        <div className="p-6 mt-auto shrink-0 border-t border-gray-50">
-          <button className="w-full flex items-center justify-center gap-2 py-3.5 bg-[#FFF0F2] text-[#D43F53] rounded-xl text-[15px] font-semibold hover:bg-[#FFE5E8] transition-colors">
-            <LogOut size={18} />
-            Log Out
-          </button>
-        </div>
-      </div>
+      </dialog>
     </>
   );
 }

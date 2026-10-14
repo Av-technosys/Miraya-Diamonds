@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+import { shadcn } from "@clerk/ui/themes";
 import { Inter, Cormorant_Garamond, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/common/header";
@@ -55,9 +57,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        <Header />
-        <div className="flex-1">{children}</div>
-        <ConditionalFooter />
+        <ClerkProvider
+          signInUrl="/sign-in"
+          signUpUrl="/sign-up"
+          signInFallbackRedirectUrl="/dashboard"
+          signInForceRedirectUrl="/dashboard"
+          signUpFallbackRedirectUrl="/dashboard"
+          signUpForceRedirectUrl="/dashboard"
+          appearance={{ theme: shadcn, variables: { colorPrimary: "#214E34" } }}
+        >
+          <Header />
+          <div className="flex-1">{children}</div>
+          <ConditionalFooter />
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -64,8 +64,8 @@ export function HomeBestSellerCarousel({ items }: { items: BestSeller[] }) {
         const cardCenter = index * step + cardWidth / 2 - offsetRef.current;
         if (cardCenter < -cardWidth || cardCenter > viewportWidth + cardWidth) continue;
         const normalized = Math.max(-1.4, Math.min(1.4, (cardCenter - centerX) / curveWidth));
-        const rotation = normalized * 4.8;
-        const archY = normalized * normalized * 32;
+        const rotation = normalized * 6.8;
+        const archY = normalized * normalized * 52;
         const scale = hoveredIndexRef.current === index ? 1.04 : 1;
         cards[index].style.transform = `translate3d(0, ${archY}px, 0) rotate(${rotation}deg) scale(${scale})`;
       }
@@ -109,7 +109,7 @@ export function HomeBestSellerCarousel({ items }: { items: BestSeller[] }) {
     <div ref={sectionRef} className="w-full">
       <div
         ref={viewportRef}
-        className={`overflow-hidden py-10 ${reduceMotion ? "overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : ""}`}
+        className={`overflow-hidden pb-[clamp(3rem,6vw,7rem)] pt-10 ${reduceMotion ? "overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" : ""}`}
         onPointerEnter={(event) => { if (event.pointerType === "mouse") targetSpeedRef.current = hoverSpeed; }}
         onPointerLeave={(event) => { if (event.pointerType === "mouse") { targetSpeedRef.current = normalSpeed; hoveredIndexRef.current = -1; } }}
         onFocusCapture={() => { targetSpeedRef.current = 0; }}

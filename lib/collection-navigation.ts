@@ -1,5 +1,6 @@
 const navFilters: Record<string, Record<string, string>> = {
   Rings: { category: "Rings" },
+  Kids: { shopFor: "Kids" },
   "Ear Rings": { category: "Earrings" },
   Bracelet: { category: "Bracelets" },
   Bangles: { category: "Bangles" },
@@ -36,7 +37,7 @@ export function collectionMenuHref(nav: string, column: string, item: string) {
       break;
     case "METAL & STONE":
       if (["Diamond", "Gemstone", "Pearl"].includes(item)) filters.stone = item;
-      if (["Gold", "Rose Gold", "Plain Gold"].includes(item)) filters.material = item;
+      if (["Gold", "White Gold", "Rose Gold", "Plain Gold"].includes(item)) filters.material = item;
       if (item === "Silver") filters.material = "Sterling Silver";
       if (item === "Solitaire") { filters.category = "Rings"; filters.stone = "Diamond"; }
       break;

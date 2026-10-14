@@ -23,10 +23,18 @@ export const filterSections: { key: FilterGroup; label: string; options: string[
   { key: "collection", label: "Collection", options: ["New Arrivals", "Best Sellers", "Trending"] },
   { key: "style", label: "Style", options: ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"] },
   { key: "karatage", label: "Karatage", options: ["9kt", "14kt", "18kt", "22kt"] },
-  { key: "shopFor", label: "Shop For", options: ["Women", "Men", "Unisex"] },
+  { key: "shopFor", label: "Shop For", options: ["Women", "Men", "Unisex", "Kids"] },
+];
+
+export const budgetRanges = [
+  { value: "25000-50000", label: "Rs. 25k to 50k" },
+  { value: "50000-100000", label: "Rs. 50k to 100k" },
+  { value: "100000-500000", label: "Rs. 100k to 500k" },
+  { value: "500000-plus", label: "Above Rs. 500k" },
 ];
 
 export const priceRanges = [
+  ...budgetRanges,
   { value: "under-5000", label: "Under ₹5,000" },
   { value: "5000-10000", label: "₹5,000 - ₹10,000" },
   { value: "10000-25000", label: "₹10,000 - ₹25,000" },
