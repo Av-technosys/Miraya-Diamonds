@@ -47,6 +47,11 @@ function matchesFilters(item: (typeof products)[number], filters: Filters) {
   if (filters.price === "10000-25000" && (item.price < 10000 || item.price >= 25000)) return false;
   if (filters.price === "25000-plus" && item.price < 25000) return false;
   if (filters.price === "90000-plus" && item.price <= 90000) return false;
+  if (filters.price === "500000-plus" && item.price <= 500000) return false;
+  if (["25000-50000", "50000-100000", "100000-500000"].includes(filters.price)) {
+    const [min, max] = filters.price.split("-").map(Number);
+    if (item.price < min || (max === 500000 ? item.price > max : item.price >= max)) return false;
+  }
   return (["material", "stone", "occasion", "collection", "style", "karatage", "shopFor"] as const).every((key) => !filters[key].length || filters[key].includes(item[key]));
 }
 

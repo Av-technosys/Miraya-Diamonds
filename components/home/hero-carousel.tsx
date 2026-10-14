@@ -5,10 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
+import heroBanner1 from "@/public/Home/herobanner1.png";
+import heroBanner1Mobile from "@/public/Home/herobanner1_mb.png";
+import heroBanner2 from "@/public/Home/herobanner2.png";
+import heroBanner2Mobile from "@/public/Home/herobanner2_mb.png";
+import heroBanner3 from "@/public/Home/herobanner3.png";
+import heroBanner3Mobile from "@/public/Home/herobanner3_mb.png";
+
 const slides = [
-  { image: "/Home/herobanner1.png", mobileImage: "/Home/herobanner1_mb.png", label: "Special Occasions jewellery collection" },
-  { image: "/Home/herobanner2.png", mobileImage: "/Home/herobanner2_mb.png", label: "Discover Zen jewellery collection" },
-  { image: "/Home/herobanner3.png", mobileImage: "/Home/herobanner3_mb.png", label: "Explore the jewellery collection" },
+  { image: heroBanner1, mobileImage: heroBanner1Mobile, label: "Special Occasions jewellery collection" },
+  { image: heroBanner2, mobileImage: heroBanner2Mobile, label: "Discover Zen jewellery collection" },
+  { image: heroBanner3, mobileImage: heroBanner3Mobile, label: "Explore the jewellery collection" },
 ];
 
 const transitionMs = 850;
@@ -62,7 +69,7 @@ export function HeroCarousel() {
 
           return (
             <div
-              key={slide.image}
+              key={slide.image.src}
               className="absolute inset-0 overflow-hidden rounded-[10px] shadow-sm transition-[transform,box-shadow] duration-[850ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
               style={{ transform, zIndex: position === "front" ? 3 : position === "right" ? 2 : 1 }}
             >
@@ -88,7 +95,7 @@ export function HeroCarousel() {
 
         <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
           {slides.map((slide, index) => (
-            <button key={slide.image} type="button" onClick={() => goTo(index)} aria-label={`Show banner ${index + 1}`} aria-current={activeIndex === index ? "true" : undefined} disabled={isAnimating} className={`h-1.5 rounded-full transition-[width,background-color] ${activeIndex === index ? "w-6 bg-white" : "w-1.5 bg-white/60"}`} />
+            <button key={slide.image.src} type="button" onClick={() => goTo(index)} aria-label={`Show banner ${index + 1}`} aria-current={activeIndex === index ? "true" : undefined} disabled={isAnimating} className={`h-1.5 rounded-full transition-[width,background-color] ${activeIndex === index ? "w-6 bg-white" : "w-1.5 bg-white/60"}`} />
           ))}
         </div>
       </div>

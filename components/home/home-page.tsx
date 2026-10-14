@@ -3,20 +3,24 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, Gem, Heart, Leaf, Tag } from "lucide-react";
 import { Container } from "@/components/common/container";
 import { product, suiteProducts } from "@/components/pdp/product-data";
 import { HeroCarousel } from "./hero-carousel";
 import { HomeBestSellerCarousel } from "./home-best-seller-carousel";
 import { HomeTestimonialsAnimated } from "./home-testimonials-animated";
+import showcaseBanner from "@/public/Home/showcasebanner.png";
+import diamondComparisonBanner from "@/public/Home/showcasebanner2.png";
+import stayInTouchBanner from "@/public/Home/stayintouch.png";
 
 const pdpHref = `/collection/${product.slug}`;
 const categories = [
   { name: "Earrings", image: "Category1.png", href: "/collection?category=Earrings" },
   { name: "Rings", image: "Category2.png", href: "/collection?category=Rings" },
-  { name: "Pendants", image: "Category3.png", href: "/collection?category=Pendants", aspect: "aspect-square" },
-  { name: "Bracelets", image: "Category4.png", href: "/collection?category=Bracelets", aspect: "aspect-[1458/1079]" },
-  { name: "Kids", image: "Category5.png", href: "/collection?occasion=Gifting", aspect: "aspect-[1721/914]" },
+  { name: "Pendants", image: "Category3.png", href: "/collection?category=Pendants" },
+  { name: "Bracelets", image: "Category4.png", href: "/collection?category=Bracelets" },
+  { name: "Kids", image: "Category5.png", href: "/collection?occasion=Gifting" },
+  { name: "Customize", image: "Category6.png", href: "/contact" },
 ];
 const collectionItems = [suiteProducts[4], suiteProducts[1], suiteProducts[2], suiteProducts[0], suiteProducts[3]];
 const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
@@ -41,13 +45,12 @@ const reviews = [
   { name: "Meera P.", text: "The bracelet feels lovely to wear, and the details are just as beautiful up close." },
 ];
 const faqs = [
-  { category: "All", question: "What materials are your jewellery pieces made from?", answer: "Our pieces include gold, platinum and certified natural diamonds. The metal and stone details are listed on each product page." },
-  { category: "Rings", question: "How do I choose the right ring or bracelet size?", answer: "Use the size guide on the product page, or contact our atelier for help with a precise fit." },
-  { category: "Necklace", question: "How should I care for and maintain my jewellery?", answer: "Store each piece separately and clean gently with a soft cloth. Avoid harsh chemicals and remove jewellery before strenuous activity." },
-  { category: "Bracelets", question: "Do you offer returns, exchanges, or refunds?", answer: "Eligibility depends on the piece and its customization. Please read our returns policy before ordering." },
-  { category: "Earrings", question: "How long does delivery take, and can I track my order?", answer: "Delivery timing depends on your location and the piece. Our team can confirm an estimate and tracking details for your order." },
+  { question: "What materials are your jewellery pieces made from?", answer: "Our pieces include gold, platinum and certified natural diamonds. The metal and stone details are listed on each product page." },
+  { question: "How do I choose the right ring/bracelet/necklace size?", answer: "Use the size guide on the product page, or contact our atelier for help with a precise fit." },
+  { question: "How should I care for and maintain my jewellery?", answer: "Store each piece separately and clean gently with a soft cloth. Avoid harsh chemicals and remove jewellery before strenuous activity." },
+  { question: "Do you offer returns, exchanges, or refunds?", answer: "Eligibility depends on the piece and its customization. Please read our returns policy before ordering." },
+  { question: "How long does delivery take, and can I track my order?", answer: "Delivery timing depends on your location and the piece. Our team can confirm an estimate and tracking details for your order." },
 ];
-const banglesFaq = { category: "Bangles", question: "How do I find my bangle size?", answer: "Measure the widest part of your hand with your thumb tucked in, then compare it with the size guide on the product page. Our team can help if you are between sizes." };
 
 function SectionHeading({ title, subtitle }: { title: string; subtitle: string }) {
   return <div className="mb-7 text-center sm:mb-9"><h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">{title}</h2><p className="mt-1.5 text-xs text-[#898989] sm:text-sm">{subtitle}</p></div>;
@@ -68,14 +71,12 @@ function ProductTile({ item }: { item: (typeof suiteProducts)[number] }) {
 export function HomePage() {
   const [loved, setLoved] = useState(0);
   const [collectionTab, setCollectionTab] = useState("All");
-  const [faqTab, setFaqTab] = useState("All");
   const newArrivalsRef = useRef<HTMLDivElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
   const shownItems = collectionTab === "All" ? collectionItems : collectionItems.filter((item) => {
     const type = item.name.includes("Earring") ? "Earrings" : item.name.includes("Necklace") ? "Necklace" : item.name.includes("Bracelet") ? "Bracelets" : "Rings";
     return type === collectionTab;
   });
-  const visibleFaqs = faqTab === "All" ? faqs : faqTab === "Bangles" ? [banglesFaq] : faqs.filter((item) => item.category === faqTab);
 
   return <main className="overflow-hidden bg-white font-[family-name:var(--font-inter)] text-[#353333]">
     <Container className="pt-5 sm:pt-6">
@@ -83,11 +84,15 @@ export function HomePage() {
     </Container>
 
     <Container className="py-10 sm:py-16"><SectionHeading title="Shop By Category" subtitle="Discover the Art of Fine Jewellery" />
-      <div className="grid grid-cols-2 gap-3 sm:hidden">
-        {[categories[1], categories[0], categories[2], categories[3], categories[4]].map((item, index) => <Link key={item.name} href={item.href} className={`group relative overflow-hidden rounded-lg ${index === 0 ? "col-span-2 aspect-[1672/941]" : "aspect-square"}`}><Image src={`/Home/${item.image}`} alt={`${item.name} jewellery`} fill sizes={index === 0 ? "92vw" : "46vw"} className={`object-cover ${item.name === "Kids" ? "object-[65%_center]" : ""}`} /><span className="absolute bottom-3 left-3 font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold text-white underline decoration-white/80 underline-offset-4">{item.name}</span></Link>)}
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+        {categories.map((item, index) => (
+          <Link key={item.name} href={item.href} className={`group relative aspect-square overflow-hidden rounded-lg ${index < 2 ? "sm:col-span-2 sm:aspect-[1672/941]" : ""}`}>
+            <Image src={`/Home/${item.image}`} alt={`${item.name} jewellery`} fill sizes={index < 2 ? "(max-width: 640px) 46vw, (max-width: 1024px) 46vw, 600px" : "(max-width: 640px) 46vw, (max-width: 1024px) 23vw, 300px"} className={`object-cover ${item.name === "Kids" ? "object-[65%_center]" : ""}`} />
+            <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-black/65 to-transparent" />
+            <span className={`absolute bottom-3 left-3 font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold text-white underline decoration-white/80 underline-offset-4 sm:bottom-5 sm:left-6 ${index < 2 ? "sm:text-2xl" : "sm:text-xl"}`}>{item.name}</span>
+          </Link>
+        ))}
       </div>
-      <div className="hidden grid-cols-2 gap-4 sm:grid">{categories.slice(0, 2).map((item) => <Link key={item.name} href={item.href} className="group relative aspect-[1672/941] overflow-hidden rounded-lg"><Image src={`/Home/${item.image}`} alt={`${item.name} jewellery`} fill sizes="(max-width: 1024px) 46vw, 600px" className="object-cover" /><span className="absolute bottom-5 left-6 font-[family-name:var(--font-cormorant-garamond)] text-2xl font-semibold text-white underline decoration-white/80 underline-offset-4">{item.name}</span></Link>)}</div>
-      <div className="mt-4 hidden grid-cols-[1fr_1.35fr_1.88fr] items-start gap-4 sm:grid">{categories.slice(2).map((item) => <Link key={item.name} href={item.href} className={`group relative overflow-hidden rounded-lg ${item.aspect}`}><Image src={`/Home/${item.image}`} alt={`${item.name} jewellery`} fill sizes="(max-width: 1024px) 40vw, 530px" className="object-cover" /><span className="absolute bottom-5 left-6 font-[family-name:var(--font-cormorant-garamond)] text-xl font-semibold text-white underline decoration-white/80 underline-offset-4">{item.name}</span></Link>)}</div>
     </Container>
 
     <Container className="pb-10 sm:pb-20"><SectionHeading title="New Arrivals" subtitle="Explore the latest range of products" />
@@ -126,7 +131,7 @@ export function HomePage() {
 
     <section className="bg-[rgba(255,248,225,0.7216)] py-14 sm:py-20"><Container><SectionHeading title="Our Collection" subtitle="Explore the latest range of products" /><div className="mb-7 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-center">{tabs.map((tab) => <button key={tab} type="button" onClick={() => setCollectionTab(tab)} aria-pressed={collectionTab === tab} className={`shrink-0 rounded-full px-4 py-2 text-[11px] transition-colors sm:px-5 ${collectionTab === tab ? "bg-[#214E34] text-white" : "bg-white text-[#214E34] hover:bg-[#F7FFF7]"}`}>{tab}</button>)}</div><div className="relative"><div ref={collectionRef} className="flex gap-3 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-5">{shownItems.length ? shownItems.map((item) => <div key={item.image} className="w-[43%] shrink-0 sm:w-[30%] lg:w-[calc(20%_-_16px)]"><ProductTile item={item} /></div>) : <p className="w-full py-8 text-center text-sm text-neutral-600">Explore this collection in our full catalogue.</p>}</div><div className="absolute inset-y-0 -left-10 hidden items-center sm:flex"><RoundArrow direction="left" label="Previous collection item" onClick={() => collectionRef.current?.scrollBy({ left: -300, behavior: "smooth" })} /></div><div className="absolute inset-y-0 -right-10 hidden items-center sm:flex"><RoundArrow direction="right" label="Next collection item" onClick={() => collectionRef.current?.scrollBy({ left: 300, behavior: "smooth" })} /></div></div><div className="mt-6 text-center"><Link href="/collection" className="inline-flex rounded-full bg-[#214E34] px-10 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]">View All</Link></div></Container></section>
 
-    <Link href="/collection?category=Necklaces" aria-label="Explore necklaces" className="relative block aspect-[1404/514] max-sm:aspect-[3/1]"><Image src="/Home/showcasebanner.png" alt="Diamond necklace worn with an embroidered green outfit" fill sizes="100vw" className="object-cover" /></Link>
+    <Link href="/collection?category=Necklaces" aria-label="Explore necklaces" className="block"><Image src={showcaseBanner} alt="Diamond necklace worn with an embroidered green outfit" sizes="100vw" className="block h-auto w-full" /></Link>
 
     <section className="bg-[#F7FFF7] py-14 sm:py-16">
       <Container>
@@ -148,7 +153,31 @@ export function HomePage() {
       </Container>
     </section>
 
-    <div className="relative aspect-[2069/502] max-sm:aspect-[3/1]"><Image src="/Home/showcasebanner2.png" alt="Diamond earrings in the Miraya collection" fill sizes="100vw" className="object-cover" /></div>
+    <section aria-labelledby="diamond-comparison-heading" className="relative overflow-hidden bg-[#faf8f3] pb-[55vw] md:pb-0">
+      <div className="absolute inset-x-0 bottom-0 h-[55vw] md:inset-0 md:h-full">
+        <Image src={diamondComparisonBanner} alt="Rough natural diamond and polished round diamond on sunlit stone" fill sizes="100vw" className="object-cover object-right md:object-center" />
+      </div>
+      <Container className="relative z-10 py-8 md:py-9 lg:py-10">
+        <div className="max-w-[460px] text-[#214532] md:w-[45%]">
+          <h2 id="diamond-comparison-heading" className="font-[family-name:var(--font-cormorant-garamond)] text-[38px] font-semibold leading-[0.95] sm:text-[44px] lg:text-[50px]">Natural or Lab-Grown<br />Diamonds?</h2>
+          <p className="mt-4 font-[family-name:var(--font-cormorant-garamond)] text-base font-semibold italic text-[#66665e] lg:text-lg">Different origins. The same timeless brilliance.</p>
+          <ul className="mt-5 grid max-w-[400px] grid-cols-4">
+            {[
+              { icon: Gem, first: "Real", second: "Brilliance" },
+              { icon: Tag, first: "Better", second: "Value" },
+              { icon: Leaf, first: "More", second: "Sustainable" },
+              { icon: Heart, first: "Your Personal", second: "Choice" },
+            ].map(({ icon: Icon, first, second }) => (
+              <li key={first} className="relative flex flex-col items-center px-1 text-center after:absolute after:right-0 after:top-5 after:h-7 after:w-px after:bg-[#ded9cd] last:after:hidden">
+                <span className="mb-2 grid size-9 place-items-center rounded-full border border-[#dce5df] bg-[#f4f8f5]/90"><Icon size={15} strokeWidth={1.3} aria-hidden="true" /></span>
+                <span className="text-[10px] leading-tight text-[#454540]">{first}<br />{second}</span>
+              </li>
+            ))}
+          </ul>
+          <Link href="/contact" className="mt-5 inline-flex min-h-11 items-center gap-4 rounded-full bg-[#214E34] px-6 text-xs font-medium text-white shadow-sm transition-colors hover:bg-[#173d28] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34]">Explore the Difference<ArrowRight size={16} strokeWidth={1.5} /></Link>
+        </div>
+      </Container>
+    </section>
 
     <section className="py-14 sm:py-20">
       <SectionHeading title="Best Seller" subtitle="Explore timeless pieces chosen by our jewellery lovers." />
@@ -157,27 +186,37 @@ export function HomePage() {
 
     <HomeTestimonialsAnimated reviews={reviews} />
 
-    <section className="relative flex min-h-[260px] items-center sm:min-h-[340px]"><Image src="/Home/stayintouch.png" alt="Diamond ring from Miraya Diamonds" fill sizes="100vw" className="object-cover" /><Container className="relative z-10 text-white"><h2 className="font-[family-name:var(--font-cormorant-garamond)] text-4xl font-semibold sm:text-5xl">Stay in Touch</h2><p className="mt-2 max-w-56 text-xs leading-relaxed sm:text-sm">Get exclusive updates, new launches and special offers.</p><Link href="/contact" className="mt-6 inline-flex items-center gap-5 rounded-full bg-white py-1 pl-5 pr-1 text-xs text-[#555]"><span>Get in touch</span><span className="grid size-8 place-items-center rounded-full bg-[#214E34] text-white"><ArrowRight size={15} /></span></Link></Container></section>
-
-    <section className="py-14 sm:py-20">
-      <Container>
-        <SectionHeading title="Frequently Asked Questions" subtitle="Know the answers to your questions" />
-        <div className="mx-auto max-w-[660px]">
-          <div className="mb-5 flex gap-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-center sm:gap-2">
-            {tabs.map((tab) => (
-              <button key={tab} type="button" onClick={() => setFaqTab(tab)} aria-pressed={faqTab === tab} className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] sm:px-4 ${faqTab === tab ? "bg-[#214E34] text-white" : "text-[#214E34] hover:bg-[#F7FFF7]"}`}>
-                {tab}
-              </button>
-            ))}
+    <section className="relative flex min-h-[260px] items-center sm:min-h-[340px]">
+      <Image src={stayInTouchBanner} alt="Diamond ring from Miraya Diamonds" fill sizes="100vw" className="object-cover" />
+      <Container className="relative z-10 py-8 text-white sm:py-10">
+        <div className="flex max-w-[290px] flex-col items-start sm:max-w-[390px]">
+          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[30px] font-semibold uppercase leading-none sm:text-[40px]">Stay in Touch</h2>
+          <p className="mt-3 text-xs leading-tight sm:text-sm">Get exclusive updates,<br />new launches and special offers.</p>
+          <div className="mt-10 flex min-h-11 w-full max-w-[280px] items-center rounded-full bg-white p-1 pl-5 text-[#555] focus-within:ring-2 focus-within:ring-white/60 focus-within:ring-offset-2 focus-within:ring-offset-[#214E34] sm:max-w-[300px]">
+            <input type="email" aria-label="Your email address" autoComplete="email" placeholder="Enter your email" className="min-w-0 flex-1 bg-transparent pr-3 text-xs text-[#353333] outline-none placeholder:text-[#888]" />
+            <Link href="/contact" aria-label="Get in touch" className="grid size-9 shrink-0 place-items-center rounded-full bg-[#214E34] text-white transition-colors hover:bg-[#173d28] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">
+              <ArrowRight size={17} strokeWidth={1.5} />
+            </Link>
           </div>
-          <div className="space-y-2" key={faqTab}>
-            {visibleFaqs.map((item, index) => (
-              <details key={item.question} name="home-faq" className="group rounded-[22px] border border-[#898989]">
-                <summary className="flex min-h-[42px] cursor-pointer list-none items-center justify-between gap-3 px-4 text-xs [&::-webkit-details-marker]:hidden">
-                  <span>{index + 1}. {item.question}</span>
-                  <ChevronDown size={14} className="shrink-0 transition-transform group-open:rotate-180" />
+        </div>
+      </Container>
+    </section>
+
+    <section className="py-10 sm:py-14 lg:py-16">
+      <Container className="grid items-start gap-8 md:grid-cols-[minmax(0,0.44fr)_minmax(0,1fr)] md:gap-10 lg:gap-14">
+        <div className="relative mx-auto aspect-[4/5] w-full max-w-[350px] overflow-hidden rounded-lg md:max-w-none">
+          <Image src="/Home/FAQ.png" alt="Diamond ring worn on a hand beside a lace sleeve" fill sizes="(max-width: 767px) 350px, (max-width: 1280px) 28vw, 355px" className="object-cover" />
+        </div>
+        <div className="min-w-0 md:pt-6 lg:pt-8">
+          <SectionHeading title="Frequently Asked Question" subtitle="Know the answer for your questions" />
+          <div>
+            {faqs.map((item, index) => (
+              <details key={item.question} name="home-faq" className="group border-b border-[#898989]">
+                <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34] sm:text-sm [&::-webkit-details-marker]:hidden">
+                  <span className="flex gap-2"><span>{index + 1}.</span><span>{item.question}</span></span>
+                  <ChevronDown size={14} className="shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
                 </summary>
-                <p className="px-4 pb-4 pt-1 text-xs leading-relaxed text-[#666]">{item.answer}</p>
+                <p className="pb-5 pl-5 pr-7 text-xs leading-relaxed text-[#666] sm:text-sm">{item.answer}</p>
               </details>
             ))}
           </div>
