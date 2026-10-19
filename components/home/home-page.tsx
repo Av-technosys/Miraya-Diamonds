@@ -22,7 +22,13 @@ const categories = [
   { name: "Kids", image: "Category5.png", href: "/collection?occasion=Gifting" },
   { name: "Customize", image: "Category6.png", href: "/contact" },
 ];
-const collectionItems = [suiteProducts[4], suiteProducts[1], suiteProducts[2], suiteProducts[0], suiteProducts[3]];
+const collectionItems = [
+  { name: "Bhvita 22KT Earring", image: "/Home/collection1.png" },
+  { name: "Bhvita 22KT Necklace", image: "/Home/collection2.png" },
+  { name: "22KT Gold Ring", image: "/Home/collection3.png" },
+  { name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png" },
+  { name: "Bhvita 22KT Necklace", image: "/Home/collection5.png" },
+];
 const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
 const tabs = ["All", "Rings", "Necklace", "Bracelets", "Earrings", "Bangles"];
 const lovedImages = ["mostloved1.png", "mostloved3.png", "mostloved2.png"];
