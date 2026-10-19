@@ -1,5 +1,31 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Database
+
+Set `DATABASE_URL` in `.env` to your Supabase PostgreSQL connection string.
+For migrations, you can optionally set `DIRECT_URL` to a direct or session pooler
+connection; Drizzle Kit uses it instead of `DATABASE_URL` when present.
+Keep both variables private, without a `NEXT_PUBLIC_` prefix.
+
+Import the database in Node.js Server Components, Server Actions, or Route Handlers:
+
+```ts
+import { db } from "@/lib/db";
+```
+
+Define tables in `lib/db/schema.ts`. The schema starts empty; no application
+tables or migrations have been created.
+
+```bash
+npm run db:generate # Generate migrations after defining tables
+npm run db:migrate # Apply generated migrations
+npm run db:studio # Browse the database locally
+```
+
+`npm run db:push` applies schema changes directly, without migration files.
+Use generated migrations for production changes and review the SQL before applying.
+Commit the generated `drizzle/` migrations alongside schema changes.
+
 ## Getting Started
 
 First, run the development server:
