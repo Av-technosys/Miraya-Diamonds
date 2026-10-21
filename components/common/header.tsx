@@ -3,6 +3,7 @@
 import { Suspense, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight, Heart, Menu, PhoneCall, Search, X } from "lucide-react";
 import { Container } from "./container";
 import { AccountButton } from "@/components/auth/account-button";
@@ -55,6 +56,7 @@ function SearchField({ onSubmit }: { onSubmit?: () => void }) {
 }
 
 export function Header() {
+  const pathname = usePathname();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
@@ -65,6 +67,10 @@ export function Header() {
   function closeDrawer() {
     setIsMobileMenuOpen(false);
     setExpandedMobileMenu(null);
+  }
+
+  if (pathname?.startsWith("/admin")) {
+    return null;
   }
 
   useEffect(() => {
