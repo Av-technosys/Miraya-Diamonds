@@ -8,8 +8,13 @@ import { UsersTable } from "./users-table";
 import { ProductsTable } from "./products-table";
 import { EnquiriesTable } from "./enquiries-table";
 import { initialEnquiries } from "./mock-data";
+import type { AdminUserView } from "@/lib/actions/users";
 
-export function AdminPanel() {
+interface AdminPanelProps {
+  initialUsers?: AdminUserView[];
+}
+
+export function AdminPanel({ initialUsers = [] }: AdminPanelProps) {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
@@ -52,7 +57,9 @@ export function AdminPanel() {
               />
             )}
 
-            {activeTab === "users" && <UsersTable />}
+            {activeTab === "users" && (
+              <UsersTable initialUsers={initialUsers} />
+            )}
 
             {activeTab === "products" && (
               <ProductsTable
