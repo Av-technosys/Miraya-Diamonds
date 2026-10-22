@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { check, integer, jsonb, numeric, pgTable, text, uuid } from "drizzle-orm/pg-core";
+import { check, integer, jsonb, numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 type ProductDimensions = {
   height: string;
@@ -25,6 +25,8 @@ export const products = pgTable("products", {
   diamondPrice: numeric("diamond_price", { precision: 14, scale: 2 }).notNull(),
   makingCharge: numeric("making_charge", { precision: 14, scale: 2 }).notNull(),
   dimensions: jsonb("dimensions").$type<ProductDimensions>().notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 }, (table) => [
   check("products_valid_weights", sql`${table.grossWeight} >= 0 AND ${table.netGoldWeight} >= 0 AND ${table.netGoldWeight} <= ${table.grossWeight} AND ${table.totalDiamondWeight} >= 0`),
   check("products_valid_diamond_pieces", sql`${table.diamondPieces} >= 0`),
@@ -41,6 +43,11 @@ export const users = pgTable("users", {
   email: text("email").notNull().unique(),
   mobileNumber: text("mobile_number").notNull(),
   address: text("address"),
+  gender: text("gender"),
+  birthday: text("birthday"),
+  anniversary: text("anniversary"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
 });
 
 export type User = typeof users.$inferSelect;
