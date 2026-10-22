@@ -30,9 +30,20 @@ import {
   ZoomIn,
 } from "lucide-react";
 import { Container } from "@/components/common/container";
-import { product, suiteProducts } from "./product-data";
+import { product as defaultProduct, suiteProducts } from "./product-data";
 
 const green = "#214E34";
+
+const defaultMetalOptions = [
+  { name: "Rose Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E4A494_0%,#F4C5B8_48%,#E3A393_100%)]" },
+  { name: "Yellow Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E5C158_0%,#FDE599_48%,#D8B042_100%)]" },
+  { name: "Platinum", detail: "950 Pure", tone: "bg-[linear-gradient(135deg,#D6D8DC_0%,#F1F3F5_48%,#B0B4B9_100%)]" },
+];
+
+const defaultQualities = [
+  { name: "SI • IJ", detail: "Slightly Included, Warm Sparkle" },
+  { name: "VVS • EF", detail: "Very Very Slight, Colorless White" },
+];
 
 function saveBagSelection(selection: Record<string, string>) {
   try {
@@ -110,12 +121,15 @@ function Thumb({ src, active, onClick, index }: { src: string; active: boolean; 
   );
 }
 
-function ProductHero() {
+function ProductHero({ product = defaultProduct }: { product?: any }) {
+  const metalOptions = product.metalOptions || defaultMetalOptions;
+  const qualities = product.qualities || defaultQualities;
+  const gallery = product.gallery && product.gallery.length > 0 ? product.gallery : defaultProduct.gallery;
   const [activeImage, setActiveImage] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [metal, setMetal] = useState(product.metalOptions[0].name);
-  const [quality, setQuality] = useState(product.qualities[1].name);
+  const [metal, setMetal] = useState(metalOptions[0]?.name || "Rose Gold");
+  const [quality, setQuality] = useState(qualities[1]?.name || qualities[0]?.name || "VVS • EF");
   const [carat, setCarat] = useState("18K");
   const [ringSize, setRingSize] = useState("12");
   const [engraving, setEngraving] = useState(false);
@@ -129,12 +143,12 @@ function ProductHero() {
     if (!zoomOpen) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setZoomOpen(false);
-      if (event.key === "ArrowRight") setActiveImage((index) => (index + 1) % product.gallery.length);
-      if (event.key === "ArrowLeft") setActiveImage((index) => (index - 1 + product.gallery.length) % product.gallery.length);
+      if (event.key === "ArrowRight") setActiveImage((index) => (index + 1) % gallery.length);
+      if (event.key === "ArrowLeft") setActiveImage((index) => (index - 1 + gallery.length) % gallery.length);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [zoomOpen]);
+  }, [zoomOpen, gallery.length]);
 
   async function shareProduct() {
     const details = { title: product.name, url: window.location.href };
@@ -181,14 +195,14 @@ function ProductHero() {
         <div className="min-w-0">
           <div className="flex flex-col gap-5 sm:grid sm:grid-cols-[clamp(58px,6vw,78px)_minmax(0,1fr)] sm:gap-4">
             <div className="order-2 flex gap-2.5 overflow-x-auto pb-1 sm:order-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:overflow-visible sm:pb-0">
-              {product.gallery.map((src, index) => (
+              {gallery.map((src: string, index: number) => (
                 <div key={`${src}-${index}`} className="w-20 shrink-0 sm:w-full"><Thumb src={src} index={index} active={index === activeImage} onClick={() => setActiveImage(index)} /></div>
               ))}
             </div>
 
             <div className="relative order-1 aspect-square overflow-hidden rounded-lg bg-[#f2d1b9] sm:order-2 sm:aspect-[4/5] sm:rounded-none">
               <Image
-                src={product.gallery[activeImage]}
+                src={gallery[activeImage] || "/PDP/product1.jpg"}
                 alt={product.name}
                 fill
                 priority
@@ -266,7 +280,7 @@ function ProductHero() {
             <p className="shrink-0 text-[11px]">Hallmarked 750</p>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
-            {product.metalOptions.map((option) => (
+            {metalOptions.map((option: any) => (
               <button type="button" key={option.name} onClick={() => setMetal(option.name)} aria-pressed={option.name === metal} className={`flex min-h-[55px] min-w-0 items-center gap-2 rounded-md border px-2 py-2 text-left sm:px-3 ${option.name === metal ? "border-2 border-[#214E34] bg-[#F7FFF7]" : "border-transparent bg-[#F7FFF7]"}`}>
                 <span className={`size-5 shrink-0 rounded-full sm:size-6 ${option.tone}`} />
                 <span className="min-w-0">
@@ -282,7 +296,7 @@ function ProductHero() {
             <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#214E34]">Natural Solitaire</p>
           </div>
           <div className="mt-2 flex gap-2 overflow-x-auto pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0">
-            {product.qualities.map((option, index) => (
+            {qualities.map((option: any, index: number) => (
               <button type="button" key={option.name} onClick={() => setQuality(option.name)} aria-pressed={option.name === quality} className={`min-h-[57px] min-w-[210px] rounded-md border px-2 py-2 text-left sm:min-w-0 sm:px-3 ${option.name === quality ? "border-2 border-[#214E34] bg-[#F7FFF7]" : "border-transparent bg-[#F7FFF7]"}`}>
                 <span className="flex items-center justify-between gap-1 text-[11px] font-semibold uppercase tracking-[0.05em] text-[#214E34]">
                   {option.name}
@@ -333,12 +347,12 @@ function ProductHero() {
     {zoomOpen && (
       <div role="dialog" aria-modal="true" aria-label="Product images" className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4" onClick={() => setZoomOpen(false)}>
         <button type="button" autoFocus aria-label="Close product images" onClick={() => setZoomOpen(false)} className="absolute right-5 top-5 text-3xl text-white">×</button>
-        {product.gallery.length > 1 && <button type="button" aria-label="Previous image" onClick={(event) => { event.stopPropagation(); setActiveImage((index) => (index - 1 + product.gallery.length) % product.gallery.length); }} className="absolute left-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#214E34] sm:left-8"><ChevronLeft size={22} /></button>}
+        {gallery.length > 1 && <button type="button" aria-label="Previous image" onClick={(event) => { event.stopPropagation(); setActiveImage((index) => (index - 1 + gallery.length) % gallery.length); }} className="absolute left-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#214E34] sm:left-8"><ChevronLeft size={22} /></button>}
         <div className="relative h-[min(80vh,720px)] w-[min(80vw,720px)]" onClick={(event) => event.stopPropagation()}>
-          <Image src={product.gallery[activeImage]} alt={`${product.name}, view ${activeImage + 1}`} fill sizes="(max-width: 768px) 80vw, 720px" className="object-contain" />
+          <Image src={gallery[activeImage] || "/PDP/product1.jpg"} alt={`${product.name}, view ${activeImage + 1}`} fill sizes="(max-width: 768px) 80vw, 720px" className="object-contain" />
         </div>
-        {product.gallery.length > 1 && <button type="button" aria-label="Next image" onClick={(event) => { event.stopPropagation(); setActiveImage((index) => (index + 1) % product.gallery.length); }} className="absolute right-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#214E34] sm:right-8"><ChevronRight size={22} /></button>}
-        <span className="absolute bottom-5 text-xs text-white">{activeImage + 1} / {product.gallery.length}</span>
+        {gallery.length > 1 && <button type="button" aria-label="Next image" onClick={(event) => { event.stopPropagation(); setActiveImage((index) => (index + 1) % gallery.length); }} className="absolute right-3 z-10 grid size-10 place-items-center rounded-full bg-white/90 text-[#214E34] sm:right-8"><ChevronRight size={22} /></button>}
+        <span className="absolute bottom-5 text-xs text-white">{activeImage + 1} / {gallery.length}</span>
       </div>
     )}
     {infoDialog === "ar" && (
@@ -383,9 +397,10 @@ function Selector({ title, options, selected, onSelect, onGuide }: { title: stri
   );
 }
 
-function IntegritySection() {
+function IntegritySection({ product = defaultProduct }: { product?: any }) {
   const [sizeOpen, setSizeOpen] = useState(false);
   const [certificateOpen, setCertificateOpen] = useState(false);
+  const specs: [string, string][] = product.specs || defaultProduct.specs;
 
   useEffect(() => {
     if (!sizeOpen) return;
@@ -407,7 +422,7 @@ function IntegritySection() {
 
         <div className="grid gap-5 lg:grid-cols-3">
           <div className="rounded-xl border border-[#eadedd] bg-white p-6 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
-            {product.specs.map(([label, value]) => (
+            {specs.map(([label, value]) => (
               <div key={label} className="flex justify-between gap-4 border-b border-neutral-200 py-2.5 text-xs last:border-0">
                 <span className="text-neutral-500">{label}</span>
                 <span className="text-right font-medium text-[#201f1f]">{value}</span>
@@ -543,11 +558,13 @@ function LegacyAndSuite() {
   );
 }
 
-export function ProductDetailPage() {
+export function ProductDetailPage({ initialProduct }: { initialProduct?: any }) {
+  const currentProduct = initialProduct ? { ...defaultProduct, ...initialProduct } : defaultProduct;
+
   return (
     <main className="bg-white font-[family-name:var(--font-inter)] text-[#353333]">
-      <ProductHero />
-      <IntegritySection />
+      <ProductHero product={currentProduct} />
+      <IntegritySection product={currentProduct} />
       <LegacyAndSuite />
     </main>
   );

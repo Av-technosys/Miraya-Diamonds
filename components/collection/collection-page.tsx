@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Heart, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/container";
 import { product, suiteProducts } from "@/components/pdp/product-data";
+import type { PublicCollectionProduct } from "@/lib/actions/products";
 import { FilterDrawer } from "./filter-drawer";
 import { categoryOptions, collectionFilterUrl, emptyFilters, type Filters } from "./filter-state";
 import { SortMenu, type Sort } from "./sort-menu";
@@ -16,7 +17,25 @@ const cardOrder = [4, 2, 1, 0, 3, 1, 2, 4, 0, 3, 0, 3, 2, 1, 4];
 const productTypes: Category[] = ["Bracelets", "Necklaces", "Rings", "Necklaces", "Earrings"];
 const desktopPageSize = 15;
 const mobilePageSize = 6;
-const products = [...cardOrder, ...[...cardOrder].reverse()].map((suiteIndex, index) => ({
+
+export interface CollectionItem {
+  id: string;
+  name: string;
+  image: string;
+  type: string;
+  price: number;
+  oldPrice: number;
+  material: string;
+  stone: string;
+  occasion: string;
+  collection: string;
+  style: string;
+  karatage: string;
+  shopFor: string;
+  slug?: string;
+}
+
+const staticFallbackProducts: CollectionItem[] = [...cardOrder, ...[...cardOrder].reverse()].map((suiteIndex, index) => ({
   id: `collection-${index + 1}`,
   ...suiteProducts[suiteIndex],
   type: productTypes[suiteIndex],
@@ -40,7 +59,7 @@ const products = [...cardOrder, ...[...cardOrder].reverse()].map((suiteIndex, in
   } : {}),
 }));
 
-function matchesFilters(item: (typeof products)[number], filters: Filters) {
+function matchesFilters(item: CollectionItem, filters: Filters) {
   if (filters.categories.length && !filters.categories.includes(item.type)) return false;
   if (filters.price.startsWith("under-") && item.price >= Number(filters.price.slice(6))) return false;
   if (filters.price === "5000-10000" && (item.price < 5000 || item.price >= 10000)) return false;
@@ -55,7 +74,7 @@ function matchesFilters(item: (typeof products)[number], filters: Filters) {
   return (["material", "stone", "occasion", "collection", "style", "karatage", "shopFor"] as const).every((key) => !filters[key].length || filters[key].includes(item[key]));
 }
 
-function saveToBag(item: (typeof products)[number]) {
+function saveToBag(item: CollectionItem) {
   try {
     const existing = JSON.parse(window.localStorage.getItem("miraya-pdp-bag") || "[]");
     const bag = Array.isArray(existing) ? existing : [];
@@ -67,7 +86,13 @@ function saveToBag(item: (typeof products)[number]) {
   }
 }
 
-export function CollectionPage({ initialFilters }: { initialFilters: Filters }) {
+export function CollectionPage({
+  initialFilters,
+  initialProducts = [],
+}: {
+  initialFilters: Filters;
+  initialProducts?: PublicCollectionProduct[];
+}) {
   const gridRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
   const [appliedFilters, setAppliedFilters] = useState<Filters>(initialFilters);
@@ -79,6 +104,13 @@ export function CollectionPage({ initialFilters }: { initialFilters: Filters }) 
   const [bagItems, setBagItems] = useState<string[]>([]);
   const [savedItems, setSavedItems] = useState<string[]>([]);
   const [message, setMessage] = useState("");
+
+  const products: CollectionItem[] = useMemo(() => {
+    if (initialProducts && initialProducts.length > 0) {
+      return initialProducts;
+    }
+    return staticFallbackProducts;
+  }, [initialProducts]);
   const closeFilters = useCallback(() => {
     setFilterOpen(false);
     filterButtonRef.current?.focus();
@@ -176,7 +208,7 @@ export function CollectionPage({ initialFilters }: { initialFilters: Filters }) 
         <div ref={gridRef} className="grid scroll-mt-5 grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
           {visible.map((item) => (
             <article key={item.id} className="relative min-w-0 rounded-lg bg-white p-1.5 shadow-[0_6px_24px_rgba(33,78,52,0.07)]">
-              <Link href={`/collection/${product.slug}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
+              <Link href={`/collection/${item.slug || product.slug}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
               <div className="relative aspect-square overflow-hidden rounded-[5px] bg-[#F7F7F7]">
                 <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
               </div>
