@@ -22,6 +22,10 @@ const tabMeta: Record<AdminTab, { title: string; subtitle: string }> = {
     title: "Diamond Jewellery Catalogue",
     subtitle: "Manage solitaire rings, necklaces, karats, and diamond stocks",
   },
+  categories: {
+    title: "Jewellery Categories",
+    subtitle: "Manage navigation categories, banners, priorities, and collection redirect URLs",
+  },
   enquiries: {
     title: "Enquiries",
     subtitle: "Customer design briefs, appointment requests & custom quotes",

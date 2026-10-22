@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   Users,
   Gem,
+  Layers,
   MessageSquareText,
   ExternalLink,
   Sparkles,
@@ -14,7 +15,7 @@ import {
   X,
 } from "lucide-react";
 
-export type AdminTab = "dashboard" | "users" | "products" | "enquiries";
+export type AdminTab = "dashboard" | "users" | "products" | "categories" | "enquiries";
 
 interface AdminSidebarProps {
   activeTab: AdminTab;
@@ -46,6 +47,11 @@ export function AdminSidebar({
       id: "products" as AdminTab,
       label: "Diamond Catalogue",
       icon: Gem,
+    },
+    {
+      id: "categories" as AdminTab,
+      label: "Categories",
+      icon: Layers,
     },
     {
       id: "enquiries" as AdminTab,

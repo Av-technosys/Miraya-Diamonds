@@ -94,3 +94,36 @@ export const users = pgTable("users", {
 
 export type User = typeof users.$inferSelect;
 export type NewUser = typeof users.$inferInsert;
+
+// ================= CATEGORY =================
+
+export const category = pgTable("categories", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: varchar("name").notNull(),
+  slug: varchar("slug").unique().notNull(),
+  redirectSlug: varchar("redirect_slug"),
+  bannerImage: varchar("banner_image"),
+  description: varchar("description"),
+  priority: integer("priority").default(1),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const categories = category;
+
+export type Category = typeof category.$inferSelect;
+export type NewCategory = typeof category.$inferInsert;
+
+// ================= CONTACT US =================
+
+export const contactUs = pgTable("contact_us", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  name: varchar("name"),
+  email: varchar("email"),
+  phone: varchar("phone"),
+  message: text("message"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type ContactUs = typeof contactUs.$inferSelect;
+export type NewContactUs = typeof contactUs.$inferInsert;
