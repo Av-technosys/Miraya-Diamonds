@@ -1,39 +1,81 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import {
   Search,
   Plus,
   Gem,
-  Sparkles,
   Trash2,
   Edit2,
   X,
   FileCode2,
   Eye,
-  Scale,
   Ruler,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  ImageIcon,
+  RefreshCw,
 } from "lucide-react";
-import { initialProducts, type AdminProduct } from "./mock-data";
+import { initialProducts as fallbackProducts, type AdminProduct } from "./mock-data";
+import {
+  getAdminProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "@/lib/actions/products";
 
 interface ProductsTableProps {
+  initialProducts?: AdminProduct[];
   isAddModalOpenInitially?: boolean;
   onCloseAddModal?: () => void;
 }
 
+function normalizeJewelleryType(type: string): string {
+  const t = (type || "").toLowerCase().trim();
+  if (t === "ring" || t === "rings") return "ring";
+  if (t === "necklace" || t === "necklaces" || t === "pendant" || t === "pendants") return "necklace";
+  if (t === "earring" || t === "earrings") return "earring";
+  if (t === "bracelet" || t === "bracelets" || t === "bangle" || t === "bangles") return "bracelet";
+  if (t === "solitaire" || t === "solitaires") return "solitaire";
+  return t;
+}
+
 export function ProductsTable({
+  initialProducts = [],
   isAddModalOpenInitially = false,
   onCloseAddModal,
 }: ProductsTableProps) {
-  const [products, setProducts] = useState<AdminProduct[]>(initialProducts);
+  const router = useRouter();
+  const [products, setProducts] = useState<AdminProduct[]>(() =>
+    initialProducts.length > 0 ? initialProducts : fallbackProducts
+  );
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [stockFilter, setStockFilter] = useState("All");
   const [isAddModalOpen, setIsAddModalOpen] = useState(isAddModalOpenInitially);
   const [selectedProduct, setSelectedProduct] = useState<AdminProduct | null>(null);
+  const [editingProduct, setEditingProduct] = useState<AdminProduct | null>(null);
 
-  // Add Product Form State matching exact user sample schema
+  // Loading & notification states
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [notification, setNotification] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  // Sync products when initialProducts prop updates from server revalidation
+  useEffect(() => {
+    if (initialProducts && initialProducts.length > 0) {
+      setProducts(initialProducts);
+    }
+  }, [initialProducts]);
+
+  // Form State for Add / Edit
   const [name, setName] = useState("");
   const [sku, setSku] = useState("");
   const [description, setDescription] = useState("");
@@ -52,6 +94,78 @@ export function ProductsTable({
   const [dimWidth, setDimWidth] = useState("8.00");
   const [dimLength, setDimLength] = useState("20.00");
   const [stock, setStock] = useState("10");
+  const [sellingPrice, setSellingPrice] = useState("48250");
+  const [imageUrl, setImageUrl] = useState("/customize/custom1.png");
+
+  function showNotification(type: "success" | "error", message: string) {
+    setNotification({ type, message });
+    setTimeout(() => setNotification(null), 5000);
+  }
+
+  async function handleManualRefresh() {
+    setIsRefreshing(true);
+    try {
+      const fresh = await getAdminProducts();
+      if (fresh && fresh.length > 0) {
+        setProducts(fresh);
+        showNotification("success", `Catalogue refreshed with ${fresh.length} pieces from live database.`);
+      }
+    } catch (err) {
+      console.error("Refresh error:", err);
+      showNotification("error", "Failed to refresh catalogue from database.");
+    } finally {
+      setIsRefreshing(false);
+    }
+  }
+
+  function resetForm() {
+    setName("");
+    setSku("");
+    setDescription("");
+    setJewelleryType("ring");
+    setDiamondGrades("EF-VVS, IJ-SI");
+    setGoldPurities("14KT, 18KT");
+    setGoldColours("yellow, rose, white");
+    setSizes("10, 11, 12, 13");
+    setGrossWeight("3.10");
+    setNetGoldWeight("3.00");
+    setDiamondPieces("12");
+    setTotalDiamondWeight("0.500");
+    setDiamondPrice("15000.00");
+    setMakingCharge("3000.00");
+    setDimHeight("5.20");
+    setDimWidth("8.00");
+    setDimLength("20.00");
+    setStock("10");
+    setSellingPrice("48250");
+    setImageUrl("/customize/custom1.png");
+    setEditingProduct(null);
+  }
+
+  function openEditModal(prod: AdminProduct) {
+    setEditingProduct(prod);
+    setName(prod.name);
+    setSku(prod.sku);
+    setDescription(prod.description);
+    setJewelleryType(prod.jewelleryType);
+    setDiamondGrades(prod.diamondGrades?.join?.(", ") || "");
+    setGoldPurities(prod.goldPurities?.join?.(", ") || "");
+    setGoldColours(prod.goldColours?.join?.(", ") || "");
+    setSizes(prod.sizes?.join?.(", ") || "");
+    setGrossWeight(prod.grossWeight || "3.10");
+    setNetGoldWeight(prod.netGoldWeight || "3.00");
+    setDiamondPieces((prod.diamondPieces ?? 12).toString());
+    setTotalDiamondWeight(prod.totalDiamondWeight || "0.500");
+    setDiamondPrice(prod.diamondPrice || "15000.00");
+    setMakingCharge(prod.makingCharge || "3000.00");
+    setDimHeight(prod.dimensions?.height || "5.20");
+    setDimWidth(prod.dimensions?.width || "8.00");
+    setDimLength(prod.dimensions?.length || "20.00");
+    setStock((prod.stock ?? 10).toString());
+    setSellingPrice((prod.price ?? 48250).toString());
+    setImageUrl(prod.image || "/customize/custom1.png");
+    setIsAddModalOpen(true);
+  }
 
   const filteredProducts = useMemo(() => {
     return products.filter((prod) => {
@@ -61,32 +175,36 @@ export function ProductsTable({
         prod.jewelleryType.toLowerCase().includes(search.toLowerCase());
       const matchesCategory =
         categoryFilter === "All" ||
-        prod.jewelleryType.toLowerCase() === categoryFilter.toLowerCase();
+        normalizeJewelleryType(prod.jewelleryType) === normalizeJewelleryType(categoryFilter);
       const matchesStock = stockFilter === "All" || prod.status === stockFilter;
       return matchesSearch && matchesCategory && matchesStock;
     });
   }, [products, search, categoryFilter, stockFilter]);
 
-  function handleCreateProduct(e: React.FormEvent) {
+  async function handleSubmitProduct(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return;
+    if (!name.trim() || !sku.trim()) {
+      showNotification("error", "Name and SKU are required.");
+      return;
+    }
 
-    const parsedStock = parseInt(stock, 10) || 1;
+    setIsSubmitting(true);
+
+    const parsedStock = parseInt(stock, 10) || 0;
+    const parsedPrice = parseFloat(sellingPrice) || 0;
     const parsedDiamondPrice = parseFloat(diamondPrice) || 0;
     const parsedMaking = parseFloat(makingCharge) || 0;
-    // Base estimated price: diamond price + making + base gold estimation
-    const estimatedPrice = parsedDiamondPrice + parsedMaking + (parseFloat(netGoldWeight) || 3) * 7500;
 
-    const newProd: AdminProduct = {
-      id: `product_${Date.now()}`,
-      sku: sku.trim() || `MIR-${Math.floor(100 + Math.random() * 900)}`,
+    const payload = {
+      sku: sku.trim(),
       name: name.trim(),
-      description: description.trim() || "Handcrafted fine diamond jewellery by Miraya Diamonds.",
-      jewelleryType,
+      description: description.trim() || "Handcrafted diamond jewellery by Miraya Diamonds.",
+      jewelleryType: jewelleryType.toLowerCase().trim(),
       diamondGrades: diamondGrades.split(",").map((s) => s.trim()).filter(Boolean),
       goldPurities: goldPurities.split(",").map((s) => s.trim()).filter(Boolean),
       goldColours: goldColours.split(",").map((s) => s.trim()).filter(Boolean),
       sizes: sizes.split(",").map((s) => s.trim()).filter(Boolean),
+      bannerImage: imageUrl.trim() || "/customize/custom1.png",
       grossWeight: grossWeight || "3.10",
       netGoldWeight: netGoldWeight || "3.00",
       diamondPieces: parseInt(diamondPieces, 10) || 12,
@@ -98,27 +216,123 @@ export function ProductsTable({
         width: dimWidth || "8.00",
         length: dimLength || "20.00",
       },
-      price: Math.round(estimatedPrice),
+      price: parsedPrice > 0 ? parsedPrice : 48250,
       stock: parsedStock,
-      status: parsedStock === 0 ? "Out of Stock" : parsedStock <= 3 ? "Low Stock" : "In Stock",
-      image: "/customize/custom1.png",
+      mediaUrls: [imageUrl.trim() || "/customize/custom1.png"],
     };
 
-    setProducts([newProd, ...products]);
-    setIsAddModalOpen(false);
-    onCloseAddModal?.();
-    setName("");
-    setSku("");
+    try {
+      if (editingProduct) {
+        // UPDATE EXISTING PRODUCT
+        const res = await updateProduct(editingProduct.id, payload);
+        if (!res.success) {
+          showNotification("error", res.error || "Failed to update product.");
+          setIsSubmitting(false);
+          return;
+        }
+
+        const updatedProd: AdminProduct = res.product || {
+          ...editingProduct,
+          ...payload,
+          price: payload.price,
+          stock: parsedStock,
+          status: parsedStock === 0 ? "Out of Stock" : parsedStock <= 3 ? "Low Stock" : "In Stock",
+          image: payload.bannerImage,
+        };
+
+        setProducts((prev) =>
+          prev.map((p) =>
+            p.id === editingProduct.id ||
+            p.sku.toLowerCase() === editingProduct.sku.toLowerCase() ||
+            p.id === updatedProd.id ||
+            p.sku.toLowerCase() === updatedProd.sku.toLowerCase()
+              ? updatedProd
+              : p
+          )
+        );
+        showNotification("success", `Product "${payload.name}" updated successfully in database!`);
+
+        getAdminProducts().then((fresh) => {
+          if (fresh && fresh.length > 0) setProducts(fresh);
+        });
+        router.refresh();
+      } else {
+        // CREATE NEW PRODUCT
+        const res = await createProduct(payload);
+        if (!res.success || !res.product) {
+          showNotification("error", res.error || "Failed to create product.");
+          setIsSubmitting(false);
+          return;
+        }
+
+        const newP = res.product;
+        setProducts((prev) => [newP, ...prev.filter((p) => p.id !== newP.id && p.sku !== newP.sku)]);
+        showNotification("success", `Product "${newP.name}" added to database!`);
+
+        getAdminProducts().then((fresh) => {
+          if (fresh && fresh.length > 0) setProducts(fresh);
+        });
+        router.refresh();
+      }
+
+      setIsAddModalOpen(false);
+      onCloseAddModal?.();
+      resetForm();
+    } catch (err) {
+      console.error("Save product error:", err);
+      showNotification("error", "An unexpected error occurred while saving.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
-  function handleDeleteProduct(id: string) {
-    if (confirm("Are you sure you want to delete this diamond piece from the catalogue?")) {
-      setProducts(products.filter((p) => p.id !== id));
+  async function handleDeleteProduct(id: string, productName: string) {
+    if (!confirm(`Are you sure you want to permanently delete "${productName}" from the catalogue and database?`)) {
+      return;
+    }
+
+    setDeletingId(id);
+    try {
+      const res = await deleteProduct(id);
+      if (res.success) {
+        setProducts((prev) => prev.filter((p) => p.id !== id));
+        showNotification("success", `"${productName}" deleted from database.`);
+
+        getAdminProducts().then((fresh) => {
+          if (fresh && fresh.length > 0) setProducts(fresh);
+        });
+        router.refresh();
+      } else {
+        showNotification("error", res.error || "Failed to delete product.");
+      }
+    } catch (err) {
+      console.error("Delete product error:", err);
+      showNotification("error", "Error deleting product from database.");
+    } finally {
+      setDeletingId(null);
     }
   }
 
   return (
     <div className="space-y-6">
+      {/* Toast Notification */}
+      {notification && (
+        <div
+          className={`flex items-center gap-3 rounded-xl border p-4 text-xs font-medium shadow-md transition-all ${
+            notification.type === "success"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+              : "border-rose-200 bg-rose-50 text-rose-800"
+          }`}
+        >
+          {notification.type === "success" ? (
+            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+          ) : (
+            <AlertCircle size={16} className="text-rose-600 shrink-0" />
+          )}
+          <span>{notification.message}</span>
+        </div>
+      )}
+
       {/* Category Pills Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-2">
@@ -138,15 +352,31 @@ export function ProductsTable({
           ))}
         </div>
 
-        {/* Add Product Button */}
-        <button
-          type="button"
-          onClick={() => setIsAddModalOpen(true)}
-          className="inline-flex items-center gap-2 rounded-full bg-[#C5A880] px-4 py-2 text-xs font-semibold text-[#121714] shadow-xs transition-transform hover:scale-[1.02] hover:bg-[#d1b690]"
-        >
-          <Plus size={15} />
-          <span>Add New Diamond Product</span>
-        </button>
+        {/* Actions: Refresh & Add Product */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleManualRefresh}
+            disabled={isRefreshing}
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#E7E2D8] bg-white px-3.5 py-2 text-xs font-medium text-[#44403C] shadow-xs transition-colors hover:border-[#C5A880] hover:text-[#161D1A] disabled:opacity-50"
+            title="Reload latest catalogue from database"
+          >
+            <RefreshCw size={13} className={isRefreshing ? "animate-spin text-[#C5A880]" : "text-[#78716C]"} />
+            <span>{isRefreshing ? "Refreshing..." : "Refresh"}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              resetForm();
+              setIsAddModalOpen(true);
+            }}
+            className="inline-flex items-center gap-2 rounded-full bg-[#C5A880] px-4 py-2 text-xs font-semibold text-[#121714] shadow-xs transition-transform hover:scale-[1.02] hover:bg-[#d1b690]"
+          >
+            <Plus size={15} />
+            <span>Add New Diamond Product</span>
+          </button>
+        </div>
       </div>
 
       {/* Filter and Search Bar */}
@@ -185,7 +415,7 @@ export function ProductsTable({
         </div>
       </div>
 
-      {/* Products Table with EXACT columns requested */}
+      {/* Products Table */}
       <div className="overflow-hidden rounded-2xl border border-[#EAE6DE] bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
@@ -292,28 +522,24 @@ export function ProductsTable({
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            const newP = prompt("Update price in ₹:", prod.price.toString());
-                            if (newP && !isNaN(Number(newP))) {
-                              setProducts(
-                                products.map((p) =>
-                                  p.id === prod.id ? { ...p, price: Number(newP) } : p
-                                )
-                              );
-                            }
-                          }}
+                          onClick={() => openEditModal(prod)}
                           className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-[#214E34]"
-                          title="Quick Edit Price"
+                          title="Edit Product"
                         >
                           <Edit2 size={14} />
                         </button>
                         <button
                           type="button"
-                          onClick={() => handleDeleteProduct(prod.id)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-rose-600"
+                          disabled={deletingId === prod.id}
+                          onClick={() => handleDeleteProduct(prod.id, prod.name)}
+                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-rose-600 disabled:opacity-40"
                           title="Delete SKU"
                         >
-                          <Trash2 size={14} />
+                          {deletingId === prod.id ? (
+                            <Loader2 size={14} className="animate-spin text-rose-600" />
+                          ) : (
+                            <Trash2 size={14} />
+                          )}
                         </button>
                       </div>
                     </td>
@@ -363,9 +589,16 @@ export function ProductsTable({
 
             {/* Content */}
             <div className="p-6 space-y-6 text-xs">
-              <p className="text-[#57534E] leading-relaxed">
-                {selectedProduct.description}
-              </p>
+              <div className="flex gap-4">
+                <div className="relative size-20 shrink-0 overflow-hidden rounded-xl border border-[#EAE6DE]">
+                  <Image src={selectedProduct.image} alt={selectedProduct.name} fill className="object-cover" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-[#57534E] leading-relaxed">
+                    {selectedProduct.description}
+                  </p>
+                </div>
+              </div>
 
               {/* Technical Specifications Grid */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -473,14 +706,14 @@ export function ProductsTable({
                 </div>
               </div>
 
-              {/* Raw JSON Preview Button */}
+              {/* Raw JSON Payload */}
               <div className="rounded-xl border border-[#E7E2D8] bg-[#121714] p-4 text-[#E8E6E3]">
                 <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
                   <span className="flex items-center gap-1.5 font-mono text-[11px] text-[#C5A880]">
                     <FileCode2 size={13} />
                     Database Payload Format
                   </span>
-                  <span className="text-[10px] text-white/40">JSON format matching schema</span>
+                  <span className="text-[10px] text-white/40">PostgreSQL JSON</span>
                 </div>
                 <pre className="overflow-x-auto text-[11px] font-mono leading-relaxed text-[#A7F3D0]">
                   {JSON.stringify(
@@ -501,6 +734,7 @@ export function ProductsTable({
                       diamondPrice: selectedProduct.diamondPrice,
                       makingCharge: selectedProduct.makingCharge,
                       dimensions: selectedProduct.dimensions,
+                      bannerImage: selectedProduct.image,
                     },
                     null,
                     2
@@ -522,13 +756,14 @@ export function ProductsTable({
         </div>
       )}
 
-      {/* Add New Product Modal Form with exact schema fields */}
+      {/* Add / Edit Product Modal */}
       {isAddModalOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs"
           onClick={() => {
             setIsAddModalOpen(false);
             onCloseAddModal?.();
+            resetForm();
           }}
         >
           <div
@@ -543,10 +778,12 @@ export function ProductsTable({
                 </div>
                 <div>
                   <h3 className="text-[17px] font-bold text-[#161D1A]">
-                    Add New Diamond Product
+                    {editingProduct ? "Edit Diamond Product" : "Add New Diamond Product"}
                   </h3>
                   <p className="text-[11px] text-[#78716C]">
-                    Enter jewellery piece specifications matching database model
+                    {editingProduct
+                      ? `Updating ${editingProduct.sku} in live database`
+                      : "Enter jewellery piece specifications matching database model"}
                   </p>
                 </div>
               </div>
@@ -555,6 +792,7 @@ export function ProductsTable({
                 onClick={() => {
                   setIsAddModalOpen(false);
                   onCloseAddModal?.();
+                  resetForm();
                 }}
                 className="grid size-8 place-items-center rounded-lg text-[#78716C] hover:bg-white"
               >
@@ -563,7 +801,7 @@ export function ProductsTable({
             </div>
 
             {/* Form */}
-            <form onSubmit={handleCreateProduct} className="p-6 space-y-4 text-xs">
+            <form onSubmit={handleSubmitProduct} className="p-6 space-y-4 text-xs">
               {/* Name & SKU */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
@@ -608,7 +846,29 @@ export function ProductsTable({
                 />
               </div>
 
-              {/* Type & Purities */}
+              {/* Image URL & Product Media */}
+              <div>
+                <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
+                  <ImageIcon size={14} className="text-[#C5A880]" />
+                  Product Media Image URL (product_media / banner_image)
+                </label>
+                <div className="mt-1 flex gap-2">
+                  <input
+                    type="text"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)}
+                    placeholder="/customize/custom1.png or https://..."
+                    className="h-9 flex-1 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                  />
+                  {imageUrl && (
+                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#E7E2D8] bg-neutral-100">
+                      <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Type, Purities, Colours */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
@@ -656,7 +916,7 @@ export function ProductsTable({
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
-                    Diamond Grades (comma-separated)
+                    Diamond Grades
                   </label>
                   <input
                     type="text"
@@ -732,8 +992,8 @@ export function ProductsTable({
                 </div>
               </div>
 
-              {/* Pricing & Charges */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              {/* Pricing, Making Charges, Selling Price & Stock */}
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                 <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
                     Diamond Price (₹)
@@ -759,8 +1019,20 @@ export function ProductsTable({
                   />
                 </div>
                 <div>
+                  <label className="block text-xs font-semibold text-[#214E34]">
+                    Selling Price (₹) *
+                  </label>
+                  <input
+                    type="number"
+                    value={sellingPrice}
+                    onChange={(e) => setSellingPrice(e.target.value)}
+                    placeholder="48250"
+                    className="mt-1 h-9 w-full rounded-lg border border-[#214E34]/40 bg-[#FAF8F5] px-3 text-xs font-semibold text-[#1C1B1A] focus:border-[#214E34] focus:bg-white focus:outline-hidden"
+                  />
+                </div>
+                <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
-                    Initial Stock Units
+                    Stock Units
                   </label>
                   <input
                     type="number"
@@ -815,9 +1087,11 @@ export function ProductsTable({
               <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#F0EBE3]">
                 <button
                   type="button"
+                  disabled={isSubmitting}
                   onClick={() => {
                     setIsAddModalOpen(false);
                     onCloseAddModal?.();
+                    resetForm();
                   }}
                   className="rounded-lg border border-[#E7E2D8] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F5]"
                 >
@@ -825,9 +1099,11 @@ export function ProductsTable({
                 </button>
                 <button
                   type="submit"
-                  className="rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#1A3F2A]"
+                  disabled={isSubmitting}
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
                 >
-                  Save Product to Database
+                  {isSubmitting && <Loader2 size={14} className="animate-spin" />}
+                  <span>{editingProduct ? "Update Product in Database" : "Save Product to Database"}</span>
                 </button>
               </div>
             </form>

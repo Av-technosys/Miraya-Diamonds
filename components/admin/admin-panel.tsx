@@ -7,14 +7,15 @@ import { DashboardOverview } from "./dashboard-overview";
 import { UsersTable } from "./users-table";
 import { ProductsTable } from "./products-table";
 import { EnquiriesTable } from "./enquiries-table";
-import { initialEnquiries } from "./mock-data";
+import { initialEnquiries, type AdminProduct } from "./mock-data";
 import type { AdminUserView } from "@/lib/actions/users";
 
 interface AdminPanelProps {
   initialUsers?: AdminUserView[];
+  initialProducts?: AdminProduct[];
 }
 
-export function AdminPanel({ initialUsers = [] }: AdminPanelProps) {
+export function AdminPanel({ initialUsers = [], initialProducts = [] }: AdminPanelProps) {
   const [activeTab, setActiveTab] = useState<AdminTab>("dashboard");
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isAddProductModalOpen, setIsAddProductModalOpen] = useState(false);
@@ -63,6 +64,7 @@ export function AdminPanel({ initialUsers = [] }: AdminPanelProps) {
 
             {activeTab === "products" && (
               <ProductsTable
+                initialProducts={initialProducts}
                 isAddModalOpenInitially={isAddProductModalOpen}
                 onCloseAddModal={() => setIsAddProductModalOpen(false)}
               />

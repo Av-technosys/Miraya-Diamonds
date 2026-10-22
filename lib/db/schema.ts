@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { check, integer, jsonb, numeric, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { boolean, check, integer, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 type ProductDimensions = {
   height: string;
@@ -35,6 +35,48 @@ export const products = pgTable("products", {
 
 export type Product = typeof products.$inferSelect;
 export type NewProduct = typeof products.$inferInsert;
+
+export const productVariants = pgTable("product_variants", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  productId: uuid("product_id")
+    .references(() => products.id, { onDelete: "cascade" })
+    .notNull(),
+  sku: text("sku").notNull().unique(),
+  name: text("name").notNull(),
+  metalColour: text("metal_colour"),
+  goldPurity: text("gold_purity"),
+  diamondGrade: text("diamond_grade"),
+  size: text("size"),
+  price: numeric("price", { precision: 14, scale: 2 }).notNull(),
+  strikethroughPrice: numeric("strikethrough_price", { precision: 14, scale: 2 }),
+  stock: integer("stock").default(1),
+  isInStock: boolean("is_in_stock").default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const productVariant = productVariants;
+
+export type ProductVariant = typeof productVariants.$inferSelect;
+export type NewProductVariant = typeof productVariants.$inferInsert;
+
+export const productMedia = pgTable("product_media", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  productVariantId: uuid("product_variant_id").references(
+    () => productVariant.id,
+    { onDelete: "cascade" },
+  ),
+  productId: uuid("product_id").references(
+    () => products.id,
+    { onDelete: "cascade" },
+  ),
+  mediaType: varchar("media_type"),
+  mediaURL: varchar("media_url"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export type ProductMedia = typeof productMedia.$inferSelect;
+export type NewProductMedia = typeof productMedia.$inferInsert;
 
 export const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
