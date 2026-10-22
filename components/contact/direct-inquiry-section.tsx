@@ -1,7 +1,55 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
+import { submitContactMessage } from "@/lib/actions/contact";
 
 export function DirectInquirySection() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setStatus({ type: "error", text: "Please fill in all required fields." });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus(null);
+
+    try {
+      const res = await submitContactMessage({
+        name,
+        email,
+        phone,
+        message,
+      });
+
+      if (res.success) {
+        setStatus({
+          type: "success",
+          text: res.message || "Thank you! Your message has been saved in our atelier database.",
+        });
+        setName("");
+        setEmail("");
+        setPhone("");
+        setMessage("");
+      } else {
+        setStatus({ type: "error", text: res.error || "Failed to submit message." });
+      }
+    } catch {
+      setStatus({ type: "error", text: "Something went wrong. Please try again." });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
+
   return (
     <section
       className="w-full pt-0 pb-0 lg:pb-[90px] md:py-[90px] px-4 md:px-[100px]"
@@ -38,7 +86,25 @@ export function DirectInquirySection() {
             </div>
 
             {/* Form Section */}
-            <div className="flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-col">
+              {/* Status Alert */}
+              {status && (
+                <div
+                  className={`mb-4 flex items-center gap-2.5 rounded-lg p-3 text-xs font-medium ${
+                    status.type === "success"
+                      ? "border border-emerald-200 bg-emerald-50 text-emerald-800"
+                      : "border border-rose-200 bg-rose-50 text-rose-800"
+                  }`}
+                >
+                  {status.type === "success" ? (
+                    <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+                  ) : (
+                    <AlertCircle size={16} className="text-rose-600 shrink-0" />
+                  )}
+                  <span>{status.text}</span>
+                </div>
+              )}
+
               {/* Row 1: Full Name + Email Address */}
               <div className="flex flex-col sm:flex-row gap-[18px]">
                 {/* Full Name */}
@@ -50,6 +116,9 @@ export function DirectInquirySection() {
                   </div>
                   <input
                     type="text"
+                    required
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Maharani Gayatri Devi"
                     className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
@@ -63,6 +132,9 @@ export function DirectInquirySection() {
                   </div>
                   <input
                     type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@aurora-patron.com"
                     className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
@@ -78,6 +150,8 @@ export function DirectInquirySection() {
                 </div>
                 <input
                   type="text"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
                   placeholder="+91 98765 43210"
                   className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                 />
@@ -92,6 +166,9 @@ export function DirectInquirySection() {
                 </div>
                 <textarea
                   rows={5}
+                  required
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
                   placeholder="Describe the piece you envision, preferred gemstones, or any bespoke design requests..."
                   className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] resize-none"
                 />
@@ -101,9 +178,21 @@ export function DirectInquirySection() {
               <div className="pt-8 lg:pt-[18px]">
                 <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4 lg:gap-0 pt-[9px]">
                   {/* Connect Button */}
-                  <button className="bg-[#214E34] rounded-[49px] py-[15.75px] px-[54px] flex items-center justify-center gap-[13.5px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]">
-                    <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center whitespace-nowrap">Connect With Miraya</span>
-                    <ArrowRight className="w-[12px] h-[12px] text-white shrink-0" strokeWidth={2} />
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    className="bg-[#214E34] hover:bg-[#183b28] disabled:opacity-50 transition-colors rounded-[49px] py-[15.75px] px-[54px] flex items-center justify-center gap-[13.5px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] cursor-pointer"
+                  >
+                    {isSubmitting ? (
+                      <Loader2 className="w-[14px] h-[14px] text-white animate-spin" />
+                    ) : (
+                      <>
+                        <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center whitespace-nowrap">
+                          Connect With Miraya
+                        </span>
+                        <ArrowRight className="w-[12px] h-[12px] text-white shrink-0" strokeWidth={2} />
+                      </>
+                    )}
                   </button>
 
                   {/* Confidential Inquiry */}
@@ -115,7 +204,7 @@ export function DirectInquirySection() {
                   </div>
                 </div>
               </div>
-            </div>
+            </form>
 
           </div>
         </div>

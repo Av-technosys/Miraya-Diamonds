@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { AdminPanel } from "@/components/admin/admin-panel";
 import { getAdminUsers } from "@/lib/actions/users";
 import { getAdminProducts } from "@/lib/actions/products";
+import { getCategories } from "@/lib/actions/categories";
 
 export const metadata: Metadata = {
   title: "Admin Portal | Miraya Diamonds",
@@ -12,10 +13,17 @@ export const metadata: Metadata = {
 export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
-  const [initialUsers, initialProducts] = await Promise.all([
+  const [initialUsers, initialProducts, initialCategories] = await Promise.all([
     getAdminUsers(),
     getAdminProducts(),
+    getCategories(),
   ]);
-  return <AdminPanel initialUsers={initialUsers} initialProducts={initialProducts} />;
+  return (
+    <AdminPanel
+      initialUsers={initialUsers}
+      initialProducts={initialProducts}
+      initialCategories={initialCategories}
+    />
+  );
 }
 
