@@ -15,7 +15,7 @@ import {
   Layers,
 } from "lucide-react";
 import { ImageUploadInput } from "./image-upload-input";
-import { getImageUrl } from "@/lib/imageUrl";
+import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 interface ProductMediaManagerProps {
   bannerImage: string;
@@ -69,10 +69,11 @@ export function ProductMediaManager({
           throw new Error(data.error || `Failed to upload "${file.name}" to S3.`);
         }
 
-        uploadedUrls.push(data.url);
+        const relativeKey = data.fileKey || toRelativeKey(data.url);
+        uploadedUrls.push(relativeKey);
       }
 
-      // Append new URLs to existing media
+      // Append new relative keys to existing media
       const updatedMedia = [...mediaUrls, ...uploadedUrls];
       onMediaUrlsChange(updatedMedia);
 
@@ -103,7 +104,7 @@ export function ProductMediaManager({
   // Update a specific media URL in the list
   function handleUrlChange(index: number, newUrl: string) {
     const updated = [...mediaUrls];
-    updated[index] = newUrl;
+    updated[index] = toRelativeKey(newUrl);
     onMediaUrlsChange(updated);
   }
 
@@ -116,7 +117,7 @@ export function ProductMediaManager({
   // Set an image from media gallery as the primary cover/banner
   function handleSetAsBanner(url: string) {
     if (!url.trim()) return;
-    onBannerImageChange(url);
+    onBannerImageChange(toRelativeKey(url));
     setSuccessMessage("Set as primary cover image!");
     setTimeout(() => setSuccessMessage(null), 3000);
   }

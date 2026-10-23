@@ -20,6 +20,9 @@ import {
 } from "lucide-react";
 import { initialProducts as fallbackProducts, type AdminProduct } from "./mock-data";
 import { ProductMediaManager } from "./product-media-manager";
+import { SuccessModal } from "./success-modal";
+import { ConfirmDeleteModal } from "./confirm-delete-modal";
+import { toRelativeKey } from "@/lib/imageUrl";
 import type { Category } from "@/lib/db/schema";
 import { getCategories } from "@/lib/actions/categories";
 import {
@@ -74,6 +77,18 @@ export function ProductsTable({
   const [notification, setNotification] = useState<{
     type: "success" | "error";
     message: string;
+  } | null>(null);
+
+  // Success popup & Delete confirmation modal states
+  const [successPopup, setSuccessPopup] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({ isOpen: false, title: "Success!", message: "" });
+
+  const [productToDelete, setProductToDelete] = useState<{
+    id: string;
+    name: string;
   } | null>(null);
 
   // Sync products when initialProducts prop updates from server revalidation
@@ -197,11 +212,11 @@ export function ProductsTable({
     setDimLength(prod.dimensions?.length || "20.00");
     setStock((prod.stock ?? 10).toString());
     setSellingPrice((prod.price ?? 48250).toString());
-    const prodBanner = prod.bannerImage || prod.image || "";
+    const prodBanner = toRelativeKey(prod.bannerImage || prod.image || "");
     setBannerImage(prodBanner);
     const existingMedia =
       prod.mediaUrls && prod.mediaUrls.length > 0
-        ? prod.mediaUrls
+        ? prod.mediaUrls.map(toRelativeKey)
         : prodBanner
         ? [prodBanner]
         : [];
@@ -237,8 +252,8 @@ export function ProductsTable({
     const parsedDiamondPrice = parseFloat(diamondPrice) || 0;
     const parsedMaking = parseFloat(makingCharge) || 0;
 
-    const cleanMediaUrls = mediaUrls.map((u) => u.trim()).filter(Boolean);
-    const primaryBanner = bannerImage.trim() || cleanMediaUrls[0] || "/customize/custom1.png";
+    const cleanMediaUrls = mediaUrls.map((u) => toRelativeKey(u.trim())).filter(Boolean);
+    const primaryBanner = toRelativeKey(bannerImage.trim()) || cleanMediaUrls[0] || "/customize/custom1.png";
     if (primaryBanner && !cleanMediaUrls.includes(primaryBanner)) {
       cleanMediaUrls.unshift(primaryBanner);
     }
@@ -300,6 +315,11 @@ export function ProductsTable({
           )
         );
         showNotification("success", `Product "${payload.name}" updated successfully in database!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Updated!",
+          message: `Product "${payload.name}" has been updated successfully in the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -317,6 +337,11 @@ export function ProductsTable({
         const newP = res.product;
         setProducts((prev) => [newP, ...prev.filter((p) => p.id !== newP.id && p.sku !== newP.sku)]);
         showNotification("success", `Product "${newP.name}" added to database!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Added!",
+          message: `Product "${newP.name}" has been created and added to the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -335,17 +360,26 @@ export function ProductsTable({
     }
   }
 
-  async function handleDeleteProduct(id: string, productName: string) {
-    if (!confirm(`Are you sure you want to permanently delete "${productName}" from the catalogue and database?`)) {
-      return;
-    }
+  function handleDeleteProduct(id: string, productName: string) {
+    setProductToDelete({ id, name: productName });
+  }
+
+  async function handleConfirmDelete() {
+    if (!productToDelete) return;
+    const { id, name } = productToDelete;
 
     setDeletingId(id);
     try {
       const res = await deleteProduct(id);
       if (res.success) {
         setProducts((prev) => prev.filter((p) => p.id !== id));
-        showNotification("success", `"${productName}" deleted from database.`);
+        setProductToDelete(null);
+        showNotification("success", `"${name}" deleted from database.`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Deleted!",
+          message: `"${name}" has been permanently deleted from the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -1156,6 +1190,24 @@ export function ProductsTable({
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        isOpen={Boolean(productToDelete)}
+        onClose={() => setProductToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        itemName={productToDelete?.name}
+        itemType="product"
+        isDeleting={Boolean(deletingId)}
+      />
+
+      {/* Centered Success Popup */}
+      <SuccessModal
+        isOpen={successPopup.isOpen}
+        onClose={() => setSuccessPopup((prev) => ({ ...prev, isOpen: false }))}
+        title={successPopup.title}
+        message={successPopup.message}
+      />
     </div>
   );
 }

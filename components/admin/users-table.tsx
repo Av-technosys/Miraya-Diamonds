@@ -21,6 +21,8 @@ import {
   type AdminUserView,
 } from "@/lib/actions/users";
 import { validateAndFormatPhone } from "@/lib/account-profile";
+import { SuccessModal } from "./success-modal";
+import { ConfirmDeleteModal } from "./confirm-delete-modal";
 
 interface UsersTableProps {
   initialUsers?: AdminUserView[];
@@ -46,6 +48,16 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
     type: "success" | "error";
     message: string;
   } | null>(null);
+
+  // Success popup & Delete confirmation modal states
+  const [successPopup, setSuccessPopup] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({ isOpen: false, title: "Success!", message: "" });
+
+  const [userToDelete, setUserToDelete] = useState<AdminUserView | null>(null);
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
 
   // Refresh handler
   async function handleRefresh() {
@@ -143,7 +155,12 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
         });
         setTimeout(() => {
           handleCloseEdit();
-        }, 1200);
+          setSuccessPopup({
+            isOpen: true,
+            title: "User Updated!",
+            message: `User "${updatedFullName}" details have been updated successfully.`,
+          });
+        }, 500);
       } else {
         setModalFeedback({
           type: "error",
@@ -153,22 +170,34 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
     });
   }
 
-  // Delete User
+  // Delete User Confirmation
   function handleDeleteUser(user: AdminUserView) {
-    if (
-      !confirm(
-        `Are you sure you want to remove user "${user.name}" (${user.email}) from the database?`
-      )
-    ) {
-      return;
-    }
+    setUserToDelete(user);
+  }
+
+  function handleConfirmDeleteUser() {
+    if (!userToDelete) return;
+    const targetUser = userToDelete;
+    setIsDeletingUser(true);
 
     startTransition(async () => {
-      const res = await adminDeleteUser(user.id);
-      if (res.success) {
-        setUsers((prev) => prev.filter((u) => u.id !== user.id));
-      } else {
-        alert(res.error || "Could not delete user.");
+      try {
+        const res = await adminDeleteUser(targetUser.id);
+        if (res.success) {
+          setUsers((prev) => prev.filter((u) => u.id !== targetUser.id));
+          setUserToDelete(null);
+          setSuccessPopup({
+            isOpen: true,
+            title: "User Removed!",
+            message: `User "${targetUser.name}" has been deleted from the database.`,
+          });
+        } else {
+          alert(res.error || "Could not delete user.");
+        }
+      } catch (err) {
+        console.error("Delete user error:", err);
+      } finally {
+        setIsDeletingUser(false);
       }
     });
   }
@@ -596,6 +625,24 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        isOpen={Boolean(userToDelete)}
+        onClose={() => setUserToDelete(null)}
+        onConfirm={handleConfirmDeleteUser}
+        itemName={userToDelete ? `${userToDelete.name} (${userToDelete.email})` : undefined}
+        itemType="user"
+        isDeleting={isDeletingUser}
+      />
+
+      {/* Centered Success Popup */}
+      <SuccessModal
+        isOpen={successPopup.isOpen}
+        onClose={() => setSuccessPopup((prev) => ({ ...prev, isOpen: false }))}
+        title={successPopup.title}
+        message={successPopup.message}
+      />
     </div>
   );
 }

@@ -13,7 +13,7 @@ import {
 import { eq, desc, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import type { AdminProduct, ProductDimensions } from "@/components/admin/mock-data";
-import { getImageUrl } from "@/lib/imageUrl";
+import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 export interface CreateProductInput {
   sku: string;
@@ -142,7 +142,8 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
 
       const rawBanner = p.bannerImage || pMedia[0]?.mediaURL || "/customize/custom1.png";
       const banner = getImageUrl(rawBanner);
-      const pMediaUrls = pMedia.map((m) => getImageUrl(m.mediaURL)).filter(Boolean) as string[];
+      const pMediaUrls = pMedia.map((m) => toRelativeKey(m.mediaURL)).filter(Boolean) as string[];
+      const cleanBannerKey = toRelativeKey(p.bannerImage || "");
 
       return {
         id: p.id,
@@ -165,8 +166,8 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
         stock,
         status,
         image: banner,
-        bannerImage: p.bannerImage || "",
-        mediaUrls: pMediaUrls.length > 0 ? pMediaUrls : (p.bannerImage ? [getImageUrl(p.bannerImage)] : []),
+        bannerImage: cleanBannerKey,
+        mediaUrls: pMediaUrls.length > 0 ? pMediaUrls : (cleanBannerKey ? [cleanBannerKey] : []),
         categoryId: p.categoryId || null,
       };
     });
@@ -197,7 +198,7 @@ export async function createProduct(input: CreateProductInput): Promise<{
       return { success: false, error: `Product with SKU "${sku}" already exists.` };
     }
 
-    const bannerImage = input.bannerImage || input.mediaUrls?.[0] || "/customize/custom1.png";
+    const bannerImage = toRelativeKey(input.bannerImage || input.mediaUrls?.[0] || "/customize/custom1.png");
     const stock = input.stock !== undefined ? input.stock : 1;
     const price = input.price > 0 ? input.price : 48250;
 
@@ -254,8 +255,10 @@ export async function createProduct(input: CreateProductInput): Promise<{
       })
       .returning();
 
-    // 3. Insert media
-    const allMediaUrls = input.mediaUrls && input.mediaUrls.length > 0 ? input.mediaUrls : [bannerImage];
+    // 3. Insert media (store only clean relative keys)
+    const allMediaUrls = (input.mediaUrls && input.mediaUrls.length > 0 ? input.mediaUrls : [bannerImage])
+      .map(toRelativeKey)
+      .filter(Boolean);
     for (const url of allMediaUrls) {
       if (url && url.trim()) {
         await db.insert(productMedia).values({
@@ -293,8 +296,8 @@ export async function createProduct(input: CreateProductInput): Promise<{
         price,
         stock,
         status: calculateProductStatus(stock),
-        image: bannerImage,
-        bannerImage,
+        image: getImageUrl(bannerImage),
+        bannerImage: toRelativeKey(bannerImage),
         mediaUrls: allMediaUrls,
         categoryId: newProduct.categoryId || null,
       },
@@ -361,7 +364,7 @@ export async function updateProduct(
     if (input.goldPurities) updates.goldPurities = input.goldPurities;
     if (input.goldColours) updates.goldColours = input.goldColours;
     if (input.sizes) updates.sizes = input.sizes;
-    if (input.bannerImage) updates.bannerImage = input.bannerImage;
+    if (input.bannerImage) updates.bannerImage = toRelativeKey(input.bannerImage);
     if (input.grossWeight) updates.grossWeight = input.grossWeight;
     if (input.netGoldWeight) updates.netGoldWeight = input.netGoldWeight;
     if (input.diamondPieces !== undefined) updates.diamondPieces = input.diamondPieces;
@@ -420,11 +423,13 @@ export async function updateProduct(
       await db.delete(productMedia).where(eq(productMedia.productId, targetId));
       for (const url of input.mediaUrls) {
         if (!url || !url.trim()) continue;
+        const cleanKey = toRelativeKey(url.trim());
+        if (!cleanKey) continue;
         await db.insert(productMedia).values({
           productId: targetId,
           productVariantId: variants[0]?.id || null,
           mediaType: "image",
-          mediaURL: url.trim(),
+          mediaURL: cleanKey,
         });
       }
     }
@@ -462,9 +467,9 @@ export async function updateProduct(
       price: finalPrice,
       stock: finalStock,
       status: calculateProductStatus(finalStock),
-      image: finalProduct.bannerImage || finalMedia[0]?.mediaURL || "/customize/custom1.png",
-      bannerImage: finalProduct.bannerImage || "",
-      mediaUrls: finalMedia.map((m) => m.mediaURL).filter(Boolean) as string[],
+      image: getImageUrl(finalProduct.bannerImage || finalMedia[0]?.mediaURL || "/customize/custom1.png"),
+      bannerImage: toRelativeKey(finalProduct.bannerImage || ""),
+      mediaUrls: finalMedia.map((m) => toRelativeKey(m.mediaURL)).filter(Boolean) as string[],
       categoryId: finalProduct.categoryId || null,
     };
 

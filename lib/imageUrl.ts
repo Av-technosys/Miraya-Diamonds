@@ -1,5 +1,3 @@
-
-
 export const DEFAULT_FALLBACK_IMAGE = "/customize/custom1.png";
 
 function getCdnBaseUrl(): string {
@@ -11,6 +9,50 @@ function getCdnBaseUrl(): string {
   return cdnUrl.trim().replace(/\/+$/, "");
 }
 
+/**
+ * Convert any full CloudFront or S3 URL to a clean relative key
+ * (e.g. "products/1729-item.png"). Local public paths (e.g. "/customize/custom1.png")
+ * are preserved as is.
+ */
+export function toRelativeKey(keyOrUrl: string | null | undefined): string {
+  if (!keyOrUrl || typeof keyOrUrl !== "string") {
+    return "";
+  }
+  const trimmed = keyOrUrl.trim();
+  if (!trimmed) {
+    return "";
+  }
+
+  // Strip query params or hash if any for key extraction
+  const cleanNoQuery = trimmed.split(/[?#]/)[0];
+
+  // If it's a full URL (CloudFront, S3, or custom CDN URL)
+  if (cleanNoQuery.startsWith("http://") || cleanNoQuery.startsWith("https://")) {
+    const baseCdn = getCdnBaseUrl();
+    if (baseCdn && cleanNoQuery.startsWith(baseCdn)) {
+      const rest = cleanNoQuery.slice(baseCdn.length);
+      return rest.replace(/^\/+/, "");
+    }
+
+    if (cleanNoQuery.includes("cloudfront.net") || cleanNoQuery.includes("amazonaws.com")) {
+      const match = cleanNoQuery.match(/^https?:\/\/[^/]+(?:\/miraya)?\/(.+)$/i);
+      if (match && match[1]) {
+        return match[1].replace(/^\/+/, "");
+      }
+    }
+  }
+
+  // Preserve local paths like /PDP/... or /customize/... as is
+  if (trimmed.startsWith("/")) {
+    return trimmed;
+  }
+
+  return trimmed.replace(/^\/+/, "");
+}
+
+/**
+ * Resolve any image key (relative or full) to a high-speed CloudFront CDN URL.
+ */
 export function getImageUrl(
   keyOrUrl: string | null | undefined,
   fallback: string = DEFAULT_FALLBACK_IMAGE

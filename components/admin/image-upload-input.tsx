@@ -11,7 +11,7 @@ import {
   AlertCircle,
   CheckCircle2,
 } from "lucide-react";
-import { getImageUrl } from "@/lib/imageUrl";
+import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 interface ImageUploadInputProps {
   label: string;
@@ -62,8 +62,9 @@ export function ImageUploadInput({
         throw new Error(data.error || "Failed to upload image.");
       }
 
-      // Update value with uploaded S3 URL
-      onChange(data.url);
+      // Store clean relative key in DB (e.g. "products/1729-item.png")
+      const relativeKey = data.fileKey || toRelativeKey(data.url);
+      onChange(relativeKey);
       setSuccessMessage(`Uploaded to S3 (${folder}/)`);
       setTimeout(() => setSuccessMessage(null), 4000);
     } catch (err: any) {
@@ -107,7 +108,7 @@ export function ImageUploadInput({
             disabled={disabled || isUploading}
             onChange={(e) => {
               setErrorMessage(null);
-              onChange(e.target.value);
+              onChange(toRelativeKey(e.target.value));
             }}
             placeholder={placeholder}
             className="h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 pr-8 text-xs text-[#1C1B1A] placeholder:text-[#A8A29E] focus:border-[#C5A880] focus:bg-white focus:outline-hidden disabled:opacity-60"

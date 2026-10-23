@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 import { category, type Category, type NewCategory } from "@/lib/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { getImageUrl } from "@/lib/imageUrl";
+import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 export interface CreateCategoryInput {
   name: string;
@@ -83,7 +83,7 @@ export async function createCategory(input: CreateCategoryInput): Promise<{
         name,
         slug,
         redirectSlug: input.redirectSlug?.trim() || `/collection?category=${encodeURIComponent(name)}`,
-        bannerImage: input.bannerImage?.trim() || null,
+        bannerImage: input.bannerImage ? toRelativeKey(input.bannerImage.trim()) : null,
         description: input.description?.trim() || null,
         priority: input.priority !== undefined ? input.priority : 1,
       })
@@ -137,7 +137,9 @@ export async function updateCategory(
         .replace(/(^-|-$)/g, "");
     }
     if (input.redirectSlug !== undefined) updates.redirectSlug = input.redirectSlug ? input.redirectSlug.trim() : null;
-    if (input.bannerImage !== undefined) updates.bannerImage = input.bannerImage ? input.bannerImage.trim() : null;
+    if (input.bannerImage !== undefined) {
+      updates.bannerImage = input.bannerImage ? toRelativeKey(input.bannerImage.trim()) : null;
+    }
     if (input.description !== undefined) updates.description = input.description ? input.description.trim() : null;
     if (input.priority !== undefined) updates.priority = input.priority;
 
