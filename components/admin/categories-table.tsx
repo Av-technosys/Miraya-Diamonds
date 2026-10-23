@@ -19,6 +19,7 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import type { Category } from "@/lib/db/schema";
+import { ImageUploadInput } from "./image-upload-input";
 import {
   getCategories,
   createCategory,
@@ -508,27 +509,16 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                 />
               </div>
 
-              {/* Banner Image URL */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
-                  <ImageIcon size={14} className="text-[#9b8966]" />
-                  Banner Image (banner_image)
-                </label>
-                <div className="mt-1 flex gap-2">
-                  <input
-                    type="text"
-                    value={bannerImage}
-                    onChange={(e) => setBannerImage(e.target.value)}
-                    placeholder="/Images/Header_ring.png or https://..."
-                    className="h-9 flex-1 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                  />
-                  {bannerImage && (
-                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-neutral-100">
-                      <Image src={bannerImage} alt="Preview" fill className="object-cover" />
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Banner Image URL with S3 Upload */}
+              <ImageUploadInput
+                label="Banner Image (banner_image)"
+                value={bannerImage}
+                onChange={setBannerImage}
+                folder="categories"
+                placeholder="/Images/Header_ring.png or https://..."
+                helperText="Upload category banner directly to AWS S3 (categories/) or enter a URL"
+                disabled={isSubmitting}
+              />
 
               {/* Priority */}
               <div>

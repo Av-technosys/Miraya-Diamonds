@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { category, type Category, type NewCategory } from "@/lib/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export interface CreateCategoryInput {
   name: string;
@@ -23,7 +24,11 @@ export interface UpdateCategoryInput extends Partial<CreateCategoryInput> {
  */
 export async function getCategories(): Promise<Category[]> {
   try {
-    return await db.select().from(category).orderBy(asc(category.priority));
+    const list = await db.select().from(category).orderBy(asc(category.priority));
+    return list.map((c) => ({
+      ...c,
+      bannerImage: c.bannerImage ? getImageUrl(c.bannerImage) : null,
+    }));
   } catch (error) {
     console.error("Error fetching categories:", error);
     return [];
@@ -36,7 +41,11 @@ export async function getCategories(): Promise<Category[]> {
 export async function getCategoryBySlug(slug: string): Promise<Category | null> {
   try {
     const res = await db.select().from(category).where(eq(category.slug, slug));
-    return res[0] || null;
+    if (!res[0]) return null;
+    return {
+      ...res[0],
+      bannerImage: res[0].bannerImage ? getImageUrl(res[0].bannerImage) : null,
+    };
   } catch (error) {
     console.error("Error fetching category by slug:", error);
     return null;

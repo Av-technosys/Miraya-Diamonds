@@ -48,7 +48,16 @@ export const priceRanges = [
   { value: "90000-plus", label: "Above ₹90,000" },
 ];
 
-export const categoryOptions = ["Rings", "Earrings", "Necklaces", "Bracelets", "Bangles", "Pendants"];
+export const categoryOptions = [
+  "Rings",
+  "Earrings",
+  "Necklaces",
+  "Bracelets",
+  "Bangles",
+  "Pendants",
+  "Solitaires",
+  "Kids Jewellery",
+];
 
 export function parseCollectionFilters(params: Record<string, string | string[] | undefined>): Filters {
   const read = (key: string) => {

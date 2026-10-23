@@ -5,6 +5,7 @@ import {
   products,
   productVariants,
   productMedia,
+  category,
   type Product,
   type ProductVariant,
   type ProductMedia,
@@ -12,6 +13,7 @@ import {
 import { eq, desc, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import type { AdminProduct, ProductDimensions } from "@/components/admin/mock-data";
+import { getImageUrl } from "@/lib/imageUrl";
 
 export interface CreateProductInput {
   sku: string;
@@ -34,6 +36,7 @@ export interface CreateProductInput {
   strikethroughPrice?: number;
   stock?: number;
   mediaUrls?: string[];
+  categoryId?: string | null;
 }
 
 export interface UpdateProductInput extends CreateProductInput {
@@ -137,10 +140,9 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
       const stock = primaryVariant?.stock ?? 1;
       const status = calculateProductStatus(stock);
 
-      const image =
-        p.bannerImage ||
-        pMedia[0]?.mediaURL ||
-        "/customize/custom1.png";
+      const rawBanner = p.bannerImage || pMedia[0]?.mediaURL || "/customize/custom1.png";
+      const banner = getImageUrl(rawBanner);
+      const pMediaUrls = pMedia.map((m) => getImageUrl(m.mediaURL)).filter(Boolean) as string[];
 
       return {
         id: p.id,
@@ -162,7 +164,10 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
         price,
         stock,
         status,
-        image,
+        image: banner,
+        bannerImage: p.bannerImage || "",
+        mediaUrls: pMediaUrls.length > 0 ? pMediaUrls : (p.bannerImage ? [getImageUrl(p.bannerImage)] : []),
+        categoryId: p.categoryId || null,
       };
     });
   } catch (error) {
@@ -196,12 +201,23 @@ export async function createProduct(input: CreateProductInput): Promise<{
     const stock = input.stock !== undefined ? input.stock : 1;
     const price = input.price > 0 ? input.price : 48250;
 
+    // Resolve categoryId if not explicitly provided
+    let resolvedCategoryId = input.categoryId || null;
+    if (!resolvedCategoryId && input.jewelleryType) {
+      const catSlug = input.jewelleryType.toLowerCase().trim();
+      const matchingCat = await db.select({ id: category.id }).from(category).where(eq(category.slug, catSlug));
+      if (matchingCat.length > 0) {
+        resolvedCategoryId = matchingCat[0].id;
+      }
+    }
+
     // 1. Insert product
     const [newProduct] = await db
       .insert(products)
       .values({
         sku,
         name,
+        categoryId: resolvedCategoryId,
         description: input.description.trim() || "Handcrafted diamond jewellery by Miraya Diamonds.",
         jewelleryType: input.jewelleryType.toLowerCase().trim() || "ring",
         diamondGrades: input.diamondGrades.length > 0 ? input.diamondGrades : ["EF-VVS"],
@@ -278,6 +294,9 @@ export async function createProduct(input: CreateProductInput): Promise<{
         stock,
         status: calculateProductStatus(stock),
         image: bannerImage,
+        bannerImage,
+        mediaUrls: allMediaUrls,
+        categoryId: newProduct.categoryId || null,
       },
     };
   } catch (error) {
@@ -329,6 +348,15 @@ export async function updateProduct(
     if (input.sku) updates.sku = input.sku.trim();
     if (input.description) updates.description = input.description.trim();
     if (input.jewelleryType) updates.jewelleryType = input.jewelleryType.toLowerCase().trim();
+    if (input.categoryId !== undefined) {
+      updates.categoryId = input.categoryId;
+    } else if (input.jewelleryType) {
+      const catSlug = input.jewelleryType.toLowerCase().trim();
+      const matchingCat = await db.select({ id: category.id }).from(category).where(eq(category.slug, catSlug));
+      if (matchingCat.length > 0) {
+        updates.categoryId = matchingCat[0].id;
+      }
+    }
     if (input.diamondGrades) updates.diamondGrades = input.diamondGrades;
     if (input.goldPurities) updates.goldPurities = input.goldPurities;
     if (input.goldColours) updates.goldColours = input.goldColours;
@@ -387,21 +415,17 @@ export async function updateProduct(
       });
     }
 
-    // Update or add media if provided
-    if (input.mediaUrls && input.mediaUrls.length > 0) {
+    // Sync media records if mediaUrls is provided
+    if (input.mediaUrls !== undefined) {
+      await db.delete(productMedia).where(eq(productMedia.productId, targetId));
       for (const url of input.mediaUrls) {
         if (!url || !url.trim()) continue;
-        const exists = await db
-          .select({ id: productMedia.id })
-          .from(productMedia)
-          .where(eq(productMedia.mediaURL, url.trim()));
-        if (exists.length === 0) {
-          await db.insert(productMedia).values({
-            productId: targetId,
-            mediaType: "image",
-            mediaURL: url.trim(),
-          });
-        }
+        await db.insert(productMedia).values({
+          productId: targetId,
+          productVariantId: variants[0]?.id || null,
+          mediaType: "image",
+          mediaURL: url.trim(),
+        });
       }
     }
 
@@ -439,6 +463,9 @@ export async function updateProduct(
       stock: finalStock,
       status: calculateProductStatus(finalStock),
       image: finalProduct.bannerImage || finalMedia[0]?.mediaURL || "/customize/custom1.png",
+      bannerImage: finalProduct.bannerImage || "",
+      mediaUrls: finalMedia.map((m) => m.mediaURL).filter(Boolean) as string[],
+      categoryId: finalProduct.categoryId || null,
     };
 
     return { success: true, product: returnedProduct };
@@ -516,7 +543,8 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       }
     }
 
-    // Capitalize category name for filter consistency (e.g. "ring" -> "Rings")
+    // Dynamic category mapping from database categories
+    const dbCategories = await db.select().from(category);
     const categoryMap: Record<string, string> = {
       ring: "Rings",
       rings: "Rings",
@@ -528,10 +556,17 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       bracelets: "Bracelets",
       bangle: "Bangles",
       bangles: "Bangles",
-      solitaire: "Rings",
-      pendant: "Necklaces",
-      pendants: "Necklaces",
+      pendant: "Pendants",
+      pendants: "Pendants",
+      solitaire: "Solitaires",
+      solitaires: "Solitaires",
+      kids: "Kids Jewellery",
     };
+
+    for (const c of dbCategories) {
+      if (c.slug) categoryMap[c.slug.toLowerCase().trim()] = c.name;
+      if (c.name) categoryMap[c.name.toLowerCase().trim()] = c.name;
+    }
 
     return allProducts.map((p, index) => {
       const pVariants = variantMap.get(p.id) || [];
@@ -551,11 +586,11 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
         ? getSafePrice(primaryVariant.strikethroughPrice, Math.round(price * 1.1))
         : Math.round(price * 1.1);
 
-      const gallery = pMedia.map((m) => m.mediaURL || "").filter(Boolean);
-      const image = p.bannerImage || gallery[0] || "/customize/custom1.png";
+      const gallery = pMedia.map((m) => getImageUrl(m.mediaURL)).filter(Boolean);
+      const image = getImageUrl(p.bannerImage || gallery[0]);
 
-      const rawType = (p.jewelleryType || "ring").toLowerCase();
-      const type = categoryMap[rawType] || "Rings";
+      const rawType = (p.jewelleryType || "rings").toLowerCase().trim();
+      const type = categoryMap[rawType] || (rawType.charAt(0).toUpperCase() + rawType.slice(1));
 
       // URL friendly slug
       const slug =
@@ -642,9 +677,9 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
       .where(eq(productMedia.productId, productRow.id));
 
     const primaryVariant = variants[0];
-    const gallery = media.map((m) => m.mediaURL || "").filter(Boolean);
+    const gallery = media.map((m) => getImageUrl(m.mediaURL)).filter(Boolean);
     if (gallery.length === 0 && productRow.bannerImage) {
-      gallery.push(productRow.bannerImage);
+      gallery.push(getImageUrl(productRow.bannerImage));
     }
 
     const price = primaryVariant

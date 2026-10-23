@@ -35,6 +35,9 @@ export interface AdminProduct {
   stock: number;
   status: "In Stock" | "Low Stock" | "Out of Stock";
   image: string;
+  bannerImage?: string;
+  mediaUrls?: string[];
+  categoryId?: string | null;
 }
 
 export interface AdminEnquiry {
