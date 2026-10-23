@@ -1,0 +1,18 @@
+@media (min-width: 1024px) {
+  :global(html):has(.page),
+  :global(body):has(.page) {
+    overflow-x: clip;
+  }
+
+  :global(body):has(.page) :global([data-site-header]) {
+    position: sticky;
+    top: var(--pdp-header-top, 0px);
+    flex-shrink: 0;
+  }
+
+  .gallery {
+    position: sticky;
+    top: calc(var(--pdp-header-height, 0px) + 1rem);
+    align-self: start;
+  }
+}

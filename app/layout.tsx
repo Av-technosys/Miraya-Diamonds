@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
 import { Inter, Cormorant_Garamond, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/common/header";
 import { ConditionalFooter } from "@/components/common/conditional-footer";
+import { SmoothScroll } from "@/components/common/smooth-scroll";
 import { cn } from "@/lib/utils";
 
 const geist = Geist({subsets:['latin'],variable:'--font-sans'});
@@ -53,6 +55,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={cn("h-full", "antialiased", inter.variable, cormorantGaramond.variable, montserrat.variable, alexBrush.variable, playfairDisplay.variable, plusJakartaSans.variable, "font-sans", geist.variable)}
       suppressHydrationWarning
     >
@@ -66,6 +69,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           signUpForceRedirectUrl="/dashboard"
           appearance={{ theme: shadcn, variables: { colorPrimary: "#214E34" } }}
         >
+          <Suspense fallback={null}><SmoothScroll /></Suspense>
           <Header />
           <div className="flex-1">{children}</div>
           <ConditionalFooter />

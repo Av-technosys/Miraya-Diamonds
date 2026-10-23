@@ -8,6 +8,13 @@
       "when": 1792642116795,
       "tag": "0000_thankful_emma_frost",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792736691591,
+      "tag": "0001_clean_black_bolt",
+      "breakpoints": true
     }
   ]
 }

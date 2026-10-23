@@ -233,14 +233,14 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
       {/* Toast Notification */}
       {notification && (
         <div
-          className={`flex items-center gap-3 rounded-xl border p-4 text-xs font-medium shadow-md transition-all ${
+          className={`flex items-center gap-3 rounded-lg border p-4 text-xs font-medium  transition-all ${
             notification.type === "success"
-              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-              : "border-rose-200 bg-rose-50 text-rose-800"
+              ? "border-[#dce5d7] bg-[#f2f6f0] text-[#214E34]"
+              : "border-[#ead8d1] bg-[#fcf2ef] text-[#9f5c4d]"
           }`}
         >
           {notification.type === "success" ? (
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+            <CheckCircle2 size={16} className="text-[#597454] shrink-0" />
           ) : (
             <AlertCircle size={16} className="text-rose-600 shrink-0" />
           )}
@@ -249,11 +249,11 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
       )}
 
       {/* Header with Title and Actions */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 border-b border-[#e9e4df] pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h2 className="text-[20px] font-bold text-[#161D1A]">Jewellery Categories</h2>
-          <p className="text-xs text-[#78716C]">
-            Manage navigation categories, banners, priorities, and collection redirect URLs
+          <h1 className="font-serif text-4xl font-medium leading-tight text-[#214E34] sm:text-[42px]">Category</h1>
+          <p className="mt-2 text-xs leading-6 text-[#8a837b]">
+            Organise your website categories.
           </p>
         </div>
 
@@ -262,50 +262,50 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
             type="button"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#E7E2D8] bg-white px-3.5 py-2 text-xs font-medium text-[#44403C] shadow-xs transition-colors hover:border-[#C5A880] hover:text-[#161D1A] disabled:opacity-50"
-            title="Reload from database"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#e5dfd9] bg-white px-3.5 py-2 text-xs font-medium text-[#44403C] transition-colors hover:border-[#9b8966] hover:text-[#353333] disabled:opacity-50"
+            title="Refresh category"
           >
-            <RefreshCw size={13} className={isRefreshing ? "animate-spin text-[#C5A880]" : "text-[#78716C]"} />
+            <RefreshCw size={13} className={isRefreshing ? "animate-spin text-[#9b8966]" : "text-[#8a837b]"} />
             <span>{isRefreshing ? "Refreshing..." : "Refresh"}</span>
           </button>
 
           <button
             type="button"
             onClick={openAddModal}
-            className="inline-flex items-center gap-2 rounded-full bg-[#214E34] px-4 py-2 text-xs font-semibold text-white shadow-xs transition-transform hover:scale-[1.02] hover:bg-[#1A3F2A]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#214E34] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1A3F2A]"
           >
             <Plus size={15} />
-            <span>Add New Category</span>
+            <span>Add category</span>
           </button>
         </div>
       </div>
 
       {/* Search Bar */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-[#EAE6DE] bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-lg border border-[#e9e4df] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="relative w-full sm:max-w-xs">
           <Search
             size={15}
-            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+            className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#aaa198]"
           />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search categories by name or slug..."
-            className="h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] pl-9 pr-3 text-xs text-[#1C1B1A] placeholder:text-[#A8A29E] transition-all focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+            className="h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] pl-9 pr-3 text-xs text-[#353333] placeholder:text-[#aaa198] transition-all focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
           />
         </div>
 
-        <div className="text-xs text-[#78716C]">
-          Total <span className="font-semibold text-[#161D1A]">{filteredCategories.length}</span> categories
+        <div className="text-xs text-[#8a837b]">
+          Total <span className="font-semibold text-[#353333]">{filteredCategories.length}</span> categories
         </div>
       </div>
 
       {/* Categories Table */}
-      <div className="overflow-hidden rounded-2xl border border-[#EAE6DE] bg-white shadow-xs">
+      <div className="overflow-hidden rounded-lg border border-[#e9e4df] bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-[#F0EBE3] bg-[#FAF8F5] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#78716C]">
+          <table className="w-full min-w-[760px] text-left text-xs">
+            <thead className="border-b border-[#eee9e4] bg-[#FAF8F7] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#8a837b]">
               <tr>
                 <th className="py-3.5 pl-6 pr-4">Category</th>
                 <th className="px-4 py-3.5">Slug</th>
@@ -315,20 +315,20 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                 <th className="py-3.5 pl-4 pr-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F5F2EB]">
+            <tbody className="divide-y divide-[#eee9e4]">
               {filteredCategories.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-sm text-[#A8A29E]">
-                    No categories found. Click &quot;Add New Category&quot; to create one.
+                  <td colSpan={6} className="py-12 text-center text-sm text-[#aaa198]">
+                    No categories found. Click &quot;Add category&quot; to create one.
                   </td>
                 </tr>
               ) : (
                 filteredCategories.map((cat) => (
-                  <tr key={cat.id} className="group transition-colors hover:bg-[#FAF8F5]/80">
+                  <tr key={cat.id} className="group transition-colors hover:bg-[#FAF8F7]/80">
                     {/* Category Name & Image */}
                     <td className="py-4 pl-6 pr-4">
                       <div className="flex items-center gap-3">
-                        <div className="relative size-12 shrink-0 overflow-hidden rounded-xl border border-[#E7E2D8] bg-[#FAF8F5]">
+                        <div className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-[#FAF8F7]">
                           {cat.bannerImage ? (
                             <Image
                               src={cat.bannerImage}
@@ -337,21 +337,21 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                               className="object-cover"
                             />
                           ) : (
-                            <div className="flex size-full items-center justify-center text-[#A8A29E]">
+                            <div className="flex size-full items-center justify-center text-[#aaa198]">
                               <Layers size={18} />
                             </div>
                           )}
                         </div>
                         <div>
-                          <div className="font-semibold text-[#161D1A]">{cat.name}</div>
-                          <div className="text-[10px] text-[#A8A29E]">ID: {cat.id.slice(0, 8)}...</div>
+                          <div className="font-semibold text-[#353333]">{cat.name}</div>
+                          <div className="text-[10px] text-[#aaa198]">ID: {cat.id.slice(0, 8)}...</div>
                         </div>
                       </div>
                     </td>
 
                     {/* Slug */}
                     <td className="px-4 py-4">
-                      <span className="inline-flex rounded-md bg-[#FAF8F5] px-2 py-1 font-mono text-[11px] text-[#214E34]">
+                      <span className="inline-flex rounded-md bg-[#FAF8F7] px-2 py-1 font-mono text-[11px] text-[#214E34]">
                         /{cat.slug}
                       </span>
                     </td>
@@ -369,20 +369,20 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                           <ExternalLink size={11} />
                         </a>
                       ) : (
-                        <span className="text-[#A8A29E]">—</span>
+                        <span className="text-[#aaa198]">—</span>
                       )}
                     </td>
 
                     {/* Priority */}
                     <td className="px-4 py-4 text-center">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#C5A880]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#8C7350]">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#9b8966]/15 px-2.5 py-0.5 text-[11px] font-semibold text-[#8d7c61]">
                         <ArrowUpDown size={10} />
                         Order: {cat.priority ?? 1}
                       </span>
                     </td>
 
                     {/* Description */}
-                    <td className="px-4 py-4 text-[#78716C] max-w-xs">
+                    <td className="px-4 py-4 text-[#8a837b] max-w-xs">
                       <p className="truncate text-xs">{cat.description || "—"}</p>
                     </td>
 
@@ -392,7 +392,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                         <button
                           type="button"
                           onClick={() => openEditModal(cat)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-[#214E34]"
+                          className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-[#214E34]"
                           title="Edit Category"
                         >
                           <Edit2 size={14} />
@@ -401,7 +401,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                           type="button"
                           disabled={deletingId === cat.id}
                           onClick={() => handleDelete(cat.id, cat.name)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-rose-600 disabled:opacity-40"
+                          className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-rose-600 disabled:opacity-40"
                           title="Delete Category"
                         >
                           {deletingId === cat.id ? (
@@ -423,29 +423,29 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
       {/* Add / Edit Category Modal */}
       {isAddModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => {
             setIsAddModalOpen(false);
             resetForm();
           }}
         >
           <div
-            className="w-full max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-[#EAE6DE] bg-white shadow-2xl"
+            className="w-full max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border border-[#e9e4df] bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#F0EBE3] bg-[#FAF8F5] px-6 py-4">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#eee9e4] bg-[#FAF8F7] px-6 py-4">
               <div className="flex items-center gap-2.5">
                 <div className="grid size-8 place-items-center rounded-lg bg-[#214E34]/15 text-[#214E34]">
                   <Layers size={17} />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-bold text-[#161D1A]">
-                    {editingCategory ? "Edit Category" : "Add New Category"}
+                  <h3 className="font-serif text-[28px] font-medium text-[#353333]">
+                    {editingCategory ? "Edit Category" : "Add category"}
                   </h3>
-                  <p className="text-[11px] text-[#78716C]">
+                  <p className="text-[11px] text-[#8a837b]">
                     {editingCategory
-                      ? `Updating "${editingCategory.name}" in database`
+                      ? `Edit ${editingCategory.name}`
                       : "Create a jewellery category for navigation and filtering"}
                   </p>
                 </div>
@@ -456,7 +456,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                   setIsAddModalOpen(false);
                   resetForm();
                 }}
-                className="grid size-8 place-items-center rounded-lg text-[#78716C] hover:bg-white"
+                className="grid size-8 place-items-center rounded-lg text-[#8a837b] hover:bg-white"
               >
                 <X size={18} />
               </button>
@@ -476,7 +476,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                     value={name}
                     onChange={handleNameChange}
                     placeholder="e.g. Rings, Solitaires"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -489,7 +489,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                     value={slug}
                     onChange={(e) => setSlug(e.target.value)}
                     placeholder="e.g. rings"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 font-mono text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 font-mono text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -504,14 +504,14 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                   value={redirectSlug}
                   onChange={(e) => setRedirectSlug(e.target.value)}
                   placeholder="/collection?category=Rings"
-                  className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                  className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
               {/* Banner Image URL */}
               <div>
                 <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
-                  <ImageIcon size={14} className="text-[#C5A880]" />
+                  <ImageIcon size={14} className="text-[#9b8966]" />
                   Banner Image (banner_image)
                 </label>
                 <div className="mt-1 flex gap-2">
@@ -520,10 +520,10 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                     value={bannerImage}
                     onChange={(e) => setBannerImage(e.target.value)}
                     placeholder="/Images/Header_ring.png or https://..."
-                    className="h-9 flex-1 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="h-9 flex-1 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                   {bannerImage && (
-                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#E7E2D8] bg-neutral-100">
+                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-neutral-100">
                       <Image src={bannerImage} alt="Preview" fill className="object-cover" />
                     </div>
                   )}
@@ -540,7 +540,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                   value={priority}
                   onChange={(e) => setPriority(e.target.value)}
                   placeholder="1"
-                  className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                  className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
@@ -554,12 +554,12 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="Category highlights and collection description..."
-                  className="mt-1 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] p-2.5 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                  className="mt-1 w-full rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] p-2.5 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
               {/* Submit Buttons */}
-              <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#F0EBE3]">
+              <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#eee9e4]">
                 <button
                   type="button"
                   disabled={isSubmitting}
@@ -567,14 +567,14 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                     setIsAddModalOpen(false);
                     resetForm();
                   }}
-                  className="rounded-lg border border-[#E7E2D8] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F5]"
+                  className="rounded-lg border border-[#e5dfd9] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F7]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
                 >
                   {isSubmitting && <Loader2 size={14} className="animate-spin" />}
                   <span>{editingCategory ? "Update Category" : "Save Category"}</span>

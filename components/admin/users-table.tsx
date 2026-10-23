@@ -13,8 +13,6 @@ import {
   MapPin,
   Mail,
   Phone,
-  User,
-  Calendar,
 } from "lucide-react";
 import {
   getAdminUsers,
@@ -194,58 +192,62 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
 
   return (
     <div className="space-y-6">
-      {/* Metric summary bar */}
+      <div className="border-b border-[#e9e4df] pb-7">
+        <h1 className="font-serif text-4xl font-medium leading-tight text-[#214E34] sm:text-[42px]">Users</h1>
+        <p className="mt-2 text-xs leading-6 text-[#8a837b]">Manage customer accounts and contact details.</p>
+      </div>
+      {/* Summary */}
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div className="rounded-xl border border-[#EAE6DE] bg-white p-4 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wider text-[#78716C]">
+        <div className="rounded-lg border border-[#e9e4df] bg-white p-4">
+          <div className="text-[11px] font-medium uppercase tracking-wider text-[#8a837b]">
             Total Users
           </div>
-          <div className="mt-1 text-[24px] font-bold text-[#161D1A]">
+          <div className="mt-1 font-serif text-[34px] font-medium text-[#353333]">
             {users.length}
           </div>
-          <div className="text-[11px] text-[#A8A29E]">
+          <div className="text-[11px] text-[#aaa198]">
             Registered customer accounts
           </div>
         </div>
-        <div className="rounded-xl border border-[#EAE6DE] bg-white p-4 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wider text-[#78716C]">
+        <div className="rounded-lg border border-[#e9e4df] bg-white p-4">
+          <div className="text-[11px] font-medium uppercase tracking-wider text-[#8a837b]">
             Email Verified
           </div>
-          <div className="mt-1 text-[24px] font-bold text-emerald-800">
+          <div className="mt-1 font-serif text-[34px] font-medium text-[#214E34]">
             {verifiedCount}
           </div>
-          <div className="text-[11px] text-emerald-700/80">
+          <div className="text-[11px] text-[#8a837b]">
             Confirmed email credentials
           </div>
         </div>
-        <div className="rounded-xl border border-[#EAE6DE] bg-white p-4 shadow-xs">
-          <div className="text-[11px] font-medium uppercase tracking-wider text-[#78716C]">
+        <div className="rounded-lg border border-[#e9e4df] bg-white p-4">
+          <div className="text-[11px] font-medium uppercase tracking-wider text-[#8a837b]">
             Unverified
           </div>
-          <div className="mt-1 text-[24px] font-bold text-amber-700">
+          <div className="mt-1 font-serif text-[34px] font-medium text-[#8f7752]">
             {unverifiedCount}
           </div>
-          <div className="text-[11px] text-amber-700/80">
+          <div className="text-[11px] text-[#8a837b]">
             Awaiting verification
           </div>
         </div>
       </div>
 
       {/* Search & Filter Bar */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-[#EAE6DE] bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-lg border border-[#e9e4df] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
           {/* Search */}
           <div className="relative w-full sm:max-w-sm">
             <Search
               size={15}
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#aaa198]"
             />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name, email, phone, address..."
-              className="h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] pl-9 pr-3 text-xs text-[#1C1B1A] placeholder:text-[#A8A29E] transition-all focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+              className="h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] pl-9 pr-3 text-xs text-[#353333] placeholder:text-[#aaa198] transition-all focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
             />
           </div>
 
@@ -253,7 +255,7 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
           <select
             value={verifiedFilter}
             onChange={(e) => setVerifiedFilter(e.target.value)}
-            className="h-9 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-2.5 text-xs text-[#44403C] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+            className="h-10 rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-2.5 text-xs text-[#44403C] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
           >
             <option value="All">All Verification Statuses</option>
             <option value="Verified">Email Verified</option>
@@ -266,18 +268,18 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
             type="button"
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs font-medium text-[#44403C] hover:bg-white hover:text-[#161D1A] transition-colors disabled:opacity-50"
-            title="Refresh database records"
+            className="inline-flex h-9 items-center gap-1.5 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs font-medium text-[#44403C] hover:bg-white hover:text-[#353333] transition-colors disabled:opacity-50"
+            title="Refresh users"
           >
             <RefreshCw
               size={13}
-              className={isRefreshing ? "animate-spin text-[#C5A880]" : ""}
+              className={isRefreshing ? "animate-spin text-[#9b8966]" : ""}
             />
             <span>Refresh</span>
           </button>
-          <div className="text-xs text-[#78716C]">
+          <div className="text-xs text-[#8a837b]">
             Showing{" "}
-            <span className="font-semibold text-[#161D1A]">
+            <span className="font-semibold text-[#353333]">
               {filteredUsers.length}
             </span>{" "}
             users
@@ -286,10 +288,10 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
       </div>
 
       {/* Users Table */}
-      <div className="overflow-hidden rounded-2xl border border-[#EAE6DE] bg-white shadow-xs">
+      <div className="overflow-hidden rounded-lg border border-[#e9e4df] bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-[#F0EBE3] bg-[#FAF8F5] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#78716C]">
+          <table className="w-full min-w-[760px] text-left text-xs">
+            <thead className="border-b border-[#eee9e4] bg-[#FAF8F7] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#8a837b]">
               <tr>
                 <th className="py-3.5 pl-6 pr-4 w-16 text-center">S.No</th>
                 <th className="px-4 py-3.5">Name</th>
@@ -301,12 +303,12 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                 <th className="py-3.5 pl-4 pr-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F5F2EB]">
+            <tbody className="divide-y divide-[#eee9e4]">
               {filteredUsers.length === 0 ? (
                 <tr>
                   <td
                     colSpan={8}
-                    className="py-12 text-center text-sm text-[#A8A29E]"
+                    className="py-12 text-center text-sm text-[#aaa198]"
                   >
                     No users found matching your criteria.
                   </td>
@@ -315,15 +317,15 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                 filteredUsers.map((user, index) => (
                   <tr
                     key={user.id}
-                    className="group transition-colors hover:bg-[#FAF8F5]/80"
+                    className="group transition-colors hover:bg-[#FAF8F7]/80"
                   >
                     {/* S.No */}
-                    <td className="py-4 pl-6 pr-4 text-center font-mono text-xs text-[#8C7350] font-semibold">
+                    <td className="py-4 pl-6 pr-4 text-center font-mono text-xs text-[#8d7c61] font-semibold">
                       {index + 1}
                     </td>
 
                     {/* Name */}
-                    <td className="px-4 py-4 font-semibold text-[#161D1A]">
+                    <td className="px-4 py-4 font-semibold text-[#353333]">
                       {user.name}
                     </td>
 
@@ -340,30 +342,30 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                       {user.address ? (
                         <span>{user.address}</span>
                       ) : (
-                        <span className="text-[#A8A29E] italic">—</span>
+                        <span className="text-[#aaa198] italic">—</span>
                       )}
                     </td>
 
                     {/* Email Verified */}
                     <td className="px-4 py-4 text-center">
                       {user.emailVerified ? (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-emerald-200/80 bg-emerald-50 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#dce5d7]/80 bg-[#f2f6f0] px-2.5 py-0.5 text-[11px] font-semibold text-[#214E34]">
                           <CheckCircle2
                             size={12}
-                            className="text-emerald-600"
+                            className="text-[#597454]"
                           />
                           Verified
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1 rounded-full border border-amber-200/80 bg-amber-50 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800">
-                          <XCircle size={12} className="text-amber-600" />
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[#e8dfce]/80 bg-[#faf7ef] px-2.5 py-0.5 text-[11px] font-semibold text-[#8f7752]">
+                          <XCircle size={12} className="text-[#8f7752]" />
                           Unverified
                         </span>
                       )}
                     </td>
 
                     {/* Joined */}
-                    <td className="px-4 py-4 text-[#78716C]">
+                    <td className="px-4 py-4 text-[#8a837b]">
                       {user.joinedDate}
                     </td>
 
@@ -373,7 +375,7 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                         <button
                           type="button"
                           onClick={() => handleOpenEdit(user)}
-                          className="grid size-7 place-items-center rounded-md border border-[#E7E2D8] bg-white text-[#57534E] hover:border-[#C5A880] hover:text-[#161D1A] transition-colors"
+                          className="grid size-7 place-items-center rounded-md border border-[#e5dfd9] bg-white text-[#57534E] hover:border-[#9b8966] hover:text-[#353333] transition-colors"
                           title="Edit User"
                         >
                           <Edit2 size={13} />
@@ -381,7 +383,7 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                         <button
                           type="button"
                           onClick={() => handleDeleteUser(user)}
-                          className="grid size-7 place-items-center rounded-md border border-[#E7E2D8] bg-white text-[#8C7350] hover:border-red-300 hover:text-red-700 transition-colors"
+                          className="grid size-7 place-items-center rounded-md border border-[#e5dfd9] bg-white text-[#8d7c61] hover:border-red-300 hover:text-red-700 transition-colors"
                           title="Delete User"
                         >
                           <Trash2 size={13} />
@@ -398,22 +400,22 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
 
       {/* Edit User Modal */}
       {editingUser && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-xs">
-          <div className="relative w-full max-w-lg rounded-2xl border border-[#EAE6DE] bg-white p-6 shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="relative max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-lg border border-[#e9e4df] bg-white p-6">
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-[#F0EBE3] pb-4">
+            <div className="flex items-center justify-between border-b border-[#eee9e4] pb-4">
               <div>
-                <h3 className="text-base font-bold text-[#161D1A]">
+                <h3 className="font-serif text-[28px] font-medium text-[#214E34]">
                   Edit User Profile
                 </h3>
-                <p className="mt-0.5 text-xs text-[#78716C]">
-                  Update user information stored in the database
+                <p className="mt-0.5 text-xs text-[#8a837b]">
+                  Update contact and profile details.
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleCloseEdit}
-                className="grid size-8 place-items-center rounded-lg text-[#78716C] hover:bg-[#FAF8F5] transition-colors"
+                className="grid size-8 place-items-center rounded-lg text-[#8a837b] hover:bg-[#FAF8F7] transition-colors"
               >
                 <X size={18} />
               </button>
@@ -426,11 +428,11 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                 <label className="mb-1.5 block font-semibold text-[#57534E]">
                   Email Address (Primary Identity)
                 </label>
-                <div className="flex h-10 items-center gap-2 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-[#78716C]">
-                  <Mail size={14} className="text-[#A8A29E]" />
+                <div className="flex h-10 items-center gap-2 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-[#8a837b]">
+                  <Mail size={14} className="text-[#aaa198]" />
                   <span>{editingUser.email}</span>
                   {editingUser.emailVerified && (
-                    <span className="ml-auto text-[10px] text-emerald-700 font-medium bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <span className="ml-auto text-[10px] text-[#597454] font-medium bg-[#f2f6f0] px-2 py-0.5 rounded-full border border-[#dce5d7]">
                       Verified
                     </span>
                   )}
@@ -440,7 +442,7 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
               {/* First Name & Last Name */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                  <label className="mb-1.5 block font-semibold text-[#353333]">
                     First Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -449,11 +451,11 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     placeholder="First Name"
-                    className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white px-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                  <label className="mb-1.5 block font-semibold text-[#353333]">
                     Last Name
                   </label>
                   <input
@@ -461,60 +463,60 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                     value={lastName}
                     onChange={(e) => setLastName(e.target.value)}
                     placeholder="Last Name"
-                    className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white px-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
               </div>
 
               {/* Phone Number */}
               <div>
-                <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                <label className="mb-1.5 block font-semibold text-[#353333]">
                   Phone Number
                 </label>
                 <div className="relative">
                   <Phone
                     size={14}
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-[#aaa198]"
                   />
                   <input
                     type="tel"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
-                    className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white pl-9 pr-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white pl-9 pr-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
               </div>
 
               {/* Address (optional) */}
               <div>
-                <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                <label className="mb-1.5 block font-semibold text-[#353333]">
                   Address (optional)
                 </label>
                 <div className="relative">
                   <MapPin
                     size={14}
-                    className="absolute left-3 top-3 text-[#A8A29E]"
+                    className="absolute left-3 top-3 text-[#aaa198]"
                   />
                   <textarea
                     rows={2}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
                     placeholder="House/Flat No., Street, City, State, PIN Code"
-                    className="w-full rounded-lg border border-[#E7E2D8] bg-white pl-9 pr-3 py-2 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="w-full rounded-lg border border-[#e5dfd9] bg-white pl-9 pr-3 py-2 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
               </div>
 
               {/* Gender (optional) */}
               <div>
-                <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                <label className="mb-1.5 block font-semibold text-[#353333]">
                   Gender (optional)
                 </label>
                 <select
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white px-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                  className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                 >
                   <option value="">Not Specified</option>
                   <option value="Male">Male</option>
@@ -526,25 +528,25 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
               {/* Special Dates (Birthday & Anniversary) */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                  <label className="mb-1.5 block font-semibold text-[#353333]">
                     Birthday (optional)
                   </label>
                   <input
                     type="date"
                     value={birthday}
                     onChange={(e) => setBirthday(e.target.value)}
-                    className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white px-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
                 <div>
-                  <label className="mb-1.5 block font-semibold text-[#161D1A]">
+                  <label className="mb-1.5 block font-semibold text-[#353333]">
                     Anniversary (optional)
                   </label>
                   <input
                     type="date"
                     value={anniversary}
                     onChange={(e) => setAnniversary(e.target.value)}
-                    className="h-10 w-full rounded-lg border border-[#E7E2D8] bg-white px-3 text-xs text-[#161D1A] focus:border-[#C5A880] focus:outline-hidden"
+                    className="h-10 w-full rounded-lg border border-[#e5dfd9] bg-white px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -554,7 +556,7 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
                 <div
                   className={`rounded-lg p-3 text-xs ${
                     modalFeedback.type === "success"
-                      ? "bg-emerald-50 text-emerald-800 border border-emerald-200"
+                      ? "bg-[#f2f6f0] text-[#214E34] border border-[#dce5d7]"
                       : "bg-red-50 text-red-800 border border-red-200"
                   }`}
                 >
@@ -563,24 +565,24 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
               )}
 
               {/* Modal Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#F0EBE3]">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-[#eee9e4]">
                 <button
                   type="button"
                   onClick={handleCloseEdit}
                   disabled={isPending}
-                  className="rounded-lg border border-[#E7E2D8] bg-white px-4 py-2 text-xs font-medium text-[#57534E] hover:bg-[#FAF8F5] transition-colors"
+                  className="rounded-lg border border-[#e5dfd9] bg-white px-4 py-2 text-xs font-medium text-[#57534E] hover:bg-[#FAF8F7] transition-colors"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isPending}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-[#193e29] transition-colors disabled:opacity-60"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white hover:bg-[#193e29] transition-colors disabled:opacity-60"
                 >
                   {isPending ? (
                     <>
                       <RefreshCw size={13} className="animate-spin" />
-                      <span>Saving to Database...</span>
+                      <span>Saving…</span>
                     </>
                   ) : (
                     <>

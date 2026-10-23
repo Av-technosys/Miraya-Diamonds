@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { boolean, check, integer, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
+import { boolean, check, index, integer, jsonb, numeric, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
 
 type ProductDimensions = {
   height: string;
@@ -127,3 +127,35 @@ export const contactUs = pgTable("contact_us", {
 
 export type ContactUs = typeof contactUs.$inferSelect;
 export type NewContactUs = typeof contactUs.$inferInsert;
+
+// Product enquiries
+export const productEnquiries = pgTable("product_enquiries", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  productId: uuid("product_id").references(() => products.id, { onDelete: "set null" }),
+  productName: text("product_name").notNull(),
+  productSku: text("product_sku").notNull(),
+  name: varchar("name", { length: 120 }).notNull(),
+  mobileNumber: varchar("mobile_number", { length: 24 }).notNull(),
+  email: varchar("email", { length: 254 }),
+  message: text("message"),
+  metalColour: text("metal_colour").notNull(),
+  diamondGrade: text("diamond_grade").notNull(),
+  metalPurity: text("metal_purity").notNull(),
+  size: text("size").notNull(),
+  engravingRequested: boolean("engraving_requested").default(false).notNull(),
+  engravingText: varchar("engraving_text", { length: 24 }),
+  status: text("status", {
+    enum: ["under_review", "response_received", "consultation_scheduled", "closed"],
+  }).default("under_review").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull().$onUpdate(() => new Date()),
+}, (table) => [
+  index("product_enquiries_created_at_idx").on(table.createdAt.desc()),
+  index("product_enquiries_product_id_idx").on(table.productId),
+  index("product_enquiries_status_created_at_idx").on(table.status, table.createdAt.desc()),
+  check("product_enquiries_valid_status", sql`${table.status} IN ('under_review', 'response_received', 'consultation_scheduled', 'closed')`),
+  check("product_enquiries_message_length", sql`char_length(${table.message}) <= 3000`),
+]);
+
+export type ProductEnquiry = typeof productEnquiries.$inferSelect;
+export type NewProductEnquiry = typeof productEnquiries.$inferInsert;
