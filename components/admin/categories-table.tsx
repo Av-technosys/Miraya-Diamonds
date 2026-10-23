@@ -19,6 +19,10 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import type { Category } from "@/lib/db/schema";
+import { ImageUploadInput } from "./image-upload-input";
+import { SuccessModal } from "./success-modal";
+import { ConfirmDeleteModal } from "./confirm-delete-modal";
+import { toRelativeKey } from "@/lib/imageUrl";
 import {
   getCategories,
   createCategory,
@@ -44,6 +48,18 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
   const [notification, setNotification] = useState<{
     type: "success" | "error";
     message: string;
+  } | null>(null);
+
+  // Success popup & Delete confirmation modal
+  const [successPopup, setSuccessPopup] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({ isOpen: false, title: "Success!", message: "" });
+
+  const [categoryToDelete, setCategoryToDelete] = useState<{
+    id: string;
+    name: string;
   } | null>(null);
 
   // Form State
@@ -86,7 +102,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
     setName(cat.name);
     setSlug(cat.slug);
     setRedirectSlug(cat.redirectSlug || "");
-    setBannerImage(cat.bannerImage || "");
+    setBannerImage(toRelativeKey(cat.bannerImage) || "");
     setDescription(cat.description || "");
     setPriority((cat.priority ?? 1).toString());
     setIsAddModalOpen(true);
@@ -147,7 +163,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
           name: name.trim(),
           slug: slug.trim(),
           redirectSlug: redirectSlug.trim() || undefined,
-          bannerImage: bannerImage.trim() || undefined,
+          bannerImage: toRelativeKey(bannerImage.trim()) || undefined,
           description: description.trim() || undefined,
           priority: parsedPriority,
         });
@@ -161,6 +177,11 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
         const updated = res.category;
         setCategories((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
         showNotification("success", `Category "${updated.name}" updated successfully!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Category Updated!",
+          message: `Category "${updated.name}" has been updated successfully.`,
+        });
 
         getCategories().then((fresh) => {
           if (fresh?.length) setCategories(fresh);
@@ -172,7 +193,7 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
           name: name.trim(),
           slug: slug.trim(),
           redirectSlug: redirectSlug.trim() || undefined,
-          bannerImage: bannerImage.trim() || undefined,
+          bannerImage: toRelativeKey(bannerImage.trim()) || undefined,
           description: description.trim() || undefined,
           priority: parsedPriority,
         });
@@ -186,6 +207,11 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
         const created = res.category;
         setCategories((prev) => [...prev, created]);
         showNotification("success", `Category "${created.name}" created successfully!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Category Created!",
+          message: `Category "${created.name}" has been created successfully.`,
+        });
 
         getCategories().then((fresh) => {
           if (fresh?.length) setCategories(fresh);
@@ -203,17 +229,26 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
     }
   }
 
-  async function handleDelete(id: string, catName: string) {
-    if (!confirm(`Are you sure you want to delete category "${catName}"?`)) {
-      return;
-    }
+  function handleDelete(id: string, catName: string) {
+    setCategoryToDelete({ id, name: catName });
+  }
+
+  async function handleConfirmDeleteCategory() {
+    if (!categoryToDelete) return;
+    const { id, name: catName } = categoryToDelete;
 
     setDeletingId(id);
     try {
       const res = await deleteCategory(id);
       if (res.success) {
         setCategories((prev) => prev.filter((c) => c.id !== id));
+        setCategoryToDelete(null);
         showNotification("success", `Category "${catName}" deleted.`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Category Deleted!",
+          message: `Category "${catName}" has been deleted successfully.`,
+        });
         getCategories().then((fresh) => {
           if (fresh?.length) setCategories(fresh);
         });
@@ -508,27 +543,16 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
                 />
               </div>
 
-              {/* Banner Image URL */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
-                  <ImageIcon size={14} className="text-[#9b8966]" />
-                  Banner Image (banner_image)
-                </label>
-                <div className="mt-1 flex gap-2">
-                  <input
-                    type="text"
-                    value={bannerImage}
-                    onChange={(e) => setBannerImage(e.target.value)}
-                    placeholder="/Images/Header_ring.png or https://..."
-                    className="h-9 flex-1 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                  />
-                  {bannerImage && (
-                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-neutral-100">
-                      <Image src={bannerImage} alt="Preview" fill className="object-cover" />
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Banner Image URL with S3 Upload */}
+              <ImageUploadInput
+                label="Banner Image (banner_image)"
+                value={bannerImage}
+                onChange={setBannerImage}
+                folder="categories"
+                placeholder="/Images/Header_ring.png or https://..."
+                helperText="Upload category banner directly to AWS S3 (categories/) or enter a URL"
+                disabled={isSubmitting}
+              />
 
               {/* Priority */}
               <div>
@@ -584,6 +608,24 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        isOpen={Boolean(categoryToDelete)}
+        onClose={() => setCategoryToDelete(null)}
+        onConfirm={handleConfirmDeleteCategory}
+        itemName={categoryToDelete?.name}
+        itemType="category"
+        isDeleting={Boolean(deletingId)}
+      />
+
+      {/* Centered Success Popup */}
+      <SuccessModal
+        isOpen={successPopup.isOpen}
+        onClose={() => setSuccessPopup((prev) => ({ ...prev, isOpen: false }))}
+        title={successPopup.title}
+        message={successPopup.message}
+      />
     </div>
   );
 }

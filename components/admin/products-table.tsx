@@ -19,6 +19,12 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { initialProducts as fallbackProducts, type AdminProduct } from "./mock-data";
+import { ProductMediaManager } from "./product-media-manager";
+import { SuccessModal } from "./success-modal";
+import { ConfirmDeleteModal } from "./confirm-delete-modal";
+import { toRelativeKey } from "@/lib/imageUrl";
+import type { Category } from "@/lib/db/schema";
+import { getCategories } from "@/lib/actions/categories";
 import {
   getAdminProducts,
   createProduct,
@@ -28,22 +34,27 @@ import {
 
 interface ProductsTableProps {
   initialProducts?: AdminProduct[];
+  categories?: Category[];
   isAddModalOpenInitially?: boolean;
   onCloseAddModal?: () => void;
 }
 
 function normalizeJewelleryType(type: string): string {
   const t = (type || "").toLowerCase().trim();
-  if (t === "ring" || t === "rings") return "ring";
-  if (t === "necklace" || t === "necklaces" || t === "pendant" || t === "pendants") return "necklace";
-  if (t === "earring" || t === "earrings") return "earring";
-  if (t === "bracelet" || t === "bracelets" || t === "bangle" || t === "bangles") return "bracelet";
-  if (t === "solitaire" || t === "solitaires") return "solitaire";
+  if (t === "ring" || t === "rings") return "rings";
+  if (t === "necklace" || t === "necklaces") return "necklaces";
+  if (t === "earring" || t === "earrings") return "earrings";
+  if (t === "bracelet" || t === "bracelets") return "bracelets";
+  if (t === "bangle" || t === "bangles") return "bangles";
+  if (t === "pendant" || t === "pendants") return "pendants";
+  if (t === "solitaire" || t === "solitaires") return "solitaires";
+  if (t === "kid" || t === "kids" || t === "kids jewellery") return "kids";
   return t;
 }
 
 export function ProductsTable({
   initialProducts = [],
+  categories = [],
   isAddModalOpenInitially = false,
   onCloseAddModal,
 }: ProductsTableProps) {
@@ -51,6 +62,7 @@ export function ProductsTable({
   const [products, setProducts] = useState<AdminProduct[]>(() =>
     initialProducts.length > 0 ? initialProducts : fallbackProducts
   );
+  const [categoriesList, setCategoriesList] = useState<Category[]>(categories);
   const [search, setSearch] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [stockFilter, setStockFilter] = useState("All");
@@ -67,6 +79,18 @@ export function ProductsTable({
     message: string;
   } | null>(null);
 
+  // Success popup & Delete confirmation modal states
+  const [successPopup, setSuccessPopup] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+  }>({ isOpen: false, title: "Success!", message: "" });
+
+  const [productToDelete, setProductToDelete] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
+
   // Sync products when initialProducts prop updates from server revalidation
   useEffect(() => {
     if (initialProducts && initialProducts.length > 0) {
@@ -74,11 +98,23 @@ export function ProductsTable({
     }
   }, [initialProducts]);
 
+  // Sync or fetch categories dynamically
+  useEffect(() => {
+    if (categories && categories.length > 0) {
+      setCategoriesList(categories);
+    } else {
+      getCategories().then((cats) => {
+        if (cats && cats.length > 0) setCategoriesList(cats);
+      });
+    }
+  }, [categories]);
+
   // Form State for Add / Edit
   const [name, setName] = useState("");
   const [sku, setSku] = useState("");
   const [description, setDescription] = useState("");
-  const [jewelleryType, setJewelleryType] = useState("ring");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [jewelleryType, setJewelleryType] = useState(() => categoriesList[0]?.slug || "rings");
   const [diamondGrades, setDiamondGrades] = useState("EF-VVS, IJ-SI");
   const [goldPurities, setGoldPurities] = useState("14KT, 18KT");
   const [goldColours, setGoldColours] = useState("yellow, rose, white");
@@ -94,7 +130,8 @@ export function ProductsTable({
   const [dimLength, setDimLength] = useState("20.00");
   const [stock, setStock] = useState("10");
   const [sellingPrice, setSellingPrice] = useState("48250");
-  const [imageUrl, setImageUrl] = useState("/customize/custom1.png");
+  const [bannerImage, setBannerImage] = useState("");
+  const [mediaUrls, setMediaUrls] = useState<string[]>([]);
 
   function showNotification(type: "success" | "error", message: string) {
     setNotification({ type, message });
@@ -121,7 +158,9 @@ export function ProductsTable({
     setName("");
     setSku("");
     setDescription("");
-    setJewelleryType("ring");
+    const defaultCat = categoriesList[0];
+    setSelectedCategoryId(defaultCat ? defaultCat.id : null);
+    setJewelleryType(defaultCat ? defaultCat.slug : "rings");
     setDiamondGrades("EF-VVS, IJ-SI");
     setGoldPurities("14KT, 18KT");
     setGoldColours("yellow, rose, white");
@@ -137,7 +176,8 @@ export function ProductsTable({
     setDimLength("20.00");
     setStock("10");
     setSellingPrice("48250");
-    setImageUrl("/customize/custom1.png");
+    setBannerImage("");
+    setMediaUrls([]);
     setEditingProduct(null);
   }
 
@@ -146,6 +186,16 @@ export function ProductsTable({
     setName(prod.name);
     setSku(prod.sku);
     setDescription(prod.description);
+    let matchedCatId = prod.categoryId || null;
+    if (!matchedCatId && prod.jewelleryType) {
+      const match = categoriesList.find(
+        (c) =>
+          c.slug.toLowerCase() === prod.jewelleryType.toLowerCase() ||
+          c.name.toLowerCase() === prod.jewelleryType.toLowerCase()
+      );
+      if (match) matchedCatId = match.id;
+    }
+    setSelectedCategoryId(matchedCatId);
     setJewelleryType(prod.jewelleryType);
     setDiamondGrades(prod.diamondGrades?.join?.(", ") || "");
     setGoldPurities(prod.goldPurities?.join?.(", ") || "");
@@ -162,7 +212,15 @@ export function ProductsTable({
     setDimLength(prod.dimensions?.length || "20.00");
     setStock((prod.stock ?? 10).toString());
     setSellingPrice((prod.price ?? 48250).toString());
-    setImageUrl(prod.image || "/customize/custom1.png");
+    const prodBanner = toRelativeKey(prod.bannerImage || prod.image || "");
+    setBannerImage(prodBanner);
+    const existingMedia =
+      prod.mediaUrls && prod.mediaUrls.length > 0
+        ? prod.mediaUrls.map(toRelativeKey)
+        : prodBanner
+        ? [prodBanner]
+        : [];
+    setMediaUrls(existingMedia);
     setIsAddModalOpen(true);
   }
 
@@ -194,16 +252,23 @@ export function ProductsTable({
     const parsedDiamondPrice = parseFloat(diamondPrice) || 0;
     const parsedMaking = parseFloat(makingCharge) || 0;
 
+    const cleanMediaUrls = mediaUrls.map((u) => toRelativeKey(u.trim())).filter(Boolean);
+    const primaryBanner = toRelativeKey(bannerImage.trim()) || cleanMediaUrls[0] || "/customize/custom1.png";
+    if (primaryBanner && !cleanMediaUrls.includes(primaryBanner)) {
+      cleanMediaUrls.unshift(primaryBanner);
+    }
+
     const payload = {
       sku: sku.trim(),
       name: name.trim(),
+      categoryId: selectedCategoryId,
       description: description.trim() || "Handcrafted diamond jewellery by Miraya Diamonds.",
       jewelleryType: jewelleryType.toLowerCase().trim(),
       diamondGrades: diamondGrades.split(",").map((s) => s.trim()).filter(Boolean),
       goldPurities: goldPurities.split(",").map((s) => s.trim()).filter(Boolean),
       goldColours: goldColours.split(",").map((s) => s.trim()).filter(Boolean),
       sizes: sizes.split(",").map((s) => s.trim()).filter(Boolean),
-      bannerImage: imageUrl.trim() || "/customize/custom1.png",
+      bannerImage: primaryBanner,
       grossWeight: grossWeight || "3.10",
       netGoldWeight: netGoldWeight || "3.00",
       diamondPieces: parseInt(diamondPieces, 10) || 12,
@@ -217,7 +282,7 @@ export function ProductsTable({
       },
       price: parsedPrice > 0 ? parsedPrice : 48250,
       stock: parsedStock,
-      mediaUrls: [imageUrl.trim() || "/customize/custom1.png"],
+      mediaUrls: cleanMediaUrls.length > 0 ? cleanMediaUrls : [primaryBanner],
     };
 
     try {
@@ -250,6 +315,11 @@ export function ProductsTable({
           )
         );
         showNotification("success", `Product "${payload.name}" updated successfully in database!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Updated!",
+          message: `Product "${payload.name}" has been updated successfully in the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -267,6 +337,11 @@ export function ProductsTable({
         const newP = res.product;
         setProducts((prev) => [newP, ...prev.filter((p) => p.id !== newP.id && p.sku !== newP.sku)]);
         showNotification("success", `Product "${newP.name}" added to database!`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Added!",
+          message: `Product "${newP.name}" has been created and added to the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -285,17 +360,26 @@ export function ProductsTable({
     }
   }
 
-  async function handleDeleteProduct(id: string, productName: string) {
-    if (!confirm(`Are you sure you want to permanently delete "${productName}" from the catalogue and database?`)) {
-      return;
-    }
+  function handleDeleteProduct(id: string, productName: string) {
+    setProductToDelete({ id, name: productName });
+  }
+
+  async function handleConfirmDelete() {
+    if (!productToDelete) return;
+    const { id, name } = productToDelete;
 
     setDeletingId(id);
     try {
       const res = await deleteProduct(id);
       if (res.success) {
         setProducts((prev) => prev.filter((p) => p.id !== id));
-        showNotification("success", `"${productName}" deleted from database.`);
+        setProductToDelete(null);
+        showNotification("success", `"${name}" deleted from database.`);
+        setSuccessPopup({
+          isOpen: true,
+          title: "Product Deleted!",
+          message: `"${name}" has been permanently deleted from the catalogue.`,
+        });
 
         getAdminProducts().then((fresh) => {
           if (fresh && fresh.length > 0) setProducts(fresh);
@@ -339,20 +423,35 @@ export function ProductsTable({
       {/* Category Pills Header */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-2">
-          {["All", "Ring", "Necklace", "Earring", "Bracelet", "Solitaire"].map((cat) => (
-            <button
-              key={cat}
-              type="button"
-              onClick={() => setCategoryFilter(cat)}
-              className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
-                categoryFilter === cat
-                  ? "bg-[#214E34] text-white "
-                  : "border border-[#e5dfd9] bg-white text-[#57534E] hover:border-[#9b8966] hover:text-[#353333]"
-              }`}
-            >
-              {cat === "All" ? "All Jewellery" : `${cat}s`}
-            </button>
-          ))}
+          <button
+            type="button"
+            onClick={() => setCategoryFilter("All")}
+            className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+              categoryFilter === "All"
+                ? "bg-[#214E34] text-white"
+                : "border border-[#e5dfd9] bg-white text-[#57534E] hover:border-[#9b8966] hover:text-[#353333]"
+            }`}
+          >
+            All Jewellery
+          </button>
+          {categoriesList.map((cat) => {
+            const isSelected =
+              normalizeJewelleryType(categoryFilter) === normalizeJewelleryType(cat.slug || cat.name);
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                onClick={() => setCategoryFilter(cat.slug || cat.name)}
+                className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
+                  isSelected
+                    ? "bg-[#214E34] text-white"
+                    : "border border-[#e5dfd9] bg-white text-[#57534E] hover:border-[#9b8966] hover:text-[#353333]"
+                }`}
+              >
+                {cat.name}
+              </button>
+            );
+          })}
         </div>
 
         {/* Actions: Refresh & Add Product */}
@@ -815,44 +914,56 @@ export function ProductsTable({
                 />
               </div>
 
-              {/* Image URL & Product Media */}
-              <div>
-                <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
-                  <ImageIcon size={14} className="text-[#9b8966]" />
-                  Product Media Image URL (product_media / banner_image)
-                </label>
-                <div className="mt-1 flex gap-2">
-                  <input
-                    type="text"
-                    value={imageUrl}
-                    onChange={(e) => setImageUrl(e.target.value)}
-                    placeholder="/customize/custom1.png or https://..."
-                    className="h-9 flex-1 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                  />
-                  {imageUrl && (
-                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-neutral-100">
-                      <Image src={imageUrl} alt="Preview" fill className="object-cover" />
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Dynamic Product Media & Images Manager with AWS S3 Upload */}
+              <ProductMediaManager
+                bannerImage={bannerImage}
+                onBannerImageChange={setBannerImage}
+                mediaUrls={mediaUrls}
+                onMediaUrlsChange={setMediaUrls}
+                disabled={isSubmitting}
+              />
 
               {/* Type, Purities, Colours */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
-                    Jewellery Type
+                    Jewellery Category *
                   </label>
                   <select
-                    value={jewelleryType}
-                    onChange={(e) => setJewelleryType(e.target.value)}
-                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-2.5 text-xs text-[#44403C] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
+                    value={selectedCategoryId || jewelleryType}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      const matched = categoriesList.find(
+                        (c) => c.id === val || c.slug === val || c.name.toLowerCase() === val.toLowerCase()
+                      );
+                      if (matched) {
+                        setSelectedCategoryId(matched.id);
+                        setJewelleryType(matched.slug || matched.name.toLowerCase());
+                      } else {
+                        setSelectedCategoryId(null);
+                        setJewelleryType(val);
+                      }
+                    }}
+                    required
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-2.5 text-xs font-medium text-[#44403C] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   >
-                    <option value="ring">ring</option>
-                    <option value="necklace">necklace</option>
-                    <option value="earring">earring</option>
-                    <option value="bracelet">bracelet</option>
-                    <option value="solitaire">solitaire</option>
+                    {categoriesList.length > 0 ? (
+                      categoriesList.map((cat) => (
+                        <option key={cat.id} value={cat.id}>
+                          {cat.name} ({cat.slug})
+                        </option>
+                      ))
+                    ) : (
+                      <>
+                        <option value="rings">Rings (rings)</option>
+                        <option value="earrings">Earrings (earrings)</option>
+                        <option value="necklaces">Necklaces (necklaces)</option>
+                        <option value="bracelets">Bracelets (bracelets)</option>
+                        <option value="bangles">Bangles (bangles)</option>
+                        <option value="pendants">Pendants (pendants)</option>
+                        <option value="solitaires">Solitaires (solitaires)</option>
+                      </>
+                    )}
                   </select>
                 </div>
                 <div>
@@ -1079,6 +1190,24 @@ export function ProductsTable({
           </div>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
+      <ConfirmDeleteModal
+        isOpen={Boolean(productToDelete)}
+        onClose={() => setProductToDelete(null)}
+        onConfirm={handleConfirmDelete}
+        itemName={productToDelete?.name}
+        itemType="product"
+        isDeleting={Boolean(deletingId)}
+      />
+
+      {/* Centered Success Popup */}
+      <SuccessModal
+        isOpen={successPopup.isOpen}
+        onClose={() => setSuccessPopup((prev) => ({ ...prev, isOpen: false }))}
+        title={successPopup.title}
+        message={successPopup.message}
+      />
     </div>
   );
 }

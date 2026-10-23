@@ -78,6 +78,7 @@ export function AdminPanel({
             {activeTab === "products" && (
               <ProductsTable
                 initialProducts={initialProducts}
+                categories={initialCategories}
                 isAddModalOpenInitially={isAddProductModalOpen}
                 onCloseAddModal={() => setIsAddProductModalOpen(false)}
               />
