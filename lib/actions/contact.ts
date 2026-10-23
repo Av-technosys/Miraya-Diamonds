@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { contactUs, type ContactUs, type NewContactUs } from "@/lib/db/schema";
+import { contactUs, type ContactUs } from "@/lib/db/schema";
 import { desc } from "drizzle-orm";
 
 export interface ContactMessageInput {

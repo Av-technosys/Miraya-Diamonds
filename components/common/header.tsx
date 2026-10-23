@@ -96,7 +96,7 @@ export function Header() {
 
   return (
     <>
-      <header className="relative z-40 w-full bg-white">
+      <header data-site-header className="relative z-40 w-full bg-white">
         <div className="bg-[#244e38] py-3">
           <Container>
             <div className="flex items-center justify-between gap-3 lg:hidden">

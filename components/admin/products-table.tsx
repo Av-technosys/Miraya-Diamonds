@@ -10,7 +10,6 @@ import {
   Trash2,
   Edit2,
   X,
-  FileCode2,
   Eye,
   Ruler,
   Loader2,
@@ -315,17 +314,21 @@ export function ProductsTable({
 
   return (
     <div className="space-y-6">
-      {/* Toast Notification */}
+      <div className="border-b border-[#e9e4df] pb-7">
+        <h1 className="font-serif text-4xl font-medium leading-tight text-[#214E34] sm:text-[42px]">Products</h1>
+        <p className="mt-2 text-xs leading-6 text-[#8a837b]">Manage jewellery, product details and availability.</p>
+      </div>
+      {/* Notification */}
       {notification && (
         <div
-          className={`flex items-center gap-3 rounded-xl border p-4 text-xs font-medium shadow-md transition-all ${
+          className={`flex items-center gap-3 rounded-lg border p-4 text-xs font-medium  transition-all ${
             notification.type === "success"
-              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
-              : "border-rose-200 bg-rose-50 text-rose-800"
+              ? "border-[#dce5d7] bg-[#f2f6f0] text-[#214E34]"
+              : "border-[#ead8d1] bg-[#fcf2ef] text-[#9f5c4d]"
           }`}
         >
           {notification.type === "success" ? (
-            <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
+            <CheckCircle2 size={16} className="text-[#597454] shrink-0" />
           ) : (
             <AlertCircle size={16} className="text-rose-600 shrink-0" />
           )}
@@ -343,8 +346,8 @@ export function ProductsTable({
               onClick={() => setCategoryFilter(cat)}
               className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition-all ${
                 categoryFilter === cat
-                  ? "bg-[#214E34] text-white shadow-xs"
-                  : "border border-[#E7E2D8] bg-white text-[#57534E] hover:border-[#C5A880] hover:text-[#161D1A]"
+                  ? "bg-[#214E34] text-white "
+                  : "border border-[#e5dfd9] bg-white text-[#57534E] hover:border-[#9b8966] hover:text-[#353333]"
               }`}
             >
               {cat === "All" ? "All Jewellery" : `${cat}s`}
@@ -358,10 +361,10 @@ export function ProductsTable({
             type="button"
             onClick={handleManualRefresh}
             disabled={isRefreshing}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[#E7E2D8] bg-white px-3.5 py-2 text-xs font-medium text-[#44403C] shadow-xs transition-colors hover:border-[#C5A880] hover:text-[#161D1A] disabled:opacity-50"
-            title="Reload latest catalogue from database"
+            className="inline-flex items-center gap-1.5 rounded-full border border-[#e5dfd9] bg-white px-3.5 py-2 text-xs font-medium text-[#44403C] transition-colors hover:border-[#9b8966] hover:text-[#353333] disabled:opacity-50"
+            title="Refresh products"
           >
-            <RefreshCw size={13} className={isRefreshing ? "animate-spin text-[#C5A880]" : "text-[#78716C]"} />
+            <RefreshCw size={13} className={isRefreshing ? "animate-spin text-[#9b8966]" : "text-[#8a837b]"} />
             <span>{isRefreshing ? "Refreshing..." : "Refresh"}</span>
           </button>
 
@@ -371,29 +374,29 @@ export function ProductsTable({
               resetForm();
               setIsAddModalOpen(true);
             }}
-            className="inline-flex items-center gap-2 rounded-full bg-[#C5A880] px-4 py-2 text-xs font-semibold text-[#121714] shadow-xs transition-transform hover:scale-[1.02] hover:bg-[#d1b690]"
+            className="inline-flex items-center gap-2 rounded-full bg-[#214E34] px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-[#193e29]"
           >
             <Plus size={15} />
-            <span>Add New Diamond Product</span>
+            <span>Add product</span>
           </button>
         </div>
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col gap-3 rounded-2xl border border-[#EAE6DE] bg-white p-4 shadow-xs sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-lg border border-[#e9e4df] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 flex-col gap-3 sm:flex-row sm:items-center">
           {/* Search */}
           <div className="relative w-full sm:max-w-xs">
             <Search
               size={15}
-              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#A8A29E]"
+              className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#aaa198]"
             />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by title, SKU, or type..."
-              className="h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] pl-9 pr-3 text-xs text-[#1C1B1A] placeholder:text-[#A8A29E] transition-all focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+              className="h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] pl-9 pr-3 text-xs text-[#353333] placeholder:text-[#aaa198] transition-all focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
             />
           </div>
 
@@ -401,7 +404,7 @@ export function ProductsTable({
           <select
             value={stockFilter}
             onChange={(e) => setStockFilter(e.target.value)}
-            className="h-9 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-2.5 text-xs text-[#44403C] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+            className="h-10 rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-2.5 text-xs text-[#44403C] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
           >
             <option value="All">All Stock Levels</option>
             <option value="In Stock">In Stock</option>
@@ -410,16 +413,16 @@ export function ProductsTable({
           </select>
         </div>
 
-        <div className="text-xs text-[#78716C]">
-          Showing <span className="font-semibold text-[#161D1A]">{filteredProducts.length}</span> pieces
+        <div className="text-xs text-[#8a837b]">
+          Showing <span className="font-semibold text-[#353333]">{filteredProducts.length}</span> pieces
         </div>
       </div>
 
       {/* Products Table */}
-      <div className="overflow-hidden rounded-2xl border border-[#EAE6DE] bg-white shadow-xs">
+      <div className="overflow-hidden rounded-lg border border-[#e9e4df] bg-white">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-xs">
-            <thead className="border-b border-[#F0EBE3] bg-[#FAF8F5] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#78716C]">
+          <table className="w-full min-w-[760px] text-left text-xs">
+            <thead className="border-b border-[#eee9e4] bg-[#FAF8F7] font-sans text-[11px] font-semibold uppercase tracking-wider text-[#8a837b]">
               <tr>
                 <th className="py-3.5 pl-6 pr-4">Jewellery Piece</th>
                 <th className="px-4 py-3.5">Category</th>
@@ -429,10 +432,10 @@ export function ProductsTable({
                 <th className="py-3.5 pl-4 pr-6 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#F5F2EB]">
+            <tbody className="divide-y divide-[#eee9e4]">
               {filteredProducts.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-12 text-center text-sm text-[#A8A29E]">
+                  <td colSpan={6} className="py-12 text-center text-sm text-[#aaa198]">
                     No diamond jewellery items match your filter criteria.
                   </td>
                 </tr>
@@ -440,12 +443,12 @@ export function ProductsTable({
                 filteredProducts.map((prod) => (
                   <tr
                     key={prod.id}
-                    className="group transition-colors hover:bg-[#FAF8F5]/80"
+                    className="group transition-colors hover:bg-[#FAF8F7]/80"
                   >
                     {/* 1. Jewellery Piece */}
                     <td className="py-4 pl-6 pr-4">
                       <div className="flex items-center gap-3">
-                        <div className="relative size-12 shrink-0 overflow-hidden rounded-xl border border-[#E7E2D8] bg-[#FAF8F5]">
+                        <div className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-[#FAF8F7]">
                           <Image
                             src={prod.image}
                             alt={prod.name}
@@ -457,14 +460,14 @@ export function ProductsTable({
                           <button
                             type="button"
                             onClick={() => setSelectedProduct(prod)}
-                            className="text-left font-semibold text-[#161D1A] hover:text-[#214E34] hover:underline"
+                            className="text-left font-semibold text-[#353333] hover:text-[#214E34] hover:underline"
                           >
                             {prod.name}
                           </button>
-                          <div className="flex items-center gap-2 text-[11px] text-[#78716C]">
-                            <span className="font-mono text-[#A8A29E]">SKU: {prod.sku}</span>
+                          <div className="flex items-center gap-2 text-[11px] text-[#8a837b]">
+                            <span className="font-mono text-[#aaa198]">SKU: {prod.sku}</span>
                             <span>•</span>
-                            <span className="text-[#8C7350]">
+                            <span className="text-[#8d7c61]">
                               {prod.diamondPieces} pcs ({prod.totalDiamondWeight} ct)
                             </span>
                           </div>
@@ -474,7 +477,7 @@ export function ProductsTable({
 
                     {/* 2. Category */}
                     <td className="px-4 py-4">
-                      <span className="inline-flex capitalize rounded-md bg-[#FAF8F5] px-2 py-1 text-[11px] font-medium text-[#44403C]">
+                      <span className="inline-flex capitalize rounded-md bg-[#FAF8F7] px-2 py-1 text-[11px] font-medium text-[#44403C]">
                         {prod.jewelleryType}
                       </span>
                     </td>
@@ -484,13 +487,13 @@ export function ProductsTable({
                       <div className="font-medium">
                         {prod.goldPurities.join(", ")}
                       </div>
-                      <div className="capitalize text-[11px] text-[#78716C]">
+                      <div className="capitalize text-[11px] text-[#8a837b]">
                         {prod.goldColours.join(", ")}
                       </div>
                     </td>
 
                     {/* 4. Price (INR) */}
-                    <td className="px-4 py-4 text-right text-[14px] font-semibold text-[#161D1A]">
+                    <td className="px-4 py-4 text-right text-[14px] font-semibold text-[#353333]">
                       ₹{prod.price.toLocaleString("en-IN")}
                     </td>
 
@@ -499,10 +502,10 @@ export function ProductsTable({
                       <span
                         className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
                           prod.status === "In Stock"
-                            ? "bg-emerald-50 text-emerald-800 border border-emerald-200/60"
+                            ? "bg-[#f2f6f0] text-[#214E34] border border-[#dce5d7]/60"
                             : prod.status === "Low Stock"
-                            ? "bg-amber-50 text-amber-800 border border-amber-200/60"
-                            : "bg-rose-50 text-rose-800 border border-rose-200/60"
+                            ? "bg-[#faf7ef] text-[#8f7752] border border-[#e8dfce]/60"
+                            : "bg-[#fcf2ef] text-[#9f5c4d] border border-[#ead8d1]/60"
                         }`}
                       >
                         {prod.stock} units
@@ -515,15 +518,15 @@ export function ProductsTable({
                         <button
                           type="button"
                           onClick={() => setSelectedProduct(prod)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-[#214E34]"
-                          title="View Specs & JSON"
+                          className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-[#214E34]"
+                          title="View product details"
                         >
                           <Eye size={15} />
                         </button>
                         <button
                           type="button"
                           onClick={() => openEditModal(prod)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-[#214E34]"
+                          className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-[#214E34]"
                           title="Edit Product"
                         >
                           <Edit2 size={14} />
@@ -532,7 +535,7 @@ export function ProductsTable({
                           type="button"
                           disabled={deletingId === prod.id}
                           onClick={() => handleDeleteProduct(prod.id, prod.name)}
-                          className="rounded-lg p-1.5 text-[#78716C] transition-colors hover:bg-white hover:text-rose-600 disabled:opacity-40"
+                          className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-rose-600 disabled:opacity-40"
                           title="Delete SKU"
                         >
                           {deletingId === prod.id ? (
@@ -551,28 +554,28 @@ export function ProductsTable({
         </div>
       </div>
 
-      {/* Product Detailed Specs & JSON Modal */}
+      {/* Product details */}
       {selectedProduct && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#EAE6DE] bg-white shadow-2xl"
+            className="w-full max-w-2xl max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border border-[#e9e4df] bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#F0EBE3] bg-[#FAF8F5] px-6 py-4">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#eee9e4] bg-[#FAF8F7] px-6 py-4">
               <div className="flex items-center gap-3">
-                <div className="grid size-9 place-items-center rounded-xl bg-[#C5A880]/20 text-[#8C7350]">
+                <div className="grid size-9 place-items-center rounded-lg bg-[#9b8966]/20 text-[#8d7c61]">
                   <Gem size={18} />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-bold text-[#161D1A]">
+                  <h3 className="font-serif text-[28px] font-medium text-[#353333]">
                     {selectedProduct.name}
                   </h3>
-                  <div className="flex items-center gap-2 text-xs text-[#78716C]">
-                    <span className="font-mono text-[#8C7350]">SKU: {selectedProduct.sku}</span>
+                  <div className="flex items-center gap-2 text-xs text-[#8a837b]">
+                    <span className="font-mono text-[#8d7c61]">SKU: {selectedProduct.sku}</span>
                     <span>•</span>
                     <span className="capitalize">{selectedProduct.jewelleryType}</span>
                   </div>
@@ -581,7 +584,7 @@ export function ProductsTable({
               <button
                 type="button"
                 onClick={() => setSelectedProduct(null)}
-                className="grid size-8 place-items-center rounded-lg text-[#78716C] hover:bg-white"
+                className="grid size-8 place-items-center rounded-lg text-[#8a837b] hover:bg-white"
               >
                 <X size={18} />
               </button>
@@ -590,7 +593,7 @@ export function ProductsTable({
             {/* Content */}
             <div className="p-6 space-y-6 text-xs">
               <div className="flex gap-4">
-                <div className="relative size-20 shrink-0 overflow-hidden rounded-xl border border-[#EAE6DE]">
+                <div className="relative size-20 shrink-0 overflow-hidden rounded-lg border border-[#e9e4df]">
                   <Image src={selectedProduct.image} alt={selectedProduct.name} fill className="object-cover" />
                 </div>
                 <div className="flex-1">
@@ -602,35 +605,35 @@ export function ProductsTable({
 
               {/* Technical Specifications Grid */}
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Gross Weight
                   </span>
-                  <div className="mt-1 text-sm font-bold text-[#161D1A]">
+                  <div className="mt-1 text-sm font-bold text-[#353333]">
                     {selectedProduct.grossWeight} g
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Net Gold Weight
                   </span>
-                  <div className="mt-1 text-sm font-bold text-[#161D1A]">
+                  <div className="mt-1 text-sm font-bold text-[#353333]">
                     {selectedProduct.netGoldWeight} g
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Diamond Pieces
                   </span>
-                  <div className="mt-1 text-sm font-bold text-[#161D1A]">
+                  <div className="mt-1 text-sm font-bold text-[#353333]">
                     {selectedProduct.diamondPieces} pcs
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Total Diamond Wt
                   </span>
-                  <div className="mt-1 text-sm font-bold text-[#161D1A]">
+                  <div className="mt-1 text-sm font-bold text-[#353333]">
                     {selectedProduct.totalDiamondWeight} ct
                   </div>
                 </div>
@@ -638,23 +641,23 @@ export function ProductsTable({
 
               {/* Price & Charges */}
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3.5">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3.5">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Diamond Price
                   </span>
-                  <div className="mt-1 font-bold text-base text-[#161D1A]">
+                  <div className="mt-1 font-bold text-base text-[#353333]">
                     ₹{parseFloat(selectedProduct.diamondPrice).toLocaleString("en-IN")}
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3.5">
-                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#A8A29E]">
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3.5">
+                  <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#aaa198]">
                     Making Charge
                   </span>
-                  <div className="mt-1 font-bold text-base text-[#161D1A]">
+                  <div className="mt-1 font-bold text-base text-[#353333]">
                     ₹{parseFloat(selectedProduct.makingCharge).toLocaleString("en-IN")}
                   </div>
                 </div>
-                <div className="rounded-xl border border-[#214E34]/20 bg-[#214E34]/5 p-3.5">
+                <div className="rounded-lg border border-[#214E34]/20 bg-[#214E34]/5 p-3.5">
                   <span className="text-[10.5px] uppercase font-semibold tracking-wider text-[#214E34]">
                     Total Selling Price
                   </span>
@@ -666,90 +669,56 @@ export function ProductsTable({
 
               {/* Options & Dimensions */}
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-4 space-y-2">
-                  <h4 className="font-semibold text-xs text-[#161D1A]">Configurations</h4>
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-4 space-y-2">
+                  <h4 className="font-semibold text-xs text-[#353333]">Configurations</h4>
                   <div>
-                    <span className="text-[#A8A29E]">Gold Purities:</span>{" "}
-                    <span className="font-medium text-[#161D1A]">{selectedProduct.goldPurities.join(", ")}</span>
+                    <span className="text-[#aaa198]">Gold Purities:</span>{" "}
+                    <span className="font-medium text-[#353333]">{selectedProduct.goldPurities.join(", ")}</span>
                   </div>
                   <div>
-                    <span className="text-[#A8A29E]">Colours:</span>{" "}
-                    <span className="font-medium capitalize text-[#161D1A]">{selectedProduct.goldColours.join(", ")}</span>
+                    <span className="text-[#aaa198]">Colours:</span>{" "}
+                    <span className="font-medium capitalize text-[#353333]">{selectedProduct.goldColours.join(", ")}</span>
                   </div>
                   <div>
-                    <span className="text-[#A8A29E]">Diamond Grades:</span>{" "}
-                    <span className="font-medium text-[#161D1A]">{selectedProduct.diamondGrades.join(", ")}</span>
+                    <span className="text-[#aaa198]">Diamond Grades:</span>{" "}
+                    <span className="font-medium text-[#353333]">{selectedProduct.diamondGrades.join(", ")}</span>
                   </div>
                   <div>
-                    <span className="text-[#A8A29E]">Available Sizes:</span>{" "}
-                    <span className="font-medium text-[#161D1A]">{selectedProduct.sizes.join(", ")}</span>
+                    <span className="text-[#aaa198]">Available Sizes:</span>{" "}
+                    <span className="font-medium text-[#353333]">{selectedProduct.sizes.join(", ")}</span>
                   </div>
                 </div>
 
-                <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-4 space-y-2">
-                  <h4 className="font-semibold text-xs text-[#161D1A]">Dimensions (mm)</h4>
+                <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-4 space-y-2">
+                  <h4 className="font-semibold text-xs text-[#353333]">Dimensions (mm)</h4>
                   <div className="flex items-center gap-2">
-                    <Ruler size={14} className="text-[#C5A880]" />
-                    <span className="text-[#A8A29E]">Height:</span>{" "}
-                    <span className="font-semibold text-[#161D1A]">{selectedProduct.dimensions.height} mm</span>
+                    <Ruler size={14} className="text-[#9b8966]" />
+                    <span className="text-[#aaa198]">Height:</span>{" "}
+                    <span className="font-semibold text-[#353333]">{selectedProduct.dimensions.height} mm</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Ruler size={14} className="text-[#C5A880]" />
-                    <span className="text-[#A8A29E]">Width:</span>{" "}
-                    <span className="font-semibold text-[#161D1A]">{selectedProduct.dimensions.width} mm</span>
+                    <Ruler size={14} className="text-[#9b8966]" />
+                    <span className="text-[#aaa198]">Width:</span>{" "}
+                    <span className="font-semibold text-[#353333]">{selectedProduct.dimensions.width} mm</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Ruler size={14} className="text-[#C5A880]" />
-                    <span className="text-[#A8A29E]">Length:</span>{" "}
-                    <span className="font-semibold text-[#161D1A]">{selectedProduct.dimensions.length} mm</span>
+                    <Ruler size={14} className="text-[#9b8966]" />
+                    <span className="text-[#aaa198]">Length:</span>{" "}
+                    <span className="font-semibold text-[#353333]">{selectedProduct.dimensions.length} mm</span>
                   </div>
                 </div>
               </div>
 
-              {/* Raw JSON Payload */}
-              <div className="rounded-xl border border-[#E7E2D8] bg-[#121714] p-4 text-[#E8E6E3]">
-                <div className="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
-                  <span className="flex items-center gap-1.5 font-mono text-[11px] text-[#C5A880]">
-                    <FileCode2 size={13} />
-                    Database Payload Format
-                  </span>
-                  <span className="text-[10px] text-white/40">PostgreSQL JSON</span>
-                </div>
-                <pre className="overflow-x-auto text-[11px] font-mono leading-relaxed text-[#A7F3D0]">
-                  {JSON.stringify(
-                    {
-                      id: selectedProduct.id,
-                      sku: selectedProduct.sku,
-                      name: selectedProduct.name,
-                      description: selectedProduct.description,
-                      jewelleryType: selectedProduct.jewelleryType,
-                      diamondGrades: selectedProduct.diamondGrades,
-                      goldPurities: selectedProduct.goldPurities,
-                      goldColours: selectedProduct.goldColours,
-                      sizes: selectedProduct.sizes,
-                      grossWeight: selectedProduct.grossWeight,
-                      netGoldWeight: selectedProduct.netGoldWeight,
-                      diamondPieces: selectedProduct.diamondPieces,
-                      totalDiamondWeight: selectedProduct.totalDiamondWeight,
-                      diamondPrice: selectedProduct.diamondPrice,
-                      makingCharge: selectedProduct.makingCharge,
-                      dimensions: selectedProduct.dimensions,
-                      bannerImage: selectedProduct.image,
-                    },
-                    null,
-                    2
-                  )}
-                </pre>
-              </div>
+
             </div>
 
-            <div className="flex justify-end border-t border-[#F0EBE3] bg-[#FAF8F5] px-6 py-3.5">
+            <div className="flex justify-end border-t border-[#eee9e4] bg-[#FAF8F7] px-6 py-3.5">
               <button
                 type="button"
                 onClick={() => setSelectedProduct(null)}
                 className="rounded-lg bg-[#214E34] px-4 py-2 text-xs font-semibold text-white hover:bg-[#1A3F2A]"
               >
-                Close Spec Sheet
+                Close
               </button>
             </div>
           </div>
@@ -759,7 +728,7 @@ export function ProductsTable({
       {/* Add / Edit Product Modal */}
       {isAddModalOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-xs"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
           onClick={() => {
             setIsAddModalOpen(false);
             onCloseAddModal?.();
@@ -767,23 +736,23 @@ export function ProductsTable({
           }}
         >
           <div
-            className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[#EAE6DE] bg-white shadow-2xl"
+            className="w-full max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border border-[#e9e4df] bg-white"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#F0EBE3] bg-[#FAF8F5] px-6 py-4">
+            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#eee9e4] bg-[#FAF8F7] px-6 py-4">
               <div className="flex items-center gap-2.5">
-                <div className="grid size-8 place-items-center rounded-lg bg-[#C5A880]/20 text-[#8C7350]">
+                <div className="grid size-8 place-items-center rounded-lg bg-[#9b8966]/20 text-[#8d7c61]">
                   <Gem size={17} />
                 </div>
                 <div>
-                  <h3 className="text-[17px] font-bold text-[#161D1A]">
-                    {editingProduct ? "Edit Diamond Product" : "Add New Diamond Product"}
+                  <h3 className="font-serif text-[28px] font-medium text-[#353333]">
+                    {editingProduct ? "Edit Diamond Product" : "Add product"}
                   </h3>
-                  <p className="text-[11px] text-[#78716C]">
+                  <p className="text-[11px] text-[#8a837b]">
                     {editingProduct
-                      ? `Updating ${editingProduct.sku} in live database`
-                      : "Enter jewellery piece specifications matching database model"}
+                      ? `Edit ${editingProduct.sku}`
+                      : "Add product details and available options."}
                   </p>
                 </div>
               </div>
@@ -794,7 +763,7 @@ export function ProductsTable({
                   onCloseAddModal?.();
                   resetForm();
                 }}
-                className="grid size-8 place-items-center rounded-lg text-[#78716C] hover:bg-white"
+                className="grid size-8 place-items-center rounded-lg text-[#8a837b] hover:bg-white"
               >
                 <X size={18} />
               </button>
@@ -806,7 +775,7 @@ export function ProductsTable({
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-semibold text-[#44403C]">
-                    Product Name (name) *
+                    Product name *
                   </label>
                   <input
                     type="text"
@@ -814,7 +783,7 @@ export function ProductsTable({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Gold Diamond Ring"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -827,7 +796,7 @@ export function ProductsTable({
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
                     placeholder="MIR-001"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -842,14 +811,14 @@ export function ProductsTable({
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   placeholder="A rose gold ring with round diamonds."
-                  className="mt-1 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] p-2.5 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                  className="mt-1 w-full rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] p-2.5 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                 />
               </div>
 
               {/* Image URL & Product Media */}
               <div>
                 <label className="flex items-center gap-1.5 text-xs font-semibold text-[#44403C]">
-                  <ImageIcon size={14} className="text-[#C5A880]" />
+                  <ImageIcon size={14} className="text-[#9b8966]" />
                   Product Media Image URL (product_media / banner_image)
                 </label>
                 <div className="mt-1 flex gap-2">
@@ -858,10 +827,10 @@ export function ProductsTable({
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                     placeholder="/customize/custom1.png or https://..."
-                    className="h-9 flex-1 rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="h-9 flex-1 rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                   {imageUrl && (
-                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#E7E2D8] bg-neutral-100">
+                    <div className="relative size-9 shrink-0 overflow-hidden rounded-lg border border-[#e5dfd9] bg-neutral-100">
                       <Image src={imageUrl} alt="Preview" fill className="object-cover" />
                     </div>
                   )}
@@ -877,7 +846,7 @@ export function ProductsTable({
                   <select
                     value={jewelleryType}
                     onChange={(e) => setJewelleryType(e.target.value)}
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-2.5 text-xs text-[#44403C] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-2.5 text-xs text-[#44403C] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   >
                     <option value="ring">ring</option>
                     <option value="necklace">necklace</option>
@@ -895,7 +864,7 @@ export function ProductsTable({
                     value={goldPurities}
                     onChange={(e) => setGoldPurities(e.target.value)}
                     placeholder="14KT, 18KT"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -907,7 +876,7 @@ export function ProductsTable({
                     value={goldColours}
                     onChange={(e) => setGoldColours(e.target.value)}
                     placeholder="yellow, rose, white"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -923,7 +892,7 @@ export function ProductsTable({
                     value={diamondGrades}
                     onChange={(e) => setDiamondGrades(e.target.value)}
                     placeholder="EF-VVS, IJ-SI"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -935,7 +904,7 @@ export function ProductsTable({
                     value={sizes}
                     onChange={(e) => setSizes(e.target.value)}
                     placeholder="10, 11, 12, 13"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -951,7 +920,7 @@ export function ProductsTable({
                     value={grossWeight}
                     onChange={(e) => setGrossWeight(e.target.value)}
                     placeholder="3.10"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -963,7 +932,7 @@ export function ProductsTable({
                     value={netGoldWeight}
                     onChange={(e) => setNetGoldWeight(e.target.value)}
                     placeholder="3.00"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -975,7 +944,7 @@ export function ProductsTable({
                     value={diamondPieces}
                     onChange={(e) => setDiamondPieces(e.target.value)}
                     placeholder="12"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -987,7 +956,7 @@ export function ProductsTable({
                     value={totalDiamondWeight}
                     onChange={(e) => setTotalDiamondWeight(e.target.value)}
                     placeholder="0.500"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
@@ -1003,7 +972,7 @@ export function ProductsTable({
                     value={diamondPrice}
                     onChange={(e) => setDiamondPrice(e.target.value)}
                     placeholder="15000.00"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -1015,7 +984,7 @@ export function ProductsTable({
                     value={makingCharge}
                     onChange={(e) => setMakingCharge(e.target.value)}
                     placeholder="3000.00"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -1027,7 +996,7 @@ export function ProductsTable({
                     value={sellingPrice}
                     onChange={(e) => setSellingPrice(e.target.value)}
                     placeholder="48250"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#214E34]/40 bg-[#FAF8F5] px-3 text-xs font-semibold text-[#1C1B1A] focus:border-[#214E34] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#214E34]/40 bg-[#FAF8F7] px-3 text-xs font-semibold text-[#353333] focus:border-[#214E34] focus:bg-white focus:outline-hidden"
                   />
                 </div>
                 <div>
@@ -1039,52 +1008,52 @@ export function ProductsTable({
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
                     placeholder="10"
-                    className="mt-1 h-9 w-full rounded-lg border border-[#E7E2D8] bg-[#FAF8F5] px-3 text-xs text-[#1C1B1A] focus:border-[#C5A880] focus:bg-white focus:outline-hidden"
+                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
                   />
                 </div>
               </div>
 
               {/* Dimensions */}
-              <div className="rounded-xl border border-[#F0EBE3] bg-[#FAF8F5] p-3">
+              <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
                 <span className="block text-xs font-semibold text-[#44403C] mb-2">
                   Dimensions (mm)
                 </span>
                 <div className="grid grid-cols-3 gap-3">
                   <div>
-                    <label className="text-[11px] text-[#78716C]">Height</label>
+                    <label className="text-[11px] text-[#8a837b]">Height</label>
                     <input
                       type="text"
                       value={dimHeight}
                       onChange={(e) => setDimHeight(e.target.value)}
                       placeholder="5.20"
-                      className="mt-0.5 h-8 w-full rounded-lg border border-[#E7E2D8] bg-white px-2.5 text-xs text-[#1C1B1A] focus:outline-hidden"
+                      className="mt-0.5 h-8 w-full rounded-lg border border-[#e5dfd9] bg-white px-2.5 text-xs text-[#353333] focus:outline-hidden"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] text-[#78716C]">Width</label>
+                    <label className="text-[11px] text-[#8a837b]">Width</label>
                     <input
                       type="text"
                       value={dimWidth}
                       onChange={(e) => setDimWidth(e.target.value)}
                       placeholder="8.00"
-                      className="mt-0.5 h-8 w-full rounded-lg border border-[#E7E2D8] bg-white px-2.5 text-xs text-[#1C1B1A] focus:outline-hidden"
+                      className="mt-0.5 h-8 w-full rounded-lg border border-[#e5dfd9] bg-white px-2.5 text-xs text-[#353333] focus:outline-hidden"
                     />
                   </div>
                   <div>
-                    <label className="text-[11px] text-[#78716C]">Length</label>
+                    <label className="text-[11px] text-[#8a837b]">Length</label>
                     <input
                       type="text"
                       value={dimLength}
                       onChange={(e) => setDimLength(e.target.value)}
                       placeholder="20.00"
-                      className="mt-0.5 h-8 w-full rounded-lg border border-[#E7E2D8] bg-white px-2.5 text-xs text-[#1C1B1A] focus:outline-hidden"
+                      className="mt-0.5 h-8 w-full rounded-lg border border-[#e5dfd9] bg-white px-2.5 text-xs text-[#353333] focus:outline-hidden"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Submit Buttons */}
-              <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#F0EBE3]">
+              <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#eee9e4]">
                 <button
                   type="button"
                   disabled={isSubmitting}
@@ -1093,17 +1062,17 @@ export function ProductsTable({
                     onCloseAddModal?.();
                     resetForm();
                   }}
-                  className="rounded-lg border border-[#E7E2D8] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F5]"
+                  className="rounded-lg border border-[#e5dfd9] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F7]"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white shadow-xs transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
                 >
                   {isSubmitting && <Loader2 size={14} className="animate-spin" />}
-                  <span>{editingProduct ? "Update Product in Database" : "Save Product to Database"}</span>
+                  <span>{editingProduct ? "Save changes" : "Add product"}</span>
                 </button>
               </div>
             </form>

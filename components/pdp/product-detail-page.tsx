@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import {
   ArrowRight,
@@ -21,16 +21,18 @@ import {
   Ruler,
   Share2,
   ShieldCheck,
-  ShoppingBag,
+  MessageCircle,
   Star,
   Truck,
   Video,
   X,
-  Zap,
   ZoomIn,
 } from "lucide-react";
+import { CustomizationDialog } from "./customization-dialog";
+import { ProductEnquiryForm } from "./product-enquiry-form";
 import { Container } from "@/components/common/container";
 import { product as defaultProduct, suiteProducts } from "./product-data";
+import styles from "./product-detail-page.module.css";
 
 const green = "#214E34";
 
@@ -54,28 +56,6 @@ function saveBagSelection(selection: Record<string, string>) {
   } catch {
     return false;
   }
-}
-
-function ActionButton({
-  children,
-  dark,
-  onClick,
-}: {
-  children: ReactNode;
-  dark?: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`flex h-10 min-w-0 flex-1 items-center justify-center gap-2 rounded-full px-3 text-xs font-semibold text-white transition ${
-        dark ? "bg-[#353333] hover:bg-[#211f1f]" : "bg-[#214E34] hover:bg-[#183b28]"
-      }`}
-    >
-      {children}
-    </button>
-  );
 }
 
 function InfoDialog({ title, children, onClose, href, action }: {
@@ -137,7 +117,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
   const [pincode, setPincode] = useState("");
   const [deliveryMessage, setDeliveryMessage] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [infoDialog, setInfoDialog] = useState<"ar" | "guide" | "buy" | null>(null);
+  const [infoDialog, setInfoDialog] = useState<"ar" | "guide" | null>(null);
 
   useEffect(() => {
     if (!zoomOpen) return;
@@ -170,10 +150,16 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
     }
   }
 
-  function addToBag() {
-    const selection = { slug: product.slug, metal, quality, carat, ringSize, engraving: engraving ? engravingText.trim() : "" };
-    setFeedback(saveBagSelection(selection) ? `${product.name} was added to your bag selection.` : "Could not save your selection in this browser.");
-  }
+  const selectedOptions = [
+    metal,
+    quality,
+    `${carat} Carat`,
+    ringSize === "Bespoke Size" ? ringSize : `Size ${ringSize}`,
+    ...(engraving ? [`Engraving: ${engravingText.trim() || "Requested"}`] : []),
+  ];
+  const whatsappMessage = `I'd like to enquire about ${product.name} (SKU: ${product.sku}).\n${selectedOptions.join(" · ")}`;
+  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "");
+  const whatsappClassName = "flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-[#48c653] px-3 py-2 text-center text-xs font-semibold text-white transition hover:bg-[#36ae42] disabled:cursor-not-allowed disabled:opacity-60";
 
   function verifyPincode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -192,7 +178,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr] lg:gap-6">
-        <div className="min-w-0">
+        <div className={`${styles.gallery} min-w-0`}>
           <div className="flex flex-col gap-5 sm:grid sm:grid-cols-[clamp(58px,6vw,78px)_minmax(0,1fr)] sm:gap-4">
             <div className="order-2 flex gap-2.5 overflow-x-auto pb-1 sm:order-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:overflow-visible sm:pb-0">
               {gallery.map((src: string, index: number) => (
@@ -317,10 +303,15 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
           </label>
           {engraving && <input type="text" value={engravingText} onChange={(event) => setEngravingText(event.target.value)} maxLength={24} aria-label="Engraving text" placeholder="Your engraving, up to 24 characters" className="mt-2 h-9 w-full rounded-md border border-[#214E34] px-3 text-xs outline-none focus:ring-1 focus:ring-[#214E34]" />}
 
-          <div className="mt-6 flex gap-2">
-            <ActionButton onClick={addToBag}><ShoppingBag size={15} /> Add to Bag</ActionButton>
-            <ActionButton dark onClick={() => setInfoDialog("buy")}><Zap size={15} /> Buy Now</ActionButton>
+          <div className="mt-6 grid gap-2 min-[400px]:grid-cols-2">
+            <CustomizationDialog />
+            {whatsappNumber ? <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className={whatsappClassName}>
+              <MessageCircle size={15} className="shrink-0" /> Order via Whatsapp
+            </a> : <button type="button" disabled title="WhatsApp ordering will be available soon" className={whatsappClassName}>
+              <MessageCircle size={15} className="shrink-0" /> Order via Whatsapp
+            </button>}
           </div>
+          <ProductEnquiryForm sku={product.sku} selection={selectedOptions} options={{ metalColour: metal, diamondGrade: quality, metalPurity: carat, size: ringSize, engravingRequested: engraving, engravingText }} />
           <Link href="/contact#consultation-booking" className="mt-2 flex h-8 w-full items-center justify-center gap-2 rounded-md bg-[#F7FFF7] text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]">
             <Video size={14} color={green} /> Book 1-On-1 Virtual Atelier Consultation
           </Link>
@@ -367,14 +358,6 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
         <Image src="/PDP/Prod_desc_img.png" alt="Ring profile dimensions" width={577} height={576} className="mx-auto mt-2 w-full max-w-[250px]" />
       </InfoDialog>
     )}
-    {infoDialog === "buy" && (
-      <InfoDialog title="Your selection" onClose={() => setInfoDialog(null)} href="/contact#consultation-booking" action="Enquire to purchase">
-        <p className="font-semibold">{product.name}</p>
-        <p className="mt-2">{metal}, {carat} · {quality} · Ring size {ringSize}{engraving && engravingText.trim() ? ` · Engraving: ${engravingText.trim()}` : ""}</p>
-        <p className="mt-2 font-semibold text-[#214E34]">{product.price}</p>
-        <p className="mt-2">Online checkout is not connected yet. The atelier can help complete this order.</p>
-      </InfoDialog>
-    )}
     </>
   );
 }
@@ -412,7 +395,7 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
   }, [sizeOpen]);
 
   return (
-    <section className="bg-white py-9 sm:py-14">
+    <section data-product-integrity className="bg-white py-9 sm:py-14">
       <Container className="max-sm:px-[10px]">
         <div className="mx-auto mb-7 max-w-xl text-center">
           <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#214E34]">Absolute Integrity</p>
@@ -560,9 +543,52 @@ function LegacyAndSuite() {
 
 export function ProductDetailPage({ initialProduct }: { initialProduct?: any }) {
   const currentProduct = initialProduct ? { ...defaultProduct, ...initialProduct } : defaultProduct;
+  const pageRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const page = pageRef.current;
+    const header = document.querySelector<HTMLElement>("[data-site-header]");
+    const integrity = page?.querySelector<HTMLElement>("[data-product-integrity]");
+    if (!page || !header || !integrity) return;
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    let frame = 0;
+
+    function updatePosition() {
+      if (!page || !header || !integrity) return;
+      if (!desktop.matches) {
+        page.style.removeProperty("--pdp-header-height");
+        header.style.removeProperty("--pdp-header-top");
+        return;
+      }
+      const height = header.getBoundingClientRect().height;
+      const top = Math.max(-height, Math.min(0, integrity.getBoundingClientRect().top - height));
+      page.style.setProperty("--pdp-header-height", `${height}px`);
+      header.style.setProperty("--pdp-header-top", `${top}px`);
+    }
+
+    function scheduleUpdate() {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(updatePosition);
+    }
+
+    const observer = new ResizeObserver(scheduleUpdate);
+    observer.observe(header);
+    observer.observe(page);
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    window.addEventListener("resize", scheduleUpdate);
+    updatePosition();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", scheduleUpdate);
+      window.removeEventListener("resize", scheduleUpdate);
+      page.style.removeProperty("--pdp-header-height");
+      header.style.removeProperty("--pdp-header-top");
+    };
+  }, []);
 
   return (
-    <main className="bg-white font-[family-name:var(--font-inter)] text-[#353333]">
+    <main ref={pageRef} className={`${styles.page} bg-white font-[family-name:var(--font-inter)] text-[#353333]`}>
       <ProductHero product={currentProduct} />
       <IntegritySection product={currentProduct} />
       <LegacyAndSuite />
