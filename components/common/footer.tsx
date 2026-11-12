@@ -8,6 +8,8 @@ import { IconBrandInstagram, IconBrandX } from "@tabler/icons-react";
 import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
 import { FacebookIcon } from "@/components/icons/cib-facebook";
 
+const INSTAGRAM_URL = "https://www.instagram.com/mirayadiamonds_?utm_source=qr&obrf=eDBxNnRmM2o3dnIx";
+
 const shopLinks = [
   { label: "Rings" },
   { label: "Earrings" },
@@ -187,9 +189,15 @@ export function Footer() {
         </p>
 
         <div className="mt-[52px] flex items-center gap-[26px] text-white">
-          <span className="flex h-[26px] w-[26px] items-center justify-center">
+          <a
+            href={INSTAGRAM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Follow Miraya Diamonds on Instagram"
+            className="flex h-[26px] w-[26px] items-center justify-center transition-colors hover:text-[#E2BD60]"
+          >
             <IconBrandInstagram size={26} stroke={2.1} />
-          </span>
+          </a>
           <span className="flex h-[26px] w-[26px] items-center justify-center">
             <FacebookIcon size={26} />
           </span>
@@ -262,9 +270,15 @@ export function Footer() {
             Lorem ipsum dolor sit amet, consectetur ffdv adipiscing elit. Sed do eiusmod temporvvxv incididunt ut labore et dolore magna aliqua.
           </p>
           <div className="mt-10 flex items-center gap-7 text-white xl:mt-12 xl:gap-8">
-            <span className="flex h-[30px] w-[30px] items-center justify-center text-white xl:h-[34px] xl:w-[34px]">
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow Miraya Diamonds on Instagram"
+              className="flex h-[30px] w-[30px] items-center justify-center text-white transition-colors hover:text-[#E2BD60] xl:h-[34px] xl:w-[34px]"
+            >
               <IconBrandInstagram className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" stroke={2.15} />
-            </span>
+            </a>
             <span className="flex h-[30px] w-[30px] items-center justify-center text-white xl:h-[34px] xl:w-[34px]">
               <FacebookIcon className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" />
             </span>

@@ -5,7 +5,7 @@ export function HeirloomBanner() {
   return (
     <section className="w-full pt-4 pb-10 lg:pt-[30px] lg:pb-[60px] px-4 lg:px-[100px] bg-white">
       <div
-        className="relative w-full max-w-[1240px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:h-[540px] lg:rounded-[18px] lg:bg-[#E7FFE6] lg:shadow-[0px_4.5px_6.75px_-4.5px_rgba(0,0,0,0.1),0px_11.25px_16.88px_-3.38px_rgba(0,0,0,0.1)] gap-8 lg:gap-0 lg:p-[54px]"
+        className="relative w-full max-w-[1240px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:h-[540px] lg:rounded-[18px] lg:bg-[#F7FFF7] lg:shadow-[0px_4.5px_6.75px_-4.5px_rgba(0,0,0,0.1),0px_11.25px_16.88px_-3.38px_rgba(0,0,0,0.1)] gap-8 lg:gap-0 lg:p-[54px]"
       >
         {/* Left Text Content (Bottom on mobile) */}
         <div className="order-2 lg:order-1 flex flex-col gap-6 lg:gap-[98px] w-full lg:w-[470px]">

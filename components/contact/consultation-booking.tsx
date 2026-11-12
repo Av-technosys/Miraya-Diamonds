@@ -39,7 +39,7 @@ export function ConsultationBooking() {
                   onClick={() => setExperience("in-store")}
                   className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
                     experience === "in-store" 
-                      ? "bg-[#E7FFE6] border-[2.25px] border-[#214E34]" 
+                      ? "bg-[#F7FFF7] border-[2.25px] border-[#214E34]" 
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -60,7 +60,7 @@ export function ConsultationBooking() {
                   onClick={() => setExperience("virtual")}
                   className={`flex-1 flex flex-col items-center justify-center gap-1 rounded-[8px] py-[18px] transition-colors duration-300 ${
                     experience === "virtual" 
-                      ? "bg-[#E7FFE6] border-[2.25px] border-[#214E34]" 
+                      ? "bg-[#F7FFF7] border-[2.25px] border-[#214E34]" 
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -89,7 +89,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("engagement")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "engagement"
-                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#F7FFF7] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -103,7 +103,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("bridal")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "bridal"
-                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#F7FFF7] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -114,7 +114,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("custom")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "custom"
-                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#F7FFF7] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >
@@ -125,7 +125,7 @@ export function ConsultationBooking() {
                   onClick={() => setCategory("gifting")}
                   className={`flex items-center justify-center sm:justify-start gap-[6px] rounded-[8px] px-[8px] sm:px-[12px] py-[9px] transition-colors duration-300 ${
                     category === "gifting"
-                      ? "bg-[#E7FFE6] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
+                      ? "bg-[#F7FFF7] border-[1.13px] border-[#C34E64] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)]"
                       : "bg-white border-[1.13px] border-[#E7E5E4]"
                   }`}
                 >

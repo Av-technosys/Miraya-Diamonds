@@ -211,7 +211,7 @@ export function DirectInquirySection() {
 
         {/* Right Column: Virtual Jewelry Consultation */}
         <div
-          className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#E7FFE6] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
+          className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#F7FFF7] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
         >
           {/* Top Content */}
           <div className="flex flex-col gap-[8.21px] pt-[2.25px] pb-[18px]">
@@ -239,7 +239,7 @@ export function DirectInquirySection() {
           <div className="flex flex-col gap-[13.5px]">
             {/* Feature 1 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
                 <Image src="/contact/video_icon.png" alt="Video" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -254,7 +254,7 @@ export function DirectInquirySection() {
 
             {/* Feature 2 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
                 <Image src="/contact/van-icon.png" alt="Delivery" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -269,7 +269,7 @@ export function DirectInquirySection() {
 
             {/* Feature 3 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
                 <Image src="/contact/pen-icon.png" alt="Custom" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
@@ -284,7 +284,7 @@ export function DirectInquirySection() {
 
             {/* Feature 4 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
-              <div className="w-[45px] h-[45px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
+              <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
                 <Image src="/contact/Lock_Icon.png" alt="Certified" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
