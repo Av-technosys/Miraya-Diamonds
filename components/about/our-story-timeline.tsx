@@ -145,7 +145,7 @@ export function OurStoryAndTimeline() {
                 HANDMADE IN INDIA
               </span>
               <span className="font-sans font-normal text-[12px] leading-[16px] text-[#757575]">
-                Where generational karigars shape timeless brilliance
+                Where thoughtful design meets the art of jewellery
               </span>
             </div>
           </div>

@@ -12,42 +12,42 @@ const POLICY_SECTIONS = [
   {
     id: 1,
     title: "Eligibility for Returns",
-    content: "Items must be returned within 15 days of delivery in their original, unworn condition with all tags, certificates and packaging intact. Custom-made or engraved jewellery, earrings and items marked as final sale are not eligible for return."
+    content: "Return eligibility depends on the item and the terms confirmed at purchase. Please check the applicable return window, condition requirements and any exclusions with our team before ordering."
   },
   {
     id: 2,
     title: "How to Initiate a Return",
-    content: "To start a return, contact our support team at support@mirayadiamonds.com or call +91 98765 43210 with your order number and reason for return. Our team will guide you through the process and arrange a secure pickup."
+    content: "To discuss a return, email miraya.diamond23@gmail.com or call +91 9869698984 with your purchase details and reason for the request. Please obtain return instructions before sending an item."
   },
   {
     id: 3,
     title: "Inspection & Approval",
-    content: "Once we receive your returned item, our quality team will inspect it within 3–5 business days. If the item meets our return criteria, your return will be approved and you will be notified via email."
+    content: "Our team will review your request and may need to inspect the item and its accompanying documents. We will explain the assessment and next steps for your case."
   },
   {
     id: 4,
     title: "Refund Process",
-    content: "Approved refunds will be processed to your original payment method within 7–10 business days after inspection. Bank processing times may vary. Shipping charges are non-refundable unless the return is due to a defect or error on our part."
+    content: "If a refund is approved, our team will confirm the amount, payment method and estimated processing time. Please ask about any applicable delivery or service charges."
   },
   {
     id: 5,
     title: "Exchange Policy",
-    content: "We offer one-time exchanges for a different size or design of equal or higher value within 15 days of delivery. For exchanges of higher value, the price difference must be paid at the time of exchange."
+    content: "Contact our team to check whether an exchange is available for your piece. Design availability, size changes and price differences will be discussed before you proceed."
   },
   {
     id: 6,
     title: "Damaged or Defective Items",
-    content: "If you receive a damaged or defective item, please contact us within 48 hours of delivery with photographs. We will arrange a free return pickup and offer a full replacement or refund at no additional cost."
+    content: "If your jewellery arrives damaged or appears to have a defect, contact us promptly with photographs, packaging details and your purchase reference so we can assist."
   },
   {
     id: 7,
     title: "Non-Returnable Items",
-    content: "Personalised or custom-engraved jewellery, earrings (for hygiene reasons), gift cards, and items purchased during clearance or final sale events cannot be returned or exchanged."
+    content: "Custom designs, engraving and other personalisation may affect return or exchange eligibility. Confirm any exclusions in writing before approving custom work."
   },
   {
     id: 8,
     title: "Contact Us",
-    content: "If you have any questions or concerns about our Return Policy, please contact us at support@mirayadiamonds.com.",
+    content: "For questions about returns or exchanges, contact Miraya Diamonds at miraya.diamond23@gmail.com.",
     isContact: true
   }
 ];
@@ -104,7 +104,7 @@ function ReturnHero() {
 
         {/* Subtitle */}
         <p className="font-sans font-medium text-[12px] md:text-[16px] leading-[18px] md:leading-[20px] text-[#757575]">
-          Hassle-free returns for your peace of mind
+          Understand the terms for your chosen piece
         </p>
       </div>
     </section>
@@ -123,13 +123,13 @@ function ReturnContent() {
         {/* Date */}
         <div className="bg-[#F8F6F5] md:bg-transparent rounded-[6px] md:rounded-none px-[10px] py-[4px] md:px-0 md:py-0 w-fit md:w-auto mb-3 md:mb-[8px]">
           <span className="font-[family-name:var(--font-jakarta)] font-medium text-[12px] leading-[16px] tracking-[0.3px] text-[#757575]">
-            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">01 September 2026</span>
+            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">13 November 2026</span>
           </span>
         </div>
         {/* Intro */}
         <div id="introduction" className="pb-6 md:pb-[25px] border-b-[1px] border-[#E8E4E2] scroll-mt-24">
           <p className="font-sans font-normal text-[14px] leading-[22.75px] text-[#6F6A68]">
-            At Miraya Diamonds, your satisfaction is our priority. If you are not completely happy with your purchase, we are here to help. Please review our return and exchange guidelines below to ensure a smooth experience.
+            Before ordering, please confirm the return, exchange and refund terms for your chosen piece with our team. The guidance below explains how to contact us and discuss a request.
           </p>
         </div>
 
@@ -154,7 +154,7 @@ function ReturnContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about our Return Policy, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#214E34]">support@mirayadiamonds.com</a>.
+                  <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34]">miraya.diamond23@gmail.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -241,8 +241,8 @@ function ReturnSidebar() {
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">support@mirayadiamonds.com</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">We typically reply within 24 hours</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">miraya.diamond23@gmail.com</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Contact us with your enquiry</span>
             </div>
           </div>
 
@@ -252,17 +252,17 @@ function ReturnSidebar() {
               <Image src="/privacy-policy/phone-icon.png" alt="Phone" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 98765 43210</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Mon – Sat, 10 AM to 6 PM</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 9869698984</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Jaipur, India</span>
             </div>
           </div>
         </div>
 
         {/* Contact Us Button */}
-        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
+        <a href="/contact" className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
           <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#9E384B]">Contact Us</span>
           <ArrowRight className="w-[14px] h-[14px] text-[#9E384B]" strokeWidth={2} />
-        </button>
+        </a>
       </div>
 
       {/* Return Policy Badge */}
@@ -277,8 +277,8 @@ function ReturnSidebar() {
         
         {/* Text */}
         <div className="flex flex-col">
-          <span className="font-sans font-bold text-[12px] leading-[16px] text-[#171717]">Hassle-Free Returns Guaranteed</span>
-          <span className="font-sans font-normal text-[11px] leading-[17.88px] text-[#6F6A68]">We are committed to making every return smooth and effortless.</span>
+          <span className="font-sans font-bold text-[12px] leading-[16px] text-[#171717]">Return & Exchange Guidance</span>
+          <span className="font-sans font-normal text-[11px] leading-[17.88px] text-[#6F6A68]">Contact our team to understand your available options.</span>
         </div>
       </div>
     </>

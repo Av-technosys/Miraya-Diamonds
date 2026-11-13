@@ -36,7 +36,7 @@ export function CustomizeHero() {
             <p className="mt-4 max-w-[440px] font-sans text-[14px] leading-[1.65] text-[#57534E] sm:mt-5 sm:text-[15px] lg:text-[16px]">
               Turn your ideas into timeless jewellery. From the first sketch to
               the final sparkle, we bring your story to life with precision,
-              passion and perfection.
+              passion and care.
             </p>
 
             {/* Primary Action Button */}
@@ -45,7 +45,7 @@ export function CustomizeHero() {
                 href="/contact#consultation-booking"
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-[#214E34] px-7 py-3.5 text-xs font-semibold text-white shadow-[0_6px_22px_rgba(33,78,52,0.22)] transition-all duration-300 hover:bg-[#173d28] hover:shadow-[0_8px_28px_rgba(33,78,52,0.3)] active:scale-[0.98] sm:px-8 sm:py-4 sm:text-sm"
               >
-                <span>Customise Your Ring</span>
+                <span>Discuss Your Design</span>
                 <ArrowRight
                   size={16}
                   className="transition-transform duration-300 group-hover:translate-x-1"

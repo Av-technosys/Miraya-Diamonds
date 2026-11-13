@@ -1,32 +1,13 @@
 "use client";
 
+import { jewelleryFaqs } from "@/lib/jewellery-faqs";
+
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
-const categories = ["All", "Rings", "Necklace", "Bracelets", "Earrings", "Bangles"];
+const categories = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"];
 
-const faqs = [
-  {
-    question: "What materials are your jewellery pieces made from?",
-    answer: "Our jewellery is crafted using 18KT and 22KT BIS hallmarked gold, platinum, and natural diamonds certified by IGI and GIA. We source only ethically mined gemstones and conflict-free diamonds.",
-  },
-  {
-    question: "How do I choose the right ring/bracelet/necklace size?",
-    answer: "We provide a comprehensive size guide on each product page. You can also request a complimentary sizing kit delivered to your doorstep, or visit our studio for an in-person fitting with our experts.",
-  },
-  {
-    question: "How should I care for and maintain my jewellery?",
-    answer: "Store your jewellery in the provided velvet pouch or box. Avoid contact with perfumes, lotions, and harsh chemicals. Clean gently with a soft cloth. We also offer complimentary professional cleaning and polishing services.",
-  },
-  {
-    question: "Do you offer returns, exchanges, or refunds?",
-    answer: "Yes, we offer a 15-day return and exchange policy on all non-customized pieces. Custom and bespoke pieces are non-returnable. Refunds are processed within 7–10 business days after inspection.",
-  },
-  {
-    question: "How long does delivery take, and can I track my order?",
-    answer: "Standard delivery takes 5–7 business days across India. Express delivery is available in select cities within 2–3 days. All orders are fully insured and come with real-time tracking via SMS and email.",
-  },
-];
+const faqs = jewelleryFaqs;
 
 export function FaqSection() {
   const [activeCategory, setActiveCategory] = useState("All");
@@ -46,10 +27,10 @@ export function FaqSection() {
         {/* Header */}
         <div className="flex flex-col items-center justify-center gap-[5.01px]">
           <h2 className="font-serif font-bold text-[32px] leading-[100%] tracking-[-0.02em] text-black text-center">
-            Frequently Asked Question
+            Frequently Asked Questions
           </h2>
           <p className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#00000080] text-center">
-            Know the answer for your questions
+            Find answers to your jewellery questions.
           </p>
         </div>
 

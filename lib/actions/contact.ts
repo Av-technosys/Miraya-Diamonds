@@ -27,7 +27,7 @@ export async function submitContactMessage(input: ContactMessageInput): Promise<
 
     if (!name) return { success: false, error: "Please provide your name." };
     if (!email) return { success: false, error: "Please provide your email." };
-    if (!message) return { success: false, error: "Please provide a message or inquiry." };
+    if (!message) return { success: false, error: "Please provide a message or enquiry." };
 
     await db.insert(contactUs).values({
       name,
@@ -38,7 +38,7 @@ export async function submitContactMessage(input: ContactMessageInput): Promise<
 
     return {
       success: true,
-      message: "Your message has been received by our atelier concierge. We will reach out shortly.",
+      message: "Thank you. Your message has been received by the Miraya Diamonds team.",
     };
   } catch (error) {
     console.error("Error submitting contact message:", error);

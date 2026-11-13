@@ -257,7 +257,7 @@ function ProfileForm({
               />
               {email?.verification.status === "verified" && <VerifiedBadge />}
             </div>
-            <span className="text-[10px] text-[#777]">Account login credential</span>
+            <span className="text-[10px] text-[#777]">Used to sign in to your account</span>
           </div>
 
           {/* Gender (optional) */}
@@ -303,7 +303,7 @@ function ProfileForm({
                 );
               })}
             </div>
-            <span className="text-[10px] text-[#777]">Optional demographic preference</span>
+            <span className="text-[10px] text-[#777]">Optional profile detail</span>
           </div>
 
           {/* Address field for DB persistence */}
@@ -313,7 +313,7 @@ function ProfileForm({
                 Delivery Address (optional)
               </label>
               <span className="inline-flex items-center gap-1 rounded-full bg-[#F7FFF7] px-2 py-0.5 text-[9px] font-medium text-[#214E34]">
-                <MapPin size={10} /> Saved to Database
+                <MapPin size={10} /> Saved to Your Profile
               </span>
             </div>
             <div
@@ -333,7 +333,7 @@ function ProfileForm({
               />
             </div>
             <p className="text-[10px] text-[#777]">
-              Stored directly in your database account for order dispatch and transit insurance.
+              Save an address to your profile for future enquiries and delivery discussions.
             </p>
           </div>
         </div>
@@ -341,13 +341,13 @@ function ProfileForm({
 
       <section className="flex flex-col items-center rounded-xl bg-white px-5 py-9 text-center shadow-[0_6px_20px_rgba(33,78,52,0.025)] sm:px-8 sm:py-11">
         <Image src="/Dashboard/Giftbox.png" alt="Gift box" width={144} height={112} className="h-[90px] w-[116px] object-contain" />
-        <h2 className="mt-7 font-serif text-[27px] font-medium text-[#45403d]">For your Anniversaries</h2>
-        <p className="mt-2 max-w-[410px] text-xs leading-relaxed text-[#214E34]">Share your special dates, and we&apos;ll create personalized experiences<br className="hidden sm:block" /> just for you.</p>
+        <h2 className="mt-7 font-serif text-[27px] font-medium text-[#45403d]">Your Special Dates</h2>
+        <p className="mt-2 max-w-[410px] text-xs leading-relaxed text-[#214E34]">Share your special dates, and we&apos;ll create personalised experiences<br className="hidden sm:block" /> just for you.</p>
         <div className="mt-8 grid w-full max-w-[560px] gap-5 sm:grid-cols-2">
           <label className="flex min-w-0 flex-col gap-2 text-left text-[11px] text-[#555]">Your Birthday<input type="date" name="birthday" max={today} value={values.birthday} disabled={!!saving} onChange={event => change("birthday", event.target.value)} className={`${fieldClass} bg-[#f5f3f0] text-[#8b8282]`} /></label>
           <label className="flex min-w-0 flex-col gap-2 text-left text-[11px] text-[#555]">Your Anniversary<input type="date" name="anniversary" value={values.anniversary} disabled={!!saving} onChange={event => change("anniversary", event.target.value)} className={`${fieldClass} bg-[#f5f3f0] text-[#8b8282]`} /></label>
         </div>
-        <button type="button" disabled={!!saving} onClick={() => void save("dates")} className={`${buttonClass} mt-5`}>{saving === "dates" ? "Saving…" : "Save Special Date"}</button>
+        <button type="button" disabled={!!saving} onClick={() => void save("dates")} className={`${buttonClass} mt-5`}>{saving === "dates" ? "Saving…" : "Save Special Dates"}</button>
       </section>
       {error && <p role="alert" className="text-sm text-red-700">{error}</p>}
       {message && <p role="status" className="text-sm text-[#214E34]">{message}</p>}

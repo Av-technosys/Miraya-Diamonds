@@ -5,16 +5,12 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Heart, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/container";
-import { product, suiteProducts } from "@/components/pdp/product-data";
 import type { PublicCollectionProduct } from "@/lib/actions/products";
 import { FilterDrawer } from "./filter-drawer";
 import { categoryOptions, collectionFilterUrl, emptyFilters, type Filters } from "./filter-state";
 import { SortMenu, type Sort } from "./sort-menu";
 
-type Category = "Earrings" | "Rings" | "Necklaces" | "Bracelets" | "Bangles" | "Pendants";
 
-const cardOrder = [4, 2, 1, 0, 3, 1, 2, 4, 0, 3, 0, 3, 2, 1, 4];
-const productTypes: Category[] = ["Bracelets", "Necklaces", "Rings", "Necklaces", "Earrings"];
 const desktopPageSize = 15;
 const mobilePageSize = 6;
 
@@ -35,31 +31,9 @@ export interface CollectionItem {
   slug?: string;
 }
 
-const staticFallbackProducts: CollectionItem[] = [...cardOrder, ...[...cardOrder].reverse()].map((suiteIndex, index) => ({
-  id: `collection-${index + 1}`,
-  ...suiteProducts[suiteIndex],
-  type: productTypes[suiteIndex],
-  price: 38255,
-  oldPrice: 40255,
-  material: index === desktopPageSize ? "Rose Gold" : "Gold",
-  stone: suiteIndex === 1 || suiteIndex === 3 ? "Ruby" : "Diamond",
-  occasion: ["Everyday", "Wedding", "Party", "Gifting", "Workwear", "Proposal", "Engagement"][index % 7],
-  collection: ["New Arrivals", "Best Sellers", "Trending"][index % 3],
-  style: ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"][index % 5],
-  karatage: index === desktopPageSize ? "18kt" : "22kt",
-  shopFor: ["Women", "Men", "Unisex"][index % 3],
-  ...(index === desktopPageSize ? {
-    name: product.name,
-    image: product.gallery[0],
-    type: "Rings" as Category,
-    price: 48250,
-    oldPrice: 54000,
-    slug: product.slug,
-    stone: "Diamond",
-  } : {}),
-}));
 
 function matchesFilters(item: CollectionItem, filters: Filters) {
+  if (filters.price && item.price <= 0) return false;
   if (filters.categories.length && !filters.categories.includes(item.type)) return false;
   if (filters.price.startsWith("under-") && item.price >= Number(filters.price.slice(6))) return false;
   if (filters.price === "5000-10000" && (item.price < 5000 || item.price >= 10000)) return false;
@@ -109,7 +83,7 @@ export function CollectionPage({
     if (initialProducts && initialProducts.length > 0) {
       return initialProducts;
     }
-    return staticFallbackProducts;
+    return [];
   }, [initialProducts]);
   const closeFilters = useCallback(() => {
     setFilterOpen(false);
@@ -208,12 +182,12 @@ export function CollectionPage({
         <div ref={gridRef} className="grid scroll-mt-5 grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
           {visible.map((item) => (
             <article key={item.id} className="relative min-w-0 rounded-lg bg-white p-1.5 shadow-[0_6px_24px_rgba(33,78,52,0.07)]">
-              <Link href={`/collection/${item.slug || product.slug}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
+              <Link href={`/collection/${item.slug || item.id}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
               <div className="relative aspect-square overflow-hidden rounded-[5px] bg-[#F7F7F7]">
                 <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
               </div>
               <div className="px-1 pb-1 pt-2">
-                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">₹{item.price.toLocaleString("en-IN")} <span className="ml-1 text-[9px] font-normal text-neutral-400 line-through">₹{item.oldPrice.toLocaleString("en-IN")}</span></p>
+                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">{item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Enquire for Pricing"} {item.oldPrice > item.price && item.price > 0 && <span className="ml-1 text-[9px] font-normal text-neutral-400 line-through">₹{item.oldPrice.toLocaleString("en-IN")}</span>}</p>
                 <p className="mt-0.5 truncate text-[11px] leading-tight text-neutral-600 sm:text-[10px]" title={item.name}>{item.name}</p>
                 <div className="relative z-20 mt-3 flex gap-1">
                   <button type="button" onClick={() => {
@@ -230,7 +204,7 @@ export function CollectionPage({
             </article>
           ))}
         </div>
-        {visible.length === 0 && <p className="py-20 text-center text-sm text-neutral-600">No products match this filter.</p>}
+        {visible.length === 0 && <p className="py-20 text-center text-sm text-neutral-600">{products.length ? "No designs match your selected filters. Try another selection or contact our team." : "Our online catalogue is currently unavailable. Please contact our team to explore available designs."} <Link href="/contact" className="text-[#214E34] underline">Contact Miraya Diamonds</Link></p>}
         {message && <p role="status" className="mt-4 text-xs text-[#214E34]">{message}</p>}
 
         {pageCount > 1 && (

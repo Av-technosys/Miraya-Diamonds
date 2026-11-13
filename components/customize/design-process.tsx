@@ -19,7 +19,7 @@ const steps = [
   {
     step: "03",
     title: "Select Your Metal",
-    desc: "Choose from yellow gold, rose gold, white gold or platinum to suit your style.",
+    desc: "Explore available metals and colours with our team to find the right match for your design.",
     image: "/customize/designprocess3.png",
   },
   {
@@ -31,7 +31,7 @@ const steps = [
   {
     step: "05",
     title: "Your Perfect Piece",
-    desc: "We craft and deliver a truly personal and meaningful jewellery.",
+    desc: "We craft a personal, meaningful piece of jewellery around your chosen design.",
     image: "/customize/designprocess5.png",
   },
 ];

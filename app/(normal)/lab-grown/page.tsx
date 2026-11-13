@@ -7,9 +7,9 @@ import { DiamondEducation } from "@/components/lab-grown/diamond-education";
 import { SustainabilityBanner } from "@/components/lab-grown/sustainability-banner";
 
 export const metadata: Metadata = {
-  title: "Lab Grown Diamonds | Miraya Diamonds",
+  title: "Lab-Grown Diamonds | Miraya Diamonds",
   description:
-    "The same brilliance. A more conscious choice. Explore our exquisite collection of ethically crafted lab grown diamond jewellery.",
+    "Explore lab-grown diamonds, how they are made and how their origin differs from natural diamonds with Miraya Diamonds.",
 };
 
 export default function LabGrownPage() {

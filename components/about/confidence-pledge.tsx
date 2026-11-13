@@ -3,23 +3,23 @@ import Image from "next/image";
 const pledgeCards = [
   {
     icon: "/about/shield-icon.png",
-    title: "Diamond Certification",
-    desc: "IGI & GIA laboratory certified solitaires with unique laser inscriptions.",
+    title: "Diamond Documentation",
+    desc: "Ask our team about the grading report and origin of your selected diamond.",
   },
   {
     icon: "/about/shining-star-icon.png",
-    title: "Quality Assurance",
-    desc: "100% BIS Hallmarked 750 (18KT) and 950 Platinum fineness guaranteed.",
+    title: "Metal Details",
+    desc: "Review the metal, purity and hallmark details for your chosen piece.",
   },
   {
     icon: "/about/lock-icon.png",
-    title: "Secure Packaging",
-    desc: "Tamper-evident vault boxes & insured armored doorstep transit.",
+    title: "Delivery Guidance",
+    desc: "Contact our team to confirm packaging and delivery arrangements before ordering.",
   },
   {
     icon: "/about/circular-icon.png",
     title: "Trusted Service",
-    desc: "Complimentary lifetime ultrasonic cleaning & verified exchange policy.",
+    desc: "Get guidance on jewellery care, servicing and the terms that apply to your piece.",
   },
 ];
 
@@ -34,7 +34,7 @@ export function ConfidencePledge() {
             Confidence in Every Sparkle
           </h2>
           <p className="font-sans font-light text-[13px] md:text-[14px] leading-[18px] md:leading-[16.88px] text-[#9CA3AF] md:text-[#757575] text-center">
-            Our unconditional pledge of purity & protection
+            Details to help you choose with confidence
           </p>
         </div>
 

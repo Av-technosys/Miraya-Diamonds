@@ -39,22 +39,22 @@ const trustFeatures = [
   {
     icon: Gem,
     title: "Real Diamonds",
-    description: "Same beauty and quality",
+    description: "Diamond crystal structure",
   },
   {
     icon: Leaf,
-    title: "More Sustainable",
-    description: "A lighter footprint",
+    title: "Modern Technology",
+    description: "Grown in controlled conditions",
   },
   {
     icon: ValueCylinderIcon,
     title: "Better Value",
-    description: "Bigger sparkle for less",
+    description: "Compare options for your budget",
   },
   {
     icon: Heart,
-    title: "Ethically Created",
-    description: "Conflict-free and responsible",
+    title: "Distinct Origin",
+    description: "Laboratory-grown diamonds",
   },
 ];
 
@@ -96,7 +96,7 @@ export function LabGrownHero() {
 
             {/* Main Heading */}
             <h1 className="mt-3.5 font-serif text-[40px] font-normal leading-[1.02] tracking-[-0.01em] text-[#14120E] sm:mt-4 sm:text-[50px] md:text-[58px] lg:text-[66px]">
-              <span className="block font-medium">Lab Grown</span>
+              <span className="block font-medium">Lab-Grown</span>
               <span className="block font-normal italic">Diamonds</span>
             </h1>
 
@@ -104,7 +104,7 @@ export function LabGrownHero() {
             <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-relaxed text-[#44403C] sm:mt-5 sm:text-[14px] md:text-[15px]">
               The same brilliance.
               <br />
-              A more conscious choice.
+              A different origin.
             </p>
 
             {/* Call to Action Button */}

@@ -27,7 +27,7 @@ export function DiscoverLabGrown() {
   return (
     <section className="w-full bg-white py-12 sm:py-16 lg:py-20">
       <div className="mx-auto w-full max-w-[1120px] px-5 sm:px-8 lg:px-12">
-        {/* Top Part: Discover The World Of Lab-Grown Diamonds */}
+        {/* Top Part: Discover the World of Lab-Grown Diamonds */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -36,7 +36,7 @@ export function DiscoverLabGrown() {
           className="flex flex-col"
         >
           <h2 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
-            Discover The World Of Lab-Grown Diamonds
+            Discover the World of Lab-Grown Diamonds
           </h2>
 
           <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">

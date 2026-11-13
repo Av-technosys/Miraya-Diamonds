@@ -128,14 +128,7 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
       const primaryVariant = pVariants[0];
 
       // Estimated price fallback
-      const baseEstimate =
-        getSafePrice(p.diamondPrice, 0) +
-        getSafePrice(p.makingCharge, 0) +
-        getSafePrice(p.netGoldWeight, 3) * 7500;
-
-      const price = primaryVariant
-        ? getSafePrice(primaryVariant.price, baseEstimate)
-        : Math.round(baseEstimate);
+      const price = primaryVariant ? getSafePrice(primaryVariant.price, 0) : 0;
 
       const stock = primaryVariant?.stock ?? 1;
       const status = calculateProductStatus(stock);
@@ -573,23 +566,16 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       if (c.name) categoryMap[c.name.toLowerCase().trim()] = c.name;
     }
 
-    return allProducts.map((p, index) => {
+    return allProducts.map((p) => {
       const pVariants = variantMap.get(p.id) || [];
       const pMedia = mediaMap.get(p.id) || [];
       const primaryVariant = pVariants[0];
 
-      const baseEstimate =
-        getSafePrice(p.diamondPrice, 0) +
-        getSafePrice(p.makingCharge, 0) +
-        getSafePrice(p.netGoldWeight, 3) * 7500;
-
-      const price = primaryVariant
-        ? getSafePrice(primaryVariant.price, baseEstimate)
-        : Math.round(baseEstimate);
+      const price = primaryVariant ? getSafePrice(primaryVariant.price, 0) : 0;
 
       const oldPrice = primaryVariant?.strikethroughPrice
-        ? getSafePrice(primaryVariant.strikethroughPrice, Math.round(price * 1.1))
-        : Math.round(price * 1.1);
+        ? getSafePrice(primaryVariant.strikethroughPrice, price)
+        : price;
 
       const gallery = pMedia.map((m) => getImageUrl(m.mediaURL)).filter(Boolean);
       const image = getImageUrl(p.bannerImage || gallery[0]);
@@ -603,10 +589,6 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
           ? "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring"
           : `${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${p.sku.toLowerCase()}`;
 
-      const occasions = ["Everyday", "Wedding", "Party", "Gifting", "Workwear", "Proposal", "Engagement"];
-      const collections = ["New Arrivals", "Best Sellers", "Trending"];
-      const styles = ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"];
-
       return {
         id: p.id,
         slug,
@@ -616,12 +598,12 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
         price,
         oldPrice,
         material: p.goldColours?.[0] ? `${p.goldColours[0].charAt(0).toUpperCase() + p.goldColours[0].slice(1)} Gold` : "Gold",
-        stone: p.diamondPieces > 0 ? "Diamond" : "Solitaire",
-        occasion: occasions[index % occasions.length],
-        collection: collections[index % collections.length],
-        style: styles[index % styles.length],
-        karatage: p.goldPurities?.[0]?.toLowerCase() || "18kt",
-        shopFor: ["Women", "Men", "Unisex"][index % 3],
+        stone: p.diamondPieces > 0 ? "Diamond" : "",
+        occasion: "",
+        collection: "",
+        style: "",
+        karatage: p.goldPurities?.[0]?.toLowerCase() || "",
+        shopFor: "",
         jewelleryType: p.jewelleryType,
         gallery: gallery.length > 0 ? gallery : [image],
         inStock: (primaryVariant?.stock ?? 1) > 0,
@@ -687,13 +669,11 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
       gallery.push(getImageUrl(productRow.bannerImage));
     }
 
-    const price = primaryVariant
-      ? getSafePrice(primaryVariant.price, 48250)
-      : 48250;
+    const price = primaryVariant ? getSafePrice(primaryVariant.price, 0) : 0;
 
     const oldPrice = primaryVariant?.strikethroughPrice
-      ? getSafePrice(primaryVariant.strikethroughPrice, Math.round(price * 1.1))
-      : Math.round(price * 1.1);
+      ? getSafePrice(primaryVariant.strikethroughPrice, price)
+      : price;
 
     const discountPct = Math.round(((oldPrice - price) / oldPrice) * 100);
 
@@ -707,14 +687,13 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
         productRow.sku === "MR-84920"
           ? "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring"
           : `${productRow.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${productRow.sku.toLowerCase()}`,
-      collection: "Bespoke Artist • The Solitaire Collection",
-      badge: "Natural Solitaire",
-      price: `₹${price.toLocaleString("en-IN")}`,
+      collection: "The Miraya Diamonds Collection",
+      badge: "Diamond Jewellery",
+      price: price > 0 ? `₹${price.toLocaleString("en-IN")}` : "Enquire for Pricing",
       oldPrice: `₹${oldPrice.toLocaleString("en-IN")}`,
       discount: discountPct > 0 ? `${discountPct}% OFF` : undefined,
-      rating: "4.9 / 5.0",
-      reviews: "148 Person Reviews",
-      emi: `Or pay ₹${Math.round(price / 3).toLocaleString("en-IN")}/mo with no-cost 3-month EMI.`,
+
+      emi: "Contact our team to confirm pricing and payment arrangements.",
       gallery: gallery.length > 0 ? gallery : ["/PDP/product1.jpg"],
       diamondGrades: productRow.diamondGrades,
       goldPurities: productRow.goldPurities,
@@ -736,8 +715,7 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
         ["Total Diamond Weight", `${productRow.totalDiamondWeight} ct`],
         ["Diamond Grade", productRow.diamondGrades.join(", ")],
         ["Available Sizes", productRow.sizes.join(", ")],
-        ["Finish", "High Polish"],
-        ["Occasion", "Engagement, Wedding, Gifting"],
+
       ],
       variants,
     };

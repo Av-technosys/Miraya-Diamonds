@@ -83,7 +83,7 @@ export async function submitProductEnquiry(input: ProductEnquiryInput) {
   try {
     const [product] = await db.select({ id: products.id, name: products.name, sku: products.sku }).from(products)
       .where(eq(products.sku, input.sku.replace(/^#/, "").trim())).limit(1);
-    if (!product) return { success: false, error: "This product is unavailable for enquiries. Please contact our atelier." };
+    if (!product) return { success: false, error: "This product is unavailable for enquiries. Please contact the Miraya Diamonds team." };
     await db.insert(productEnquiries).values({
       productId: product.id, productName: product.name, productSku: product.sku,
       name, mobileNumber: `+${digits.length === 10 ? "91" : ""}${digits}`, email: email || null,
@@ -92,7 +92,7 @@ export async function submitProductEnquiry(input: ProductEnquiryInput) {
       engravingRequested: input.engravingRequested,
       engravingText: input.engravingRequested ? input.engravingText.trim() || null : null,
     });
-    return { success: true, message: "Thank you. Your enquiry has been received. Our atelier will get in touch shortly." };
+    return { success: true, message: "Thank you. Your enquiry has been received. The Miraya Diamonds team will review your request." };
   } catch (error) {
     console.error("Product enquiry failed:", error);
     return { success: false, error: "We couldn't send your enquiry. Please try again." };

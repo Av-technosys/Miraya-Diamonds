@@ -12,52 +12,52 @@ const POLICY_SECTIONS = [
   {
     id: 1,
     title: "Acceptance of Terms",
-    content: "By accessing or using the Miraya Diamonds website and services, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, please do not use our website or make a purchase."
+    content: "These terms explain how to use the Miraya Diamonds website and contact our team. Please read the information relevant to your enquiry or purchase and ask us about anything that is unclear."
   },
   {
     id: 2,
     title: "Products & Pricing",
-    content: "All products listed on our website are subject to availability. We strive to display accurate product images, descriptions and pricing. However, slight variations in colour and appearance may occur due to screen settings. Prices are inclusive of applicable taxes unless stated otherwise and are subject to change without prior notice."
+    content: "Product availability, specifications and prices may vary by design and selected options. Images may appear different across screens. Please confirm the final details, price and applicable taxes with our team before placing an order."
   },
   {
     id: 3,
     title: "Orders & Payment",
-    content: "By placing an order, you confirm that the information provided is accurate and complete. We accept payments via credit/debit cards, UPI, net banking and other available methods. Orders are confirmed only upon successful payment verification."
+    content: "Submitting an enquiry or saving a selection in your browser does not place or confirm an order. Our team will confirm availability, the final quotation, payment arrangements and order acceptance directly with you."
   },
   {
     id: 4,
     title: "Shipping & Delivery",
-    content: "We offer insured and tamper-evident shipping across India. Estimated delivery timelines are provided at checkout and may vary based on location and availability. Miraya Diamonds is not responsible for delays caused by third-party logistics providers or unforeseen circumstances."
+    content: "Delivery availability, charges and estimated timing depend on the piece and destination. Confirm dispatch, packaging, insurance and tracking arrangements with our team before ordering."
   },
   {
     id: 5,
     title: "Cancellations",
-    content: "Orders may be cancelled within 24 hours of placement, provided they have not been shipped. Custom or personalised orders cannot be cancelled once production has begun. Refunds for eligible cancellations will be processed within 7–10 business days."
+    content: "Contact our team to request a cancellation. The available options depend on the order status and any custom work already approved. Please confirm cancellation and refund terms before proceeding with a purchase."
   },
   {
     id: 6,
     title: "Intellectual Property",
-    content: "All content on the Miraya Diamonds website — including text, images, logos, designs and graphics — is the exclusive property of Miraya Diamonds and is protected under applicable intellectual property laws. Unauthorised reproduction or distribution is strictly prohibited."
+    content: "Please do not copy or reuse website text, images, logos or designs without the permission of the relevant rights holder. Contact us if you have a question about using Miraya Diamonds material."
   },
   {
     id: 7,
     title: "Limitation of Liability",
-    content: "Miraya Diamonds shall not be liable for any indirect, incidental, special or consequential damages arising out of the use of our website or products. Our total liability shall not exceed the amount paid by you for the relevant product or service."
+    content: "This website provides collection information and enquiry tools. Please confirm important product and service details with our team before relying on them for a purchase. Nothing on this page is intended to limit rights that cannot be excluded under applicable law."
   },
   {
     id: 8,
     title: "Governing Law",
-    content: "These Terms and Conditions are governed by and construed in accordance with the laws of India. Any disputes arising from these terms shall be subject to the exclusive jurisdiction of the courts in Mumbai, Maharashtra."
+    content: "The laws and dispute-resolution requirements applicable to your transaction will apply. Please contact us first if you have a concern so that our team can assist."
   },
   {
     id: 9,
     title: "Changes to Terms",
-    content: "Miraya Diamonds reserves the right to update or modify these Terms and Conditions at any time without prior notice. Continued use of the website after any changes constitutes your acceptance of the revised terms."
+    content: "These terms may be updated as our website and services change. Please review the latest version and confirm the terms that apply to your purchase with our team."
   },
   {
     id: 10,
     title: "Contact Us",
-    content: "If you have any questions or concerns about these Terms and Conditions, please contact us at support@mirayadiamonds.com.",
+    content: "For questions about these terms, contact Miraya Diamonds at miraya.diamond23@gmail.com.",
     isContact: true
   }
 ];
@@ -126,7 +126,7 @@ function TermsContent() {
       <div className="px-3 md:px-[41px] pt-[8px] md:pt-[35px] pb-5 md:pb-[41px]">
         <div className="bg-[#F8F6F5] md:bg-transparent rounded-[6px] md:rounded-none px-[10px] py-[4px] md:px-0 md:py-0 w-fit md:w-auto mb-3 md:mb-[8px]">
           <span className="font-[family-name:var(--font-jakarta)] font-medium text-[12px] leading-[16px] tracking-[0.3px] text-[#757575]">
-            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">01 September 2026</span>
+            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">13 November 2026</span>
           </span>
         </div>
         <div id="introduction" className="pb-6 md:pb-[25px] border-b-[1px] border-[#E8E4E2] scroll-mt-24">
@@ -153,7 +153,7 @@ function TermsContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about these Terms and Conditions, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#214E34]">support@mirayadiamonds.com</a>.
+                  <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34]">miraya.diamond23@gmail.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -234,8 +234,8 @@ function TermsSidebar() {
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">support@mirayadiamonds.com</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">We typically reply within 24 hours</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">miraya.diamond23@gmail.com</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Contact us with your enquiry</span>
             </div>
           </div>
 
@@ -244,16 +244,16 @@ function TermsSidebar() {
               <Image src="/privacy-policy/phone-icon.png" alt="Phone" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 98765 43210</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Mon – Sat, 10 AM to 6 PM</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 9869698984</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Jaipur, India</span>
             </div>
           </div>
         </div>
 
-        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
+        <a href="/contact" className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
           <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#9E384B]">Contact Us</span>
           <ArrowRight className="w-[14px] h-[14px] text-[#9E384B]" strokeWidth={2} />
-        </button>
+        </a>
       </div>
 
       <div className="w-full order-4 lg:order-none bg-[#FFF4F5] border-[1px] border-[#214E341A] rounded-[16px] py-[21px] px-[21px] flex items-center gap-4">

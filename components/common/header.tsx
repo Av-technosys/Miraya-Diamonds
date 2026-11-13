@@ -19,7 +19,7 @@ const categories = [
   { label: "Rings", nav: "Rings", image: ringImage },
   { label: "Earrings", nav: "Ear Rings", image: earringImage },
   { label: "Bracelets", nav: "Bracelet", image: braceletImage },
-  { label: "Pendant", nav: "Pendant", image: necklaceImage },
+  { label: "Pendants", nav: "Pendant", image: necklaceImage },
   { label: "Kids", nav: "Kids", image: kidsImage },
 ];
 
@@ -49,7 +49,7 @@ function Logo({ compact = false }: { compact?: boolean }) {
 function SearchField({ onSubmit }: { onSubmit?: () => void }) {
   return (
     <form action="/collection" role="search" onSubmit={onSubmit} className="relative w-full">
-      <input type="search" name="search" aria-label="Search jewellery" placeholder="Search for rings" className="h-10 w-full rounded-full border border-[#e1e6e2] bg-white pl-4 pr-12 text-sm text-[#454545] outline-none placeholder:text-[#888] focus-visible:ring-2 focus-visible:ring-[#b49b60]" />
+      <input type="search" name="search" aria-label="Search jewellery" placeholder="Search jewellery" className="h-10 w-full rounded-full border border-[#e1e6e2] bg-white pl-4 pr-12 text-sm text-[#454545] outline-none placeholder:text-[#888] focus-visible:ring-2 focus-visible:ring-[#b49b60]" />
       <button type="submit" aria-label="Search" className="absolute inset-y-0 right-1 grid w-10 place-items-center rounded-full text-[#214E34] focus-visible:outline-2"><Search size={20} strokeWidth={1.8} /></button>
     </form>
   );
@@ -156,7 +156,7 @@ export function Header() {
                     ))}
                     <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
                       <Image key={activeCategory.image.src} src={activeCategory.image} alt={`${activeCategory.label} by Miraya Diamonds`} fill sizes="(max-width: 1280px) 25vw, 320px" className="object-cover" />
-                      <Link href="/contact" onClick={() => setActiveMenu(null)} className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34] transition-colors hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">Customize</Link>
+                      <Link href="/contact" onClick={() => setActiveMenu(null)} className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34] transition-colors hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">Customise</Link>
                     </div>
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export function Header() {
                     ))}
                     <Link href="/contact" onClick={closeDrawer} className="relative block overflow-hidden rounded-xl">
                       <Image src={category.image} alt={`${category.label} by Miraya Diamonds`} sizes="330px" className="h-auto w-full" />
-                      <span className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34]">Customize</span>
+                      <span className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34]">Customise</span>
                     </Link>
                   </div>
                 )}

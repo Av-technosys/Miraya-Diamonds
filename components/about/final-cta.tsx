@@ -30,7 +30,7 @@ export function FinalCTA() {
             style={{ boxShadow: "0px 21.1px 47.47px -15.82px rgba(201, 111, 145, 0.12)" }}
           >
             <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[16.88px] whitespace-nowrap">
-              Explore Jewellary
+              Explore Jewellery
             </span>
           </Link>
           

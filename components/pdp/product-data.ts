@@ -7,15 +7,14 @@ export type ProductOption = {
 export const product = {
   slug: "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring",
   name: "Bhvita 18KT Rose Gold Filigree Solitaire Diamond Ring",
-  collection: "Bespoke Artist • The Solitaire Collection",
+  collection: "The Miraya Diamonds Collection",
   sku: "#MR-84920",
-  badge: "Natural Solitaire",
-  price: "₹48,250",
-  oldPrice: "₹54,000",
-  discount: "11% OFF",
-  rating: "4.9 / 5.0",
-  reviews: "148 Person Reviews",
-  emi: "Or pay ₹16,083/mo with no-cost 3-month EMI.",
+  badge: "Diamond Jewellery",
+  price: "Enquire for Pricing",
+  oldPrice: "",
+  discount: "",
+
+  emi: "Contact our team to confirm pricing and payment arrangements.",
   gallery: [
     "/PDP/product1.jpg",
     "/PDP/product2.jpg",
@@ -27,11 +26,11 @@ export const product = {
   metalOptions: [
     { name: "Rose Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E4A494_0%,#F4C5B8_48%,#E3A393_100%)]" },
     { name: "Yellow Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E5C158_0%,#FDE599_48%,#D8B042_100%)]" },
-    { name: "Platinum", detail: "950 Pure", tone: "bg-[linear-gradient(135deg,#D6D8DC_0%,#F1F3F5_48%,#B0B4B9_100%)]" },
+    { name: "Platinum", detail: "950 Platinum", tone: "bg-[linear-gradient(135deg,#D6D8DC_0%,#F1F3F5_48%,#B0B4B9_100%)]" },
   ] satisfies ProductOption[],
   qualities: [
-    { name: "SI • IJ", detail: "Slightly Included, Warm Sparkle" },
-    { name: "VVS • EF", detail: "Very Very Slight, Colorless White" },
+    { name: "SI • IJ", detail: "Slightly Included, I–J Colour" },
+    { name: "VVS • EF", detail: "Very Very Slightly Included, E–F Colour" },
   ],
   specs: [
     ["Product Type", "Ring"],
@@ -53,5 +52,5 @@ export const suiteProducts = [
   { name: "Bhvita 22KT Necklace", image: "/PDP/explore2.png" },
   { name: "22KT Gold Ring", image: "/PDP/explore3.png" },
   { name: "Bhvita 22KT Necklace", image: "/PDP/explore4.png" },
-  { name: "Bhvita 22KT Earring", image: "/PDP/explore5.png" },
+  { name: "Bhvita 22KT Earrings", image: "/PDP/explore5.png" },
 ];

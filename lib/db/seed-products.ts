@@ -29,7 +29,7 @@ const seedItems: SeedItem[] = [
     sku: "MR-84920",
     name: "Bhvita 18KT Rose Gold Filigree Solitaire Diamond Ring",
     description:
-      "Handcrafted filigree solitaire diamond ring in 18KT rose gold featuring an IGI certified lab-grown diamond with micro-pavé accents.",
+      "Handcrafted filigree solitaire diamond ring in 18KT rose gold featuring a lab-grown diamond with micro-pavé accents.",
     jewelleryType: "ring",
     diamondGrades: ["VVS-EF", "SI-IJ"],
     goldPurities: ["18KT"],
@@ -57,7 +57,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-001",
     name: "Gold Diamond Ring",
-    description: "A rose gold ring with round brilliant diamonds handcrafted to perfection.",
+    description: "A rose gold ring with round brilliant diamonds with carefully considered detailing.",
     jewelleryType: "ring",
     diamondGrades: ["EF-VVS", "IJ-SI"],
     goldPurities: ["14KT", "18KT"],
@@ -101,7 +101,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-003",
     name: "Elysian Solitaire Tennis Diamond Bracelet",
-    description: "Classic continuous row of brilliant round cut natural diamonds.",
+    description: "Classic continuous row of brilliant round-cut natural diamonds.",
     jewelleryType: "bracelet",
     diamondGrades: ["VS1-FG", "VVS2-EF"],
     goldPurities: ["18KT"],
@@ -123,7 +123,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-004",
     name: "Aura Butterfly Motif Diamond Drop Earrings",
-    description: "Delicate feminine butterfly silhouette adorned with pave diamonds.",
+    description: "Delicate feminine butterfly silhouette adorned with pavé diamonds.",
     jewelleryType: "earring",
     diamondGrades: ["VVS1-DF", "VS-GH"],
     goldPurities: ["14KT", "18KT"],
@@ -145,7 +145,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-005",
     name: "The Royal Mirage 2.05ct Oval Solitaire Ring",
-    description: "Magnificent single oval solitaire set with hidden diamond gallery.",
+    description: "Magnificent single oval solitaire set with a hidden diamond gallery.",
     jewelleryType: "solitaire",
     diamondGrades: ["IF-D", "VVS1-EF"],
     goldPurities: ["18KT", "950 Platinum"],
@@ -167,7 +167,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-006",
     name: "Seraphina Open Cuff Diamond Bangle",
-    description: "Flexible modern cuff with micro-pave diamond terminals.",
+    description: "Flexible modern cuff with micro-pavé diamond terminals.",
     jewelleryType: "bracelet",
     diamondGrades: ["VVS2-EF"],
     goldPurities: ["18KT"],
@@ -233,7 +233,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-009",
     name: "22KT Gold Diamond Ring",
-    description: "Contemporary 22KT gold ring encrusted with brilliant cut diamonds.",
+    description: "Contemporary 22KT gold ring encrusted with brilliant-cut diamonds.",
     jewelleryType: "ring",
     diamondGrades: ["EF-VVS"],
     goldPurities: ["22KT"],
@@ -255,7 +255,7 @@ const seedItems: SeedItem[] = [
   {
     sku: "MIR-010",
     name: "Bhvita 22KT Layered Necklace",
-    description: "Layered elegance in pure 22KT hallmarked gold with fine diamond pavé.",
+    description: "Layered elegance in 22KT gold with fine diamond pavé.",
     jewelleryType: "necklace",
     diamondGrades: ["EF-VVS"],
     goldPurities: ["22KT"],
@@ -276,7 +276,7 @@ const seedItems: SeedItem[] = [
   },
   {
     sku: "MIR-011",
-    name: "Bhvita 22KT Diamond Earring",
+    name: "Bhvita 22KT Diamond Earrings",
     description: "Signature drop earrings handcrafted in 22KT gold with delicate diamonds.",
     jewelleryType: "earring",
     diamondGrades: ["EF-VVS"],

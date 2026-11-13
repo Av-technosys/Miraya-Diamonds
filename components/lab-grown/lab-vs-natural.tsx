@@ -51,7 +51,7 @@ export function LabVsNatural() {
             <div className="relative z-10 ml-auto flex w-full max-w-[170px] min-[380px]:max-w-[195px] min-[440px]:max-w-[220px] flex-col items-end p-4 pr-3 min-[380px]:pr-4 sm:max-w-[320px] sm:p-7 sm:pr-8 md:max-w-[360px] md:p-8 md:pr-10 lg:max-w-[390px] lg:p-9 lg:pr-12 xl:max-w-[420px] xl:pr-14">
               <div className="flex flex-col items-start">
                 <h3 className="font-serif text-[20px] min-[380px]:text-[23px] font-normal leading-[1.08] tracking-[-0.01em] text-[#1C1917] sm:text-[36px] md:text-[40px] lg:text-[44px]">
-                  <span className="block font-medium">Lab Grown</span>
+                  <span className="block font-medium">Lab-Grown</span>
                   <span className="block font-normal">Diamond</span>
                 </h3>
 
@@ -135,7 +135,7 @@ export function LabVsNatural() {
 
       {/* Bottom Editorial Content - Perfectly proportioned for reading */}
       <div className="mx-auto mt-14 w-full max-w-[1140px] px-5 sm:mt-18 sm:px-8 lg:mt-24 lg:px-12">
-        {/* Section 1: Lab-Grown Vs Natural Diamonds */}
+        {/* Section 1: Lab-Grown vs Natural Diamonds */}
         <motion.div
           initial={reduceMotion ? false : { opacity: 0, y: 18 }}
           whileInView={reduceMotion ? undefined : { opacity: 1, y: 0 }}
@@ -144,19 +144,12 @@ export function LabVsNatural() {
           className="flex flex-col"
         >
           <h3 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
-            Lab-Grown Vs Natural Diamonds
+            Lab-Grown vs Natural Diamonds
           </h3>
 
           <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
-            Natural And Lab-Grown Diamonds Are Chemically And Structurally
-            Identical, Offering Similar Beauty And Strength. The Primary
-            Difference Lies In Their Origin. Natural Diamonds Are Formed Over
-            Billions Of Years Beneath The Earth&apos;s Surface, Making Their
-            Rarity A Defining Part Of Their Value And Appeal. Lab-Grown
-            Diamonds Are Created Using Advanced Technology In Controlled
-            Environments, Offering A Different Option For Buyers While Still
-            Delivering Brilliance, Beauty, And Durability In Fine Jewelry.
-          </p>
+              Natural and lab-grown diamonds are chemically and structurally identical, offering similar beauty and strength. The primary difference lies in their origin. Natural diamonds are formed over billions of years beneath the earth&apos;s surface, making their rarity a defining part of their value and appeal. Lab-grown diamonds are created using advanced technology in controlled environments, offering a different option for buyers while still delivering brilliance, beauty, and durability in fine jewellery.
+            </p>
         </motion.div>
 
         {/* Section 2: Are Lab-Grown Diamonds Real Diamonds? */}
@@ -173,20 +166,10 @@ export function LabVsNatural() {
 
           <div className="mt-4 space-y-3.5 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
             <p>
-              Yes. Lab-Grown Diamonds Are Genuine Diamonds, Not Imitations. They
-              Consist Of Crystalline Carbon And Possess The Defining Material
-              Properties That Distinguish Diamond From Other Gemstones. Their
-              Hardness, Crystal Structure And Optical Behaviour Are
-              Fundamentally Comparable To Those Of Natural Diamonds. This Is
-              Why A Lab-Grown Diamond Can Display The Same Captivating
-              Brilliance And Beauty.
+              Yes. Lab-grown diamonds are genuine diamonds, not imitations. They consist of crystalline carbon and possess the defining material properties that distinguish diamond from other gemstones. Their hardness, crystal structure and optical behaviour are fundamentally comparable to those of natural diamonds. This is why a lab-grown diamond can display the same captivating brilliance and beauty.
             </p>
             <p>
-              What Makes Them Different Is Their Origin. Natural Diamonds
-              Develop Through Geological Processes Deep Within The Earth, While
-              Lab-Grown Diamonds Form Through Specialised Technological Methods.
-              The Result Is The Same Fundamental Diamond Material, Created
-              Through Two Different Journeys.
+              What makes them different is their origin. Natural diamonds develop through geological processes deep within the earth, while lab-grown diamonds form through specialised technological methods. The result is the same fundamental diamond material, created through two different journeys.
             </p>
           </div>
         </motion.div>

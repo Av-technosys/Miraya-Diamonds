@@ -2,53 +2,67 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/ui/themes";
-import { Inter, Cormorant_Garamond, Montserrat, Alex_Brush, Playfair_Display, Plus_Jakarta_Sans, Geist } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/components/common/header";
 import { ConditionalFooter } from "@/components/common/conditional-footer";
 import { SmoothScroll } from "@/components/common/smooth-scroll";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
+const geist = localFont({
+  src: "./fonts/geist.woff2",
+  weight: "100 900",
+  variable: "--font-sans",
+  display: "swap",
+});
 
-const inter = Inter({
+const inter = localFont({
+  src: "./fonts/inter.woff2",
+  weight: "100 900",
   variable: "--font-inter",
-  subsets: ["latin"],
+  display: "swap",
 });
 
-const cormorantGaramond = Cormorant_Garamond({
+const cormorantGaramond = localFont({
+  src: [
+    { path: "./fonts/cormorant-garamond.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/cormorant-garamond-italic.woff2", weight: "300 700", style: "italic" },
+  ],
   variable: "--font-cormorant-garamond",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  display: "swap",
 });
 
-const montserrat = Montserrat({
+const montserrat = localFont({
+  src: "./fonts/montserrat.woff2",
+  weight: "100 900",
   variable: "--font-montserrat",
-  subsets: ["latin"],
+  display: "swap",
 });
 
-const alexBrush = Alex_Brush({
-  variable: "--font-great-vibes", // keeping variable name same to avoid changing css
-  weight: ["400"],
-  subsets: ["latin"],
+const alexBrush = localFont({
+  src: "./fonts/alex-brush.woff2",
+  weight: "400",
+  variable: "--font-great-vibes",
+  display: "swap",
 });
 
-const playfairDisplay = Playfair_Display({
+const playfairDisplay = localFont({
+  src: "./fonts/playfair-display.woff2",
+  weight: "400 900",
   variable: "--font-playfair",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const plusJakartaSans = localFont({
+  src: "./fonts/plus-jakarta-sans.woff2",
+  weight: "200 800",
   variable: "--font-jakarta",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Miraya Diamonds",
-  description: "Miraya Diamonds application",
+  description: "Discover fine diamond jewellery at Miraya Diamonds. Explore collections, learn about diamonds and discuss a design that feels personal to you.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
