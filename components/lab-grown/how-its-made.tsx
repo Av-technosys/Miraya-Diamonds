@@ -13,19 +13,19 @@ const steps = [
   {
     number: 2,
     title: "Growth",
-    description: "Advanced technology recreates natural conditions.",
+    description: "HPHT or CVD technology provides the conditions for diamond growth.",
     image: "/lab-grown/growth.png",
   },
   {
     number: 3,
     title: "Formation",
-    description: "A small diamond seed is placed in a lab.",
+    description: "Carbon builds into a diamond crystal under controlled conditions.",
     image: "/lab-grown/formation.png",
   },
   {
     number: 4,
     title: "Cut & Polish",
-    description: "A small diamond seed is placed in a lab.",
+    description: "The rough diamond is cut and polished to reveal its brilliance.",
     image: "/lab-grown/cutpolish.png",
   },
 ];

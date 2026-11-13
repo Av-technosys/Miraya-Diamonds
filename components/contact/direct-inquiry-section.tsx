@@ -34,7 +34,7 @@ export function DirectInquirySection() {
       if (res.success) {
         setStatus({
           type: "success",
-          text: res.message || "Thank you! Your message has been saved in our atelier database.",
+          text: res.message || "Thank you! Your message has been received by Miraya Diamonds.",
         });
         setName("");
         setEmail("");
@@ -71,7 +71,7 @@ export function DirectInquirySection() {
             <div className="flex flex-col gap-[7.31px] pt-0 lg:pt-[6.19px]">
               {/* Eyebrow */}
               <span className="font-[family-name:var(--font-jakarta)] font-semibold text-[12.38px] leading-[18px] tracking-[2.48px] text-[#214E34] uppercase">
-                DIRECT INQUIRY
+                DIRECT ENQUIRY
               </span>
 
               {/* Heading */}
@@ -81,7 +81,7 @@ export function DirectInquirySection() {
 
               {/* Description */}
               <p className="font-sans font-normal text-[14px] leading-[24.75px] text-[#757575] pt-[1.69px]">
-                Connect directly with our master gemologists for bespoke consultations, solitaire acquisition, or custom heirlooms.
+                Ask about a piece, share a design idea or get help choosing jewellery for a special moment.
               </p>
             </div>
 
@@ -135,7 +135,7 @@ export function DirectInquirySection() {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@aurora-patron.com"
+                    placeholder="you@example.com"
                     className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
                 </div>
@@ -152,7 +152,7 @@ export function DirectInquirySection() {
                   type="text"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
-                  placeholder="+91 98765 43210"
+                  placeholder="Your mobile number"
                   className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                 />
               </div>
@@ -161,7 +161,7 @@ export function DirectInquirySection() {
               <div className="flex flex-col mt-[18px]">
                 <div className="pb-[4.5px]">
                   <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
-                    MESSAGE / INQUIRY <span className="text-[#214E34]">*</span>
+                    MESSAGE / ENQUIRY <span className="text-[#214E34]">*</span>
                   </label>
                 </div>
                 <textarea
@@ -195,11 +195,11 @@ export function DirectInquirySection() {
                     )}
                   </button>
 
-                  {/* Confidential Inquiry */}
+                  {/* Jewellery Enquiry */}
                   <div className="flex items-center justify-center gap-[6.75px]">
                     <Image src="/contact/inquiry-lock_icon.png" alt="Lock" width={12} height={16} style={{ width: '12px', height: '15.75px' }} className="object-contain" />
                     <span className="font-sans font-normal text-[12px] leading-[20.25px] text-[#574143]" style={{ letterSpacing: "0.13px" }}>
-                      Confidential Inquiry
+                      Jewellery Enquiry
                     </span>
                   </div>
                 </div>
@@ -209,7 +209,7 @@ export function DirectInquirySection() {
           </div>
         </div>
 
-        {/* Right Column: Virtual Jewelry Consultation */}
+        {/* Right Column: Virtual Jewellery Consultation */}
         <div
           className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#F7FFF7] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
         >
@@ -219,19 +219,19 @@ export function DirectInquirySection() {
             <div className="flex">
               <div className="bg-white rounded-full px-[13.5px] py-[4.5px] flex items-center justify-center">
                 <span className="font-sans font-medium text-[12px] leading-[18px] text-[#214E34] uppercase">
-                  100% DIGITAL EXPERIENCE
+                  CONNECT FROM HOME
                 </span>
               </div>
             </div>
 
             {/* Heading */}
             <h3 className="font-[family-name:var(--font-playfair)] font-medium text-[31.5px] leading-[40.5px] text-[#1C1B1B] pt-[5.29px]">
-              Virtual Jewelry Consultation
+              Virtual Jewellery Consultation
             </h3>
 
             {/* Description */}
             <p className="font-[family-name:var(--font-jakarta)] font-normal text-[14px] leading-[20px] text-[#574143] pl-[1px]">
-              Experience luxury fine jewellery from the comfort of your home. We ship fully insured worldwide directly from our master craft studio.
+              Explore fine jewellery from wherever you are. Contact our team to discuss designs, diamond details and available consultation options.
             </p>
           </div>
 
@@ -244,10 +244,10 @@ export function DirectInquirySection() {
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  4K Live Video Appointments
+                  Explore the Details
                 </h4>
                 <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  View diamonds & bespoke pieces live under high magnification with our gemologists.
+                  Ask for more information about a design, setting or diamond before making your choice.
                 </p>
               </div>
             </div>
@@ -259,10 +259,10 @@ export function DirectInquirySection() {
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Complimentary At-Home Try-On
+                  Find Your Fit
                 </h4>
                 <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Doorstep white-glove insured delivery and return pickup across India.
+                  Get help with sizing and discuss the options available for your selected piece.
                 </p>
               </div>
             </div>
@@ -274,10 +274,10 @@ export function DirectInquirySection() {
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Direct Master Jeweller Consultation
+                  Discuss a Custom Design
                 </h4>
                 <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Custom 3D CAD renders and bespoke heirloom custom pieces crafted easily online.
+                  Share your ideas and ask our team which design details can be personalised.
                 </p>
               </div>
             </div>
@@ -285,14 +285,14 @@ export function DirectInquirySection() {
             {/* Feature 4 */}
             <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
-                <Image src="/contact/Lock_Icon.png" alt="Certified" width={19} height={15} className="object-contain" />
+                <Image src="/contact/Lock_Icon.png" alt="Jewellery details" width={19} height={15} className="object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
                 <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Certified & Hallmarked
+                  Understand Your Jewellery
                 </h4>
                 <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  100% IGI/GIA certified solitaires and 18KT/22KT BIS hallmarked gold delivered to your doorstep.
+                  Confirm diamond origin, grading documentation and metal purity with our team.
                 </p>
               </div>
             </div>
@@ -301,14 +301,14 @@ export function DirectInquirySection() {
           {/* Bottom Buttons */}
           <div className="pt-[18px]">
             <div className="border-t-[1.13px] border-[#214E3433] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
-              <button className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
-                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Schedule Live Call</span>
+              <a href="mailto:miraya.diamond23@gmail.com?subject=Jewellery%20consultation" className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
+                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Discuss a Call</span>
                 <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
-              </button>
-              <button className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-[41%] lg:w-auto lg:flex-none">
-                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#214E34] whitespace-nowrap">Whatsapp</span>
+              </a>
+              <a href="https://wa.me/919869698984" target="_blank" rel="noopener noreferrer" className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-[41%] lg:w-auto lg:flex-none">
+                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#214E34] whitespace-nowrap">WhatsApp</span>
                 <Image src="/contact/message-icon.png" alt="Message" width={15} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-[15px] sm:h-[15px]" />
-              </button>
+              </a>
             </div>
           </div>
         </div>

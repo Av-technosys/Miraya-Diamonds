@@ -35,24 +35,24 @@ export function ArtOfCraftsmanship() {
         <div className="grid grid-cols-2 gap-[12px]">
           <div className="bg-[#FFFDFC] border-[1px] border-[#E7FFE6] rounded-[16px] p-[16px] flex flex-col shadow-sm">
             <span className="font-serif font-bold text-[22px] leading-[26px] text-[#214E34] mb-[4px]">
-              34+ Hrs
+              Craft
             </span>
             <span className="font-sans font-medium text-[12px] leading-[14px] text-[#3B2A30] mb-[2px]">
-              Handcrafting Time
+              Attention to Detail
             </span>
             <span className="font-sans font-normal text-[10px] leading-[12px] text-[#806A72]">
-              Per bespoke solitaire
+              From sketch to final polish
             </span>
           </div>
           <div className="bg-[#FFFDFC] border-[1px] border-[#E7FFE6] rounded-[16px] p-[16px] flex flex-col shadow-sm">
             <span className="font-serif font-bold text-[22px] leading-[26px] text-[#214E34] mb-[4px]">
-              100%
+              Design
             </span>
             <span className="font-sans font-medium text-[12px] leading-[14px] text-[#3B2A30] mb-[2px]">
-              Hand-Selected
+              Considered Settings
             </span>
             <span className="font-sans font-normal text-[10px] leading-[12px] text-[#806A72]">
-              Cut, color, clarity certified
+              Balance, comfort and finish
             </span>
           </div>
         </div>
@@ -103,7 +103,7 @@ export function ArtOfCraftsmanship() {
           >
             <div className="w-[8.44px] h-[8.44px] rounded-full bg-[#214E34]" />
             <span className="font-sans font-semibold text-[12.66px] leading-[16.88px] tracking-[0.63px] text-[#3B2A30]">
-              Zero-Tolerance Setting Precision
+              Care in Every Detail
             </span>
           </div>
 
@@ -143,13 +143,13 @@ export function ArtOfCraftsmanship() {
               style={{ boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D" }}
             >
               <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#214E34] mb-[6px]">
-                34+ Hrs
+                Craft
               </span>
               <span className="font-sans font-medium text-[14px] leading-[16.88px] text-[#3B2A30] mb-[2px]">
-                Average Handcrafting Time
+                Attention to Detail
               </span>
               <span className="font-sans font-normal text-[12px] leading-[17.41px] text-[#806A72]">
-                Per bespoke bridal solitaire
+                From sketch to final polish
               </span>
             </div>
 
@@ -159,13 +159,13 @@ export function ArtOfCraftsmanship() {
               style={{ boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D" }}
             >
               <span className="font-serif font-bold text-[32px] leading-[37.98px] text-[#214E34] mb-[6px]">
-                100%
+                Design
               </span>
               <span className="font-sans font-medium text-[14px] leading-[16.88px] text-[#3B2A30] mb-[2px]">
-                Hand-Selected Solitaires
+                Considered Settings
               </span>
               <span className="font-sans font-normal text-[12px] leading-[17.41px] text-[#806A72]">
-                Cut, color, and clarity scrutinized
+                Balance, comfort and finish
               </span>
             </div>
 

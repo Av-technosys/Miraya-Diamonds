@@ -77,10 +77,10 @@ export function AboutHero() {
               {/* Stats */}
               <div className="flex flex-col gap-[4px]">
                 <span className="font-serif font-bold text-[20px] leading-[19px] text-[#454545]">
-                  250K+
+                  Miraya
                 </span>
                 <span className="font-sans font-normal text-[14px] leading-[17px] tracking-[0.32px] text-[#454545]">
-                  Cherished Patrons Across India &amp; Abroad
+                  Jewellery for Your Story
                 </span>
               </div>
             </div>
@@ -105,8 +105,8 @@ export function AboutHero() {
             </div>
             {/* Text */}
             <div className="flex flex-col">
-              <span className="font-sans font-bold text-[12px] leading-[15px] text-[#111827]">250K+ Cherished Patrons</span>
-              <span className="font-sans font-normal text-[10px] leading-[14px] text-[#9CA3AF]">Across India & Abroad</span>
+              <span className="font-sans font-bold text-[12px] leading-[15px] text-[#111827]">Jewellery for Your Story</span>
+              <span className="font-sans font-normal text-[10px] leading-[14px] text-[#9CA3AF]">Jaipur, India</span>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ export function AboutHero() {
                 CRAFTED WITH PASSION
               </span>
               <span className="font-sans font-normal text-[14px] md:text-[17px] leading-[18px] text-[#757575]">
-                Hand-set natural solitaires
+                Thoughtfully designed jewellery
               </span>
             </div>
           </div>

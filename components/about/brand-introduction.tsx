@@ -47,7 +47,7 @@ export function BrandIntroduction() {
 
           {/* Mobile Description */}
           <p className="md:hidden font-sans font-light text-[14px] leading-[20px] text-[#757575] mb-[20px]">
-            At Miraya Diamonds, jewellery is a reflection of individuality, emotions, and unforgettable celebrations designed for generations.
+            At Miraya Diamonds, jewellery celebrates individuality, meaningful connections and the moments you want to treasure.
           </p>
 
           {/* Desktop Description */}
@@ -58,36 +58,36 @@ export function BrandIntroduction() {
           {/* Quote Box - Mobile */}
           <div className="md:hidden w-full bg-[#FCF5F7] border-l-[2px] border-[#214E34] rounded-r-[12px] p-[20px] flex flex-col gap-[12px] mb-[30px]">
             <p className="font-serif font-normal italic text-[14px] leading-[18px] text-[#454545]">
-              &quot;Diamonds are nature&apos;s most enduring poetry, sculpted to reflect the subtle brilliance of the woman who wears them.&quot;
+              Thoughtful design turns a beautiful diamond into a piece that feels personal.
             </p>
             <span className="font-sans font-bold text-[10px] tracking-[1.2px] uppercase text-[#214E34]">
-              — MIRAYA DESIGN ARTIST
+              THE MIRAYA DESIGN PHILOSOPHY
             </span>
           </div>
 
           {/* Quote Box - Desktop */}
           <div className="hidden md:flex w-full bg-[#FBF4F6] border-[1.05px] border-[#F3E5EC] rounded-[17px] p-[25px] flex-col gap-[12.66px] mb-[40px]">
             <p className="font-serif font-medium italic text-[16px] leading-[20px] text-[#454545]">
-              &quot;Diamonds are nature&apos;s most enduring poetry. Our joy lies in sculpting them to reflect the subtle brilliance of the woman who wears them.&quot;
+              Thoughtful design turns a beautiful diamond into a piece that feels personal. Our inspiration comes from the stories and individuality of the people who wear our jewellery.
             </p>
             <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#214E34]">
-              — MIRAYA DESIGN ARTIST
+              THE MIRAYA DESIGN PHILOSOPHY
             </span>
           </div>
 
           {/* Stats - Mobile */}
           <div className="flex md:hidden flex-row items-stretch justify-between gap-[10px] mb-[20px]">
             <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">100%</span>
-              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Conflict-Free</span>
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Detail</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Thoughtful Design</span>
             </div>
             <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">18KT & PT</span>
-              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Precious Metals</span>
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Fine</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Jewellery</span>
             </div>
             <div className="flex-1 bg-white border-[1px] border-[#E7FFE6] rounded-[12px] py-[20px] px-[4px] flex flex-col items-center justify-center gap-[6px] shadow-[0px_2px_8px_rgba(0,0,0,0.04)]">
-              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Lifetime</span>
-              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Warranty</span>
+              <span className="font-serif font-bold text-[15px] sm:text-[16px] text-[#111827]">Personal</span>
+              <span className="font-sans font-normal text-[10px] sm:text-[11px] uppercase tracking-wide text-[#6B7280] text-center">Guidance</span>
             </div>
           </div>
 
@@ -95,18 +95,18 @@ export function BrandIntroduction() {
           <div className="hidden md:flex w-full border-t-[2px] border-[#F3E5EC] pt-[17px] flex-row items-center justify-start gap-[100px]">
             {/* Stat 1 */}
             <div className="flex flex-col gap-[2px]">
-              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">18KT &amp; PT</span>
-              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Precious Metals</span>
+              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">Fine</span>
+              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Jewellery</span>
             </div>
             {/* Stat 2 */}
             <div className="flex flex-col gap-[2px]">
-              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">100%</span>
-              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Conflict-Free</span>
+              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">Detail</span>
+              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Thoughtful Design</span>
             </div>
             {/* Stat 3 */}
             <div className="flex flex-col gap-[2px]">
-              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">Lifetime</span>
-              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Warranty</span>
+              <span className="font-serif font-bold text-[20px] leading-[29.5px] text-[#454545]">Personal</span>
+              <span className="font-sans font-normal text-[12px] leading-[17px] text-[#757575]">Guidance</span>
             </div>
           </div>
         </div>

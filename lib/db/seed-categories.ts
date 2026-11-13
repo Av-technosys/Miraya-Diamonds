@@ -32,7 +32,7 @@ const seedCategories: SeedCategory[] = [
     slug: "necklaces",
     redirectSlug: "/collection?category=Necklaces",
     bannerImage: "/Images/Header_necklace.png",
-    description: "Signature diamond necklaces and chokers certified by international ateliers.",
+    description: "Explore diamond necklaces and chokers in a range of designs.",
     priority: 3,
   },
   {
@@ -56,7 +56,7 @@ const seedCategories: SeedCategory[] = [
     slug: "pendants",
     redirectSlug: "/collection?category=Pendants",
     bannerImage: "/customize/custom4.png",
-    description: "Solitaire and halo diamond pendants with certified clarity and brilliance.",
+    description: "Discover solitaire and halo diamond pendants with thoughtfully considered settings.",
     priority: 6,
   },
   {

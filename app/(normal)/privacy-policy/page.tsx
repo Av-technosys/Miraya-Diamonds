@@ -12,42 +12,42 @@ const POLICY_SECTIONS = [
   {
     id: 1,
     title: "Information We Collect",
-    content: "We collect information you provide directly to us, such as your name, contact details, shipping address, and payment information, as well as information collected automatically through cookies and similar technologies."
+    content: "When you create an account or contact us, we receive the details you provide, such as your name, email address, phone number, enquiry and design preferences. Your profile may also include an address and optional personal dates. Account services may use cookies and related technical information."
   },
   {
     id: 2,
     title: "How We Use Your Information",
-    content: "We use your information to process orders, provide customer support, improve our services, personalize your shopping experience and keep you updated about our collections, offers and events."
+    content: "We use these details to manage accounts, respond to enquiries, discuss jewellery requirements and provide requested support. Please share only the information needed for your request."
   },
   {
     id: 3,
     title: "Sharing of Information",
-    content: "We do not sell your personal information. We may share your information with trusted service providers (such as payment gateways, logistics partners and marketing platforms) only to deliver our services and improve your experience."
+    content: "The website uses service providers for functions such as account authentication, data hosting and uploaded-file storage. Relevant information is processed through these services to support the features you use."
   },
   {
     id: 4,
     title: "Cookies and Tracking Technologies",
-    content: "We use cookies and similar technologies to enhance your browsing experience, analyze website traffic and personalize content. You can manage your cookie preferences through your browser settings."
+    content: "Account and authentication features may use cookies or similar technologies. You can manage cookies through your browser settings; blocking them may affect sign-in and related features."
   },
   {
     id: 5,
     title: "Data Security",
-    content: "We implement industry-standard security measures to protect your personal information from unauthorized access, disclosure, alteration or destruction."
+    content: "Please keep your sign-in details private and avoid sending sensitive payment information through enquiry forms. Contact us if you have a concern about your account or information."
   },
   {
     id: 6,
     title: "Your Rights",
-    content: "You have the right to access, update or delete your personal information. You can also opt out of marketing communications at any time."
+    content: "You can edit available profile fields in your account. To request access, correction or deletion of other personal information, contact us with enough detail to identify your request."
   },
   {
     id: 7,
     title: "Changes to This Policy",
-    content: "We may update this Privacy Policy from time to time. Any changes will be posted on this page with the updated date."
+    content: "This page may be updated as our website and services change. Please check the date shown above for the latest revision."
   },
   {
     id: 8,
     title: "Contact Us",
-    content: "If you have any questions or concerns about this Privacy Policy, please contact us at support@mirayadiamonds.com.",
+    content: "For questions about this Privacy Policy or your information, contact Miraya Diamonds at miraya.diamond23@gmail.com.",
     isContact: true
   }
 ];
@@ -104,7 +104,7 @@ function PrivacyHero() {
 
         {/* Subtitle */}
         <p className="font-sans font-medium text-[12px] md:text-[16px] leading-[18px] md:leading-[20px] text-[#757575]">
-          A few more steps it make it yours
+          How we handle your account and enquiry information
         </p>
       </div>
     </section>
@@ -123,13 +123,13 @@ function PrivacyContent() {
         {/* Date */}
         <div className="bg-[#F8F6F5] md:bg-transparent rounded-[6px] md:rounded-none px-[10px] py-[4px] md:px-0 md:py-0 w-fit md:w-auto mb-3 md:mb-[8px]">
           <span className="font-[family-name:var(--font-jakarta)] font-medium text-[12px] leading-[16px] tracking-[0.3px] text-[#757575]">
-            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">01 September 2026</span>
+            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">13 November 2026</span>
           </span>
         </div>
         {/* Intro */}
         <div id="introduction" className="pb-6 md:pb-[25px] border-b-[1px] border-[#E8E4E2] scroll-mt-24">
           <p className="font-sans font-normal text-[14px] leading-[22.75px] text-[#6F6A68]">
-            At Miraya Diamonds, we value your privacy. This Privacy Policy explains how we collect, use, disclose and protect your personal information when you visit our website, make a purchase, or interact with our services.
+            At Miraya Diamonds, we value your privacy. This Privacy Policy explains how we collect, use, disclose and protect your personal information when you visit our website, create an account or contact our team.
           </p>
         </div>
 
@@ -154,7 +154,7 @@ function PrivacyContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about this Privacy Policy, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#214E34]">support@mirayadiamonds.com</a>.
+                  <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34]">miraya.diamond23@gmail.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -241,8 +241,8 @@ function PrivacySidebar() {
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">support@aurorajewels.com</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">We typically reply within 24 hours</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">miraya.diamond23@gmail.com</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Contact us with your enquiry</span>
             </div>
           </div>
 
@@ -252,17 +252,17 @@ function PrivacySidebar() {
               <Image src="/privacy-policy/phone-icon.png" alt="Phone" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 98765 43210</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Mon – Sat, 10 AM to 6 PM</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 9869698984</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Jaipur, India</span>
             </div>
           </div>
         </div>
 
         {/* Contact Us Button */}
-        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
+        <a href="/contact" className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
           <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#9E384B]">Contact Us</span>
           <ArrowRight className="w-[14px] h-[14px] text-[#9E384B]" strokeWidth={2} />
-        </button>
+        </a>
       </div>
 
       {/* Privacy Commitment Badge */}

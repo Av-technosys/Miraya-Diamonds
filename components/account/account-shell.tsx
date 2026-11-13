@@ -4,10 +4,10 @@ import { AccountSidebar } from "./sidebar";
 import { AccountBreadcrumbs } from "./account-breadcrumbs";
 
 const trustItems = [
-  { title: "100% Certified", description: "IGI, GIA & BIS Hallmarked Jewellery", icon: Award },
-  { title: "Insured Delivery", description: "Complimentary transit insurance", icon: LockKeyhole },
-  { title: "Easy Returns", description: "15-day return policy, no questions", icon: RefreshCw },
-  { title: "Ethical Craft", description: "Responsibly sourced heirloom gold", icon: Gem },
+  { title: "Product Details", description: "Ask about grading and hallmark details", icon: Award },
+  { title: "Delivery Guidance", description: "Confirm arrangements with our team", icon: LockKeyhole },
+  { title: "Returns Guidance", description: "Check the terms for your chosen piece", icon: RefreshCw },
+  { title: "Personal Guidance", description: "Help choosing jewellery for your story", icon: Gem },
 ];
 
 export function AccountShell({ children }: { children: React.ReactNode }) {
@@ -37,9 +37,9 @@ export function AccountShell({ children }: { children: React.ReactNode }) {
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2">
               <span className="font-serif text-[23px] font-semibold">Miraya Diamonds</span>
               <span className="hidden h-3 w-px bg-[#214E34]/50 sm:block" />
-              <span className="text-[10px]">Modern Indian High Jewellery</span>
+              <span className="text-[10px]">Fine Jewellery for Your Story</span>
             </div>
-            <p className="text-[10px]">© {new Date().getFullYear()} Miraya Diamonds Pvt Ltd. All rights reserved.</p>
+            <p className="text-[10px]">© {new Date().getFullYear()} Miraya Diamonds. All rights reserved.</p>
           </div>
         </Container>
       </footer>

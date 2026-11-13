@@ -55,7 +55,7 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
         <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-[#d5e5d6] text-[#214E34]"><Sparkles size={13} /></span>
         <div>
           <h2 id="product-enquiry-title" className="font-[family-name:var(--font-cormorant-garamond)] text-[23px] font-semibold leading-tight text-[#253c2e]">Enquire About This Product</h2>
-          <p className="mt-1 text-xs leading-[1.5] text-[#607565]">Our experts will get back to you within 24 hours with details, pricing and customisation options.</p>
+          <p className="mt-1 text-xs leading-[1.5] text-[#607565]">Ask our team about availability, pricing, diamond details and customisation options.</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
               <input name="name" autoComplete="name" required maxLength={120} placeholder="Enter your name" className={fieldClass} />
             </label>
             <label className={labelClass}>Mobile number <span className="text-[#ba493a]">*</span>
-              <input name="phone" type="tel" autoComplete="tel" required maxLength={24} pattern={String.raw`[+\d\s\(\)\-]{10,24}`} title="Enter a mobile number with 10 to 15 digits, including country code if needed." placeholder="+91 98765 43210" className={fieldClass} />
+              <input name="phone" type="tel" autoComplete="tel" required maxLength={24} pattern={String.raw`[+\d\s\(\)\-]{10,24}`} title="Enter a mobile number with 10 to 15 digits, including country code if needed." placeholder="Your mobile number" className={fieldClass} />
             </label>
           </div>
           <label className={labelClass}>Email (optional)

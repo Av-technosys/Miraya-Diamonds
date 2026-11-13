@@ -34,7 +34,7 @@ export function CustomizeContactSection() {
           {/* Left Column: Information */}
           <div className="flex flex-col">
             <span className="font-[family-name:var(--font-montserrat)] text-[11px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[12px]">
-              LET&apos;S CREATE SOMETHING MEMORIAL
+              LET&apos;S CREATE SOMETHING MEANINGFUL
             </span>
 
             <h2 className="mt-4 font-serif text-[36px] font-bold leading-[1.1] text-[#252525] sm:mt-5 sm:text-[44px] lg:text-[50px]">
@@ -46,7 +46,7 @@ export function CustomizeContactSection() {
             <p className="mt-5 font-sans text-[14px] leading-[1.7] text-[#555555] sm:text-[15px]">
               Every meaningful piece begins with a vision. Our jewellery
               specialists are here to help you explore designs, discover the
-              perfect diamond, and create a ring that reflects your personal style.
+              right diamond, and create jewellery that reflects your personal style.
               From choosing the finest details to bringing your custom creation to
               life, we&apos;ll make every step feel effortless.
             </p>
@@ -54,10 +54,9 @@ export function CustomizeContactSection() {
             <div className="mt-8 border-t border-[#EAE6E1] pt-6 font-sans text-[12px] leading-[1.65] text-[#78716C] sm:text-[13px]">
               <p>
                 <strong className="font-semibold text-[#373534]">
-                  Our team is available Monday to Saturday, 11:00 AM – 8:00 PM.
+                  Contact our team to discuss your design and arrange a convenient time.
                 </strong>{" "}
-                You can expect a response within 24–48 business hours. Response
-                times may vary on Sundays and public holidays.
+                Response times may vary. For a time-sensitive enquiry, please call us.
               </p>
             </div>
           </div>
@@ -68,11 +67,11 @@ export function CustomizeContactSection() {
               <div className="flex min-h-[460px] flex-col items-center justify-center text-center">
                 <CheckCircle2 className="size-14 text-[#214E34]" />
                 <h3 className="mt-4 font-serif text-[28px] font-bold text-[#1C1B1B]">
-                  Thank You!
+                  Ready to Discuss Your Design?
                 </h3>
                 <p className="mt-2 max-w-[340px] font-sans text-sm text-[#666666]">
-                  We have received your custom enquiry. Our bespoke jewellery
-                  concierge will get back to you shortly.
+                  Please send your design brief to miraya.diamond23@gmail.com
+                  or call +91 9869698984 to discuss your enquiry.
                 </p>
                 <button
                   type="button"
@@ -82,17 +81,17 @@ export function CustomizeContactSection() {
                   }}
                   className="mt-6 rounded-full bg-[#214E34] px-6 py-2.5 text-xs font-semibold text-white transition hover:bg-[#183d28]"
                 >
-                  Send another message
+                  Edit your design brief
                 </button>
               </div>
             ) : (
               <>
                 <div className="mb-6 text-center sm:mb-8">
                   <h3 className="font-serif text-[28px] font-bold leading-tight text-[#1C1B1B] sm:text-[32px]">
-                    Contact us
+                    Prepare Your Design Brief
                   </h3>
                   <p className="mt-1.5 font-sans text-[13px] text-[#757575]">
-                    Leave your message and we&apos;ll get back to you shortly.
+                    Use these fields to organise your ideas, then contact our team. This form does not send a message or upload your reference file.
                   </p>
                 </div>
 
@@ -154,7 +153,7 @@ export function CustomizeContactSection() {
                         className="h-12 w-full cursor-pointer appearance-none rounded-xl border border-[#E2E8F0] bg-white px-4 pr-9 text-sm text-[#475569] outline-none transition focus:border-[#214E34] focus:ring-1 focus:ring-[#214E34]"
                       >
                         <option value="" disabled>
-                          Jewellary Type
+                          Jewellery Type
                         </option>
                         <option value="Solitaire Engagement Ring">
                           Solitaire Engagement Ring
@@ -182,7 +181,7 @@ export function CustomizeContactSection() {
                         className="h-12 w-full cursor-pointer appearance-none rounded-xl border border-[#E2E8F0] bg-white px-4 pr-9 text-sm text-[#475569] outline-none transition focus:border-[#214E34] focus:ring-1 focus:ring-[#214E34]"
                       >
                         <option value="" disabled>
-                          Select Your Approx Budget
+                          Select Your Approximate Budget
                         </option>
                         <option value="Under ₹50,000">Under ₹50,000</option>
                         <option value="₹50,000 – ₹1,00,000">
@@ -252,10 +251,10 @@ export function CustomizeContactSection() {
                         <>
                           <Upload size={22} className="text-[#333333]" strokeWidth={1.8} />
                           <p className="mt-2 font-sans text-xs font-semibold text-[#333333]">
-                            Choose file or drag here
+                            Choose a file or drag it here
                           </p>
                           <p className="mt-1 font-sans text-[10px] text-[#94A3B8] sm:text-[11px]">
-                            Supported format: JPG, JPEG, PNG, GIF, SVG.
+                            Supported formats: JPG, JPEG, PNG, GIF, SVG.
                           </p>
                         </>
                       )}
@@ -279,7 +278,7 @@ export function CustomizeContactSection() {
                       type="submit"
                       className="h-12 w-full rounded-xl bg-[#264E36] text-sm font-semibold text-white shadow-sm transition hover:bg-[#1E3F2B] active:scale-[0.99]"
                     >
-                      Submit
+                      View Contact Details
                     </button>
                   </div>
                 </form>

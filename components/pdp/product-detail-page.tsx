@@ -22,7 +22,6 @@ import {
   Share2,
   ShieldCheck,
   MessageCircle,
-  Star,
   Truck,
   Video,
   X,
@@ -39,12 +38,12 @@ const green = "#214E34";
 const defaultMetalOptions = [
   { name: "Rose Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E4A494_0%,#F4C5B8_48%,#E3A393_100%)]" },
   { name: "Yellow Gold", detail: "18KT", tone: "bg-[linear-gradient(135deg,#E5C158_0%,#FDE599_48%,#D8B042_100%)]" },
-  { name: "Platinum", detail: "950 Pure", tone: "bg-[linear-gradient(135deg,#D6D8DC_0%,#F1F3F5_48%,#B0B4B9_100%)]" },
+  { name: "Platinum", detail: "950 Platinum", tone: "bg-[linear-gradient(135deg,#D6D8DC_0%,#F1F3F5_48%,#B0B4B9_100%)]" },
 ];
 
 const defaultQualities = [
-  { name: "SI • IJ", detail: "Slightly Included, Warm Sparkle" },
-  { name: "VVS • EF", detail: "Very Very Slight, Colorless White" },
+  { name: "SI • IJ", detail: "Slightly Included, I–J Colour" },
+  { name: "VVS • EF", detail: "Very Very Slightly Included, E–F Colour" },
 ];
 
 function saveBagSelection(selection: Record<string, string>) {
@@ -110,8 +109,8 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
   const [liked, setLiked] = useState(false);
   const [metal, setMetal] = useState(metalOptions[0]?.name || "Rose Gold");
   const [quality, setQuality] = useState(qualities[1]?.name || qualities[0]?.name || "VVS • EF");
-  const [carat, setCarat] = useState("18K");
-  const [ringSize, setRingSize] = useState("12");
+  const [carat, setCarat] = useState(product.goldPurities?.[0] || "18KT");
+  const [ringSize, setRingSize] = useState(product.sizes?.[0] || "12");
   const [engraving, setEngraving] = useState(false);
   const [engravingText, setEngravingText] = useState("");
   const [pincode, setPincode] = useState("");
@@ -153,7 +152,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
   const selectedOptions = [
     metal,
     quality,
-    `${carat} Carat`,
+    `Metal purity: ${carat}`,
     ringSize === "Bespoke Size" ? ringSize : `Size ${ringSize}`,
     ...(engraving ? [`Engraving: ${engravingText.trim() || "Requested"}`] : []),
   ];
@@ -163,7 +162,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
 
   function verifyPincode(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setDeliveryMessage(/^\d{6}$/.test(pincode) ? `Pincode ${pincode} entered. Delivery and COD availability will be confirmed by our team.` : "Enter a valid 6-digit Indian pincode.");
+    setDeliveryMessage(/^\d{6}$/.test(pincode) ? `Pincode ${pincode} has the correct format. Contact our team to confirm delivery availability.` : "Enter a valid 6-digit Indian pincode.");
   }
 
   return (
@@ -207,13 +206,13 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
               </div>
               <div className="absolute bottom-4 left-4 right-4 hidden flex-wrap items-center gap-2 sm:left-5 sm:right-5 sm:flex">
                 <button type="button" onClick={() => setInfoDialog("ar")} className="flex items-center gap-1.5 bg-white px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.04em]">
-                  <Camera size={14} color={green} /> Live AR Try-On
+                  <Camera size={14} color={green} /> View Ring Illustration
                 </button>
                 <button type="button" onClick={() => setZoomOpen(true)} className="flex items-center gap-1.5 bg-white px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.04em]">
-                  <Video size={14} color={green} /> 360° View
+                  <Video size={14} color={green} /> Browse Product Images
                 </button>
                 <button type="button" onClick={() => setZoomOpen(true)} className="ml-auto flex items-center gap-1.5 bg-[#4b4037]/90 px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.04em] text-white">
-                  <ZoomIn size={14} /> Hover To Zoom
+                  <ZoomIn size={14} /> Click to Zoom
                 </button>
               </div>
             </div>
@@ -221,9 +220,9 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
 
           <div className="mt-5 flex gap-2 overflow-x-auto pb-1 sm:mt-8 sm:grid sm:grid-cols-3 sm:gap-3 sm:overflow-visible sm:pb-0">
             {[
-              [Gem, "100% Certified", "IGI & GIA Authenticated"],
-              [BadgeCheck, "BIS Hallmarked", "750 (18K) Gold Purity"],
-              [ShieldCheck, "Insured Transit", "Armored Doorstep Delivery"],
+              [Gem, "Diamond Details", "Ask About Origin & Grading"],
+              [BadgeCheck, "Metal Details", "Confirm Purity & Hallmark"],
+              [ShieldCheck, "Delivery Guidance", "Confirm Arrangements With Us"],
             ].map(([Icon, title, text]) => (
               <div key={String(title)} className="flex min-w-[205px] items-center gap-2 rounded-md bg-[#F7FFF7] px-3 py-3 text-[#214E34] sm:min-w-0">
                 <Icon size={21} strokeWidth={1.7} className="shrink-0" />
@@ -245,25 +244,21 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
             {product.name}
           </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
-            <span className="flex text-[#E2BD60]">{Array.from({ length: 5 }).map((_, i) => <Star key={i} size={15} fill="currentColor" />)}</span>
-            <span className="text-[#353333]">{product.rating}</span>
-            <span className="font-bold text-[#214E34]">{product.reviews}</span>
-          </div>
+
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <p className="text-[27px] font-semibold text-[#214E34]">{product.price}</p>
-            <p className="text-sm text-neutral-500 line-through">{product.oldPrice}</p>
-            <span className="rounded-full bg-[#F7FFF7] px-3 py-1 text-[10px] font-semibold text-[#214E34]">{product.discount}</span>
+            {product.discount && <p className="text-sm text-neutral-500 line-through">{product.oldPrice}</p>}
+            {product.discount && <span className="rounded-full bg-[#F7FFF7] px-3 py-1 text-[10px] font-semibold text-[#214E34]">{product.discount}</span>}
           </div>
-          <p className="mt-1 text-xs text-neutral-600">Price inclusive of all taxes. Free transit insured shipping across India.</p>
+          <p className="mt-1 text-xs text-neutral-600">Confirm the final price, applicable taxes and delivery charges with our team.</p>
           <p className="mt-3 flex items-center gap-2 text-xs text-neutral-700"><LockKeyhole size={13} color={green} /> {product.emi}</p>
 
           <div className="mt-7 flex items-center justify-between gap-3 text-[#214E34]">
             <p className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[#4a4a4a]">
               Selected Metal: <b className="text-[#214E34]">{metal === "Platinum" ? "Platinum" : `${carat} ${metal}`}</b>
             </p>
-            <p className="shrink-0 text-[11px]">Hallmarked 750</p>
+            <p className="shrink-0 text-[11px]">Confirm metal purity</p>
           </div>
           <div className="mt-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
             {metalOptions.map((option: any) => (
@@ -279,7 +274,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
 
           <div className="mt-5 flex items-center justify-between gap-3">
             <p className="text-[11px] font-semibold uppercase tracking-[0.04em] text-[#4a4a4a]">Diamond Quality Tier</p>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#214E34]">Natural Solitaire</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#214E34]">Confirm Available Options</p>
           </div>
           <div className="mt-2 flex gap-2 overflow-x-auto pb-1 sm:grid sm:grid-cols-2 sm:overflow-visible sm:pb-0">
             {qualities.map((option: any, index: number) => (
@@ -294,40 +289,40 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
             ))}
           </div>
 
-          <Selector title={`Carat: ${carat}`} options={["14K", "16K", "18K", "20K", "22K"]} selected={carat} onSelect={setCarat} onGuide={() => setInfoDialog("guide")} />
-          <Selector title={`Indian Ring Size: ${ringSize}`} options={["10", "12", "14", "16", "18", "Bespoke Size"]} selected={ringSize} onSelect={setRingSize} onGuide={() => setInfoDialog("guide")} />
+          <Selector title={`Gold Purity: ${carat}`} options={product.goldPurities?.length ? product.goldPurities : ["18KT"]} selected={carat} onSelect={setCarat} onGuide={() => setInfoDialog("guide")} />
+          <Selector title={`Size Preference: ${ringSize}`} options={product.sizes?.length ? product.sizes : ["10", "12", "14", "16", "18", "Bespoke Size"]} selected={ringSize} onSelect={setRingSize} onGuide={() => setInfoDialog("guide")} />
 
           <label className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase text-neutral-600">
             <input type="checkbox" checked={engraving} onChange={(event) => setEngraving(event.target.checked)} className="size-3.5 accent-[#214E34]" />
-            <Pencil size={13} color={green} /> Add Free Laser Atelier Engraving
+            <Pencil size={13} color={green} /> Request Engraving Details
           </label>
           {engraving && <input type="text" value={engravingText} onChange={(event) => setEngravingText(event.target.value)} maxLength={24} aria-label="Engraving text" placeholder="Your engraving, up to 24 characters" className="mt-2 h-9 w-full rounded-md border border-[#214E34] px-3 text-xs outline-none focus:ring-1 focus:ring-[#214E34]" />}
 
           <div className="mt-6 grid gap-2 min-[400px]:grid-cols-2">
             <CustomizationDialog />
             {whatsappNumber ? <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className={whatsappClassName}>
-              <MessageCircle size={15} className="shrink-0" /> Order via Whatsapp
-            </a> : <button type="button" disabled title="WhatsApp ordering will be available soon" className={whatsappClassName}>
-              <MessageCircle size={15} className="shrink-0" /> Order via Whatsapp
+              <MessageCircle size={15} className="shrink-0" /> Enquire via WhatsApp
+            </a> : <button type="button" disabled title="WhatsApp enquiries are currently unavailable" className={whatsappClassName}>
+              <MessageCircle size={15} className="shrink-0" /> Enquire via WhatsApp
             </button>}
           </div>
           <ProductEnquiryForm sku={product.sku} selection={selectedOptions} options={{ metalColour: metal, diamondGrade: quality, metalPurity: carat, size: ringSize, engravingRequested: engraving, engravingText }} />
           <Link href="/contact#consultation-booking" className="mt-2 flex h-8 w-full items-center justify-center gap-2 rounded-md bg-[#F7FFF7] text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]">
-            <Video size={14} color={green} /> Book 1-On-1 Virtual Atelier Consultation
+            <Video size={14} color={green} /> Discuss a Jewellery Consultation
           </Link>
           {feedback && <p role="status" className="mt-2 text-xs text-[#214E34]">{feedback}</p>}
 
           <div className="mt-3 rounded-md bg-[#F7FFF7] p-3">
-            <p className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]"><Truck size={15} color={green} /> Estimated Delivery & COD Availability</p>
+            <p className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]"><Truck size={15} color={green} /> Delivery Enquiry</p>
             <form onSubmit={verifyPincode} className="flex gap-2 rounded-full bg-white p-1.5">
               <input value={pincode} onChange={(event) => setPincode(event.target.value.replace(/\D/g, ""))} className="min-w-0 flex-1 px-3 text-xs outline-none" aria-label="6-digit pincode" placeholder="Enter 6-digit Pincode" inputMode="numeric" maxLength={6} />
-              <button type="submit" className="rounded-full bg-[#214E34] px-5 text-xs font-semibold text-white">Verify</button>
+              <button type="submit" className="rounded-full bg-[#214E34] px-5 text-xs font-semibold text-white">Check Format</button>
             </form>
-            <p role="status" className="mt-3 flex gap-2 text-[10px] leading-relaxed text-[#214E34]"><Check size={13} className="shrink-0" /> {deliveryMessage || "Enter a pincode for delivery and COD confirmation."}</p>
+            <p role="status" className="mt-3 flex gap-2 text-[10px] leading-relaxed text-[#214E34]"><Check size={13} className="shrink-0" /> {deliveryMessage || "Enter your pincode, then contact us to confirm delivery options."}</p>
           </div>
 
           <div className="mt-3 grid grid-cols-3 gap-1 rounded-md bg-[#F7FFF7] px-1 py-3 text-center">
-            {["Diamond Wt|0.65 Carat", "Gross Wt|4.82 Grams", "Guarantee|Lifetime Buyback"].map((item) => {
+            {[`Diamond Weight|${product.totalDiamondWeight ? `${product.totalDiamondWeight} ct` : "Confirm with team"}`, `Gross Weight|${product.grossWeight ? `${product.grossWeight} g` : "Confirm with team"}`, "Care|Ask Our Team"].map((item) => {
               const [label, value] = item.split("|");
               return <div key={label}><p className="text-[9px] font-semibold uppercase text-neutral-500">{label}</p><p className="mt-1 text-xs font-semibold text-[#214E34]">{value}</p></div>;
             })}
@@ -349,12 +344,12 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
     {infoDialog === "ar" && (
       <InfoDialog title="View on hand" onClose={() => setInfoDialog(null)}>
         <Image src="/PDP/product2.jpg" alt="Bhvita ring worn on a hand" width={512} height={512} className="mb-3 aspect-square w-full rounded-md object-cover" />
-        Live camera try-on is not available for this product yet. This image shows the ring worn on a hand.
+        This is an illustrative ring image. It does not show a live try-on of your selected product.
       </InfoDialog>
     )}
     {infoDialog === "guide" && (
-      <InfoDialog title="Ring size guidance" onClose={() => setInfoDialog(null)} href="/contact#consultation-booking" action="Ask the atelier">
-        <p>Choose your usual Indian ring size if you know it. For a precise fit or bespoke size, our atelier can help you measure before ordering.</p>
+      <InfoDialog title="Jewellery sizing guidance" onClose={() => setInfoDialog(null)} href="/contact#consultation-booking" action="Ask our team">
+        <p>Sizing varies by jewellery type and design. Contact our team to confirm measurements, fit and available sizes before ordering.</p>
         <Image src="/PDP/Prod_desc_img.png" alt="Ring profile dimensions" width={577} height={576} className="mx-auto mt-2 w-full max-w-[250px]" />
       </InfoDialog>
     )}
@@ -398,9 +393,9 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
     <section data-product-integrity className="bg-white py-9 sm:py-14">
       <Container className="max-sm:px-[10px]">
         <div className="mx-auto mb-7 max-w-xl text-center">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#214E34]">Absolute Integrity</p>
-          <h2 className="mt-2 font-[family-name:var(--font-cormorant-garamond)] text-[34px] font-semibold leading-none text-[#201f1f] sm:text-[38px]">Unveiling the Craft & Purity</h2>
-          <p className="mt-2 text-xs leading-5 text-neutral-600">Every gram of gold accounted for, every facet certified by the world&apos;s strictest laboratories.</p>
+          <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#214E34]">Know Your Jewellery</p>
+          <h2 className="mt-2 font-[family-name:var(--font-cormorant-garamond)] text-[34px] font-semibold leading-none text-[#201f1f] sm:text-[38px]">Explore the Craft & Details</h2>
+          <p className="mt-2 text-xs leading-5 text-neutral-600">Review the specifications and ask our team to confirm the details for your selected piece.</p>
         </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
@@ -415,10 +410,10 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
 
           <div className="flex min-h-[440px] flex-col items-center rounded-xl border border-[#eadedd] bg-white px-5 pb-7 pt-5 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
             <div className="flex w-full flex-1 items-center justify-center">
-              <Image src="/PDP/Prod_desc_img.png" alt="Ring dimension diagram" width={577} height={576} className="h-auto w-full max-w-[350px]" />
+              <Image src="/PDP/Prod_desc_img.png" alt="Illustrative ring dimension diagram" width={577} height={576} className="h-auto w-full max-w-[350px]" />
             </div>
             <button type="button" onClick={() => setSizeOpen(true)} className="flex h-10 w-full max-w-[290px] items-center justify-center gap-2 rounded-full bg-[#214E34] text-xs font-semibold text-white">
-              <Camera size={14} /> View Size on Hand
+              <Camera size={14} /> View Size Illustration
             </button>
           </div>
 
@@ -426,17 +421,17 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
             <div className="flex gap-4">
               <div className="grid size-14 shrink-0 place-items-center rounded border border-neutral-200 text-[#214E34]"><FileCheck size={23} /></div>
               <div>
-                <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-[21px] font-semibold leading-tight text-[#201f1f]">IGI Certified Natural Diamond</h3>
-                <p className="mt-2 text-xs leading-5 text-neutral-600">Comes with an international certificate ensuring authenticity, quality and peace of mind.</p>
+                <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-[21px] font-semibold leading-tight text-[#201f1f]">Diamond Documentation</h3>
+                <p className="mt-2 text-xs leading-5 text-neutral-600">Ask our team about the grading report and origin of the diamond in your selected piece.</p>
               </div>
             </div>
-            <button type="button" onClick={() => setCertificateOpen(true)} className="mt-4 h-10 w-full rounded-full border border-[#214E34] text-xs font-semibold text-[#214E34]">View Certificate</button>
+            <button type="button" onClick={() => setCertificateOpen(true)} className="mt-4 h-10 w-full rounded-full border border-[#214E34] text-xs font-semibold text-[#214E34]">Ask About Documentation</button>
             <div className="mt-6 grid grid-cols-2 gap-x-2 gap-y-3 border-t border-[#eadedd] pt-5 lg:mt-auto lg:grid-cols-1 lg:gap-y-4">
               {[
-                [Gem, "100% Natural Diamonds"],
-                [Leaf, "BIS Hallmarked Gold"],
-                [Box, "Lifetime Exchange"],
-                [Truck, "Free & Insured Delivery"],
+                [Gem, "Confirm Diamond Origin"],
+                [Leaf, "Review Metal Details"],
+                [Box, "Discuss Care Options"],
+                [Truck, "Confirm Delivery Arrangements"],
               ].map(([Icon, text]) => (
                 <p key={String(text)} className="flex min-w-0 items-center gap-2 text-[10px] font-medium sm:text-xs"><span className="grid size-6 shrink-0 place-items-center rounded-full bg-pink-50 text-[#214E34] sm:size-7"><Icon size={13} /></span>{text as string}</p>
               ))}
@@ -444,41 +439,27 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 sm:mt-9 sm:gap-y-4">
-          <h2 className="w-full font-[family-name:var(--font-cormorant-garamond)] text-[30px] font-semibold leading-none text-[#201f1f] sm:w-auto sm:text-[34px]">Customer Stories</h2>
-          <p className="text-[11px] text-neutral-500 sm:text-xs"><b className="text-[#201f1f]">4.8 out of 5</b> <span className="mx-1 text-[#E2BD60] sm:mx-2">★★★★★</span> (148 Reviews)</p>
-          <Link href="/testimonials" className="ml-auto text-[11px] font-semibold text-[#A42D49] sm:text-xs">View All <ArrowRight size={13} className="inline" /></Link>
-        </div>
-        <div className="relative mt-4 flex gap-3 overflow-x-auto pb-3 md:mt-5 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible md:pb-0">
-          {["The ring is even more beautiful in person. The craftsmanship is exceptional!", "Absolutely loved it! Elegant, timeless and perfect for my engagement.", "Such fine detailing. The filigree work makes it truly special."].map((story, index) => (
-            <article key={story} className="min-w-[260px] rounded-lg border border-[#eadedd] bg-white p-4 shadow-sm md:min-w-0 md:p-6">
-              <p className="mb-3 text-sm text-[#E2BD60]">★★★★★</p>
-              <p className="min-h-12 text-xs leading-5 text-[#353333]">“{story}”</p>
-              <div className="mt-5 flex items-center gap-2">
-                <span className="grid size-8 place-items-center rounded-full bg-pink-50 text-xs font-bold text-[#214E34]">{["A", "R", "S"][index]}</span>
-                <b className="text-xs">{["Aditi S.", "Riya M.", "Sneha K."][index]}</b>
-                <Check size={13} className="text-emerald-600" />
-                <span className="text-[10px] text-neutral-500">Verified Purchase</span>
-              </div>
-            </article>
-          ))}
+        <div className="mt-8 rounded-xl border border-[#eadedd] bg-[#FCF9F8] p-6 sm:mt-9">
+          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[30px] font-semibold text-[#201f1f]">Make an Informed Choice</h2>
+          <p className="mt-3 text-xs leading-5 text-neutral-600">Before ordering, confirm diamond origin, metal purity, sizing, pricing and the care terms for your selected piece with our team.</p>
+          <Link href="/contact" className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[#214E34]">Talk to Miraya Diamonds <ArrowRight size={13} /></Link>
         </div>
       </Container>
       {sizeOpen && (
-        <div role="dialog" aria-modal="true" aria-label="Ring size on hand" className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" onClick={() => setSizeOpen(false)}>
+        <div role="dialog" aria-modal="true" aria-label="Illustrative ring size" className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4" onClick={() => setSizeOpen(false)}>
           <div className="relative grid max-h-[calc(100dvh-2rem)] w-full max-w-3xl gap-4 overflow-y-auto rounded-lg bg-white p-5 sm:grid-cols-2" onClick={(event) => event.stopPropagation()}>
             <button type="button" autoFocus aria-label="Close size view" onClick={() => setSizeOpen(false)} className="absolute right-3 top-3 z-10 grid size-8 place-items-center rounded-full bg-white text-2xl text-[#214E34]">×</button>
             <Image src="/PDP/product2.jpg" alt="Bhvita ring worn on a hand" width={512} height={512} className="aspect-square w-full rounded-md object-cover" />
             <div className="flex flex-col items-center justify-center">
               <Image src="/PDP/Prod_desc_img.png" alt="Ring dimensions: 6.2 mm wide and 5.1 mm high" width={577} height={576} className="w-full max-w-[350px]" />
-              <p className="text-xs text-[#214E34]">6.2 mm wide · 5.1 mm high</p>
+              <p className="text-xs text-[#214E34]">Illustrative size view. Confirm dimensions for your selected piece.</p>
             </div>
           </div>
         </div>
       )}
       {certificateOpen && (
-        <InfoDialog title="Diamond certificate" onClose={() => setCertificateOpen(false)} href="/contact#consultation-booking" action="Request certificate details">
-          The certificate image for SKU {product.sku} has not been added to this product yet. Contact the atelier for the verified document before ordering.
+        <InfoDialog title="Diamond documentation" onClose={() => setCertificateOpen(false)} href="/contact#consultation-booking" action="Request documentation">
+          Contact our team for the grading documentation available for SKU {product.sku} and confirm the diamond origin before ordering.
         </InfoDialog>
       )}
     </section>
@@ -504,10 +485,10 @@ function LegacyAndSuite() {
         <Container className="max-sm:px-[10px]">
           <div className="mb-5 flex items-end justify-between gap-2 sm:mb-6 sm:gap-4">
             <div className="min-w-0">
-              <p className="text-[9px] font-semibold uppercase tracking-[0.17em] text-[#A42D49] sm:text-[10px] sm:tracking-[0.25em] sm:text-[#214E34]">Harmonious Ensembles</p>
-              <h2 className="mt-2 font-[family-name:var(--font-cormorant-garamond)] text-[23px] font-semibold leading-none sm:text-[30px]">Complete the Bhvita Suite</h2>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.17em] text-[#A42D49] sm:text-[10px] sm:tracking-[0.25em] sm:text-[#214E34]">Design Inspiration</p>
+              <h2 className="mt-2 font-[family-name:var(--font-cormorant-garamond)] text-[23px] font-semibold leading-none sm:text-[30px]">Explore More Designs</h2>
             </div>
-            <Link href="#curated-sets" className="flex shrink-0 items-center gap-1 text-[9px] font-semibold text-[#A42D49] sm:text-[10px] sm:uppercase sm:tracking-[0.08em] sm:text-[#214E34]">Explore All <span className="hidden sm:inline">Curated </span>Sets <ArrowRight size={13} className="text-[#A42D49]" /></Link>
+            <Link href="/collection" className="flex shrink-0 items-center gap-1 text-[9px] font-semibold text-[#A42D49] sm:text-[10px] sm:uppercase sm:tracking-[0.08em] sm:text-[#214E34]">Explore More <span className="hidden sm:inline">Jewellery</span> <ArrowRight size={13} className="text-[#A42D49]" /></Link>
           </div>
           <div id="curated-sets" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
             {suiteProducts.map((item, index) => (
@@ -516,7 +497,7 @@ function LegacyAndSuite() {
                   <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
                 </div>
                 <div className="px-1 pb-1 pt-2">
-                  <p className="text-[11px] font-semibold leading-tight">₹38,255 <span className="ml-1 text-[9px] font-normal text-neutral-400 line-through">₹40,255</span></p>
+                  <p className="text-[11px] font-semibold leading-tight">Enquire for Pricing</p>
                   <p className="mt-0.5 truncate text-[10px] leading-tight text-neutral-600" title={item.name}>{item.name}</p>
                   <div className="mt-3 flex gap-1">
                     <button type="button" onClick={() => {
@@ -542,7 +523,15 @@ function LegacyAndSuite() {
 }
 
 export function ProductDetailPage({ initialProduct }: { initialProduct?: any }) {
-  const currentProduct = initialProduct ? { ...defaultProduct, ...initialProduct } : defaultProduct;
+  const currentProduct = initialProduct ? {
+    ...defaultProduct,
+    ...initialProduct,
+    metalOptions: (initialProduct.goldColours || []).map((colour: string) => ({
+      name: `${colour.charAt(0).toUpperCase() + colour.slice(1)} Gold`,
+      detail: (initialProduct.goldPurities || []).join(" / "),
+    })),
+    qualities: (initialProduct.diamondGrades || []).map((grade: string) => ({ name: grade, detail: "Confirm grading details with our team" })),
+  } : defaultProduct;
   const pageRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

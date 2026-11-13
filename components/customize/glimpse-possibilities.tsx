@@ -152,8 +152,8 @@ export function GlimpsePossibilities() {
           A Glimpse of Possibilities
         </h2>
         <p className="mt-3 font-sans text-[13px] leading-relaxed text-[#757575] sm:text-[14px]">
-          Explore some of our recent custom designs, created with love and
-          precision for our customers.
+          Explore design ideas, settings and silhouettes to inspire your
+          own personal piece.
         </p>
       </div>
 

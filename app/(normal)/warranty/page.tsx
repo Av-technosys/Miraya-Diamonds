@@ -12,47 +12,47 @@ const POLICY_SECTIONS = [
   {
     id: 1,
     title: "Warranty Coverage",
-    content: "All Miraya Diamonds jewellery comes with a comprehensive warranty that covers manufacturing defects in materials and craftsmanship. This includes issues such as loose settings, clasp malfunctions, rhodium plating wear and structural defects that occur under normal usage conditions."
+    content: "Warranty coverage depends on the piece and the terms supplied with your purchase. Please ask our team to confirm any coverage before ordering."
   },
   {
     id: 2,
     title: "Warranty Duration",
-    content: "Our standard warranty is valid for 1 year from the date of purchase. Solitaire and diamond jewellery above ₹1,00,000 comes with a 2-year extended warranty. The warranty period begins from the date mentioned on your invoice."
+    content: "Please refer to your invoice and any written warranty terms for the applicable duration. Contact us if the duration is not specified."
   },
   {
     id: 3,
     title: "What Is Covered",
-    content: "Manufacturing defects in prong settings, clasps and closures. Loose or missing stones due to faulty settings (not impact damage). Tarnishing or discolouration under normal wear conditions. Rhodium re-plating for white gold pieces (once per year)."
+    content: "Our team can assess concerns about a setting, clasp, stone or finish and explain whether the issue falls within the terms provided with your purchase."
   },
   {
     id: 4,
     title: "What Is Not Covered",
-    content: "Damage caused by accidents, misuse, negligence or improper storage. Normal wear and tear including minor scratches on metal surfaces. Damage from exposure to chemicals, perfumes, chlorine or harsh cleaning agents. Loss or theft of the jewellery piece. Unauthorised repairs or modifications by third parties."
+    content: "Accidental damage, normal wear, chemical exposure and repairs by another jeweller may affect service eligibility. Please contact us for an assessment of your specific concern."
   },
   {
     id: 5,
     title: "How to Claim Warranty",
-    content: "To initiate a warranty claim, contact our support team with your order number, original invoice and photographs of the issue. Our team will assess the claim within 3–5 business days and guide you through the repair or replacement process."
+    content: "To request an assessment, share your purchase details, a description of the issue and clear photographs. Our team will explain the next steps."
   },
   {
     id: 6,
     title: "Repair & Replacement",
-    content: "If your warranty claim is approved, we will repair or replace the defective piece at no additional cost. Repairs typically take 10–15 business days. If the exact piece is unavailable for replacement, we will offer a piece of equal or higher value."
+    content: "Repair options, charges and estimated completion times depend on the piece and the assessment. Please confirm the arrangements before sending jewellery to us."
   },
   {
     id: 7,
-    title: "Lifetime Services",
-    content: "Beyond the warranty period, Miraya Diamonds offers complimentary lifetime services including professional ultrasonic cleaning, prong tightening inspection and polishing. These services are available at any authorised Miraya Diamonds service centre."
+    title: "Jewellery Care",
+    content: "Ask our team about cleaning, polishing, setting checks and other care options. Availability and charges depend on the piece and the service requested."
   },
   {
     id: 8,
     title: "Diamond Certification",
-    content: "All Miraya Diamonds solitaires are IGI or GIA certified with unique laser inscriptions for authenticity. Your diamond certificate is a permanent record of your stone's characteristics and serves as proof of quality and authenticity."
+    content: "Ask for the grading documentation available for your selected diamond. A report should identify the stone and its origin; documentation varies by diamond and laboratory."
   },
   {
     id: 9,
     title: "Contact Us",
-    content: "If you have any questions or concerns about our Warranty Policy, please contact us at support@mirayadiamonds.com.",
+    content: "For questions about jewellery care or warranty terms, contact Miraya Diamonds at miraya.diamond23@gmail.com.",
     isContact: true
   }
 ];
@@ -65,7 +65,7 @@ const NAV_SECTIONS = [
   { id: "what-is-not-covered", label: "4. What Is Not Covered", desktopLabel: "What Is Not Covered" },
   { id: "how-to-claim-warranty", label: "5. How to Claim Warranty", desktopLabel: "How to Claim Warranty" },
   { id: "repair-&-replacement", label: "6. Repair & Replacement", desktopLabel: "Repair & Replacement" },
-  { id: "lifetime-services", label: "7. Lifetime Services", desktopLabel: "Lifetime Services" },
+  { id: "jewellery-care", label: "7. Jewellery Care", desktopLabel: "Jewellery Care" },
   { id: "diamond-certification", label: "8. Diamond Certification", desktopLabel: "Diamond Certification" },
   { id: "contact-us", label: "9. Contact Us", desktopLabel: "Contact Us" }
 ];
@@ -120,12 +120,12 @@ function WarrantyContent() {
       <div className="px-3 md:px-[41px] pt-[8px] md:pt-[35px] pb-5 md:pb-[41px]">
         <div className="bg-[#F8F6F5] md:bg-transparent rounded-[6px] md:rounded-none px-[10px] py-[4px] md:px-0 md:py-0 w-fit md:w-auto mb-3 md:mb-[8px]">
           <span className="font-[family-name:var(--font-jakarta)] font-medium text-[12px] leading-[16px] tracking-[0.3px] text-[#757575]">
-            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">01 September 2026</span>
+            Last Updated: <span className="text-[#171717] font-semibold md:font-medium">13 November 2026</span>
           </span>
         </div>
         <div id="introduction" className="pb-6 md:pb-[25px] border-b-[1px] border-[#E8E4E2] scroll-mt-24">
           <p className="font-sans font-normal text-[14px] leading-[22.75px] text-[#6F6A68]">
-            At Miraya Diamonds, every piece of jewellery is crafted with the highest standards of quality and precision. We stand behind the craftsmanship of our products and offer a comprehensive warranty to ensure your complete satisfaction and peace of mind.
+            Find guidance on jewellery care and requesting a service assessment. Warranty coverage, duration and service arrangements must be confirmed for your individual piece.
           </p>
         </div>
 
@@ -147,7 +147,7 @@ function WarrantyContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about our Warranty Policy, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:support@mirayadiamonds.com" className="font-medium text-[#214E34]">support@mirayadiamonds.com</a>.
+                  <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34]">miraya.diamond23@gmail.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -228,8 +228,8 @@ function WarrantySidebar() {
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">support@mirayadiamonds.com</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">We typically reply within 24 hours</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">miraya.diamond23@gmail.com</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Contact us with your enquiry</span>
             </div>
           </div>
 
@@ -238,16 +238,16 @@ function WarrantySidebar() {
               <Image src="/privacy-policy/phone-icon.png" alt="Phone" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 98765 43210</span>
-              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Mon – Sat, 10 AM to 6 PM</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">+91 9869698984</span>
+              <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Jaipur, India</span>
             </div>
           </div>
         </div>
 
-        <button className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
+        <a href="/contact" className="w-full h-[46px] bg-[#FFF4F5] border-[1px] border-[#214E3433] rounded-[50px] flex items-center justify-center gap-[8px] transition-transform hover:scale-[1.02]">
           <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#9E384B]">Contact Us</span>
           <ArrowRight className="w-[14px] h-[14px] text-[#9E384B]" strokeWidth={2} />
-        </button>
+        </a>
       </div>
 
       <div className="w-full order-4 lg:order-none bg-[#FFF4F5] border-[1px] border-[#214E341A] rounded-[16px] py-[21px] px-[21px] flex items-center gap-4">
@@ -259,7 +259,7 @@ function WarrantySidebar() {
         </div>
         <div className="flex flex-col">
           <span className="font-sans font-bold text-[12px] leading-[16px] text-[#171717]">Quality You Can Trust</span>
-          <span className="font-sans font-normal text-[11px] leading-[17.88px] text-[#6F6A68]">Every Miraya piece is backed by our craftsmanship guarantee.</span>
+          <span className="font-sans font-normal text-[11px] leading-[17.88px] text-[#6F6A68]">Ask us about care and service options for your piece.</span>
         </div>
       </div>
     </>

@@ -1,36 +1,12 @@
 "use client";
 
+import { jewelleryFaqs } from "@/lib/jewellery-faqs";
+
 import Image from "next/image";
 import { ChevronDown } from "lucide-react";
 import { Container } from "@/components/common/container";
 
-const faqs = [
-  {
-    question: "What materials are your jewellery pieces made from?",
-    answer:
-      "Our pieces include gold, platinum and certified natural diamonds. The metal and stone details are listed on each product page.",
-  },
-  {
-    question: "How do I choose the right ring/bracelet/necklace size?",
-    answer:
-      "Use the size guide on the product page, or contact our atelier for help with a precise fit.",
-  },
-  {
-    question: "How should I care for and maintain my jewellery?",
-    answer:
-      "Store each piece separately and clean gently with a soft cloth. Avoid harsh chemicals and remove jewellery before strenuous activity.",
-  },
-  {
-    question: "Do you offer returns, exchanges, or refunds?",
-    answer:
-      "Eligibility depends on the piece and its customization. Please read our returns policy before ordering.",
-  },
-  {
-    question: "How long does delivery take, and can I track my order?",
-    answer:
-      "Delivery timing depends on your location and the piece. Our team can confirm an estimate and tracking details for your order.",
-  },
-];
+const faqs = jewelleryFaqs;
 
 export function CustomizeFaq() {
   return (
@@ -51,10 +27,10 @@ export function CustomizeFaq() {
         <div className="min-w-0 md:pt-6 lg:pt-8">
           <div className="mb-7 text-center sm:mb-9">
             <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">
-              Frequently Asked Question
+              Frequently Asked Questions
             </h2>
             <p className="mt-1.5 text-xs text-[#898989] sm:text-sm">
-              Know the answer for your questions
+              Find answers to your jewellery questions.
             </p>
           </div>
 

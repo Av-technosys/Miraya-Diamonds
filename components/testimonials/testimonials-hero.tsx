@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Star, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 export function TestimonialsHero() {
   return (
@@ -47,34 +47,11 @@ export function TestimonialsHero() {
 
               {/* Description */}
               <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#757575] max-w-[553px] mt-[4px] md:mt-0">
-                Real stories. Real moments. Real people. Discover how our jewellery becomes a part of life&apos;s most beautiful chapters.
+                Every piece can hold a personal meaning. Share the moments and memories you celebrate with Miraya Diamonds.
               </p>
             </div>
 
-            {/* Rating Badge */}
-            <div className="flex items-center gap-[8px] md:gap-[13.5px] w-fit border md:border-none border-[#EDE5E1] rounded-[12px] md:rounded-none px-[16px] md:px-0 py-[12px] md:py-0 shadow-sm md:shadow-none bg-white md:bg-transparent mt-[4px] md:mt-0">
-              {/* Rating Number */}
-              <span className="font-sans font-bold text-[18px] md:text-[24px] leading-[22px] md:leading-[27px] text-[#252220]">
-                4.9/5
-              </span>
-
-              {/* 5 Stars */}
-              <div className="flex items-center gap-[2px] md:gap-[4.5px]">
-                {[...Array(5)].map((_, i) => (
-                  <Star
-                    key={i}
-                    className="w-[12px] h-[12px] md:w-[16.1px] md:h-[15.35px] text-[#FFB922] fill-[#FFB922]"
-                    strokeWidth={0}
-                    style={{ borderRadius: "0.5px" }}
-                  />
-                ))}
-              </div>
-
-              {/* Verified Reviews Text */}
-              <span className="font-sans font-normal text-[11px] md:text-[14px] leading-[14px] md:leading-[18px] text-[#7A726E]">
-                from 1,200+ verified reviews
-              </span>
-            </div>
+            <p className="text-sm leading-relaxed text-[#214E34]">A space for experiences shared by our customers.</p>
           </div>
 
           {/* Right Hero Editorial Visual */}

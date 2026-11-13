@@ -22,28 +22,16 @@ export function DiamondEducation() {
 
           <div className="mt-4 space-y-3.5 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
             <p>
-              One Of The Key Differences Between Lab-Grown And Natural Diamonds Is
-              Their Market Price. Lab-Grown Diamonds Are Generally Less Expensive
-              Than Natural Diamonds With Comparable Grading Characteristics. This
-              Price Difference Is Influenced By Production Methods, Manufacturing
-              Capacity, Market Supply And Demand, And Changing Consumer
-              Preferences. Advances In Diamond-Growing Technology Have Also Made
-              Laboratory Production More Accessible.
+              One of the key differences between lab-grown and natural diamonds is their market price. Lab-grown diamonds are generally less expensive than natural diamonds with comparable grading characteristics. This price difference is influenced by production methods, manufacturing capacity, market supply and demand, and changing consumer preferences. Advances in diamond-growing technology have also made laboratory production more accessible.
             </p>
             <p>
-              Natural Diamonds Have A Finite Geological Supply, While Lab-Grown
-              Diamonds Can Be Produced Through Specialised Manufacturing
-              Processes. This Creates Different Market Dynamics That Influence
-              Their Pricing.
+              Natural diamonds have a finite geological supply, while lab-grown diamonds can be produced through specialised manufacturing processes. This creates different market dynamics that influence their pricing.
             </p>
             <p>
-              For Buyers, A Lab-Grown Diamond May Offer Greater Flexibility When
-              Choosing A Preferred Carat Weight, Cut Or Quality Within A Budget.
+              For buyers, a lab-grown diamond may offer greater flexibility when choosing a preferred carat weight, cut or quality within a budget.
             </p>
             <p>
-              The Takeaway: Compare Diamonds By Their Grading Characteristics,
-              Origin And Price To Find The Option That Best Suits Your
-              Priorities.
+              The takeaway: compare diamonds by their grading characteristics, origin and price to find the option that best suits your priorities.
             </p>
           </div>
         </motion.div>
@@ -62,21 +50,10 @@ export function DiamondEducation() {
 
           <div className="mt-4 space-y-3.5 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
             <p>
-              How Do You Know What Makes A Diamond Special? The 4Cs — Cut, Colour,
-              Clarity And Carat Weight — Provide A Recognised Framework For
-              Understanding And Comparing Diamond Quality.
+              How do you know what makes a diamond special? The 4Cs — cut, colour, clarity and carat weight — provide a recognised framework for understanding and comparing diamond quality.
             </p>
             <p>
-              Both Natural And Lab-Grown Diamonds Can Be Assessed Using These
-              Characteristics. Cut Influences How A Diamond Interacts With Light,
-              Colour Describes Its Appearance, Clarity Evaluates Its Internal And
-              External Characteristics, And Carat Weight Measures Its Weight.
-              Independent Gemological Laboratories Can Provide Grading Reports
-              That Help Buyers Understand A Diamond&apos;s Characteristics And
-              Origin. Report Details, Grading Terminology And Assessment Practices
-              May Vary Between Laboratories And Diamond Types. Knowledge Brings
-              Confidence. Understanding A Diamond&apos;s Grading Report Helps You
-              Make A More Informed Choice.
+              Both natural and lab-grown diamonds can be assessed using these characteristics. Cut influences how a diamond interacts with light, colour describes its appearance, clarity evaluates its internal and external characteristics, and carat weight measures its weight. Independent gemological laboratories can provide grading reports that help buyers understand a diamond&apos;s characteristics and origin. Report details, grading terminology and assessment practices may vary between laboratories and diamond types. Knowledge brings confidence. Understanding a diamond&apos;s grading report helps you make a more informed choice.
             </p>
           </div>
         </motion.div>

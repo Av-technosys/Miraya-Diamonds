@@ -126,7 +126,7 @@ export function CollectionPhilosophy() {
             className="inline-flex items-center gap-[10px] py-[16px] px-[24px] rounded-full bg-[#214E34] shadow-sm"
           >
             <span className="font-sans font-semibold text-[14px] leading-[16px] text-white">
-              Explore All Collection
+              Explore All Collections
             </span>
             <span className="font-sans font-semibold text-[16px] leading-[16.88px] tracking-[1.27px] text-white">
               →

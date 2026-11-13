@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { useReducedMotion } from "framer-motion";
 import { Container } from "@/components/common/container";
 
@@ -123,8 +123,8 @@ export function HomeTestimonialsAnimated({ reviews }: { reviews: Review[] }) {
               </div>
             ))}
           </div>
-          <h2 className="mt-1 font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525]">Testimonials</h2>
-          <p className="mt-1.5 text-xs text-[#898989]">Stories from our customers</p>
+          <h2 className="mt-1 font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525]">The Miraya Edit</h2>
+          <p className="mt-1.5 text-xs text-[#898989]">Jewellery inspiration for your story</p>
         </div>
         <div className="relative hidden h-[400px] w-full sm:block md:h-[460px] lg:h-[520px]">
           {bubbles.map((bubble, index) => {
@@ -150,15 +150,15 @@ export function HomeTestimonialsAnimated({ reviews }: { reviews: Review[] }) {
           })}
 
           <div className="absolute inset-x-0 bottom-[28%] z-10 text-center">
-            <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">Testimonials</h2>
-            <p className="mt-1.5 text-xs text-[#898989] sm:text-sm">Stories from our customers</p>
+            <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">The Miraya Edit</h2>
+            <p className="mt-1.5 text-xs text-[#898989] sm:text-sm">Jewellery inspiration for your story</p>
           </div>
         </div>
 
         <div className="relative z-10 w-full sm:-mt-24 lg:-mt-28">
           <div className="flex items-center gap-4">
-            <button type="button" onClick={() => move(-1)} aria-label="Previous testimonials" className="hidden size-10 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] lg:grid"><ArrowLeft size={18} /></button>
-            <div className="min-w-0 flex-1 overflow-hidden" aria-label="Customer testimonials">
+            <button type="button" onClick={() => move(-1)} aria-label="Previous design notes" className="hidden size-10 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] lg:grid"><ArrowLeft size={18} /></button>
+            <div className="min-w-0 flex-1 overflow-hidden" aria-label="Jewellery design inspiration">
             <div
               ref={trackRef}
               className="flex gap-3 lg:gap-4"
@@ -167,19 +167,19 @@ export function HomeTestimonialsAnimated({ reviews }: { reviews: Review[] }) {
               {[...order, ...order].map((item, index) => (
                 <article key={`${item.name}-${index}`} aria-hidden={index >= order.length} className="flex h-[205px] w-[72%] shrink-0 flex-col justify-between overflow-hidden rounded-md border border-[#ececec] bg-white shadow-sm sm:h-[184px] sm:w-[calc(50%_-_6px)] lg:w-[calc(25%_-_12px)]">
                   <div className="px-3 py-3">
-                    <div className="flex items-center justify-between gap-2"><div className="flex gap-0.5 text-[#E2BD60]">{Array.from({ length: 5 }, (_, star) => <Star key={star} size={13} fill="currentColor" />)}</div><span className="text-[9px] text-[#898989]">Customer review</span></div>
-                    <p className="mt-2 text-[11px] leading-[1.35] text-[#5c5c5c]">“{item.text}”</p>
+                    <div className="flex items-center justify-between gap-2"><span className="text-[9px] text-[#214E34]">The Miraya Edit</span><span className="text-[9px] text-[#898989]">Design inspiration</span></div>
+                    <p className="mt-2 text-[11px] leading-[1.35] text-[#5c5c5c]">{item.text}</p>
                   </div>
-                  <div className="flex items-center gap-2 bg-[#214E34] px-3 py-2 text-[11px] text-white"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#E7FFE6] font-semibold text-[#214E34]">{item.name[0]}</span><span>{item.name}<span className="block text-[9px] text-white/75">Miraya customer</span></span></div>
+                  <div className="flex items-center gap-2 bg-[#214E34] px-3 py-2 text-[11px] text-white"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#E7FFE6] font-semibold text-[#214E34]">{item.name[0]}</span><span>{item.name}<span className="block text-[9px] text-white/75">Miraya Diamonds</span></span></div>
                 </article>
               ))}
             </div>
             </div>
-            <button type="button" onClick={() => move(1)} aria-label="Next testimonials" className="hidden size-10 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] lg:grid"><ArrowRight size={18} /></button>
+            <button type="button" onClick={() => move(1)} aria-label="Next design notes" className="hidden size-10 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] lg:grid"><ArrowRight size={18} /></button>
           </div>
           <div className="mt-5 flex justify-center gap-3 lg:hidden">
-            <button type="button" onClick={() => move(-1)} aria-label="Previous testimonials" className="grid size-9 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10"><ArrowLeft size={18} /></button>
-            <button type="button" onClick={() => move(1)} aria-label="Next testimonials" className="grid size-9 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10"><ArrowRight size={18} /></button>
+            <button type="button" onClick={() => move(-1)} aria-label="Previous design notes" className="grid size-9 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10"><ArrowLeft size={18} /></button>
+            <button type="button" onClick={() => move(1)} aria-label="Next design notes" className="grid size-9 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10"><ArrowRight size={18} /></button>
           </div>
         </div>
       </Container>

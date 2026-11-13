@@ -4,19 +4,18 @@ import { type ReactNode, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "framer-motion";
-import { IconBrandInstagram, IconBrandX } from "@tabler/icons-react";
+import { IconBrandInstagram } from "@tabler/icons-react";
 import { ChevronDown, Mail, MapPin, Phone } from "lucide-react";
-import { FacebookIcon } from "@/components/icons/cib-facebook";
 
 const INSTAGRAM_URL = "https://www.instagram.com/mirayadiamonds_?utm_source=qr&obrf=eDBxNnRmM2o3dnIx";
 
 const shopLinks = [
-  { label: "Rings" },
-  { label: "Earrings" },
-  { label: "Bracelets" },
-  { label: "Necklaces" },
-  { label: "Bangels" },
-  { label: "Collections" },
+  { label: "Rings", href: "/collection?category=Rings" },
+  { label: "Earrings", href: "/collection?category=Earrings" },
+  { label: "Bracelets", href: "/collection?category=Bracelets" },
+  { label: "Necklaces", href: "/collection?category=Necklaces" },
+  { label: "Bangles", href: "/collection?category=Bangles" },
+  { label: "Collections", href: "/collection" },
 ];
 
 const aboutLinks = [
@@ -29,9 +28,9 @@ const aboutLinks = [
 
 const policyLinks = [
   { label: "FAQs", href: "/contact#faq" },
-  { label: "Shipping & Delivery" },
+  { label: "Shipping & Delivery", href: "/contact" },
   { label: "Returns & Exchange", href: "/return-policy" },
-  { label: "Track Order" },
+  { label: "Order Support", href: "/contact" },
   { label: "Contact Us", href: "/contact" },
 ];
 
@@ -185,7 +184,7 @@ export function Footer() {
         </div>
 
         <p className="mt-[27px] max-w-[330px] font-sans text-[14px] leading-[1.22] tracking-[-0.02em] text-white">
-          Lorem ipsum dolor sit amet, consectetur ffdv ciscing elit. Sed do eiusmod temporvvxv incididunt ut labore et dolore magna aliqua.
+          Discover fine diamond jewellery, thoughtfully crafted to celebrate your story. From everyday elegance to cherished milestones, find a piece to treasure with Miraya Diamonds.
         </p>
 
         <div className="mt-[52px] flex items-center gap-[26px] text-white">
@@ -198,12 +197,6 @@ export function Footer() {
           >
             <IconBrandInstagram size={26} stroke={2.1} />
           </a>
-          <span className="flex h-[26px] w-[26px] items-center justify-center">
-            <FacebookIcon size={26} />
-          </span>
-          <span className="flex h-[26px] w-[26px] items-center justify-center">
-            <IconBrandX size={25} stroke={1.65} />
-          </span>
         </div>
 
         <div className="mt-[29px] border-t border-[#E2BD60]/80">
@@ -242,7 +235,7 @@ export function Footer() {
               <li>
                 <a href="tel:+919869698984">+91 9869698984</a>
               </li>
-              <li>23,24 Paradise Heights, Bangalore</li>
+              <li>Jaipur, India</li>
             </ul>
           </MobileFooterSection>
         </div>
@@ -267,7 +260,7 @@ export function Footer() {
             />
           </div>
           <p className="mt-7 max-w-[260px] font-sans text-[13px] leading-[1.28] tracking-[-0.02em] text-white xl:max-w-[300px] xl:text-[15px]">
-            Lorem ipsum dolor sit amet, consectetur ffdv adipiscing elit. Sed do eiusmod temporvvxv incididunt ut labore et dolore magna aliqua.
+            Discover fine diamond jewellery, thoughtfully crafted to celebrate your story. From everyday elegance to cherished milestones, find a piece to treasure with Miraya Diamonds.
           </p>
           <div className="mt-10 flex items-center gap-7 text-white xl:mt-12 xl:gap-8">
             <a
@@ -279,12 +272,6 @@ export function Footer() {
             >
               <IconBrandInstagram className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" stroke={2.15} />
             </a>
-            <span className="flex h-[30px] w-[30px] items-center justify-center text-white xl:h-[34px] xl:w-[34px]">
-              <FacebookIcon className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" />
-            </span>
-            <span className="flex h-[30px] w-[30px] items-center justify-center text-white xl:h-[34px] xl:w-[34px]">
-              <IconBrandX className="h-[29px] w-[29px] xl:h-8 xl:w-8" stroke={1.75} />
-            </span>
           </div>
         </div>
 
@@ -337,7 +324,7 @@ export function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <MapPin className="h-5 w-5 shrink-0 text-[#E2BD60] xl:h-[22px] xl:w-[22px]" strokeWidth={1.8} />
-              <span>23,24 Paradise Heights, Bangalore</span>
+              <span>Jaipur, India</span>
             </li>
           </ul>
         </FooterColumn>

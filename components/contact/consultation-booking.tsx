@@ -18,7 +18,7 @@ export function ConsultationBooking() {
             Let&apos;s Find the Perfect Piece, Together
           </h2>
           <p className="font-sans font-normal text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575] text-center max-w-[629px] mt-2">
-            Choose a private consultation and let our jewellery experts guide you through the pieces made for your moment.
+            Explore your preferences below, then contact our team to arrange a consultation.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ export function ConsultationBooking() {
                 <label className="font-[family-name:var(--font-montserrat)] font-semibold text-[12px] text-[#292524]">Phone Number <span className="text-[#214E34]">*</span></label>
                 <div className="relative">
                   <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#A8A29E]" />
-                  <input type="text" placeholder="+91 98765 43210" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#292524] text-[#292524] outline-none focus:ring-1 ring-[#214E34]" />
+                  <input type="text" placeholder="Your mobile number" className="w-full bg-[#F5F5F4] rounded-[8px] py-[12px] pl-[36px] pr-[12px] text-[14px] font-sans placeholder:text-[#292524] text-[#292524] outline-none focus:ring-1 ring-[#214E34]" />
                 </div>
               </div>
             </div>
@@ -212,23 +212,23 @@ export function ConsultationBooking() {
 
             {/* Submit */}
             <div className="flex flex-col gap-[11.25px] mt-[18px]">
-              <button className="relative w-full h-[46px] rounded-full group outline-none">
+              <a href="mailto:miraya.diamond23@gmail.com?subject=Consultation%20request" className="relative block w-full h-[46px] rounded-full group outline-none">
                 {/* Shadow overlay matching the spec */}
                 <div className="absolute inset-0 bg-[#FFFFFF01] rounded-[56px] shadow-[0px_2.25px_4.5px_-2.25px_rgba(0,0,0,0.1),0px_4.5px_6.75px_-1.13px_rgba(0,0,0,0.1)] pointer-events-none" />
                 <div className="absolute inset-0 bg-[#214E34] rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
                   <div className="flex items-center justify-center">
-                    <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center">Confirm Appointment</span>
+                    <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center">Discuss an Appointment</span>
                     <div className="pl-[9px] flex items-center justify-center">
                       <ArrowRight className="w-[18px] h-[18px] text-white" strokeWidth={1.5} />
                     </div>
                   </div>
                 </div>
-              </button>
+              </a>
               
               <div className="flex items-center justify-center pt-1">
                 <Calendar className="w-[15.75px] h-[15.75px] text-[#78716C]" strokeWidth={1.18} />
                 <span className="font-[family-name:var(--font-montserrat)] font-normal text-[12.38px] leading-[18.56px] text-[#78716C] pl-[6.75px]">
-                  We&apos;ll confirm your appointment shortly.
+                  Call or email us to request a time. Appointments require confirmation.
                 </span>
               </div>
             </div>
@@ -280,7 +280,7 @@ export function ConsultationBooking() {
                     <Image src="/contact/diamond_icon.png" alt="Diamond" width={18} height={18} className="object-contain" />
                   </div>
                   <div className="flex flex-col gap-[1.39px]">
-                    <span className="font-[family-name:var(--font-montserrat)] font-semibold text-[14px] leading-[17.79px] text-[#292524]">Private & personalized experience</span>
+                    <span className="font-[family-name:var(--font-montserrat)] font-semibold text-[14px] leading-[17.79px] text-[#292524]">Personal jewellery guidance</span>
                     <span className="font-sans font-normal text-[12px] leading-[14.06px] text-[#757575]">Explore at your own pace in complete privacy.</span>
                   </div>
                 </div>

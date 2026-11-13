@@ -5,25 +5,25 @@ const cards = [
   {
     num: "01",
     title: "Authentic Craftsmanship",
-    desc: "Generational Jaipur & Mumbai artisan karigari with heirloom precision.",
+    desc: "Fine details and carefully considered finishes that celebrate the art of jewellery.",
     img: "/about/aurora-img1.jpg",
   },
   {
     num: "02",
     title: "Thoughtful Design",
-    desc: "Ergonomically contoured fine jewellery made for daily grace.",
+    desc: "Considered silhouettes and fine details for a style that feels personal.",
     img: "/about/aurora-img2.jpg",
   },
   {
     num: "03",
     title: "Premium Experience",
-    desc: "Dedicated 1-on-1 virtual consultations & white-glove styling.",
+    desc: "Personal guidance to help you explore designs and choose a piece with confidence.",
     img: "/about/aurora-img3.jpg",
   },
   {
     num: "04",
     title: "Made for Milestones",
-    desc: "Bespoke laser engravings and personalized celebration keepsakes.",
+    desc: "Personal design ideas inspired by the moments you want to celebrate.",
     img: "/about/aurora-img4.jpg",
   },
 ];
@@ -39,7 +39,7 @@ export function TrustAndCredibility() {
             The Miraya Difference
           </h2>
           <p className="font-sans font-light text-[14px] leading-[20px] md:leading-[25.32px] text-[#6B7280] md:text-[#757575] text-center mb-0">
-            A more meaningful tomorrow in fine diamond craft.
+            Thoughtful details. Personal meaning. Lasting style.
           </p>
         </div>
 
