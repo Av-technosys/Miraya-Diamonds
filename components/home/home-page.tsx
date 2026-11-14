@@ -24,15 +24,23 @@ const categories = [
   { name: "Kids", image: "Category5.png", href: "/collection?occasion=Gifting" },
   { name: "Customise", image: "Category6.png", href: "/contact" },
 ];
-const collectionItems = [
-  { name: "Bhvita 22KT Earrings", image: "/Home/collection1.png" },
-  { name: "Bhvita 22KT Necklace", image: "/Home/collection2.png" },
-  { name: "22KT Gold Ring", image: "/Home/collection3.png" },
-  { name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png" },
-  { name: "Bhvita 22KT Necklace", image: "/Home/collection2.png" },
+const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"] as const;
+type CollectionTab = (typeof tabs)[number];
+type CollectionCategory = Exclude<CollectionTab, "All">;
+type CollectionItem = {
+  id: string;
+  name: string;
+  image: string;
+  category: CollectionCategory;
+};
+const collectionItems: CollectionItem[] = [
+  { id: "collection-earrings", name: "Bhvita 22KT Earrings", image: "/Home/collection1.png", category: "Earrings" },
+  { id: "collection-necklace", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
+  { id: "collection-ring", name: "22KT Gold Ring", image: "/Home/collection3.png", category: "Rings" },
+  { id: "collection-bracelet", name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png", category: "Bracelets" },
+  { id: "collection-necklace-featured", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
 ];
 const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
-const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"];
 const lovedImages = ["mostloved1.png", "mostloved3.png", "mostloved2.png"];
 const signature = [
   { name: "Warm & Romantic", metal: "Rose Gold", image: "Signature1.png", swatch: "linear-gradient(135deg, #E4A494, #F4C5B8 50%, #E3A393)", edge: "linear-gradient(135deg, #A86F62, #F9E5DE 22%, #C68778 40%, #FFF9F6 53%, #D49A8B 75%, #9E675F)", button: "linear-gradient(100deg, #C67970, #EDB5A8)", shadow: "0 5px 14px rgba(180, 113, 100, 0.13)", copy: "A soft pink hue that adds a touch of romance. Ideal for those who love subtle uniqueness." },
@@ -40,11 +48,11 @@ const signature = [
   { name: "Modern & Minimal", metal: "White Gold", image: "Signature3.png", swatch: "linear-gradient(135deg, #D6D8DC, #F1F3F5 50%, #B0B4B9)", edge: "linear-gradient(135deg, #87949B, #F5F7F9 22%, #ABB4BA 40%, #FFFFFF 53%, #C7CFD3 75%, #7E8C94)", button: "linear-gradient(100deg, #AAB5BB, #D7DBDE)", shadow: "0 5px 14px rgba(119, 137, 146, 0.13)", copy: "Sleek and sophisticated, white gold pairs beautifully with diamonds and contemporary styles." },
 ];
 const bestSellers = [
-  { name: "Necklaces & Pendants", image: "bestseller1.png", href: "/collection?category=Necklaces" },
-  { name: "Designer Rings", image: "bestseller2.png", href: "/collection?category=Rings" },
-  { name: "Necklaces & Pendants", image: "bestseller3.png", href: "/collection?category=Necklaces" },
-  { name: "Bangles & Bracelets", image: "bestseller4.png", href: "/collection?category=Bracelets" },
-  { name: "Earrings", image: "bestseller5.png", href: "/collection?category=Earrings" },
+  { name: "Necklaces ", image: "bestseller1.png", href: "/collection?category=Necklaces" },
+  { name: "Designer Earrings", image: "bestseller2.png", href: "/collection?category=Rings" },
+  { name: "Bracelets", image: "bestseller3.png", href: "/collection?category=Necklaces" },
+  { name: "Desigener Rings", image: "bestseller4.png", href: "/collection?category=Bracelets" },
+  { name: "Bracelets", image: "bestseller5.png", href: "/collection?category=Earrings" },
 ];
 const reviews = [
   { name: "Everyday Elegance", text: "Explore understated designs that bring a little sparkle to your daily style." },
@@ -62,8 +70,8 @@ function RoundArrow({ direction, onClick, label }: { direction: "left" | "right"
   return <button type="button" onClick={onClick} aria-label={label} className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10">{direction === "left" ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}</button>;
 }
 
-function ProductTile({ item }: { item: (typeof suiteProducts)[number] }) {
-  return <Link href={pdpHref} className="group block min-w-0 text-left">
+function ProductTile({ item }: { item: CollectionItem }) {
+  return <Link href={`/collection?category=${encodeURIComponent(item.category)}`} className="group block min-w-0 text-left">
     <div className="relative aspect-square overflow-hidden rounded-lg border-2 border-white bg-[#f8f8f8]"><Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px" className="object-contain transition-transform duration-300 group-hover:scale-[1.04]" /></div>
     <p className="mt-2 text-xs font-semibold text-[#373737] sm:text-sm">Enquire for Pricing</p>
     <p className="truncate text-[11px] text-[#777] sm:text-xs">{item.name}</p>
@@ -72,13 +80,20 @@ function ProductTile({ item }: { item: (typeof suiteProducts)[number] }) {
 
 export function HomePage() {
   const [loved, setLoved] = useState(0);
-  const [collectionTab, setCollectionTab] = useState("All");
+  const [collectionTab, setCollectionTab] = useState<CollectionTab>("All");
   const newArrivalsRef = useRef<HTMLDivElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
-  const shownItems = collectionTab === "All" ? collectionItems : collectionItems.filter((item) => {
-    const type = item.name.includes("Earring") ? "Earrings" : item.name.includes("Necklace") ? "Necklaces" : item.name.includes("Bracelet") ? "Bracelets" : "Rings";
-    return type === collectionTab;
-  });
+  const shownItems = collectionTab === "All"
+    ? collectionItems
+    : collectionItems.filter((item) => item.category === collectionTab);
+  const collectionHref = collectionTab === "All"
+    ? "/collection"
+    : `/collection?category=${encodeURIComponent(collectionTab)}`;
+
+  function changeCollectionTab(tab: CollectionTab) {
+    setCollectionTab(tab);
+    collectionRef.current?.scrollTo({ left: 0, behavior: "instant" });
+  }
 
   return <main className="overflow-hidden bg-white font-[family-name:var(--font-inter)] text-[#353333]">
     <Container className="pt-5 sm:pt-6">
@@ -131,7 +146,24 @@ export function HomePage() {
       <div className="mt-5 flex items-center justify-center gap-4"><button type="button" onClick={() => setLoved((loved + lovedImages.length - 1) % lovedImages.length)} aria-label="Previous collection"><ArrowLeft size={17} /></button><div className="flex gap-1">{lovedImages.map((_, index) => <button key={index} type="button" onClick={() => setLoved(index)} aria-label={`Show collection ${index + 1}`} className={`h-1.5 rounded-full ${loved === index ? "w-5 bg-[#214E34]" : "w-1.5 bg-[#214E34]/35"}`} />)}</div><button type="button" onClick={() => setLoved((loved + 1) % lovedImages.length)} aria-label="Next collection"><ArrowRight size={17} /></button></div>
     </Container>
 
-    <section className="bg-[rgba(255,248,225,0.7216)] py-14 sm:py-20"><Container><SectionHeading title="Our Collection" subtitle="Explore jewellery for your next chapter." /><div className="mb-7 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-center">{tabs.map((tab) => <button key={tab} type="button" onClick={() => setCollectionTab(tab)} aria-pressed={collectionTab === tab} className={`shrink-0 rounded-full px-4 py-2 text-[11px] transition-colors sm:px-5 ${collectionTab === tab ? "bg-[#214E34] text-white" : "bg-white text-[#214E34] hover:bg-[#F7FFF7]"}`}>{tab}</button>)}</div><div className="relative"><div ref={collectionRef} className="flex gap-3 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-5">{shownItems.length ? shownItems.map((item) => <div key={item.image} className="w-[43%] shrink-0 sm:w-[30%] lg:w-[calc(20%_-_16px)]"><ProductTile item={item} /></div>) : <p className="w-full py-8 text-center text-sm text-neutral-600">Explore this collection in our full catalogue.</p>}</div><div className="absolute inset-y-0 -left-10 hidden items-center sm:flex"><RoundArrow direction="left" label="Previous collection item" onClick={() => collectionRef.current?.scrollBy({ left: -300, behavior: "smooth" })} /></div><div className="absolute inset-y-0 -right-10 hidden items-center sm:flex"><RoundArrow direction="right" label="Next collection item" onClick={() => collectionRef.current?.scrollBy({ left: 300, behavior: "smooth" })} /></div></div><div className="mt-6 text-center"><Link href="/collection" className="inline-flex rounded-full bg-[#214E34] px-10 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]">View All</Link></div></Container></section>
+    <section className="bg-[rgba(255,248,225,0.7216)] py-14 sm:py-20">
+      <Container>
+        <SectionHeading title="Our Collection" subtitle="Explore jewellery for your next chapter." />
+        <div className="mb-7 flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:justify-center">
+          {tabs.map((tab) => <button key={tab} type="button" onClick={() => changeCollectionTab(tab)} aria-pressed={collectionTab === tab} aria-controls="home-collection-items" className={`shrink-0 rounded-full px-4 py-2 text-[11px] transition-colors sm:px-5 ${collectionTab === tab ? "bg-[#214E34] text-white" : "bg-white text-[#214E34] hover:bg-[#F7FFF7]"}`}>{tab}</button>)}
+        </div>
+        <div className="relative">
+          <div id="home-collection-items" ref={collectionRef} className="flex gap-3 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-5">
+            {shownItems.length ? shownItems.map((item) => <div key={item.id} className="w-[43%] shrink-0 sm:w-[30%] lg:w-[calc(20%_-_16px)]"><ProductTile item={item} /></div>) : <p role="status" className="w-full py-8 text-center text-sm text-neutral-600">No {collectionTab.toLowerCase()} are featured here yet. View all to explore this category.</p>}
+          </div>
+          {shownItems.length > 0 && <>
+            <div className="absolute inset-y-0 -left-10 hidden items-center sm:flex"><RoundArrow direction="left" label="Previous collection item" onClick={() => collectionRef.current?.scrollBy({ left: -300, behavior: "smooth" })} /></div>
+            <div className="absolute inset-y-0 -right-10 hidden items-center sm:flex"><RoundArrow direction="right" label="Next collection item" onClick={() => collectionRef.current?.scrollBy({ left: 300, behavior: "smooth" })} /></div>
+          </>}
+        </div>
+        <div className="mt-6 text-center"><Link href={collectionHref} className="inline-flex rounded-full bg-[#214E34] px-10 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]">View All</Link></div>
+      </Container>
+    </section>
 
     <Link href="/collection?category=Necklaces" aria-label="Explore necklaces" className="block"><Image src={showcaseBanner} alt="Diamond necklace worn with an embroidered green outfit" sizes="100vw" className="block h-auto w-full" /></Link>
 
