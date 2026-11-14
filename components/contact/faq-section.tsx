@@ -7,11 +7,12 @@ import { ChevronDown } from "lucide-react";
 
 const categories = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"];
 
-const faqs = jewelleryFaqs;
-
 export function FaqSection() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const faqs = jewelleryFaqs.filter(
+    (faq) => activeCategory === "All" || faq.category === activeCategory,
+  );
 
   const toggleFaq = (idx: number) => {
     setOpenIndex(openIndex === idx ? null : idx);
@@ -39,7 +40,11 @@ export function FaqSection() {
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => {
+                setActiveCategory(cat);
+                setOpenIndex(null);
+              }}
+              aria-pressed={activeCategory === cat}
               className={`shrink-0 snap-center h-[33.08px] rounded-[84.2px] px-[24.06px] py-[8.02px] text-[14px] leading-[100%] tracking-[-0.02em] text-center font-sans cursor-pointer transition-colors duration-300 ${
                 activeCategory === cat
                   ? "bg-[#214E34] text-white font-semibold"
@@ -53,6 +58,11 @@ export function FaqSection() {
 
         {/* FAQ List */}
         <div className="flex flex-col gap-[10px] max-w-[659px] mx-auto w-full">
+          {faqs.length === 0 && (
+            <p className="text-center text-sm text-[#757575]">
+              For questions about {activeCategory.toLowerCase()}, please contact our team.
+            </p>
+          )}
           {faqs.map((faq, idx) => (
             <div
               key={idx}

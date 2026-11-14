@@ -60,8 +60,6 @@ const reviews = [
   { name: "Thoughtful Details", text: "Discover the settings, textures and finishing touches that give each design its character." },
   { name: "Personal Style", text: "Find jewellery that feels like you, from delicate accents to a statement piece." },
 ];
-const faqs = jewelleryFaqs;
-
 function SectionHeading({ title, subtitle }: { title: string; subtitle: string }) {
   return <div className="mb-7 text-center sm:mb-9"><h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">{title}</h2><p className="mt-1.5 text-xs text-[#898989] sm:text-sm">{subtitle}</p></div>;
 }
@@ -81,6 +79,10 @@ function ProductTile({ item }: { item: CollectionItem }) {
 export function HomePage() {
   const [loved, setLoved] = useState(0);
   const [collectionTab, setCollectionTab] = useState<CollectionTab>("All");
+  const [faqTab, setFaqTab] = useState<CollectionCategory>("Rings");
+  const faqs = jewelleryFaqs.filter(
+    (item) => item.category === faqTab,
+  );
   const newArrivalsRef = useRef<HTMLDivElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
   const shownItems = collectionTab === "All"
@@ -242,8 +244,22 @@ export function HomePage() {
           <Image src="/Home/FAQ.png" alt="Diamond ring worn on a hand beside a lace sleeve" fill sizes="(max-width: 767px) 350px, (max-width: 1280px) 28vw, 355px" className="object-cover" />
         </div>
         <div className="min-w-0 md:pt-6 lg:pt-8">
-          <SectionHeading title="Frequently Asked Question" subtitle="Find answers to your jewellery questions." />
-          <div>
+          <SectionHeading title="Frequently Asked Questions" subtitle="Find answers to your jewellery questions." />
+          <div className="mb-4 flex gap-2 overflow-x-auto pb-2" role="group" aria-label="FAQ categories">
+            {tabs.filter((tab) => tab !== "All").map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setFaqTab(tab)}
+                aria-pressed={faqTab === tab}
+                aria-controls="home-faq-items"
+                className={`shrink-0 cursor-pointer rounded-full border border-[#214E34] px-4 py-2 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] ${faqTab === tab ? "bg-[#214E34] font-semibold text-white" : "bg-white text-[#214E34] hover:bg-[#F7FFF7]"}`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div id="home-faq-items" key={faqTab}>
             {faqs.map((item, index) => (
               <details key={item.question} name="home-faq" className="group border-b border-[#898989]">
                 <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34] sm:text-sm [&::-webkit-details-marker]:hidden">

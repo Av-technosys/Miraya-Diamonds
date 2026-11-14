@@ -1,6 +1,6 @@
 "use client";
 
-import { type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useId, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useInView, useReducedMotion } from "framer-motion";
@@ -28,7 +28,7 @@ const aboutLinks = [
 
 const policyLinks = [
   { label: "FAQs", href: "/contact#faq" },
-  { label: "Shipping & Delivery", href: "/contact" },
+  { label: "Shipping & Delivery", href: "/shipping-and-delivery" },
   { label: "Returns & Exchange", href: "/return-policy" },
   { label: "Order Support", href: "/contact" },
   { label: "Contact Us", href: "/contact" },
@@ -70,23 +70,27 @@ function FooterColumn({
 function MobileFooterSection({
   title,
   children,
-  defaultOpen = false,
+  isOpen,
+  onToggle,
 }: {
   title: string;
   children?: ReactNode;
-  defaultOpen?: boolean;
+  isOpen: boolean;
+  onToggle: () => void;
 }) {
-  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const panelId = useId();
   const hasContent = Boolean(children);
 
   return (
     <div className="border-b border-[#E2BD60]/80">
       <button
         type="button"
+        aria-expanded={isOpen}
+        aria-controls={panelId}
         className="flex w-full items-center justify-between py-[18px] text-left"
         onClick={() => {
           if (hasContent) {
-            setIsOpen((value) => !value);
+            onToggle();
           }
         }}
       >
@@ -98,12 +102,16 @@ function MobileFooterSection({
           strokeWidth={1.9}
         />
       </button>
-      {hasContent && isOpen ? <div>{children}</div> : null}
+      {hasContent ? <div id={panelId} hidden={!isOpen}>{children}</div> : null}
     </div>
   );
 }
 
 export function Footer() {
+  const [openSection, setOpenSection] = useState<string | null>(null);
+  const toggleSection = (title: string) => {
+    setOpenSection((current) => current === title ? null : title);
+  };
   const ringTrigger = useRef<HTMLDivElement>(null);
   const ringInView = useInView(ringTrigger, { amount: "all" });
   const reduceMotion = useReducedMotion();
@@ -200,7 +208,7 @@ export function Footer() {
         </div>
 
         <div className="mt-[29px] border-t border-[#E2BD60]/80">
-          <MobileFooterSection title="Shop">
+          <MobileFooterSection title="Shop" isOpen={openSection === "Shop"} onToggle={() => toggleSection("Shop")}>
             <ul className="space-y-[16px] pb-[14px] font-sans text-[14px] leading-none">
               {shopLinks.map((item) => (
                 <li key={item.label}>
@@ -209,7 +217,7 @@ export function Footer() {
               ))}
             </ul>
           </MobileFooterSection>
-          <MobileFooterSection title="Policies">
+          <MobileFooterSection title="Policies" isOpen={openSection === "Policies"} onToggle={() => toggleSection("Policies")}>
             <ul className="space-y-[16px] pb-[14px] font-sans text-[14px] leading-none">
               {policyLinks.map((item) => (
                 <li key={item.label}>
@@ -218,7 +226,7 @@ export function Footer() {
               ))}
             </ul>
           </MobileFooterSection>
-          <MobileFooterSection title="About">
+          <MobileFooterSection title="About" isOpen={openSection === "About"} onToggle={() => toggleSection("About")}>
             <ul className="space-y-[18px] pb-[14px] font-sans text-[14px] leading-none">
               {aboutLinks.map((item) => (
                 <li key={item.label}>
@@ -227,7 +235,7 @@ export function Footer() {
               ))}
             </ul>
           </MobileFooterSection>
-          <MobileFooterSection title="Contact Us">
+          <MobileFooterSection title="Contact Us" isOpen={openSection === "Contact Us"} onToggle={() => toggleSection("Contact Us")}>
             <ul className="space-y-[14px] pb-[14px] font-sans text-[13px] leading-tight">
               <li>
                 <a href="mailto:miraya.diamond23@gmail.com">miraya.diamond23@gmail.com</a>
