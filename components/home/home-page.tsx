@@ -29,7 +29,7 @@ const collectionItems = [
   { name: "Bhvita 22KT Necklace", image: "/Home/collection2.png" },
   { name: "22KT Gold Ring", image: "/Home/collection3.png" },
   { name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png" },
-  { name: "Bhvita 22KT Necklace", image: "/Home/collection5.png" },
+  { name: "Bhvita 22KT Necklace", image: "/Home/collection2.png" },
 ];
 const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
 const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"];
