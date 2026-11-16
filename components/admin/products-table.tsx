@@ -201,17 +201,17 @@ export function ProductsTable({
     setGoldPurities(prod.goldPurities?.join?.(", ") || "");
     setGoldColours(prod.goldColours?.join?.(", ") || "");
     setSizes(prod.sizes?.join?.(", ") || "");
-    setGrossWeight(prod.grossWeight || "3.10");
-    setNetGoldWeight(prod.netGoldWeight || "3.00");
-    setDiamondPieces((prod.diamondPieces ?? 12).toString());
-    setTotalDiamondWeight(prod.totalDiamondWeight || "0.500");
-    setDiamondPrice(prod.diamondPrice || "15000.00");
-    setMakingCharge(prod.makingCharge || "3000.00");
-    setDimHeight(prod.dimensions?.height || "5.20");
-    setDimWidth(prod.dimensions?.width || "8.00");
-    setDimLength(prod.dimensions?.length || "20.00");
+    setGrossWeight(prod.grossWeight);
+    setNetGoldWeight(prod.netGoldWeight);
+    setDiamondPieces(prod.sku.startsWith("MD-E") ? "" : prod.diamondPieces.toString());
+    setTotalDiamondWeight(prod.totalDiamondWeight);
+    setDiamondPrice(prod.diamondPrice);
+    setMakingCharge(prod.makingCharge);
+    setDimHeight(prod.dimensions?.height || "");
+    setDimWidth(prod.dimensions?.width || "");
+    setDimLength(prod.dimensions?.length || "");
     setStock((prod.stock ?? 10).toString());
-    setSellingPrice((prod.price ?? 48250).toString());
+    setSellingPrice(prod.price > 0 ? prod.price.toString() : "");
     const prodBanner = toRelativeKey(prod.bannerImage || prod.image || "");
     setBannerImage(prodBanner);
     const existingMedia =
@@ -269,18 +269,18 @@ export function ProductsTable({
       goldColours: goldColours.split(",").map((s) => s.trim()).filter(Boolean),
       sizes: sizes.split(",").map((s) => s.trim()).filter(Boolean),
       bannerImage: primaryBanner,
-      grossWeight: grossWeight || "3.10",
-      netGoldWeight: netGoldWeight || "3.00",
-      diamondPieces: parseInt(diamondPieces, 10) || 12,
-      totalDiamondWeight: totalDiamondWeight || "0.500",
-      diamondPrice: parsedDiamondPrice.toFixed(2),
-      makingCharge: parsedMaking.toFixed(2),
+      grossWeight,
+      netGoldWeight,
+      diamondPieces: diamondPieces ? parseInt(diamondPieces, 10) : 0,
+      totalDiamondWeight,
+      diamondPrice: diamondPrice ? parsedDiamondPrice.toFixed(2) : "",
+      makingCharge: makingCharge ? parsedMaking.toFixed(2) : "",
       dimensions: {
-        height: dimHeight || "5.20",
-        width: dimWidth || "8.00",
-        length: dimLength || "20.00",
+        height: dimHeight,
+        width: dimWidth,
+        length: dimLength,
       },
-      price: parsedPrice > 0 ? parsedPrice : 48250,
+      price: parsedPrice,
       stock: parsedStock,
       mediaUrls: cleanMediaUrls.length > 0 ? cleanMediaUrls : [primaryBanner],
     };
@@ -593,7 +593,7 @@ export function ProductsTable({
 
                     {/* 4. Price (INR) */}
                     <td className="px-4 py-4 text-right text-[14px] font-semibold text-[#353333]">
-                      ₹{prod.price.toLocaleString("en-IN")}
+                      {prod.price > 0 ? `₹${prod.price.toLocaleString("en-IN")}` : "Enquire for pricing"}
                     </td>
 
                     {/* 5. Stock */}
@@ -709,7 +709,7 @@ export function ProductsTable({
                     Gross Weight
                   </span>
                   <div className="mt-1 text-sm font-bold text-[#353333]">
-                    {selectedProduct.grossWeight} g
+                    {selectedProduct.grossWeight ? `${selectedProduct.grossWeight} g` : "—"}
                   </div>
                 </div>
                 <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
@@ -717,7 +717,7 @@ export function ProductsTable({
                     Net Gold Weight
                   </span>
                   <div className="mt-1 text-sm font-bold text-[#353333]">
-                    {selectedProduct.netGoldWeight} g
+                    {selectedProduct.netGoldWeight ? `${selectedProduct.netGoldWeight} g` : "—"}
                   </div>
                 </div>
                 <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
@@ -725,7 +725,7 @@ export function ProductsTable({
                     Diamond Pieces
                   </span>
                   <div className="mt-1 text-sm font-bold text-[#353333]">
-                    {selectedProduct.diamondPieces} pcs
+                    {selectedProduct.sku.startsWith("MD-E") ? "—" : `${selectedProduct.diamondPieces} pcs`}
                   </div>
                 </div>
                 <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3">
@@ -733,7 +733,7 @@ export function ProductsTable({
                     Total Diamond Wt
                   </span>
                   <div className="mt-1 text-sm font-bold text-[#353333]">
-                    {selectedProduct.totalDiamondWeight} ct
+                    {selectedProduct.totalDiamondWeight ? `${selectedProduct.totalDiamondWeight} ct` : "—"}
                   </div>
                 </div>
               </div>
@@ -745,7 +745,7 @@ export function ProductsTable({
                     Diamond Price
                   </span>
                   <div className="mt-1 font-bold text-base text-[#353333]">
-                    ₹{parseFloat(selectedProduct.diamondPrice).toLocaleString("en-IN")}
+                    {selectedProduct.diamondPrice ? `₹${parseFloat(selectedProduct.diamondPrice).toLocaleString("en-IN")}` : "—"}
                   </div>
                 </div>
                 <div className="rounded-lg border border-[#eee9e4] bg-[#FAF8F7] p-3.5">
@@ -753,7 +753,7 @@ export function ProductsTable({
                     Making Charge
                   </span>
                   <div className="mt-1 font-bold text-base text-[#353333]">
-                    ₹{parseFloat(selectedProduct.makingCharge).toLocaleString("en-IN")}
+                    {selectedProduct.makingCharge ? `₹${parseFloat(selectedProduct.makingCharge).toLocaleString("en-IN")}` : "—"}
                   </div>
                 </div>
                 <div className="rounded-lg border border-[#214E34]/20 bg-[#214E34]/5 p-3.5">
@@ -761,7 +761,7 @@ export function ProductsTable({
                     Total Selling Price
                   </span>
                   <div className="mt-1 font-bold text-base text-[#214E34]">
-                    ₹{selectedProduct.price.toLocaleString("en-IN")}
+                    {selectedProduct.price > 0 ? `₹${selectedProduct.price.toLocaleString("en-IN")}` : "Enquire for pricing"}
                   </div>
                 </div>
               </div>

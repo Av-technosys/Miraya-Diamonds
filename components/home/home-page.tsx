@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ChevronDown, Gem, Heart, Leaf, Tag } from "lucide-react";
 import { Container } from "@/components/common/container";
-import { product, suiteProducts } from "@/components/pdp/product-data";
+import type { PublicCollectionProduct } from "@/lib/actions/products";
 import { HeroCarousel } from "./hero-carousel";
 import { HomeBestSellerCarousel } from "./home-best-seller-carousel";
 import { HomeTestimonialsAnimated } from "./home-testimonials-animated";
@@ -15,13 +15,12 @@ import showcaseBanner from "@/public/Home/showcasebanner.png";
 import diamondComparisonBanner from "@/public/Home/showcasebanner2.png";
 import stayInTouchBanner from "@/public/Home/stayintouch.png";
 
-const pdpHref = `/collection/${product.slug}`;
 const categories = [
   { name: "Earrings", image: "Category1.png", href: "/collection?category=Earrings" },
   { name: "Rings", image: "Category2.png", href: "/collection?category=Rings" },
   { name: "Pendants", image: "Category3.png", href: "/collection?category=Pendants" },
   { name: "Bracelets", image: "Category4.png", href: "/collection?category=Bracelets" },
-  { name: "Kids", image: "Category5.png", href: "/collection?occasion=Gifting" },
+  { name: "Kids", image: "Category5.png", href: "/collection?category=Kids%20Jewellery" },
   { name: "Customise", image: "Category6.png", href: "/contact" },
 ];
 const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"] as const;
@@ -31,28 +30,15 @@ type CollectionItem = {
   id: string;
   name: string;
   image: string;
-  category: CollectionCategory;
+  category: string;
+  slug: string;
+  price: number;
 };
-const collectionItems: CollectionItem[] = [
-  { id: "collection-earrings", name: "Bhvita 22KT Earrings", image: "/Home/collection1.png", category: "Earrings" },
-  { id: "collection-necklace", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
-  { id: "collection-ring", name: "22KT Gold Ring", image: "/Home/collection3.png", category: "Rings" },
-  { id: "collection-bracelet", name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png", category: "Bracelets" },
-  { id: "collection-necklace-featured", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
-];
-const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
 const lovedImages = ["mostloved1.png", "mostloved3.png", "mostloved2.png"];
 const signature = [
   { name: "Warm & Romantic", metal: "Rose Gold", image: "Signature1.png", swatch: "linear-gradient(135deg, #E4A494, #F4C5B8 50%, #E3A393)", edge: "linear-gradient(135deg, #A86F62, #F9E5DE 22%, #C68778 40%, #FFF9F6 53%, #D49A8B 75%, #9E675F)", button: "linear-gradient(100deg, #C67970, #EDB5A8)", shadow: "0 5px 14px rgba(180, 113, 100, 0.13)", copy: "A soft pink hue that adds a touch of romance. Ideal for those who love subtle uniqueness." },
   { name: "Classic & Timeless", metal: "Yellow Gold", image: "Signature2.png", swatch: "linear-gradient(135deg, #E5C158, #FDE599 50%, #D8B042)", edge: "linear-gradient(135deg, #A88542, #FFF0BB 22%, #C7A358 40%, #FFFDF2 53%, #E0BC70 75%, #92743F)", button: "linear-gradient(100deg, #BA8B4F, #E8C98F)", shadow: "0 5px 14px rgba(165, 130, 62, 0.13)", copy: "The traditional gold tone that never goes out of style. Perfect for everyday elegance." },
   { name: "Modern & Minimal", metal: "White Gold", image: "Signature3.png", swatch: "linear-gradient(135deg, #D6D8DC, #F1F3F5 50%, #B0B4B9)", edge: "linear-gradient(135deg, #87949B, #F5F7F9 22%, #ABB4BA 40%, #FFFFFF 53%, #C7CFD3 75%, #7E8C94)", button: "linear-gradient(100deg, #AAB5BB, #D7DBDE)", shadow: "0 5px 14px rgba(119, 137, 146, 0.13)", copy: "Sleek and sophisticated, white gold pairs beautifully with diamonds and contemporary styles." },
-];
-const bestSellers = [
-  { name: "Necklaces ", image: "bestseller1.png", href: "/collection?category=Necklaces" },
-  { name: "Designer Earrings", image: "bestseller2.png", href: "/collection?category=Rings" },
-  { name: "Bracelets", image: "bestseller3.png", href: "/collection?category=Necklaces" },
-  { name: "Desigener Rings", image: "bestseller4.png", href: "/collection?category=Bracelets" },
-  { name: "Bracelets", image: "bestseller5.png", href: "/collection?category=Earrings" },
 ];
 const reviews = [
   { name: "Everyday Elegance", text: "Explore understated designs that bring a little sparkle to your daily style." },
@@ -69,14 +55,14 @@ function RoundArrow({ direction, onClick, label }: { direction: "left" | "right"
 }
 
 function ProductTile({ item }: { item: CollectionItem }) {
-  return <Link href={`/collection?category=${encodeURIComponent(item.category)}`} className="group block min-w-0 text-left">
+  return <Link href={`/collection/${item.slug}`} className="group block min-w-0 text-left">
     <div className="relative aspect-square overflow-hidden rounded-lg border-2 border-white bg-[#f8f8f8]"><Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px" className="object-contain transition-transform duration-300 group-hover:scale-[1.04]" /></div>
-    <p className="mt-2 text-xs font-semibold text-[#373737] sm:text-sm">Enquire for Pricing</p>
+    <p className="mt-2 text-xs font-semibold text-[#373737] sm:text-sm">{item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Enquire for Pricing"}</p>
     <p className="truncate text-[11px] text-[#777] sm:text-xs">{item.name}</p>
   </Link>;
 }
 
-export function HomePage() {
+export function HomePage({ products }: { products: PublicCollectionProduct[] }) {
   const [loved, setLoved] = useState(0);
   const [collectionTab, setCollectionTab] = useState<CollectionTab>("All");
   const [faqTab, setFaqTab] = useState<CollectionCategory>("Rings");
@@ -85,6 +71,11 @@ export function HomePage() {
   );
   const newArrivalsRef = useRef<HTMLDivElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
+  const collectionItems: CollectionItem[] = products.map((item) => ({
+    id: item.id, name: item.name, image: item.image, category: item.type, slug: item.slug, price: item.price,
+  }));
+  const newArrivalItems = products.slice(0, 5);
+  const designItems = products.slice(0, 5).map((item) => ({ name: item.name, image: item.image, href: `/collection/${item.slug}` }));
   const shownItems = collectionTab === "All"
     ? collectionItems
     : collectionItems.filter((item) => item.category === collectionTab);
@@ -115,14 +106,14 @@ export function HomePage() {
     </Container>
 
     <Container className="pb-10 sm:pb-20"><SectionHeading title="New Arrivals" subtitle="Explore jewellery for your next chapter." />
-      <div className="-mx-4 grid overflow-hidden sm:mx-0 sm:rounded-lg lg:grid-cols-[41%_minmax(0,1fr)]"><Link href="/collection?collection=New+Arrivals" aria-label="Shop new arrivals" className="relative block aspect-[1539/1022] overflow-hidden"><Image src="/Home/newarrival_mb.png" alt="New Arrivals, for festive sparkle to everyday essentials" fill sizes="(max-width: 640px) 100vw, 1px" className="object-cover sm:hidden" /><Image src="/Home/newarrival.png" alt="" fill sizes="(max-width: 1024px) 90vw, 500px" className="hidden object-cover sm:block" /></Link>
+      <div className="-mx-4 grid overflow-hidden sm:mx-0 sm:rounded-lg lg:grid-cols-[41%_minmax(0,1fr)]"><Link href="/collection" aria-label="Shop new arrivals" className="relative block aspect-[1539/1022] overflow-hidden"><Image src="/Home/newarrival_mb.png" alt="New Arrivals, for festive sparkle to everyday essentials" fill sizes="(max-width: 640px) 100vw, 1px" className="object-cover sm:hidden" /><Image src="/Home/newarrival.png" alt="" fill sizes="(max-width: 1024px) 90vw, 500px" className="hidden object-cover sm:block" /></Link>
         <div className="flex min-w-0 flex-col bg-white">
-          <div className="min-h-0 flex-1 bg-white pt-5 sm:bg-[linear-gradient(180deg,#a8baac_0%,#bbcebe_42%,#f4f8f4_88%,#fff_100%)] sm:pt-3"><div ref={newArrivalsRef} className="flex min-w-0 gap-4 overflow-x-auto scroll-smooth px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:px-3">{newArrivalItems.map((item, index) => <Link key={`${item.image}-${index}`} href={pdpHref} className="group w-[38%] shrink-0 sm:w-[30%] lg:w-[24%]">
+          <div className="min-h-0 flex-1 bg-white pt-5 sm:bg-[linear-gradient(180deg,#a8baac_0%,#bbcebe_42%,#f4f8f4_88%,#fff_100%)] sm:pt-3"><div ref={newArrivalsRef} className="flex min-w-0 gap-4 overflow-x-auto scroll-smooth px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:px-3">{newArrivalItems.length ? newArrivalItems.map((item) => <Link key={item.id} href={`/collection/${item.slug}`} className="group w-[38%] shrink-0 sm:w-[30%] lg:w-[24%]">
             <div className="relative aspect-square overflow-hidden rounded-md border border-[#214E34]/80 bg-[#f8f8f8] sm:rounded-lg sm:border-white sm:bg-white"><Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 210px" className="object-contain" /></div>
-            <p className="mt-2 whitespace-nowrap text-xs font-semibold text-[#333] sm:text-sm">Enquire for Pricing</p>
+            <p className="mt-2 whitespace-nowrap text-xs font-semibold text-[#333] sm:text-sm">{item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Enquire for Pricing"}</p>
             <p className="truncate text-[11px] text-[#666]">{item.name}</p>
-          </Link>)}</div></div>
-          <div className="flex items-center justify-end gap-3 bg-white px-5 pb-4 pt-3 sm:justify-between"><div className="hidden gap-4 sm:flex"><RoundArrow direction="left" label="Previous new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: -newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /><RoundArrow direction="right" label="Next new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /></div><Link href="/collection?collection=New+Arrivals" className="rounded-md bg-[#214E34] px-6 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]"><span className="sm:hidden">Shop Now</span><span className="hidden sm:inline">View All</span></Link></div>
+          </Link>) : <p role="status" className="w-full py-8 text-center text-sm text-neutral-600">No products available yet.</p>}</div></div>
+          <div className="flex items-center justify-end gap-3 bg-white px-5 pb-4 pt-3 sm:justify-between"><div className="hidden gap-4 sm:flex"><RoundArrow direction="left" label="Previous new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: -newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /><RoundArrow direction="right" label="Next new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /></div><Link href="/collection" className="rounded-md bg-[#214E34] px-6 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]"><span className="sm:hidden">Shop Now</span><span className="hidden sm:inline">View All</span></Link></div>
         </div>
       </div>
     </Container>
@@ -156,7 +147,7 @@ export function HomePage() {
         </div>
         <div className="relative">
           <div id="home-collection-items" ref={collectionRef} className="flex gap-3 overflow-x-auto scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-5">
-            {shownItems.length ? shownItems.map((item) => <div key={item.id} className="w-[43%] shrink-0 sm:w-[30%] lg:w-[calc(20%_-_16px)]"><ProductTile item={item} /></div>) : <p role="status" className="w-full py-8 text-center text-sm text-neutral-600">No {collectionTab.toLowerCase()} are featured here yet. View all to explore this category.</p>}
+            {shownItems.length ? shownItems.map((item) => <div key={item.id} className="w-[43%] shrink-0 sm:w-[30%] lg:w-[calc(20%_-_16px)]"><ProductTile item={item} /></div>) : <p role="status" className="w-full py-8 text-center text-sm text-neutral-600">No products in this category yet.</p>}
           </div>
           {shownItems.length > 0 && <>
             <div className="absolute inset-y-0 -left-10 hidden items-center sm:flex"><RoundArrow direction="left" label="Previous collection item" onClick={() => collectionRef.current?.scrollBy({ left: -300, behavior: "smooth" })} /></div>
@@ -217,7 +208,7 @@ export function HomePage() {
 
     <section className="py-14 sm:py-20">
       <SectionHeading title="Discover Our Designs" subtitle="Explore jewellery for everyday elegance and meaningful occasions." />
-      <HomeBestSellerCarousel items={bestSellers} />
+      {designItems.length ? <HomeBestSellerCarousel items={designItems} /> : <p role="status" className="py-8 text-center text-sm text-neutral-600">No products available yet.</p>}
     </section>
 
     <HomeTestimonialsAnimated reviews={reviews} />

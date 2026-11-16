@@ -308,7 +308,8 @@ export async function seedProducts() {
   try {
     console.log("Starting idempotent product seed...");
 
-    for (const item of seedItems) {
+    // Only the ring examples remain after the catalogue cleanup.
+    for (const item of seedItems.filter((entry) => ["MR-84920", "MIR-001", "MIR-009"].includes(entry.sku))) {
       // 1. Check if product exists by SKU
       const existing = await pool.query(
         "SELECT id FROM products WHERE sku = $1",

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetailPage } from "@/components/pdp/product-detail-page";
-import { product as fallbackProduct } from "@/components/pdp/product-data";
-import { getProductBySlugOrSku } from "@/lib/actions/products";
+import { getProductBySlugOrSku, getPublicProducts } from "@/lib/actions/products";
 
 type PageProps = {
   params: Promise<{
@@ -23,26 +22,19 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
-  if (slug === fallbackProduct.slug) {
-    return {
-      title: `${fallbackProduct.name} | Miraya Diamonds`,
-      description: "Explore the Bhvita rose gold solitaire diamond ring by Miraya Diamonds.",
-    };
-  }
-
   return { title: "Product Not Found | Miraya Diamonds" };
 }
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-  const dbProduct = await getProductBySlugOrSku(slug);
+  const [dbProduct, allProducts] = await Promise.all([getProductBySlugOrSku(slug), getPublicProducts()]);
 
   if (dbProduct) {
-    return <ProductDetailPage initialProduct={dbProduct} />;
-  }
-
-  if (slug === fallbackProduct.slug) {
-    return <ProductDetailPage />;
+    const relatedProducts = allProducts
+      .filter((item) => item.id !== dbProduct.id)
+      .sort((a, b) => Number(b.jewelleryType === dbProduct.jewelleryType) - Number(a.jewelleryType === dbProduct.jewelleryType))
+      .slice(0, 5);
+    return <ProductDetailPage initialProduct={dbProduct} relatedProducts={relatedProducts} />;
   }
 
   notFound();

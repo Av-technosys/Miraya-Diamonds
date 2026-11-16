@@ -123,7 +123,7 @@ export function CollectionPage({
     return items;
   }, [appliedFilters, sort]);
   const previewCount = useMemo(() => products.filter((item) => matchesFilters(item, draftFilters)).length, [draftFilters]);
-  const categoryCounts = useMemo(() => Object.fromEntries(categoryOptions.map((item) => [item, products.filter((entry) => entry.type === item).length])), []);
+  const categoryCounts = useMemo(() => Object.fromEntries(categoryOptions.map((item) => [item, products.filter((entry) => entry.type === item).length])), [products]);
   const activeFilterCount = appliedFilters.categories.length + Number(Boolean(appliedFilters.price)) + appliedFilters.material.length + appliedFilters.stone.length + appliedFilters.occasion.length + appliedFilters.collection.length + appliedFilters.style.length + appliedFilters.karatage.length + appliedFilters.shopFor.length;
   const pageCount = Math.ceil(filtered.length / pageSize);
   const visible = filtered.slice((page - 1) * pageSize, page * pageSize);
@@ -204,7 +204,7 @@ export function CollectionPage({
             </article>
           ))}
         </div>
-        {visible.length === 0 && <p className="py-20 text-center text-sm text-neutral-600">{products.length ? "No designs match your selected filters. Try another selection or contact our team." : "Our online catalogue is currently unavailable. Please contact our team to explore available designs."} <Link href="/contact" className="text-[#214E34] underline">Contact Miraya Diamonds</Link></p>}
+        {visible.length === 0 && <p className="py-20 text-center text-sm text-neutral-600">{appliedFilters.categories.length && !appliedFilters.price && !appliedFilters.material.length && !appliedFilters.stone.length && !appliedFilters.occasion.length && !appliedFilters.collection.length && !appliedFilters.style.length && !appliedFilters.karatage.length && !appliedFilters.shopFor.length ? "No products in this category yet." : products.length ? "No designs match your selected filters. Try another selection or contact our team." : "No products available yet."} <Link href="/contact" className="text-[#214E34] underline">Contact Miraya Diamonds</Link></p>}
         {message && <p role="status" className="mt-4 text-xs text-[#214E34]">{message}</p>}
 
         {pageCount > 1 && (

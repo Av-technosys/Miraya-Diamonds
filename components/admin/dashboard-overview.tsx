@@ -67,7 +67,7 @@ export function DashboardOverview({ onNavigateTab, onOpenAddProduct, usersCount,
           <div className="divide-y divide-[#eee9e4] px-5 sm:px-6">
             {lowStockProducts.length === 0 && <p className="py-8 text-sm text-[#8a837b]">{products.length ? "No products currently need restocking." : "Add products to start tracking stock."}</p>}
             {lowStockProducts.map((product) => <div key={product.id} className="flex items-start justify-between gap-4 py-5">
-              <div className="min-w-0"><p className="truncate text-sm font-medium text-[#45433e]">{product.name}</p><p className="mt-1 text-[10px] text-[#9a948a]">{product.sku} · {product.goldPurities.join(", ")}</p><p className="mt-2 text-xs text-[#214E34]">₹{product.price.toLocaleString("en-IN")}</p></div>
+              <div className="min-w-0"><p className="truncate text-sm font-medium text-[#45433e]">{product.name}</p><p className="mt-1 text-[10px] text-[#9a948a]">{product.sku} · {product.goldPurities.join(", ")}</p><p className="mt-2 text-xs text-[#214E34]">{product.price > 0 ? `₹${product.price.toLocaleString("en-IN")}` : "Enquire for pricing"}</p></div>
               <span className={`shrink-0 rounded border px-2 py-1 text-[10px] ${product.stock === 0 ? "border-[#e8d9d4] bg-[#faf2ef] text-[#a16e5e]" : "border-[#e8dfce] bg-[#faf7ef] text-[#907c52]"}`}>{product.stock === 0 ? "Out of stock" : `${product.stock} left`}</span>
             </div>)}
           </div>

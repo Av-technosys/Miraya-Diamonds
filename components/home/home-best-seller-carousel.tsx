@@ -128,7 +128,7 @@ export function HomeBestSellerCarousel({ items }: { items: BestSeller[] }) {
                 className="group relative block w-[132px] shrink-0 overflow-hidden rounded-[14px] shadow-md will-change-transform sm:w-[260px] lg:w-[290px]"
               >
                 <div className="relative aspect-[3/4]">
-                  <Image src={`/Home/${item.image}`} alt={repeat === 1 ? item.name : ""} fill sizes="(max-width: 640px) 132px, (max-width: 1024px) 260px, 290px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                  <Image src={item.image} alt={repeat === 1 ? item.name : ""} fill sizes="(max-width: 640px) 132px, (max-width: 1024px) 260px, 290px" className="object-cover transition-transform duration-700 group-hover:scale-105" />
                   <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/65 to-transparent sm:h-28" />
                   <span className="absolute inset-x-2 bottom-2 border-y border-white/80 py-1 text-center text-[9px] font-medium text-white sm:inset-x-4 sm:bottom-4 sm:py-2 sm:text-xs">{item.name}</span>
                 </div>
