@@ -244,7 +244,11 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
             {product.name}
           </h1>
 
-
+          {product.description && (
+            <p className="mt-2.5 text-xs leading-relaxed text-[#615d5d] sm:text-[13px]">
+              {product.description}
+            </p>
+          )}
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <p className="text-[27px] font-semibold text-[#214E34]">{product.price}</p>
@@ -393,13 +397,19 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
-          <div className="rounded-xl border border-[#eadedd] bg-white p-6 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
-            {specs.map(([label, value]) => (
-              <div key={label} className="flex justify-between gap-4 border-b border-neutral-200 py-2.5 text-xs last:border-0">
-                <span className="text-neutral-500">{label}</span>
-                <span className="text-right font-medium text-[#201f1f]">{value}</span>
-              </div>
-            ))}
+          <div className="flex flex-col rounded-xl border border-[#eadedd] bg-white p-6 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
+            <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-[21px] font-semibold leading-tight text-[#201f1f]">Specifications & Craft</h3>
+            {product.description && (
+              <p className="mt-2 mb-3 text-xs leading-relaxed text-neutral-600 border-b border-neutral-100 pb-3">{product.description}</p>
+            )}
+            <div className="flex-1">
+              {specs.map(([label, value]) => (
+                <div key={label} className="flex justify-between gap-4 border-b border-neutral-200 py-2.5 text-xs last:border-0">
+                  <span className="text-neutral-500">{label}</span>
+                  <span className="text-right font-medium text-[#201f1f]">{value}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="flex min-h-[440px] flex-col items-center rounded-xl border border-[#eadedd] bg-white px-5 pb-7 pt-5 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
