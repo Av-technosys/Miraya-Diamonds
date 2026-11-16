@@ -46,12 +46,12 @@ export function QuickContact() {
             Email Miraya Diamonds
           </span>
           <h3 className="font-serif font-semibold break-words text-[18px] md:text-[21px] leading-[20px] md:leading-[33.75px] tracking-[0.25px] text-[#1C1B1B] mb-2 lining-nums">
-            miraya.diamond23@gmail.com
+            Sales.mirayadiamonds@gmail.com
           </h3>
           <p className="font-sans font-normal text-[14px] leading-[20px] text-[#757575] mb-auto">
             Share your design ideas, product questions or requests for diamond documentation.
           </p>
-          <a href="mailto:miraya.diamond23@gmail.com" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
+          <a href="mailto:Sales.mirayadiamonds@gmail.com" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
             <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[0px] text-white uppercase">
               Send Email
             </span>
@@ -73,7 +73,7 @@ export function QuickContact() {
           <p className="font-sans font-normal text-[14px] leading-[20px] text-[#757575] mb-auto">
             Contact us to discuss a remote consultation and the details you would like to explore.
           </p>
-          <a href="mailto:miraya.diamond23@gmail.com?subject=Jewellery%20consultation" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
+          <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
             <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[0px] text-white uppercase">
               Discuss a Consultation
             </span>
