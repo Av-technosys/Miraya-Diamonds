@@ -7,6 +7,7 @@ export type ProductOption = {
 export const product = {
   slug: "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring",
   name: "Bhvita 18KT Rose Gold Filigree Solitaire Diamond Ring",
+  description: "A masterclass in fine craftsmanship, this 18KT rose gold filigree ring features an exquisite solitaire diamond embraced by delicate vintage-inspired filigree patterns and pavé accents.",
   collection: "The Miraya Diamonds Collection",
   sku: "#MR-84920",
   badge: "Diamond Jewellery",
