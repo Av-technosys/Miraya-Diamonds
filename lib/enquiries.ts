@@ -24,6 +24,7 @@ export type EnquiryListResult = {
 } | { success: false; error: string };
 
 export type ProductSelection = {
+  variantId?: string | null;
   metalColour: string;
   diamondGrade: string;
   metalPurity: string;

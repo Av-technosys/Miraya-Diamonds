@@ -7,6 +7,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Heart, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/container";
 import type { PublicCollectionProduct } from "@/lib/actions/products";
+import { formatCataloguePrice } from "@/lib/product-catalog";
 import { FilterDrawer } from "./filter-drawer";
 import { collectionFilterUrl, emptyFilters, filterGroups, getCollectionFilterOptions, matchesFilters, parseCollectionFilters, priceRanges, type Filters } from "./filter-state";
 import { SortMenu, type Sort } from "./sort-menu";
@@ -146,12 +147,12 @@ export function CollectionPage({ initialProducts }: { initialProducts: PublicCol
         <div ref={gridRef} className="grid scroll-mt-5 grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
           {visible.map((item) => (
             <article key={item.id} className="relative min-w-0 rounded-lg bg-white p-1.5 shadow-[0_6px_24px_rgba(33,78,52,0.07)]">
-              <Link href={`/collection/${item.slug || item.id}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
+              <Link href={`/collection/${encodeURIComponent(item.slug || item.id)}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
               <div className="relative aspect-square overflow-hidden rounded-[5px] bg-[#F7F7F7]">
-                <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
+                {item.image ? <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="h-full w-full object-fill" /> : <span className="absolute inset-0 grid place-items-center text-xs text-neutral-500">Image unavailable</span>}
               </div>
               <div className="px-1 pb-1 pt-2">
-                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">{item.price > 0 ? `${item.priceFrom ? "From " : ""}₹${item.price.toLocaleString("en-IN", { maximumFractionDigits: 2 })}` : "Enquire for Pricing"}</p>
+                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">{formatCataloguePrice(item)}</p>
                 <p className="mt-0.5 truncate text-[11px] leading-tight text-neutral-600 sm:text-[10px]" title={item.name}>{item.name}</p>
                 <div className="relative z-20 mt-3 flex gap-1">
                   <button type="button" onClick={() => {

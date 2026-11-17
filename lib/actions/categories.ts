@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
-import { category, type Category, type NewCategory } from "@/lib/db/schema";
+import { category, type Category } from "@/lib/db/schema";
 import { asc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
@@ -11,6 +11,7 @@ export interface CreateCategoryInput {
   slug: string;
   redirectSlug?: string;
   bannerImage?: string;
+  dimensions?: string;
   description?: string;
   priority?: number;
 }
@@ -33,6 +34,12 @@ export async function getCategories(): Promise<Category[]> {
     console.error("Error fetching categories:", error);
     return [];
   }
+}
+
+export async function getCategoryById(id: string): Promise<Category | null> {
+  if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) return null;
+  const [result] = await db.select().from(category).where(eq(category.id, id)).limit(1);
+  return result || null;
 }
 
 /**
@@ -84,13 +91,14 @@ export async function createCategory(input: CreateCategoryInput): Promise<{
         slug,
         redirectSlug: input.redirectSlug?.trim() || `/collection?category=${encodeURIComponent(name)}`,
         bannerImage: input.bannerImage ? toRelativeKey(input.bannerImage.trim()) : null,
+        dimensions: input.dimensions ? toRelativeKey(input.dimensions.trim()) : null,
         description: input.description?.trim() || null,
         priority: input.priority !== undefined ? input.priority : 1,
       })
       .returning();
 
     revalidatePath("/admin", "layout");
-    revalidatePath("/collection");
+    revalidatePath("/collection", "layout");
     revalidatePath("/");
 
     return { success: true, category: newCat };
@@ -140,6 +148,9 @@ export async function updateCategory(
     if (input.bannerImage !== undefined) {
       updates.bannerImage = input.bannerImage ? toRelativeKey(input.bannerImage.trim()) : null;
     }
+    if (input.dimensions !== undefined) {
+      updates.dimensions = input.dimensions ? toRelativeKey(input.dimensions.trim()) : null;
+    }
     if (input.description !== undefined) updates.description = input.description ? input.description.trim() : null;
     if (input.priority !== undefined) updates.priority = input.priority;
 
@@ -150,7 +161,7 @@ export async function updateCategory(
       .returning();
 
     revalidatePath("/admin", "layout");
-    revalidatePath("/collection");
+    revalidatePath("/collection", "layout");
     revalidatePath("/");
 
     return { success: true, category: updated };
@@ -176,7 +187,7 @@ export async function deleteCategory(id: string): Promise<{ success: boolean; er
     }
 
     revalidatePath("/admin", "layout");
-    revalidatePath("/collection");
+    revalidatePath("/collection", "layout");
     revalidatePath("/");
 
     return { success: true };

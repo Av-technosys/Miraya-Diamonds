@@ -10,10 +10,11 @@ import {
   type ProductVariant,
   type ProductMedia,
 } from "@/lib/db/schema";
-import { eq, asc, desc, inArray } from "drizzle-orm";
+import { eq, asc, desc, inArray, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import type { AdminProduct } from "@/lib/admin/types";
-import { calculateProductPrice, formatProductPrice, getCataloguePrice } from "@/lib/product-pricing";
+import { getProductSlug, getProductOptions, getProductGallery, uniqueValues } from "@/lib/product-catalog";
+import { formatProductPrice, getCataloguePrice } from "@/lib/product-pricing";
 import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 export interface PublicCollectionProduct {
@@ -23,6 +24,8 @@ export interface PublicCollectionProduct {
   image: string;
   type: string;
   categoryAliases: string[];
+  categoryId: string | null;
+  createdAt: string | null;
   price: number;
   priceFrom: boolean;
   materials: string[];
@@ -64,7 +67,7 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
     const media = await db
       .select()
       .from(productMedia)
-      .where(inArray(productMedia.productId, productIds));
+      .where(inArray(productMedia.productId, productIds)).orderBy(asc(productMedia.createdAt), asc(productMedia.id));
 
     // Group variants and media by productId
     const variantMap = new Map<string, ProductVariant[]>();
@@ -146,7 +149,7 @@ export async function deleteProduct(id: string): Promise<{ success: boolean; err
     }
 
     revalidatePath("/admin", "layout");
-    revalidatePath("/collection");
+    revalidatePath("/collection", "layout");
     revalidatePath("/");
 
     return { success: true };
@@ -180,7 +183,7 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
     const media = await db
       .select()
       .from(productMedia)
-      .where(inArray(productMedia.productId, productIds));
+      .where(inArray(productMedia.productId, productIds)).orderBy(asc(productMedia.createdAt), asc(productMedia.id));
 
     const variantMap = new Map<string, ProductVariant[]>();
     for (const v of variants) {
@@ -227,28 +230,16 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
     return allProducts.map((p) => {
       const pVariants = variantMap.get(p.id) || [];
       const pMedia = mediaMap.get(p.id) || [];
-      const primaryVariant = pVariants[0];
-
       const cataloguePrice = getCataloguePrice(p, pVariants);
       const price = cataloguePrice.price ?? 0;
 
-      const gallery = pMedia.map((m) => getImageUrl(m.mediaURL)).filter(Boolean);
-      const image = getImageUrl(p.bannerImage || gallery[0]);
-
+      const gallery = getProductGallery(p.bannerImage, pMedia);
+      const image = gallery[0] || "";
       const rawType = (p.jewelleryType || categoryById.get(p.categoryId || "")?.slug || "jewellery").toLowerCase().trim();
       const linkedCategory = categoryById.get(p.categoryId || "");
       const type = linkedCategory?.name || categoryMap[rawType] || (rawType.charAt(0).toUpperCase() + rawType.slice(1));
-      const uniqueOptions = (values: (string | null | undefined)[]) => [...new Set(values.map((value) => value?.trim()).filter((value): value is string => Boolean(value)))];
-      const goldColours = uniqueOptions([...(p.goldColours || []), ...pVariants.map((variant) => variant.metalColour)]);
-      const goldPurities = uniqueOptions([...(p.goldPurities || []), ...pVariants.map((variant) => variant.goldPurity)]);
-      const diamondGrades = uniqueOptions([...(p.diamondGrades || []), ...pVariants.map((variant) => variant.diamondGrade)]);
-      const sizes = uniqueOptions([...(p.sizes || []), ...pVariants.map((variant) => variant.size)]);
-
-      // URL friendly slug
-      const slug =
-        p.sku === "MR-84920"
-          ? "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring"
-          : `${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${p.sku.toLowerCase()}`;
+      const { goldColours, goldPurities, diamondGrades, sizes } = getProductOptions(p, pVariants);
+      const slug = getProductSlug(p);
 
       return {
         id: p.id,
@@ -258,16 +249,18 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
         type,
         price,
         priceFrom: cataloguePrice.from,
-        categoryAliases: uniqueOptions([type, linkedCategory?.slug, linkedCategory?.id, linkedCategory ? null : p.jewelleryType]),
-        materials: uniqueOptions(goldColours.map((colour) => {
+        categoryId: p.categoryId,
+        createdAt: p.createdAt?.toISOString() || null,
+        categoryAliases: uniqueValues([type, linkedCategory?.slug, linkedCategory?.id, linkedCategory ? null : p.jewelleryType]),
+        materials: uniqueValues(goldColours.map((colour) => {
           const value = colour.toLowerCase().replace(/\s+gold$/, "");
           const labels: Record<string, string> = { yellow: "Yellow Gold", rose: "Rose Gold", white: "White Gold" };
           return labels[value] || colour;
         })),
         stone: (p.diamondPieces ?? 0) > 0 || diamondGrades.length ? "Diamond" : "",
         jewelleryType: p.jewelleryType || "",
-        gallery: gallery.length > 0 ? gallery : [image],
-        inStock: primaryVariant?.isInStock !== false && (primaryVariant?.stock ?? 1) > 0,
+        gallery,
+        inStock: pVariants.some((variant) => variant.isInStock !== false && (variant.stock ?? 0) > 0),
         diamondGrades,
         goldPurities,
         goldColours,
@@ -284,97 +277,58 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
  * Fetch a single product by slug or SKU with its gallery and full details.
  */
 export async function getProductBySlugOrSku(slugOrSku: string) {
-  try {
-    // If slug is the flagship bhvita slug, find by SKU MR-84920
-    const cleanParam = decodeURIComponent(slugOrSku).trim();
-
-    let productRow: Product | undefined;
-
-    if (cleanParam === "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring" || cleanParam.includes("MR-84920")) {
-      const res = await db.select().from(products).where(eq(products.sku, "MR-84920"));
-      productRow = res[0];
-    } else {
-      // Try direct SKU match
-      const bySku = await db.select().from(products).where(eq(products.sku, cleanParam));
-      if (bySku.length > 0) {
-        productRow = bySku[0];
-      } else {
-        // Try searching all products for matching generated slug
-        const all = await db.select().from(products);
-        productRow = all.find((p) => {
-          const generated = `${p.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${p.sku.toLowerCase()}`;
-          return (
-            generated === cleanParam ||
-            cleanParam.endsWith(p.sku.toLowerCase()) ||
-            cleanParam.includes(p.sku.toLowerCase())
-          );
-        });
-      }
-    }
-
-    if (!productRow) return null;
-
-    const variants = await db
-      .select()
-      .from(productVariants)
-      .where(eq(productVariants.productId, productRow.id)).orderBy(asc(productVariants.createdAt), asc(productVariants.id));
-
-    const media = await db
-      .select()
-      .from(productMedia)
-      .where(eq(productMedia.productId, productRow.id));
-
-    const primaryVariant = variants[0];
-    const gallery = media.map((m) => getImageUrl(m.mediaURL)).filter(Boolean);
-    if (gallery.length === 0 && productRow.bannerImage) {
-      gallery.push(getImageUrl(productRow.bannerImage));
-    }
-
-    const pricing = calculateProductPrice(productRow, primaryVariant?.goldPurity || productRow.goldPurities[0], primaryVariant?.price);
-
-    return {
-      id: productRow.id,
-      sku: productRow.sku,
-      name: productRow.name,
-      description: productRow.description,
-      jewelleryType: productRow.jewelleryType,
-      slug:
-        productRow.sku === "MR-84920"
-          ? "bhvita-18kt-rose-gold-filigree-solitaire-diamond-ring"
-          : `${productRow.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "")}-${productRow.sku.toLowerCase()}`,
-      collection: "The Miraya Diamonds Collection",
-      badge: "Diamond Jewellery",
-      price: formatProductPrice(pricing.amount),
-
-      emi: "Contact our team to confirm pricing and payment arrangements.",
-      gallery: gallery.length > 0 ? gallery : ["/PDP/product1.jpg"],
-      diamondGrades: productRow.diamondGrades,
-      goldPurities: productRow.goldPurities,
-      goldColours: productRow.goldColours,
-      sizes: productRow.sizes,
-      grossWeight: productRow.grossWeight,
-      netGoldWeight: productRow.netGoldWeight,
-      diamondPieces: productRow.diamondPieces,
-      totalDiamondWeight: productRow.totalDiamondWeight,
-      diamondPrice: productRow.diamondPrice,
-      makingCharge: productRow.makingCharge,
-      dimensions: productRow.dimensions,
-      specs: [
-        ["Product Type", productRow.jewelleryType ? productRow.jewelleryType.charAt(0).toUpperCase() + productRow.jewelleryType.slice(1) : "Confirm with team"],
-        ["Metal", [productRow.goldPurities[0], productRow.goldColours[0]].filter(Boolean).join(" ") || "Confirm with team"],
-        ["Net Gold Weight", productRow.netGoldWeight !== null ? `${productRow.netGoldWeight} g` : "Confirm with team"],
-        ["Gross Weight", productRow.grossWeight !== null ? `${productRow.grossWeight} g` : "Confirm with team"],
-        ["Diamond Pieces", productRow.diamondPieces !== null ? `${productRow.diamondPieces}` : "Confirm with team"],
-        ["Total Diamond Weight", productRow.totalDiamondWeight !== null ? `${productRow.totalDiamondWeight} ct` : "Confirm with team"],
-        ["Diamond Grade", productRow.diamondGrades.join(", ") || "Confirm with team"],
-        ["Available Sizes", productRow.sizes.join(", ") || "Confirm with team"],
-
-      ],
-      variants,
-    };
-  } catch (error) {
-    console.error("Error fetching product by slug/sku:", error);
-    return null;
+  const cleanParam = slugOrSku.trim();
+  if (!cleanParam || cleanParam.length > 500) return null;
+  const [bySku] = await db.select().from(products).where(sql`lower(${products.sku}) = ${cleanParam.toLowerCase()}`).limit(1);
+  let productRow: Product | undefined = bySku;
+  if (!productRow && /^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i.test(cleanParam)) {
+    [productRow] = await db.select().from(products).where(eq(products.id, cleanParam)).limit(1);
   }
-}
+  if (!productRow) {
+    const rows = await db.select().from(products);
+    productRow = rows.find((product) => getProductSlug(product) === cleanParam.toLowerCase());
+  }
+  if (!productRow) return null;
 
+  const [variants, media, categoryRows] = await Promise.all([
+    db.select().from(productVariants).where(eq(productVariants.productId, productRow.id)).orderBy(asc(productVariants.createdAt), asc(productVariants.id)),
+    db.select().from(productMedia).where(eq(productMedia.productId, productRow.id)).orderBy(asc(productMedia.createdAt), asc(productMedia.id)),
+    productRow.categoryId ? db.select().from(category).where(eq(category.id, productRow.categoryId)).limit(1) : Promise.resolve([]),
+  ]);
+  const options = getProductOptions(productRow, variants);
+  const gallery = getProductGallery(productRow.bannerImage, media);
+  const pricing = getCataloguePrice(productRow, variants);
+  const specs: [string, string][] = [];
+  const addSpec = (label: string, value: string | number | null | undefined, suffix = "") => {
+    if (value !== null && value !== undefined && value !== "") specs.push([label, `${value}${suffix}`]);
+  };
+  addSpec("Product Type", productRow.jewelleryType || categoryRows[0]?.name);
+  addSpec("Gold Purities", options.goldPurities.join(", "));
+  addSpec("Gold Colours", options.goldColours.join(", "));
+  addSpec("Net Gold Weight", productRow.netGoldWeight, " g");
+  addSpec("Gross Weight", productRow.grossWeight, " g");
+  addSpec("Diamond Pieces", productRow.diamondPieces);
+  addSpec("Total Diamond Weight", productRow.totalDiamondWeight, " ct");
+  addSpec("Diamond Grades", options.diamondGrades.join(", "));
+  addSpec("Available Sizes", options.sizes.join(", "));
+  for (const key of ["height", "width", "length"] as const) addSpec(key.charAt(0).toUpperCase() + key.slice(1), productRow.dimensions?.[key], " mm");
+
+  return {
+    id: productRow.id, sku: productRow.sku, name: productRow.name, description: productRow.description,
+    categoryId: productRow.categoryId, categoryName: categoryRows[0]?.name || "Jewellery",
+    categoryDimensions: categoryRows[0]?.dimensions ? getImageUrl(categoryRows[0].dimensions) : null,
+    jewelleryType: productRow.jewelleryType, slug: getProductSlug(productRow),
+    badge: categoryRows[0]?.name || productRow.jewelleryType || "Fine Jewellery",
+    price: formatProductPrice(pricing.price), gallery, ...options,
+    grossWeight: productRow.grossWeight, netGoldWeight: productRow.netGoldWeight,
+    diamondPieces: productRow.diamondPieces, totalDiamondWeight: productRow.totalDiamondWeight,
+    diamondPrice: productRow.diamondPrice, makingCharge: productRow.makingCharge,
+    dimensions: productRow.dimensions, specs,
+    variants: variants.map((variant) => ({
+      id: variant.id, name: variant.name, sku: variant.sku, metalColour: variant.metalColour,
+      goldPurity: variant.goldPurity, diamondGrade: variant.diamondGrade, size: variant.size,
+      price: variant.price, stock: variant.stock, isInStock: variant.isInStock,
+      gallery: getProductGallery(productRow.bannerImage, media, variant.id),
+    })),
+  };
+}

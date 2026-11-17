@@ -7,7 +7,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ChevronDown, Gem, Heart, Leaf, Tag } from "lucide-react";
 import { Container } from "@/components/common/container";
-import { product, suiteProducts } from "@/components/pdp/product-data";
+import type { PublicCollectionProduct } from "@/lib/actions/products";
+import { formatCataloguePrice } from "@/lib/product-catalog";
+import { emptyFilters, matchesFilters } from "@/components/collection/filter-state";
 import { HeroCarousel } from "./hero-carousel";
 import { HomeBestSellerCarousel } from "./home-best-seller-carousel";
 import { HomeTestimonialsAnimated } from "./home-testimonials-animated";
@@ -15,7 +17,6 @@ import showcaseBanner from "@/public/Home/showcasebanner.png";
 import diamondComparisonBanner from "@/public/Home/showcasebanner2.png";
 import stayInTouchBanner from "@/public/Home/stayintouch.png";
 
-const pdpHref = `/collection/${product.slug}`;
 const categories = [
   { name: "Earrings", image: "Category1.png", href: "/collection?category=Earrings" },
   { name: "Rings", image: "Category2.png", href: "/collection?category=Rings" },
@@ -27,20 +28,6 @@ const categories = [
 const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"] as const;
 type CollectionTab = (typeof tabs)[number];
 type CollectionCategory = Exclude<CollectionTab, "All">;
-type CollectionItem = {
-  id: string;
-  name: string;
-  image: string;
-  category: CollectionCategory;
-};
-const collectionItems: CollectionItem[] = [
-  { id: "collection-earrings", name: "Bhvita 22KT Earrings", image: "/Home/collection1.png", category: "Earrings" },
-  { id: "collection-necklace", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
-  { id: "collection-ring", name: "22KT Gold Ring", image: "/Home/collection3.png", category: "Rings" },
-  { id: "collection-bracelet", name: "Bhvita 22KT Bracelet", image: "/Home/collection4.png", category: "Bracelets" },
-  { id: "collection-necklace-featured", name: "Bhvita 22KT Necklace", image: "/Home/collection2.png", category: "Necklaces" },
-];
-const newArrivalItems = [suiteProducts[4], suiteProducts[2], suiteProducts[0], suiteProducts[1], suiteProducts[3]];
 const lovedImages = ["mostloved1.png", "mostloved3.png", "mostloved2.png"];
 const signature = [
   { name: "Warm & Romantic", metal: "Rose Gold", image: "Signature1.png", swatch: "linear-gradient(135deg, #E4A494, #F4C5B8 50%, #E3A393)", edge: "linear-gradient(135deg, #A86F62, #F9E5DE 22%, #C68778 40%, #FFF9F6 53%, #D49A8B 75%, #9E675F)", button: "linear-gradient(100deg, #C67970, #EDB5A8)", shadow: "0 5px 14px rgba(180, 113, 100, 0.13)", copy: "A soft pink hue that adds a touch of romance. Ideal for those who love subtle uniqueness." },
@@ -68,15 +55,17 @@ function RoundArrow({ direction, onClick, label }: { direction: "left" | "right"
   return <button type="button" onClick={onClick} aria-label={label} className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-[#214E34] shadow-[0_2px_12px_rgba(0,0,0,0.12)] transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-[#214E34] sm:size-10">{direction === "left" ? <ArrowLeft size={18} /> : <ArrowRight size={18} />}</button>;
 }
 
-function ProductTile({ item }: { item: CollectionItem }) {
-  return <Link href={`/collection?category=${encodeURIComponent(item.category)}`} className="group block min-w-0 text-left">
-    <div className="relative aspect-square overflow-hidden rounded-lg border-2 border-white bg-[#f8f8f8]"><Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px" className="object-contain transition-transform duration-300 group-hover:scale-[1.04]" /></div>
-    <p className="mt-2 text-xs font-semibold text-[#373737] sm:text-sm">Enquire for Pricing</p>
+function ProductTile({ item }: { item: PublicCollectionProduct }) {
+  return <Link href={`/collection/${encodeURIComponent(item.slug)}`} className="group block min-w-0 text-left">
+    <div className="relative aspect-square overflow-hidden rounded-lg border-2 border-white bg-[#f8f8f8]">{item.image ? <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 44vw, (max-width: 1024px) 28vw, 220px" className="h-full w-full object-fill" /> : <span className="absolute inset-0 grid place-items-center text-xs text-neutral-500">Image unavailable</span>}</div>
+    <p className="mt-2 text-xs font-semibold text-[#373737] sm:text-sm">{formatCataloguePrice(item)}</p>
     <p className="truncate text-[11px] text-[#777] sm:text-xs">{item.name}</p>
   </Link>;
 }
 
-export function HomePage() {
+export function HomePage({ products }: { products: PublicCollectionProduct[] }) {
+  const newArrivalItems = [...products].sort((a, b) => (b.createdAt || "").localeCompare(a.createdAt || "")).slice(0, 8);
+  const collectionItems = products;
   const [loved, setLoved] = useState(0);
   const [collectionTab, setCollectionTab] = useState<CollectionTab>("All");
   const [faqTab, setFaqTab] = useState<CollectionCategory>("Rings");
@@ -87,7 +76,7 @@ export function HomePage() {
   const collectionRef = useRef<HTMLDivElement>(null);
   const shownItems = collectionTab === "All"
     ? collectionItems
-    : collectionItems.filter((item) => item.category === collectionTab);
+    : collectionItems.filter((item) => matchesFilters(item, { ...emptyFilters, categories: [collectionTab] }));
   const collectionHref = collectionTab === "All"
     ? "/collection"
     : `/collection?category=${encodeURIComponent(collectionTab)}`;
@@ -117,9 +106,9 @@ export function HomePage() {
     <Container className="pb-10 sm:pb-20"><SectionHeading title="New Arrivals" subtitle="Explore jewellery for your next chapter." />
       <div className="-mx-4 grid overflow-hidden sm:mx-0 sm:rounded-lg lg:grid-cols-[41%_minmax(0,1fr)]"><Link href="/collection?collection=New+Arrivals" aria-label="Shop new arrivals" className="relative block aspect-[1539/1022] overflow-hidden"><Image src="/Home/newarrival_mb.png" alt="New Arrivals, for festive sparkle to everyday essentials" fill sizes="(max-width: 640px) 100vw, 1px" className="object-cover sm:hidden" /><Image src="/Home/newarrival.png" alt="" fill sizes="(max-width: 1024px) 90vw, 500px" className="hidden object-cover sm:block" /></Link>
         <div className="flex min-w-0 flex-col bg-white">
-          <div className="min-h-0 flex-1 bg-white pt-5 sm:bg-[linear-gradient(180deg,#a8baac_0%,#bbcebe_42%,#f4f8f4_88%,#fff_100%)] sm:pt-3"><div ref={newArrivalsRef} className="flex min-w-0 gap-4 overflow-x-auto scroll-smooth px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:px-3">{newArrivalItems.map((item, index) => <Link key={`${item.image}-${index}`} href={pdpHref} className="group w-[38%] shrink-0 sm:w-[30%] lg:w-[24%]">
-            <div className="relative aspect-square overflow-hidden rounded-md border border-[#214E34]/80 bg-[#f8f8f8] sm:rounded-lg sm:border-white sm:bg-white"><Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 210px" className="object-contain" /></div>
-            <p className="mt-2 whitespace-nowrap text-xs font-semibold text-[#333] sm:text-sm">Enquire for Pricing</p>
+          <div className="min-h-0 flex-1 bg-white pt-5 sm:bg-[linear-gradient(180deg,#a8baac_0%,#bbcebe_42%,#f4f8f4_88%,#fff_100%)] sm:pt-3"><div ref={newArrivalsRef} className="flex min-w-0 gap-4 overflow-x-auto scroll-smooth px-2.5 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:gap-3 sm:px-3">{!newArrivalItems.length && <p className="w-full px-4 py-8 text-center text-sm text-neutral-600">No new products are available yet.</p>}{newArrivalItems.map((item) => <Link key={item.id} href={`/collection/${encodeURIComponent(item.slug)}`} className="group w-[38%] shrink-0 sm:w-[30%] lg:w-[24%]">
+            <div className="relative aspect-square overflow-hidden rounded-md border border-[#214E34]/80 bg-[#f8f8f8] sm:rounded-lg sm:border-white sm:bg-white">{item.image ? <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 38vw, (max-width: 1024px) 30vw, 210px" className="h-full w-full object-fill" /> : <span className="absolute inset-0 grid place-items-center text-xs text-neutral-500">Image unavailable</span>}</div>
+            <p className="mt-2 whitespace-nowrap text-xs font-semibold text-[#333] sm:text-sm">{formatCataloguePrice(item)}</p>
             <p className="truncate text-[11px] text-[#666]">{item.name}</p>
           </Link>)}</div></div>
           <div className="flex items-center justify-end gap-3 bg-white px-5 pb-4 pt-3 sm:justify-between"><div className="hidden gap-4 sm:flex"><RoundArrow direction="left" label="Previous new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: -newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /><RoundArrow direction="right" label="Next new arrival" onClick={() => newArrivalsRef.current?.scrollBy({ left: newArrivalsRef.current.clientWidth * 0.3, behavior: "smooth" })} /></div><Link href="/collection?collection=New+Arrivals" className="rounded-md bg-[#214E34] px-6 py-2.5 text-xs font-semibold text-white hover:bg-[#173d28]"><span className="sm:hidden">Shop Now</span><span className="hidden sm:inline">View All</span></Link></div>
