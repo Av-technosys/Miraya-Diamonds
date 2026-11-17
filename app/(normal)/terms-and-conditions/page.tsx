@@ -57,7 +57,7 @@ const POLICY_SECTIONS = [
   {
     id: 10,
     title: "Contact Us",
-    content: "For questions about these terms, contact Miraya Diamonds at Sales.mirayadiamonds@gmail.com.",
+    content: "For questions about these terms, contact Miraya Diamonds at miraya.diamond23@gmail.com.",
     isContact: true
   }
 ];
@@ -153,7 +153,7 @@ function TermsContent() {
               {section.isContact ? (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                   If you have any questions or concerns about these Terms and Conditions, please contact us at <br className="hidden md:block"/>
-                  <a href="mailto:Sales.mirayadiamonds@gmail.com" className="font-medium text-[#214E34]">Sales.mirayadiamonds@gmail.com</a>.
+                  <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34]">miraya.diamond23@gmail.com</a>.
                 </p>
               ) : (
                 <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
@@ -234,7 +234,7 @@ function TermsSidebar() {
               <Image src="/privacy-policy/email-icon.png" alt="Email" width={16} height={16} className="object-contain w-3.5 h-3.5" />
             </div>
             <div className="flex flex-col pt-1">
-              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">Sales.mirayadiamonds@gmail.com</span>
+              <span className="font-sans font-semibold text-[14px] leading-[16px] text-[#171717] mb-1">miraya.diamond23@gmail.com</span>
               <span className="font-sans font-normal text-[14px] leading-[16px] text-[#6F6A68]">Contact us with your enquiry</span>
             </div>
           </div>

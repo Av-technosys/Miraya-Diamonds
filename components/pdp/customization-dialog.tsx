@@ -34,7 +34,7 @@ export function CustomizationDialog() {
           <Dialog.Close aria-label="Close customisation form" className="absolute right-3 top-3 grid size-7 place-items-center rounded-full text-[#77786d] hover:bg-[#eaf1e7]"><X size={17} strokeWidth={1.5} /></Dialog.Close>
           <div className="mb-5 px-5 text-center">
             <Dialog.Title className="font-serif text-[26px] font-semibold leading-tight text-[#26362a]">Discuss Your Design</Dialog.Title>
-            <Dialog.Description className="mt-1 text-[11px] leading-5 text-[#85877a]">Contact our team at Sales.mirayadiamonds@gmail.com to discuss your design. Online submission is currently unavailable.</Dialog.Description>
+            <Dialog.Description className="mt-1 text-[11px] leading-5 text-[#85877a]">Contact our team at miraya.diamond23@gmail.com to discuss your design. Online submission is currently unavailable.</Dialog.Description>
           </div>
           <form onSubmit={(event) => event.preventDefault()} className="space-y-2.5">
             <div className="grid gap-2.5 min-[400px]:grid-cols-2">

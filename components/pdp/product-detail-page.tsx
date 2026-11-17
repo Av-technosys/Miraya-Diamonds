@@ -30,8 +30,7 @@ import {
 import { CustomizationDialog } from "./customization-dialog";
 import { ProductEnquiryForm } from "./product-enquiry-form";
 import { Container } from "@/components/common/container";
-import type { PublicCollectionProduct } from "@/lib/actions/products";
-import { product as defaultProduct } from "./product-data";
+import { product as defaultProduct, suiteProducts } from "./product-data";
 import styles from "./product-detail-page.module.css";
 
 const green = "#214E34";
@@ -85,18 +84,18 @@ function InfoDialog({ title, children, onClose, href, action }: {
   );
 }
 
-function Thumb({ src, active, onClick, index, contain = false, dark = false }: { src: string; active: boolean; onClick: () => void; index: number; contain?: boolean; dark?: boolean }) {
+function Thumb({ src, active, onClick, index }: { src: string; active: boolean; onClick: () => void; index: number }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={`View product image ${index + 1}`}
       aria-pressed={active}
-      className={`relative aspect-square w-full overflow-hidden rounded-[2px] border ${dark ? "bg-[#090909]" : contain ? "bg-white" : "bg-[#f7f3ef]"} ${
+      className={`relative aspect-square w-full overflow-hidden rounded-[2px] border bg-[#f7f3ef] ${
         active ? "border-[#8b143c]" : "border-transparent"
       }`}
     >
-      <Image src={src} alt="" fill sizes="92px" className={contain ? "object-contain p-1" : "object-cover"} />
+      <Image src={src} alt="" fill sizes="92px" className="object-cover" />
     </button>
   );
 }
@@ -105,8 +104,6 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
   const metalOptions = product.metalOptions || defaultMetalOptions;
   const qualities = product.qualities || defaultQualities;
   const gallery = product.gallery && product.gallery.length > 0 ? product.gallery : defaultProduct.gallery;
-  const containGalleryImages = product.sku === "MD-E003" || product.sku === "MD-E009";
-  const darkGalleryImages = product.sku === "MD-E009";
   const [activeImage, setActiveImage] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -119,7 +116,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
   const [pincode, setPincode] = useState("");
   const [deliveryMessage, setDeliveryMessage] = useState("");
   const [feedback, setFeedback] = useState("");
-  const [infoDialog, setInfoDialog] = useState<"guide" | null>(null);
+  const [infoDialog, setInfoDialog] = useState<"ar" | "guide" | null>(null);
 
   useEffect(() => {
     if (!zoomOpen) return;
@@ -184,18 +181,18 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
           <div className="flex flex-col gap-5 sm:grid sm:grid-cols-[clamp(58px,6vw,78px)_minmax(0,1fr)] sm:gap-4">
             <div className="order-2 flex gap-2.5 overflow-x-auto pb-1 sm:order-1 sm:grid sm:grid-cols-1 sm:gap-2 sm:overflow-visible sm:pb-0">
               {gallery.map((src: string, index: number) => (
-                <div key={`${src}-${index}`} className="w-20 shrink-0 sm:w-full"><Thumb src={src} index={index} active={index === activeImage} onClick={() => setActiveImage(index)} contain={containGalleryImages} dark={darkGalleryImages} /></div>
+                <div key={`${src}-${index}`} className="w-20 shrink-0 sm:w-full"><Thumb src={src} index={index} active={index === activeImage} onClick={() => setActiveImage(index)} /></div>
               ))}
             </div>
 
-            <div className={`relative order-1 aspect-square overflow-hidden rounded-lg sm:order-2 sm:aspect-[4/5] sm:rounded-none ${darkGalleryImages ? "bg-[#090909]" : containGalleryImages ? "bg-white" : "bg-[#f2d1b9]"}`}>
+            <div className="relative order-1 aspect-square overflow-hidden rounded-lg bg-[#f2d1b9] sm:order-2 sm:aspect-[4/5] sm:rounded-none">
               <Image
                 src={gallery[activeImage] || "/PDP/product1.jpg"}
                 alt={product.name}
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 620px"
-                className={`cursor-zoom-in ${containGalleryImages ? "object-contain p-3 sm:p-5" : activeImage === 3 || activeImage === 5 ? "object-contain" : "object-cover"}`}
+                className={`cursor-zoom-in ${activeImage === 3 || activeImage === 5 ? "object-contain" : "object-cover"}`}
                 onClick={() => setZoomOpen(true)}
               />
               <span className="absolute left-4 top-4 hidden rounded-full bg-white px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#214E34] sm:block">{product.badge}</span>
@@ -208,6 +205,9 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
                 </button>
               </div>
               <div className="absolute bottom-4 left-4 right-4 hidden flex-wrap items-center gap-2 sm:left-5 sm:right-5 sm:flex">
+                <button type="button" onClick={() => setInfoDialog("ar")} className="flex items-center gap-1.5 bg-white px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.04em]">
+                  <Camera size={14} color={green} /> View Ring Illustration
+                </button>
                 <button type="button" onClick={() => setZoomOpen(true)} className="flex items-center gap-1.5 bg-white px-3 py-2 text-[10px] font-semibold uppercase tracking-[0.04em]">
                   <Video size={14} color={green} /> Browse Product Images
                 </button>
@@ -244,11 +244,7 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
             {product.name}
           </h1>
 
-          {product.description && (
-            <p className="mt-2.5 text-xs leading-relaxed text-[#615d5d] sm:text-[13px]">
-              {product.description}
-            </p>
-          )}
+
 
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <p className="text-[27px] font-semibold text-[#214E34]">{product.price}</p>
@@ -345,6 +341,12 @@ function ProductHero({ product = defaultProduct }: { product?: any }) {
         <span className="absolute bottom-5 text-xs text-white">{activeImage + 1} / {gallery.length}</span>
       </div>
     )}
+    {infoDialog === "ar" && (
+      <InfoDialog title="View on hand" onClose={() => setInfoDialog(null)}>
+        <Image src="/PDP/product2.jpg" alt="Bhvita ring worn on a hand" width={512} height={512} className="mb-3 aspect-square w-full rounded-md object-cover" />
+        This is an illustrative ring image. It does not show a live try-on of your selected product.
+      </InfoDialog>
+    )}
     {infoDialog === "guide" && (
       <InfoDialog title="Jewellery sizing guidance" onClose={() => setInfoDialog(null)} href="/contact#consultation-booking" action="Ask our team">
         <p>Sizing varies by jewellery type and design. Contact our team to confirm measurements, fit and available sizes before ordering.</p>
@@ -397,19 +399,13 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
         </div>
 
         <div className="grid gap-5 lg:grid-cols-3">
-          <div className="flex flex-col rounded-xl border border-[#eadedd] bg-white p-6 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
-            <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-[21px] font-semibold leading-tight text-[#201f1f]">Specifications & Craft</h3>
-            {product.description && (
-              <p className="mt-2 mb-3 text-xs leading-relaxed text-neutral-600 border-b border-neutral-100 pb-3">{product.description}</p>
-            )}
-            <div className="flex-1">
-              {specs.map(([label, value]) => (
-                <div key={label} className="flex justify-between gap-4 border-b border-neutral-200 py-2.5 text-xs last:border-0">
-                  <span className="text-neutral-500">{label}</span>
-                  <span className="text-right font-medium text-[#201f1f]">{value}</span>
-                </div>
-              ))}
-            </div>
+          <div className="rounded-xl border border-[#eadedd] bg-white p-6 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
+            {specs.map(([label, value]) => (
+              <div key={label} className="flex justify-between gap-4 border-b border-neutral-200 py-2.5 text-xs last:border-0">
+                <span className="text-neutral-500">{label}</span>
+                <span className="text-right font-medium text-[#201f1f]">{value}</span>
+              </div>
+            ))}
           </div>
 
           <div className="flex min-h-[440px] flex-col items-center rounded-xl border border-[#eadedd] bg-white px-5 pb-7 pt-5 shadow-[0_12px_30px_rgba(33,78,52,0.05)]">
@@ -470,7 +466,7 @@ function IntegritySection({ product = defaultProduct }: { product?: any }) {
   );
 }
 
-function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
+function LegacyAndSuite() {
   const [bagItems, setBagItems] = useState<string[]>([]);
   const [savedItems, setSavedItems] = useState<string[]>([]);
   const [bagMessage, setBagMessage] = useState("");
@@ -495,16 +491,15 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
             <Link href="/collection" className="flex shrink-0 items-center gap-1 text-[9px] font-semibold text-[#A42D49] sm:text-[10px] sm:uppercase sm:tracking-[0.08em] sm:text-[#214E34]">Explore More <span className="hidden sm:inline">Jewellery</span> <ArrowRight size={13} className="text-[#A42D49]" /></Link>
           </div>
           <div id="curated-sets" className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5">
-            {products.map((item, index) => (
-              <article key={item.id} className={`relative min-w-0 rounded-[6px] bg-white p-1.5 shadow-[0_8px_28px_rgba(33,78,52,0.06)] ${["order-4 sm:order-1", "order-3 sm:order-2", "order-2 sm:order-3", "order-5 max-sm:hidden sm:order-4", "order-1 sm:order-5"][index]}`}>
-                <Link href={`/collection/${item.slug}`} aria-label={`View ${item.name}`} className="absolute inset-0 z-10 rounded-[6px] focus-visible:outline-2 focus-visible:outline-[#214E34]" />
+            {suiteProducts.map((item, index) => (
+              <article key={item.image} className={`min-w-0 rounded-[6px] bg-white p-1.5 shadow-[0_8px_28px_rgba(33,78,52,0.06)] ${["order-4 sm:order-1", "order-3 sm:order-2", "order-2 sm:order-3", "order-5 max-sm:hidden sm:order-4", "order-1 sm:order-5"][index]}`}>
                 <div className="relative aspect-square overflow-hidden rounded-[5px] bg-[#f6f6f6]">
                   <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
                 </div>
                 <div className="px-1 pb-1 pt-2">
-                  <p className="text-[11px] font-semibold leading-tight">{item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Enquire for Pricing"}</p>
+                  <p className="text-[11px] font-semibold leading-tight">Enquire for Pricing</p>
                   <p className="mt-0.5 truncate text-[10px] leading-tight text-neutral-600" title={item.name}>{item.name}</p>
-                  <div className="relative z-20 mt-3 flex gap-1">
+                  <div className="mt-3 flex gap-1">
                     <button type="button" onClick={() => {
                       if (bagItems.includes(item.image)) return;
                       if (saveBagSelection({ name: item.name, image: item.image })) {
@@ -520,7 +515,6 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
               </article>
             ))}
           </div>
-          {products.length === 0 && <p className="py-8 text-center text-sm text-neutral-600">No other products available yet.</p>}
           {bagMessage && <p role="status" className="mt-3 text-xs text-[#214E34]">{bagMessage}</p>}
         </Container>
       </section>
@@ -528,7 +522,7 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
   );
 }
 
-export function ProductDetailPage({ initialProduct, relatedProducts = [] }: { initialProduct?: any; relatedProducts?: PublicCollectionProduct[] }) {
+export function ProductDetailPage({ initialProduct }: { initialProduct?: any }) {
   const currentProduct = initialProduct ? {
     ...defaultProduct,
     ...initialProduct,
@@ -586,7 +580,7 @@ export function ProductDetailPage({ initialProduct, relatedProducts = [] }: { in
     <main ref={pageRef} className={`${styles.page} bg-white font-[family-name:var(--font-inter)] text-[#353333]`}>
       <ProductHero product={currentProduct} />
       <IntegritySection product={currentProduct} />
-      <LegacyAndSuite products={relatedProducts} />
+      <LegacyAndSuite />
     </main>
   );
 }

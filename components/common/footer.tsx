@@ -238,7 +238,7 @@ export function Footer() {
           <MobileFooterSection title="Contact Us" isOpen={openSection === "Contact Us"} onToggle={() => toggleSection("Contact Us")}>
             <ul className="space-y-[14px] pb-[14px] font-sans text-[13px] leading-tight">
               <li>
-                <a href="mailto:Sales.mirayadiamonds@gmail.com">Sales.mirayadiamonds@gmail.com</a>
+                <a href="mailto:miraya.diamond23@gmail.com">miraya.diamond23@gmail.com</a>
               </li>
               <li>
                 <a href="tel:+919869698984">+91 9869698984</a>
@@ -320,8 +320,8 @@ export function Footer() {
           <ul className="mt-6 space-y-4 font-sans text-[13px] leading-none xl:mt-7 xl:space-y-[18px] xl:text-[15px]">
             <li className="flex items-center gap-3">
               <Mail className="h-[18px] w-[18px] shrink-0 text-[#E2BD60] xl:h-5 xl:w-5" strokeWidth={1.8} />
-              <a href="mailto:Sales.mirayadiamonds@gmail.com" className="transition-colors hover:text-[#E2BD60]">
-                Sales.mirayadiamonds@gmail.com
+              <a href="mailto:miraya.diamond23@gmail.com" className="transition-colors hover:text-[#E2BD60]">
+                miraya.diamond23@gmail.com
               </a>
             </li>
             <li className="flex items-center gap-3">
