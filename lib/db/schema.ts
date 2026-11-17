@@ -15,6 +15,7 @@ export const category = pgTable("categories", {
   slug: varchar("slug").unique().notNull(),
   redirectSlug: varchar("redirect_slug"),
   bannerImage: varchar("banner_image"),
+  dimensions: varchar("dimensions"),
   description: varchar("description"),
   priority: integer("priority").default(1),
   createdAt: timestamp("created_at").defaultNow(),

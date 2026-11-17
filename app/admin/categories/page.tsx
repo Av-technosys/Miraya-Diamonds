@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   Search,
@@ -9,7 +10,6 @@ import {
   Layers,
   Edit2,
   Trash2,
-  X,
   RefreshCw,
   CheckCircle2,
   AlertCircle,
@@ -18,14 +18,9 @@ import {
   ArrowUpDown,
 } from "lucide-react";
 import type { Category } from "@/lib/db/schema";
-import { ImageUploadInput } from "@/components/admin/shared/image-upload-input";
-import { SuccessModal } from "@/components/admin/shared/success-modal";
 import { ConfirmDeleteModal } from "@/components/admin/shared/confirm-delete-modal";
-import { toRelativeKey } from "@/lib/imageUrl";
 import {
   getCategories,
-  createCategory,
-  updateCategory,
   deleteCategory,
 } from "@/lib/actions/categories";
 
@@ -33,11 +28,6 @@ export default function CategoriesTable() {
   const router = useRouter();
   const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState("");
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-
-  // Loading & Notification state
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [notification, setNotification] = useState<{
@@ -45,25 +35,10 @@ export default function CategoriesTable() {
     message: string;
   } | null>(null);
 
-  // Success popup & Delete confirmation modal
-  const [successPopup, setSuccessPopup] = useState<{
-    isOpen: boolean;
-    title: string;
-    message: string;
-  }>({ isOpen: false, title: "Success!", message: "" });
-
   const [categoryToDelete, setCategoryToDelete] = useState<{
     id: string;
     name: string;
   } | null>(null);
-
-  // Form State
-  const [name, setName] = useState("");
-  const [slug, setSlug] = useState("");
-  const [redirectSlug, setRedirectSlug] = useState("");
-  const [bannerImage, setBannerImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [priority, setPriority] = useState("1");
 
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState("");
@@ -80,32 +55,6 @@ export default function CategoriesTable() {
     setTimeout(() => setNotification(null), 5000);
   }
 
-  function resetForm() {
-    setName("");
-    setSlug("");
-    setRedirectSlug("");
-    setBannerImage("");
-    setDescription("");
-    setPriority("1");
-    setEditingCategory(null);
-  }
-
-  function openAddModal() {
-    resetForm();
-    setIsAddModalOpen(true);
-  }
-
-  function openEditModal(cat: Category) {
-    setEditingCategory(cat);
-    setName(cat.name);
-    setSlug(cat.slug);
-    setRedirectSlug(cat.redirectSlug || "");
-    setBannerImage(toRelativeKey(cat.bannerImage) || "");
-    setDescription(cat.description || "");
-    setPriority((cat.priority ?? 1).toString());
-    setIsAddModalOpen(true);
-  }
-
   async function handleRefresh() {
     setIsRefreshing(true);
     try {
@@ -119,20 +68,6 @@ export default function CategoriesTable() {
     }
   }
 
-  // Auto generate slug from name if adding
-  function handleNameChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const val = e.target.value;
-    setName(val);
-    if (!editingCategory) {
-      const generated = val
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, "-")
-        .replace(/(^-|-$)/g, "");
-      setSlug(generated);
-      setRedirectSlug(`/collection?category=${encodeURIComponent(val)}`);
-    }
-  }
-
   const filteredCategories = useMemo(() => {
     return categories.filter((c) => {
       const q = search.toLowerCase();
@@ -143,89 +78,6 @@ export default function CategoriesTable() {
       );
     });
   }, [categories, search]);
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim()) {
-      showNotification("error", "Category name is required.");
-      return;
-    }
-
-    setIsSubmitting(true);
-    const parsedPriority = parseInt(priority, 10) || 1;
-
-    try {
-      if (editingCategory) {
-        // UPDATE CATEGORY
-        const res = await updateCategory(editingCategory.id, {
-          name: name.trim(),
-          slug: slug.trim(),
-          redirectSlug: redirectSlug.trim() || undefined,
-          bannerImage: toRelativeKey(bannerImage.trim()) || undefined,
-          description: description.trim() || undefined,
-          priority: parsedPriority,
-        });
-
-        if (!res.success || !res.category) {
-          showNotification("error", res.error || "Failed to update category.");
-          setIsSubmitting(false);
-          return;
-        }
-
-        const updated = res.category;
-        setCategories((prev) => prev.map((c) => (c.id === updated.id ? updated : c)));
-        showNotification("success", `Category "${updated.name}" updated successfully!`);
-        setSuccessPopup({
-          isOpen: true,
-          title: "Category Updated!",
-          message: `Category "${updated.name}" has been updated successfully.`,
-        });
-
-        getCategories().then((fresh) => {
-          if (fresh?.length) setCategories(fresh);
-        });
-        router.refresh();
-      } else {
-        // CREATE CATEGORY
-        const res = await createCategory({
-          name: name.trim(),
-          slug: slug.trim(),
-          redirectSlug: redirectSlug.trim() || undefined,
-          bannerImage: toRelativeKey(bannerImage.trim()) || undefined,
-          description: description.trim() || undefined,
-          priority: parsedPriority,
-        });
-
-        if (!res.success || !res.category) {
-          showNotification("error", res.error || "Failed to create category.");
-          setIsSubmitting(false);
-          return;
-        }
-
-        const created = res.category;
-        setCategories((prev) => [...prev, created]);
-        showNotification("success", `Category "${created.name}" created successfully!`);
-        setSuccessPopup({
-          isOpen: true,
-          title: "Category Created!",
-          message: `Category "${created.name}" has been created successfully.`,
-        });
-
-        getCategories().then((fresh) => {
-          if (fresh?.length) setCategories(fresh);
-        });
-        router.refresh();
-      }
-
-      setIsAddModalOpen(false);
-      resetForm();
-    } catch (err) {
-      console.error("Save category error:", err);
-      showNotification("error", "An error occurred while saving category.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  }
 
   function handleDelete(id: string, catName: string) {
     setCategoryToDelete({ id, name: catName });
@@ -242,11 +94,6 @@ export default function CategoriesTable() {
         setCategories((prev) => prev.filter((c) => c.id !== id));
         setCategoryToDelete(null);
         showNotification("success", `Category "${catName}" deleted.`);
-        setSuccessPopup({
-          isOpen: true,
-          title: "Category Deleted!",
-          message: `Category "${catName}" has been deleted successfully.`,
-        });
         getCategories().then((fresh) => {
           if (fresh?.length) setCategories(fresh);
         });
@@ -287,7 +134,7 @@ export default function CategoriesTable() {
       {/* Header with Title and Actions */}
       <div className="flex flex-col gap-4 border-b border-[#e9e4df] pb-7 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <h1 className="font-serif text-4xl font-medium leading-tight text-[#214E34] sm:text-[42px]">Category</h1>
+          <h1 className="font-serif text-4xl font-medium leading-tight text-[#214E34] sm:text-[42px]">Categories</h1>
           <p className="mt-2 text-xs leading-6 text-[#8a837b]">
             Organise your website categories.
           </p>
@@ -305,14 +152,13 @@ export default function CategoriesTable() {
             <span>{isRefreshing ? "Refreshing..." : "Refresh"}</span>
           </button>
 
-          <button
-            type="button"
-            onClick={openAddModal}
+          <Link
+            href="/admin/categories/new"
             className="inline-flex items-center gap-2 rounded-full bg-[#214E34] px-4 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1A3F2A]"
           >
             <Plus size={15} />
             <span>Add category</span>
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -425,14 +271,13 @@ export default function CategoriesTable() {
                     {/* Actions */}
                     <td className="py-4 pl-4 pr-6 text-right">
                       <div className="flex items-center justify-end gap-1.5">
-                        <button
-                          type="button"
-                          onClick={() => openEditModal(cat)}
+                        <Link
+                          href={`/admin/categories/edit/${cat.id}`}
                           className="rounded-lg p-1.5 text-[#8a837b] transition-colors hover:bg-white hover:text-[#214E34]"
                           title="Edit Category"
                         >
                           <Edit2 size={14} />
-                        </button>
+                        </Link>
                         <button
                           type="button"
                           disabled={deletingId === cat.id}
@@ -456,160 +301,6 @@ export default function CategoriesTable() {
         </div>
       </div>
 
-      {/* Add / Edit Category Modal */}
-      {isAddModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
-          onClick={() => {
-            setIsAddModalOpen(false);
-            resetForm();
-          }}
-        >
-          <div
-            className="w-full max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-lg border border-[#e9e4df] bg-white"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Modal Header */}
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#eee9e4] bg-[#FAF8F7] px-6 py-4">
-              <div className="flex items-center gap-2.5">
-                <div className="grid size-8 place-items-center rounded-lg bg-[#214E34]/15 text-[#214E34]">
-                  <Layers size={17} />
-                </div>
-                <div>
-                  <h3 className="font-serif text-[28px] font-medium text-[#353333]">
-                    {editingCategory ? "Edit Category" : "Add category"}
-                  </h3>
-                  <p className="text-[11px] text-[#8a837b]">
-                    {editingCategory
-                      ? `Edit ${editingCategory.name}`
-                      : "Create a jewellery category for navigation and filtering"}
-                  </p>
-                </div>
-              </div>
-              <button
-                type="button"
-                onClick={() => {
-                  setIsAddModalOpen(false);
-                  resetForm();
-                }}
-                className="grid size-8 place-items-center rounded-lg text-[#8a837b] hover:bg-white"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Form */}
-            <form onSubmit={handleSubmit} className="p-6 space-y-4 text-xs">
-              {/* Category Name & Slug */}
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <div>
-                  <label className="block text-xs font-semibold text-[#44403C]">
-                    Category Name (name) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={name}
-                    onChange={handleNameChange}
-                    placeholder="e.g. Rings, Solitaires"
-                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-[#44403C]">
-                    URL Slug (slug) *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={slug}
-                    onChange={(e) => setSlug(e.target.value)}
-                    placeholder="e.g. rings"
-                    className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 font-mono text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                  />
-                </div>
-              </div>
-
-              {/* Redirect Slug / Target */}
-              <div>
-                <label className="block text-xs font-semibold text-[#44403C]">
-                  Redirect URL (redirect_slug)
-                </label>
-                <input
-                  type="text"
-                  value={redirectSlug}
-                  onChange={(e) => setRedirectSlug(e.target.value)}
-                  placeholder="/collection?category=Rings"
-                  className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                />
-              </div>
-
-              {/* Banner Image URL with S3 Upload */}
-              <ImageUploadInput
-                label="Banner Image (banner_image)"
-                value={bannerImage}
-                onChange={setBannerImage}
-                folder="categories"
-                placeholder="/Images/Header_ring.png or https://..."
-                helperText="Upload category banner directly to AWS S3 (categories/) or enter a URL"
-                disabled={isSubmitting}
-              />
-
-              {/* Priority */}
-              <div>
-                <label className="block text-xs font-semibold text-[#44403C]">
-                  Display Priority (order: 1, 2, 3...)
-                </label>
-                <input
-                  type="number"
-                  value={priority}
-                  onChange={(e) => setPriority(e.target.value)}
-                  placeholder="1"
-                  className="mt-1 h-10 w-full rounded-md border border-[#e5dfd9] bg-[#FAF8F7] px-3 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                />
-              </div>
-
-              {/* Description */}
-              <div>
-                <label className="block text-xs font-semibold text-[#44403C]">
-                  Description
-                </label>
-                <textarea
-                  rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  placeholder="Category highlights and collection description..."
-                  className="mt-1 w-full rounded-lg border border-[#e5dfd9] bg-[#FAF8F7] p-2.5 text-xs text-[#353333] focus:border-[#9b8966] focus:bg-white focus:outline-hidden"
-                />
-              </div>
-
-              {/* Submit Buttons */}
-              <div className="mt-6 flex items-center justify-end gap-2.5 pt-2 border-t border-[#eee9e4]">
-                <button
-                  type="button"
-                  disabled={isSubmitting}
-                  onClick={() => {
-                    setIsAddModalOpen(false);
-                    resetForm();
-                  }}
-                  className="rounded-lg border border-[#e5dfd9] px-4 py-2 text-xs font-medium text-[#44403C] hover:bg-[#FAF8F7]"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex items-center gap-2 rounded-lg bg-[#214E34] px-5 py-2 text-xs font-semibold text-white transition-colors hover:bg-[#1A3F2A] disabled:opacity-50"
-                >
-                  {isSubmitting && <Loader2 size={14} className="animate-spin" />}
-                  <span>{editingCategory ? "Update Category" : "Save Category"}</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
       {/* Delete Confirmation Modal */}
       <ConfirmDeleteModal
         isOpen={Boolean(categoryToDelete)}
@@ -620,13 +311,6 @@ export default function CategoriesTable() {
         isDeleting={Boolean(deletingId)}
       />
 
-      {/* Centered Success Popup */}
-      <SuccessModal
-        isOpen={successPopup.isOpen}
-        onClose={() => setSuccessPopup((prev) => ({ ...prev, isOpen: false }))}
-        title={successPopup.title}
-        message={successPopup.message}
-      />
     </div>
   );
 }

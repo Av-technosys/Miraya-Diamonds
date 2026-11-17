@@ -59,9 +59,9 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
         </div>
       </div>
 
-      <div aria-label="Selected product options" aria-live="polite" className="mt-4 flex flex-wrap gap-1.5 rounded-lg border border-[#e1ece1] p-2">
+      {selection.length > 0 && <div aria-label="Selected product options" aria-live="polite" className="mt-4 flex flex-wrap gap-1.5 rounded-lg border border-[#e1ece1] p-2">
         {selection.map((option, index) => <span key={index} className="max-w-full break-words rounded bg-[#e7fbe5] px-2 py-1 text-[9px] font-medium uppercase text-[#214E34]">{option}</span>)}
-      </div>
+      </div>}
 
       <form onSubmit={handleSubmit} className="mt-3">
         <fieldset disabled={pending} className="min-w-0 space-y-3.5 disabled:opacity-70">

@@ -3,7 +3,7 @@
 import { and, count, desc, eq, ilike, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { productEnquiries, products } from "@/lib/db/schema";
+import { productEnquiries, products, productVariants } from "@/lib/db/schema";
 import { enquiryStatuses } from "@/lib/enquiries";
 import type { AdminEnquiry, EnquiryListResult, EnquiryQuery, EnquiryStatus, EnquirySummary, ProductEnquiryInput } from "@/lib/enquiries";
 
@@ -75,20 +75,26 @@ export async function submitProductEnquiry(input: ProductEnquiryInput) {
   if (!name || name.length > 120) return { success: false, error: "Please enter your name (up to 120 characters)." };
   if (!/^[+\d\s()-]+$/.test(phone) || !/^\d{10,15}$/.test(digits)) return { success: false, error: "Please enter a valid mobile number." };
   if (email && (email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))) return { success: false, error: "Please enter a valid email address." };
-  if (input.message.length > 3000 || input.sku.length > 100 || input.engravingText.length > 24 ||
+  if (input.message.length > 3000 || input.sku.length > 120 || input.engravingText.length > 24 ||
     typeof input.engravingRequested !== "boolean" ||
-    [input.metalColour, input.diamondGrade, input.metalPurity, input.size].some((value) => !value.trim() || value.length > 100)) {
+    [input.metalColour, input.diamondGrade, input.metalPurity, input.size].some((value) => value.length > 100)) {
     return { success: false, error: "Please check your product options and message." };
   }
+  if (input.variantId !== undefined && input.variantId !== null && (typeof input.variantId !== "string" || !/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/i.test(input.variantId))) return { success: false, error: "Please choose a valid product variant." };
   try {
     const [product] = await db.select({ id: products.id, name: products.name, sku: products.sku }).from(products)
-      .where(eq(products.sku, input.sku.replace(/^#/, "").trim())).limit(1);
+      .where(eq(products.sku, input.sku.trim())).limit(1);
     if (!product) return { success: false, error: "This product is unavailable for enquiries. Please contact the Miraya Diamonds team." };
+    const [variant] = input.variantId ? await db.select().from(productVariants).where(and(eq(productVariants.id, input.variantId), eq(productVariants.productId, product.id))).limit(1) : [];
+    if (input.variantId && !variant) return { success: false, error: "This variant is no longer available. Please reload the product page." };
+    const variantDetails = variant ? `Selected variant: ${variant.name.slice(0, 300)}\nVariant SKU: ${variant.sku.slice(0, 120)}\nVariant ID: ${variant.id}` : "";
+    const message = [input.message.trim(), variantDetails].filter(Boolean).join("\n\n");
+    if (message.length > 3000) return { success: false, error: "Please shorten your message so the selected variant details can be included." };
     await db.insert(productEnquiries).values({
       productId: product.id, productName: product.name, productSku: product.sku,
       name, mobileNumber: `+${digits.length === 10 ? "91" : ""}${digits}`, email: email || null,
-      message: input.message.trim() || null, metalColour: input.metalColour.trim(),
-      diamondGrade: input.diamondGrade.trim(), metalPurity: input.metalPurity.trim(), size: input.size.trim(),
+      message: message || null, metalColour: input.metalColour.trim() || "Not specified",
+      diamondGrade: input.diamondGrade.trim() || "Not specified", metalPurity: input.metalPurity.trim() || "Not specified", size: input.size.trim() || "Not specified",
       engravingRequested: input.engravingRequested,
       engravingText: input.engravingRequested ? input.engravingText.trim() || null : null,
     });

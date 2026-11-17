@@ -22,6 +22,13 @@
       "when": 1794902912647,
       "tag": "0002_optional_product_details",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794912229112,
+      "tag": "0003_category_dimensions_image",
+      "breakpoints": true
     }
   ]
 }
