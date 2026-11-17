@@ -15,13 +15,12 @@ import {
   AlertCircle,
   Loader2,
   ExternalLink,
-  ImageIcon,
   ArrowUpDown,
 } from "lucide-react";
 import type { Category } from "@/lib/db/schema";
-import { ImageUploadInput } from "./image-upload-input";
-import { SuccessModal } from "./success-modal";
-import { ConfirmDeleteModal } from "./confirm-delete-modal";
+import { ImageUploadInput } from "@/components/admin/shared/image-upload-input";
+import { SuccessModal } from "@/components/admin/shared/success-modal";
+import { ConfirmDeleteModal } from "@/components/admin/shared/confirm-delete-modal";
 import { toRelativeKey } from "@/lib/imageUrl";
 import {
   getCategories,
@@ -30,13 +29,9 @@ import {
   deleteCategory,
 } from "@/lib/actions/categories";
 
-interface CategoriesTableProps {
-  initialCategories?: Category[];
-}
-
-export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps) {
+export default function CategoriesTable() {
   const router = useRouter();
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -70,12 +65,15 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState("1");
 
-  // Sync state if initialCategories updates
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
   useEffect(() => {
-    if (initialCategories && initialCategories.length > 0) {
-      setCategories(initialCategories);
-    }
-  }, [initialCategories]);
+    let cancelled = false;
+    getCategories().then((data) => { if (!cancelled) setCategories(data); })
+      .catch(() => { if (!cancelled) setLoadError("Categories could not be loaded. Refresh to try again."); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
 
   function showNotification(type: "success" | "error", message: string) {
     setNotification({ type, message });
@@ -262,6 +260,9 @@ export function CategoriesTable({ initialCategories = [] }: CategoriesTableProps
       setDeletingId(null);
     }
   }
+
+  if (loading) return <p role="status" className="py-16 text-center text-sm text-[#817b70]">Loading…</p>;
+  if (loadError) return <p role="alert" className="py-16 text-center text-sm text-red-700">{loadError}</p>;
 
   return (
     <div className="space-y-6">

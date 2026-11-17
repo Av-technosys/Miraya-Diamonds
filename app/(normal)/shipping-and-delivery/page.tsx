@@ -47,7 +47,7 @@ const POLICY_SECTIONS = [
   {
     "id": 8,
     "title": "Contact Us",
-    "content": "If you have any questions or concerns about shipping and delivery, please contact us at miraya.diamond23@gmail.com or call +91 9869698984."
+    "content": "If you have any questions or concerns about shipping and delivery, please contact us at Sales.mirayadiamonds@gmail.com or call +91 9869698984."
   }
 ];
 
@@ -182,7 +182,7 @@ function ShippingContent() {
               </h2>
               <p className="font-sans font-normal text-[14px] leading-[20px] text-[#6F6A68]">
                 {section.id === 8 ? (
-                  <>If you have any questions or concerns about shipping and delivery, please contact us at <a href="mailto:miraya.diamond23@gmail.com" className="font-medium text-[#214E34] break-all">miraya.diamond23@gmail.com</a> or call <a href="tel:+919869698984" className="font-medium text-[#214E34] whitespace-nowrap">+91 9869698984</a>.</>
+                  <>If you have any questions or concerns about shipping and delivery, please contact us at <a href="mailto:Sales.mirayadiamonds@gmail.com" className="font-medium text-[#214E34] break-all">Sales.mirayadiamonds@gmail.com</a> or call <a href="tel:+919869698984" className="font-medium text-[#214E34] whitespace-nowrap">+91 9869698984</a>.</>
                 ) : section.content}
               </p>
             </div>

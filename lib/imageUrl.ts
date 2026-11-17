@@ -3,10 +3,13 @@ export const DEFAULT_FALLBACK_IMAGE = "/customize/custom1.png";
 function getCdnBaseUrl(): string {
   const cdnUrl =
     process.env.NEXT_PUBLIC_S3_URL ||
+    process.env.AWS_S3_PUBLIC_URL ||
     process.env.AWS_S3_CUSTOM_DOMAIN ||
     "";
 
-  return cdnUrl.trim().replace(/\/+$/, "");
+  const base = cdnUrl.trim().replace(/\/+$/, "");
+  const prefix = (process.env.NEXT_PUBLIC_S3_PREFIX || process.env.AWS_S3_PREFIX || "").replace(/^\/+|\/+$/g, "");
+  return base && prefix && !base.endsWith(`/${prefix}`) ? `${base}/${prefix}` : base;
 }
 
 /**

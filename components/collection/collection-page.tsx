@@ -2,53 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Heart, SlidersHorizontal } from "lucide-react";
 import { Container } from "@/components/common/container";
 import type { PublicCollectionProduct } from "@/lib/actions/products";
 import { FilterDrawer } from "./filter-drawer";
-import { categoryOptions, collectionFilterUrl, emptyFilters, type Filters } from "./filter-state";
+import { collectionFilterUrl, emptyFilters, filterGroups, getCollectionFilterOptions, matchesFilters, parseCollectionFilters, priceRanges, type Filters } from "./filter-state";
 import { SortMenu, type Sort } from "./sort-menu";
 
 
 const desktopPageSize = 15;
 const mobilePageSize = 6;
 
-export interface CollectionItem {
-  id: string;
-  name: string;
-  image: string;
-  type: string;
-  price: number;
-  oldPrice: number;
-  material: string;
-  stone: string;
-  occasion: string;
-  collection: string;
-  style: string;
-  karatage: string;
-  shopFor: string;
-  slug?: string;
-}
-
-
-function matchesFilters(item: CollectionItem, filters: Filters) {
-  if (filters.price && item.price <= 0) return false;
-  if (filters.categories.length && !filters.categories.includes(item.type)) return false;
-  if (filters.price.startsWith("under-") && item.price >= Number(filters.price.slice(6))) return false;
-  if (filters.price === "5000-10000" && (item.price < 5000 || item.price >= 10000)) return false;
-  if (filters.price === "10000-25000" && (item.price < 10000 || item.price >= 25000)) return false;
-  if (filters.price === "25000-plus" && item.price < 25000) return false;
-  if (filters.price === "90000-plus" && item.price <= 90000) return false;
-  if (filters.price === "500000-plus" && item.price <= 500000) return false;
-  if (["25000-50000", "50000-100000", "100000-500000"].includes(filters.price)) {
-    const [min, max] = filters.price.split("-").map(Number);
-    if (item.price < min || (max === 500000 ? item.price > max : item.price >= max)) return false;
-  }
-  return (["material", "stone", "occasion", "collection", "style", "karatage", "shopFor"] as const).every((key) => !filters[key].length || filters[key].includes(item[key]));
-}
-
-function saveToBag(item: CollectionItem) {
+function saveToBag(item: PublicCollectionProduct) {
   try {
     const existing = JSON.parse(window.localStorage.getItem("miraya-pdp-bag") || "[]");
     const bag = Array.isArray(existing) ? existing : [];
@@ -60,31 +27,21 @@ function saveToBag(item: CollectionItem) {
   }
 }
 
-export function CollectionPage({
-  initialFilters,
-  initialProducts = [],
-}: {
-  initialFilters: Filters;
-  initialProducts?: PublicCollectionProduct[];
-}) {
+export function CollectionPage({ initialProducts }: { initialProducts: PublicCollectionProduct[] }) {
+  const products = initialProducts;
+  const searchParams = useSearchParams();
+  const appliedFilters = useMemo(() => parseCollectionFilters(Object.fromEntries([...new Set(searchParams.keys())].map((key) => [key, searchParams.getAll(key)])), products), [searchParams, products]);
   const gridRef = useRef<HTMLDivElement>(null);
   const filterButtonRef = useRef<HTMLButtonElement>(null);
-  const [appliedFilters, setAppliedFilters] = useState<Filters>(initialFilters);
-  const [draftFilters, setDraftFilters] = useState<Filters>(initialFilters);
+  const [draftFilters, setDraftFilters] = useState<Filters>(appliedFilters);
   const [sort, setSort] = useState<Sort>("featured");
-  const [page, setPage] = useState(1);
+  const [pagination, setPagination] = useState({ page: 1, key: "" });
   const [pageSize, setPageSize] = useState(desktopPageSize);
   const [filterOpen, setFilterOpen] = useState(false);
   const [bagItems, setBagItems] = useState<string[]>([]);
   const [savedItems, setSavedItems] = useState<string[]>([]);
   const [message, setMessage] = useState("");
 
-  const products: CollectionItem[] = useMemo(() => {
-    if (initialProducts && initialProducts.length > 0) {
-      return initialProducts;
-    }
-    return [];
-  }, [initialProducts]);
   const closeFilters = useCallback(() => {
     setFilterOpen(false);
     filterButtonRef.current?.focus();
@@ -94,7 +51,6 @@ export function CollectionPage({
     const media = window.matchMedia("(max-width: 639px)");
     const updatePageSize = () => {
       setPageSize(media.matches ? mobilePageSize : desktopPageSize);
-      setPage(1);
     };
     updatePageSize();
     media.addEventListener("change", updatePageSize);
@@ -115,17 +71,27 @@ export function CollectionPage({
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
+  const filterOptions = useMemo(() => getCollectionFilterOptions(products), [products]);
   const filtered = useMemo(() => {
     const items = products.filter((item) => matchesFilters(item, appliedFilters));
-    if (sort === "price-asc") return [...items].sort((a, b) => a.price - b.price);
-    if (sort === "price-desc") return [...items].sort((a, b) => b.price - a.price);
+    if (sort === "price-asc" || sort === "price-desc") return [...items].sort((a, b) => {
+      if (a.price <= 0 || b.price <= 0) return Number(a.price <= 0) - Number(b.price <= 0);
+      return sort === "price-asc" ? a.price - b.price : b.price - a.price;
+    });
     if (sort === "name") return [...items].sort((a, b) => a.name.localeCompare(b.name));
     return items;
-  }, [appliedFilters, sort]);
-  const previewCount = useMemo(() => products.filter((item) => matchesFilters(item, draftFilters)).length, [draftFilters]);
-  const categoryCounts = useMemo(() => Object.fromEntries(categoryOptions.map((item) => [item, products.filter((entry) => entry.type === item).length])), []);
-  const activeFilterCount = appliedFilters.categories.length + Number(Boolean(appliedFilters.price)) + appliedFilters.material.length + appliedFilters.stone.length + appliedFilters.occasion.length + appliedFilters.collection.length + appliedFilters.style.length + appliedFilters.karatage.length + appliedFilters.shopFor.length;
+  }, [products, appliedFilters, sort]);
+  const previewCount = useMemo(() => products.filter((item) => matchesFilters(item, draftFilters)).length, [products, draftFilters]);
+  const categoryCounts = useMemo(() => {
+    const matching = products.filter((item) => matchesFilters(item, { ...draftFilters, categories: [] }));
+    return Object.fromEntries([...new Set([...filterOptions.categories, ...draftFilters.categories])].map((name) => [name, matching.filter((item) => item.type === name).length]));
+  }, [products, draftFilters, filterOptions.categories]);
+  const sections = useMemo(() => filterOptions.sections.map((section) => ({ ...section, options: [...new Set([...section.options, ...draftFilters[section.key]])] })), [filterOptions.sections, draftFilters]);
+  const ranges = useMemo(() => [...filterOptions.prices, ...priceRanges.filter((range) => range.value === draftFilters.price && !filterOptions.prices.some((item) => item.value === range.value))], [filterOptions.prices, draftFilters.price]);
+  const activeFilterCount = appliedFilters.categories.length + Number(Boolean(appliedFilters.price)) + filterGroups.reduce((count, group) => count + appliedFilters[group].length, 0);
   const pageCount = Math.ceil(filtered.length / pageSize);
+  const paginationKey = JSON.stringify(appliedFilters) + sort + pageSize;
+  const page = pagination.key === paginationKey ? Math.min(pagination.page, Math.max(1, pageCount)) : 1;
   const visible = filtered.slice((page - 1) * pageSize, page * pageSize);
 
   function toggleWishlist(image: string) {
@@ -139,14 +105,12 @@ export function CollectionPage({
   }
 
   function changePage(nextPage: number) {
-    setPage(nextPage);
+    setPagination({ page: nextPage, key: paginationKey });
     gridRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function applyFilters(filters: Filters) {
-    setAppliedFilters(filters);
-    setPage(1);
-    window.history.replaceState(null, "", collectionFilterUrl(filters));
+    window.history.pushState(null, "", collectionFilterUrl(filters));
     closeFilters();
   }
 
@@ -176,7 +140,7 @@ export function CollectionPage({
             </button>
             <p className="truncate text-[10px] sm:text-[11px]"><span className="max-[360px]:hidden">Collections </span>({filtered.length})<span className="hidden sm:inline"> Products</span></p>
           </div>
-          <SortMenu value={sort} onChange={(value) => { setSort(value); setPage(1); }} />
+          <SortMenu value={sort} onChange={setSort} />
         </div>
 
         <div ref={gridRef} className="grid scroll-mt-5 grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
@@ -187,7 +151,7 @@ export function CollectionPage({
                 <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="object-contain" />
               </div>
               <div className="px-1 pb-1 pt-2">
-                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">{item.price > 0 ? `₹${item.price.toLocaleString("en-IN")}` : "Enquire for Pricing"} {item.oldPrice > item.price && item.price > 0 && <span className="ml-1 text-[9px] font-normal text-neutral-400 line-through">₹{item.oldPrice.toLocaleString("en-IN")}</span>}</p>
+                <p className="text-[13px] font-semibold leading-tight sm:text-[11px]">{item.price > 0 ? `${item.priceFrom ? "From " : ""}₹${item.price.toLocaleString("en-IN", { maximumFractionDigits: 2 })}` : "Enquire for Pricing"}</p>
                 <p className="mt-0.5 truncate text-[11px] leading-tight text-neutral-600 sm:text-[10px]" title={item.name}>{item.name}</p>
                 <div className="relative z-20 mt-3 flex gap-1">
                   <button type="button" onClick={() => {
@@ -217,7 +181,7 @@ export function CollectionPage({
           </nav>
         )}
       </Container>
-      {filterOpen && <FilterDrawer filters={draftFilters} categoryCounts={categoryCounts} previewCount={previewCount} onChange={setDraftFilters} onApply={() => applyFilters(draftFilters)} onReset={() => { setDraftFilters(emptyFilters); applyFilters(emptyFilters); }} onClose={closeFilters} />}
+      {filterOpen && <FilterDrawer filters={draftFilters} sections={sections} ranges={ranges} totalCount={products.length} categoryCounts={categoryCounts} previewCount={previewCount} onChange={setDraftFilters} onApply={() => applyFilters(draftFilters)} onReset={() => { setDraftFilters(emptyFilters); applyFilters(emptyFilters); }} onClose={closeFilters} />}
     </main>
   );
 }

@@ -89,7 +89,7 @@ export async function createCategory(input: CreateCategoryInput): Promise<{
       })
       .returning();
 
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     revalidatePath("/collection");
     revalidatePath("/");
 
@@ -149,7 +149,7 @@ export async function updateCategory(
       .where(eq(category.id, target.id))
       .returning();
 
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     revalidatePath("/collection");
     revalidatePath("/");
 
@@ -175,7 +175,7 @@ export async function deleteCategory(id: string): Promise<{ success: boolean; er
       await db.delete(category).where(eq(category.slug, id));
     }
 
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     revalidatePath("/collection");
     revalidatePath("/");
 

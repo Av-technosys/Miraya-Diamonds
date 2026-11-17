@@ -15,6 +15,13 @@
       "when": 1792736691591,
       "tag": "0001_clean_black_bolt",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794902912647,
+      "tag": "0002_optional_product_details",
+      "breakpoints": true
     }
   ]
 }

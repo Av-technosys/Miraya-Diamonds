@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
 import { PutObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { getS3Client, sanitizeFileName } from "@/lib/s3";
+import { getS3Client, getS3Location, sanitizeFileName } from "@/lib/s3";
 import { getImageUrl } from "@/lib/imageUrl";
 import crypto from "crypto";
 
@@ -59,20 +59,7 @@ export async function POST(req: NextRequest) {
     const fileKey = `${folder}/${timestamp}-${randomSuffix}-${sanitizedName}`;
 
     // 5. Determine S3 bucket and object key (respecting root prefix like "miraya" from AWS_S3_BUCKET_NAME)
-    const rawBucket = (process.env.AWS_S3_BUCKET_NAME || "").trim();
-    if (!rawBucket) {
-      return NextResponse.json(
-        {
-          success: false,
-          error: "AWS_S3_BUCKET_NAME environment variable is not defined.",
-        },
-        { status: 500 }
-      );
-    }
-
-    const parts = rawBucket.split("/").filter(Boolean);
-    const bucketName = parts[0];
-    const basePrefix = parts.slice(1).join("/");
+    const { bucketName, basePrefix } = getS3Location();
 
     // The actual S3 key inside the bucket (e.g. "miraya/products/172967-xxxx-diamond.png")
     const s3Key = basePrefix ? `${basePrefix}/${fileKey}` : fileKey;
@@ -96,12 +83,12 @@ export async function POST(req: NextRequest) {
       cloudfrontUrl, // Live CDN URL via CloudFront
       expiresIn: 60,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[S3 Presigned Upload API Error]:", error);
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || "Failed to generate presigned upload URL.",
+        error: error instanceof Error ? error.message : "Failed to generate presigned upload URL.",
       },
       { status: 500 }
     );

@@ -151,7 +151,7 @@ export async function syncCurrentUser(): Promise<User | null> {
       })
       .returning();
 
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return inserted;
   } catch (error) {
     console.error("Error syncing current user with database:", error);
@@ -294,7 +294,7 @@ export async function updateUserProfile(data: {
 
   revalidatePath("/dashboard/profile");
   revalidatePath("/dashboard");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 
   return { success: true, user: updatedDbUser };
 }
@@ -381,7 +381,7 @@ export async function updateUserSpecialDates(data: {
 
   revalidatePath("/dashboard/profile");
   revalidatePath("/dashboard");
-  revalidatePath("/admin");
+  revalidatePath("/admin", "layout");
 
   return { success: true, user: updatedDbUser };
 }
@@ -426,7 +426,7 @@ export async function adminUpdateUser(
       .where(eq(users.id, userId))
       .returning();
 
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     revalidatePath("/dashboard/profile");
     revalidatePath("/dashboard");
 
@@ -443,7 +443,7 @@ export async function adminUpdateUser(
 export async function adminDeleteUser(userId: string) {
   try {
     await db.delete(users).where(eq(users.id, userId));
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return { success: true };
   } catch (error) {
     console.error("Error in adminDeleteUser:", error);

@@ -9,7 +9,6 @@ export type AdminTab = "dashboard" | "users" | "products" | "categories" | "enqu
 
 interface AdminSidebarProps {
   activeTab: AdminTab;
-  onSelectTab: (tab: AdminTab) => void;
   enquiriesPendingCount?: number;
   isOpenMobile?: boolean;
   onCloseMobile?: () => void;
@@ -25,7 +24,6 @@ const navigation = [
 
 export function AdminSidebar({
   activeTab,
-  onSelectTab,
   enquiriesPendingCount = 0,
   isOpenMobile = false,
   onCloseMobile,
@@ -61,12 +59,11 @@ export function AdminSidebar({
       </p>
       <nav aria-label="Admin navigation" className="space-y-1 px-4">
         {navigation.map(({ id, label, icon: Icon }) => (
-          <button
+          <Link
             key={id}
-            type="button"
+            href={id === "dashboard" ? "/admin" : `/admin/${id}`}
             aria-current={activeTab === id ? "page" : undefined}
             onClick={() => {
-              onSelectTab(id);
               onCloseMobile?.();
             }}
             className={`flex min-h-12 [@media(max-height:600px)]:min-h-9 w-full items-center gap-3 rounded-md px-4 text-left text-[13px] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9caa9b] ${
@@ -86,7 +83,7 @@ export function AdminSidebar({
                 {enquiriesPendingCount}
               </span>
             )}
-          </button>
+          </Link>
         ))}
       </nav>
       <div className="mt-auto shrink-0 px-6 pb-6 pt-5 [@media(max-height:600px)]:py-3">
