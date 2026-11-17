@@ -46,3 +46,11 @@ export const product = {
     ["Occasion", "Engagement, Wedding, Gifting"],
   ],
 };
+
+export const suiteProducts = [
+  { name: "Bhvita 22KT Bracelet", image: "/PDP/explore1.png" },
+  { name: "Bhvita 22KT Necklace", image: "/PDP/explore2.png" },
+  { name: "22KT Gold Ring", image: "/PDP/explore3.png" },
+  { name: "Bhvita 22KT Necklace", image: "/PDP/explore4.png" },
+  { name: "Bhvita 22KT Earrings", image: "/PDP/explore5.png" },
+];

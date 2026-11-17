@@ -148,12 +148,12 @@ export async function getAdminProducts(): Promise<AdminProduct[]> {
         goldPurities: p.goldPurities || [],
         goldColours: p.goldColours || [],
         sizes: p.sizes || [],
-        grossWeight: p.grossWeight ?? "",
-        netGoldWeight: p.netGoldWeight ?? "",
+        grossWeight: p.grossWeight || "0.00",
+        netGoldWeight: p.netGoldWeight || "0.00",
         diamondPieces: p.diamondPieces || 0,
-        totalDiamondWeight: p.totalDiamondWeight ?? "",
-        diamondPrice: p.diamondPrice ?? "",
-        makingCharge: p.makingCharge ?? "",
+        totalDiamondWeight: p.totalDiamondWeight || "0.000",
+        diamondPrice: p.diamondPrice || "0.00",
+        makingCharge: p.makingCharge || "0.00",
         dimensions: p.dimensions || { height: "0.00", width: "0.00", length: "0.00" },
         price,
         stock,
@@ -193,7 +193,7 @@ export async function createProduct(input: CreateProductInput): Promise<{
 
     const bannerImage = toRelativeKey(input.bannerImage || input.mediaUrls?.[0] || "/customize/custom1.png");
     const stock = input.stock !== undefined ? input.stock : 1;
-    const price = input.price > 0 ? input.price : 0;
+    const price = input.price > 0 ? input.price : 48250;
 
     // Resolve categoryId if not explicitly provided
     let resolvedCategoryId = input.categoryId || null;
@@ -214,18 +214,18 @@ export async function createProduct(input: CreateProductInput): Promise<{
         categoryId: resolvedCategoryId,
         description: input.description.trim() || "Handcrafted diamond jewellery by Miraya Diamonds.",
         jewelleryType: input.jewelleryType.toLowerCase().trim() || "ring",
-        diamondGrades: input.diamondGrades,
-        goldPurities: input.goldPurities,
+        diamondGrades: input.diamondGrades.length > 0 ? input.diamondGrades : ["EF-VVS"],
+        goldPurities: input.goldPurities.length > 0 ? input.goldPurities : ["18KT"],
         goldColours: input.goldColours.length > 0 ? input.goldColours : ["yellow", "rose", "white"],
-        sizes: input.sizes,
+        sizes: input.sizes.length > 0 ? input.sizes : ["12"],
         bannerImage,
-        grossWeight: input.grossWeight || null,
-        netGoldWeight: input.netGoldWeight || null,
-        diamondPieces: input.jewelleryType === "earrings" && input.diamondPieces === 0 ? null : input.diamondPieces,
-        totalDiamondWeight: input.totalDiamondWeight || null,
-        diamondPrice: input.diamondPrice || null,
-        makingCharge: input.makingCharge || null,
-        dimensions: Object.values(input.dimensions).some(Boolean) ? input.dimensions : null,
+        grossWeight: input.grossWeight || "3.10",
+        netGoldWeight: input.netGoldWeight || "3.00",
+        diamondPieces: input.diamondPieces >= 0 ? input.diamondPieces : 12,
+        totalDiamondWeight: input.totalDiamondWeight || "0.500",
+        diamondPrice: input.diamondPrice || "15000.00",
+        makingCharge: input.makingCharge || "3000.00",
+        dimensions: input.dimensions || { height: "5.20", width: "8.00", length: "20.00" },
       })
       .returning();
 
@@ -241,7 +241,7 @@ export async function createProduct(input: CreateProductInput): Promise<{
         goldPurity: input.goldPurities[0] || "18KT",
         diamondGrade: input.diamondGrades[0] || "EF-VVS",
         size: input.sizes[0] || "12",
-        price: price > 0 ? price.toFixed(2) : null,
+        price: price.toFixed(2),
         strikethroughPrice: input.strikethroughPrice ? input.strikethroughPrice.toFixed(2) : null,
         stock,
         isInStock: stock > 0,
@@ -279,13 +279,13 @@ export async function createProduct(input: CreateProductInput): Promise<{
         goldPurities: newProduct.goldPurities,
         goldColours: newProduct.goldColours,
         sizes: newProduct.sizes,
-        grossWeight: newProduct.grossWeight ?? "",
-        netGoldWeight: newProduct.netGoldWeight ?? "",
-        diamondPieces: newProduct.diamondPieces ?? 0,
-        totalDiamondWeight: newProduct.totalDiamondWeight ?? "",
-        diamondPrice: newProduct.diamondPrice ?? "",
-        makingCharge: newProduct.makingCharge ?? "",
-        dimensions: newProduct.dimensions ?? { height: "", width: "", length: "" },
+        grossWeight: newProduct.grossWeight,
+        netGoldWeight: newProduct.netGoldWeight,
+        diamondPieces: newProduct.diamondPieces,
+        totalDiamondWeight: newProduct.totalDiamondWeight,
+        diamondPrice: newProduct.diamondPrice,
+        makingCharge: newProduct.makingCharge,
+        dimensions: newProduct.dimensions,
         price,
         stock,
         status: calculateProductStatus(stock),
@@ -358,13 +358,13 @@ export async function updateProduct(
     if (input.goldColours) updates.goldColours = input.goldColours;
     if (input.sizes) updates.sizes = input.sizes;
     if (input.bannerImage) updates.bannerImage = toRelativeKey(input.bannerImage);
-    if (input.grossWeight !== undefined) updates.grossWeight = input.grossWeight || null;
-    if (input.netGoldWeight !== undefined) updates.netGoldWeight = input.netGoldWeight || null;
-    if (input.diamondPieces !== undefined) updates.diamondPieces = input.jewelleryType === "earrings" && input.diamondPieces === 0 ? null : input.diamondPieces;
-    if (input.totalDiamondWeight !== undefined) updates.totalDiamondWeight = input.totalDiamondWeight || null;
-    if (input.diamondPrice !== undefined) updates.diamondPrice = input.diamondPrice || null;
-    if (input.makingCharge !== undefined) updates.makingCharge = input.makingCharge || null;
-    if (input.dimensions) updates.dimensions = Object.values(input.dimensions).some(Boolean) ? input.dimensions : null;
+    if (input.grossWeight) updates.grossWeight = input.grossWeight;
+    if (input.netGoldWeight) updates.netGoldWeight = input.netGoldWeight;
+    if (input.diamondPieces !== undefined) updates.diamondPieces = input.diamondPieces;
+    if (input.totalDiamondWeight) updates.totalDiamondWeight = input.totalDiamondWeight;
+    if (input.diamondPrice) updates.diamondPrice = input.diamondPrice;
+    if (input.makingCharge) updates.makingCharge = input.makingCharge;
+    if (input.dimensions) updates.dimensions = input.dimensions;
 
     await db.update(products).set(updates).where(eq(products.id, targetId));
 
@@ -385,7 +385,7 @@ export async function updateProduct(
       if (input.goldPurities?.[0]) vUpdates.goldPurity = input.goldPurities[0];
       if (input.diamondGrades?.[0]) vUpdates.diamondGrade = input.diamondGrades[0];
       if (input.sizes?.[0]) vUpdates.size = input.sizes[0];
-      if (input.price !== undefined) vUpdates.price = input.price > 0 ? input.price.toFixed(2) : null;
+      if (input.price !== undefined) vUpdates.price = input.price.toFixed(2);
       if (input.strikethroughPrice !== undefined) {
         vUpdates.strikethroughPrice = input.strikethroughPrice ? input.strikethroughPrice.toFixed(2) : null;
       }
@@ -404,7 +404,7 @@ export async function updateProduct(
         goldPurity: input.goldPurities?.[0] || productRecord.goldPurities?.[0] || "18KT",
         diamondGrade: input.diamondGrades?.[0] || productRecord.diamondGrades?.[0] || "EF-VVS",
         size: input.sizes?.[0] || productRecord.sizes?.[0] || "12",
-        price: input.price && input.price > 0 ? input.price.toFixed(2) : null,
+        price: (input.price ?? 48250).toFixed(2),
         strikethroughPrice: input.strikethroughPrice ? input.strikethroughPrice.toFixed(2) : null,
         stock: input.stock ?? 1,
         isInStock: (input.stock ?? 1) > 0,
@@ -437,7 +437,7 @@ export async function updateProduct(
     const finalMedia = await db.select().from(productMedia).where(eq(productMedia.productId, targetId));
 
     const primaryVar = finalVariants[0];
-    const finalPrice = primaryVar ? getSafePrice(primaryVar.price, 0) : 0;
+    const finalPrice = primaryVar ? getSafePrice(primaryVar.price, input.price || 48250) : (input.price || 48250);
     const finalStock = primaryVar?.stock ?? (input.stock ?? 1);
 
     const returnedProduct: AdminProduct = {
@@ -450,13 +450,13 @@ export async function updateProduct(
       goldPurities: finalProduct.goldPurities,
       goldColours: finalProduct.goldColours,
       sizes: finalProduct.sizes,
-      grossWeight: finalProduct.grossWeight ?? "",
-      netGoldWeight: finalProduct.netGoldWeight ?? "",
-      diamondPieces: finalProduct.diamondPieces ?? 0,
-      totalDiamondWeight: finalProduct.totalDiamondWeight ?? "",
-      diamondPrice: finalProduct.diamondPrice ?? "",
-      makingCharge: finalProduct.makingCharge ?? "",
-      dimensions: finalProduct.dimensions ?? { height: "", width: "", length: "" },
+      grossWeight: finalProduct.grossWeight,
+      netGoldWeight: finalProduct.netGoldWeight,
+      diamondPieces: finalProduct.diamondPieces,
+      totalDiamondWeight: finalProduct.totalDiamondWeight,
+      diamondPrice: finalProduct.diamondPrice,
+      makingCharge: finalProduct.makingCharge,
+      dimensions: finalProduct.dimensions,
       price: finalPrice,
       stock: finalStock,
       status: calculateProductStatus(finalStock),
@@ -565,10 +565,6 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       if (c.slug) categoryMap[c.slug.toLowerCase().trim()] = c.name;
       if (c.name) categoryMap[c.name.toLowerCase().trim()] = c.name;
     }
-    // The stored category is "Stud Earrings"; public navigation uses "Earrings".
-    categoryMap.earrings = "Earrings";
-    categoryMap["stud earrings"] = "Earrings";
-    const categoryById = new Map(dbCategories.map((item) => [item.id, item.name]));
 
     return allProducts.map((p) => {
       const pVariants = variantMap.get(p.id) || [];
@@ -585,8 +581,7 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       const image = getImageUrl(p.bannerImage || gallery[0]);
 
       const rawType = (p.jewelleryType || "rings").toLowerCase().trim();
-      const storedCategory = p.categoryId ? categoryById.get(p.categoryId) : undefined;
-      const type = categoryMap[storedCategory?.toLowerCase() || rawType] || (storedCategory ?? rawType.charAt(0).toUpperCase() + rawType.slice(1));
+      const type = categoryMap[rawType] || (rawType.charAt(0).toUpperCase() + rawType.slice(1));
 
       // URL friendly slug
       const slug =
@@ -603,7 +598,7 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
         price,
         oldPrice,
         material: p.goldColours?.[0] ? `${p.goldColours[0].charAt(0).toUpperCase() + p.goldColours[0].slice(1)} Gold` : "Gold",
-        stone: (p.diamondPieces ?? 0) > 0 || p.sku.startsWith("MD-E") ? "Diamond" : "",
+        stone: p.diamondPieces > 0 ? "Diamond" : "",
         occasion: "",
         collection: "",
         style: "",
@@ -680,7 +675,7 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
       ? getSafePrice(primaryVariant.strikethroughPrice, price)
       : price;
 
-    const discountPct = oldPrice > 0 ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
+    const discountPct = Math.round(((oldPrice - price) / oldPrice) * 100);
 
     return {
       id: productRow.id,
@@ -695,7 +690,7 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
       collection: "The Miraya Diamonds Collection",
       badge: "Diamond Jewellery",
       price: price > 0 ? `₹${price.toLocaleString("en-IN")}` : "Enquire for Pricing",
-      oldPrice: oldPrice > 0 ? `₹${oldPrice.toLocaleString("en-IN")}` : "",
+      oldPrice: `₹${oldPrice.toLocaleString("en-IN")}`,
       discount: discountPct > 0 ? `${discountPct}% OFF` : undefined,
 
       emi: "Contact our team to confirm pricing and payment arrangements.",
@@ -713,13 +708,13 @@ export async function getProductBySlugOrSku(slugOrSku: string) {
       dimensions: productRow.dimensions,
       specs: [
         ["Product Type", productRow.jewelleryType.charAt(0).toUpperCase() + productRow.jewelleryType.slice(1)],
-        ...(productRow.goldPurities.length ? [["Metal", `${productRow.goldPurities.join(", ")} ${productRow.goldColours.join(", ")}`]] : []),
-        ...(productRow.netGoldWeight ? [["Net Gold Weight", `${productRow.netGoldWeight} g`]] : []),
-        ...(productRow.grossWeight ? [["Gross Weight", `${productRow.grossWeight} g`]] : []),
-        ...(productRow.diamondPieces !== null ? [["Diamond Pieces", `${productRow.diamondPieces}`]] : []),
-        ...(productRow.totalDiamondWeight ? [["Total Diamond Weight", `${productRow.totalDiamondWeight} ct`]] : []),
-        ...(productRow.diamondGrades.length ? [["Diamond Grade", productRow.diamondGrades.join(", ")]] : []),
-        ...(productRow.sizes.length ? [["Available Sizes", productRow.sizes.join(", ")]] : []),
+        ["Metal", `${productRow.goldPurities[0] || "18KT"} ${productRow.goldColours[0] || "Gold"}`],
+        ["Net Gold Weight", `${productRow.netGoldWeight} g`],
+        ["Gross Weight", `${productRow.grossWeight} g`],
+        ["Diamond Pieces", `${productRow.diamondPieces}`],
+        ["Total Diamond Weight", `${productRow.totalDiamondWeight} ct`],
+        ["Diamond Grade", productRow.diamondGrades.join(", ")],
+        ["Available Sizes", productRow.sizes.join(", ")],
 
       ],
       variants,

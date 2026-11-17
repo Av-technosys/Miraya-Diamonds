@@ -212,7 +212,7 @@ export function ConsultationBooking() {
 
             {/* Submit */}
             <div className="flex flex-col gap-[11.25px] mt-[18px]">
-              <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Consultation%20request" className="relative block w-full h-[46px] rounded-full group outline-none">
+              <a href="mailto:miraya.diamond23@gmail.com?subject=Consultation%20request" className="relative block w-full h-[46px] rounded-full group outline-none">
                 {/* Shadow overlay matching the spec */}
                 <div className="absolute inset-0 bg-[#FFFFFF01] rounded-[56px] shadow-[0px_2.25px_4.5px_-2.25px_rgba(0,0,0,0.1),0px_4.5px_6.75px_-1.13px_rgba(0,0,0,0.1)] pointer-events-none" />
                 <div className="absolute inset-0 bg-[#214E34] rounded-full flex items-center justify-center px-[27px] py-[13.5px]">
