@@ -67,9 +67,9 @@ export function ImageUploadInput({
       onChange(relativeKey);
       setSuccessMessage(`Uploaded to S3 (${folder}/)`);
       setTimeout(() => setSuccessMessage(null), 4000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Upload error:", err);
-      setErrorMessage(err?.message || "Failed to upload file to S3.");
+      setErrorMessage(err instanceof Error ? err.message : "Failed to upload file to S3.");
     } finally {
       setIsUploading(false);
       // Reset input so re-uploading same file works

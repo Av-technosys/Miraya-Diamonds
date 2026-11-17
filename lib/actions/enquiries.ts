@@ -55,7 +55,7 @@ export async function updateEnquiryStatus(id: string, status: EnquiryStatus): Pr
   try {
     const [row] = await db.update(productEnquiries).set({ status }).where(eq(productEnquiries.id, id)).returning();
     if (!row) return { success: false, error: "This enquiry no longer exists. Refresh the list." };
-    revalidatePath("/admin");
+    revalidatePath("/admin", "layout");
     return { success: true, enquiry: { ...row, createdAt: row.createdAt.toISOString(), updatedAt: row.updatedAt.toISOString() } };
   } catch (error) {
     console.error("Enquiry update failed:", error);

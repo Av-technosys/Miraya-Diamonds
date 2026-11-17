@@ -96,12 +96,12 @@ export async function POST(req: NextRequest) {
       contentType,
       folder,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("[S3 Upload API Error]:", error);
     return NextResponse.json(
       {
         success: false,
-        error: error?.message || "Failed to upload image to AWS S3.",
+        error: error instanceof Error ? error.message : "Failed to upload image to AWS S3.",
       },
       { status: 500 }
     );

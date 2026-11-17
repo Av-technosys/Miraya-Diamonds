@@ -92,19 +92,8 @@ export async function uploadFileToS3({
   contentType,
   folder = "products",
 }: S3UploadOptions): Promise<S3UploadResult> {
-  const rawBucket = (process.env.AWS_S3_BUCKET_NAME || "").trim();
+  const { bucketName, basePrefix } = getS3Location();
   const region = process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || "ap-south-1";
-
-  if (!rawBucket) {
-    throw new Error(
-      "AWS_S3_BUCKET_NAME is not configured. Please define it in your environment variables (.env)."
-    );
-  }
-
-  // Handle nested bucket prefixes gracefully (e.g. "av-rone/miraya/" -> bucket: "av-rone", basePrefix: "miraya")
-  const parts = rawBucket.split("/").filter(Boolean);
-  const bucketName = parts[0];
-  const basePrefix = parts.slice(1).join("/");
 
   const s3Client = getS3Client();
   const fileKey = generateS3Key(fileName, folder);
@@ -132,3 +121,10 @@ export async function uploadFileToS3({
   };
 }
 
+
+export function getS3Location() {
+  const parts = (process.env.AWS_S3_BUCKET_NAME || "").trim().split("/").filter(Boolean);
+  if (!parts.length) throw new Error("AWS_S3_BUCKET_NAME is not configured.");
+  const basePrefix = (process.env.AWS_S3_PREFIX?.trim() || parts.slice(1).join("/")).replace(/^\/+|\/+$/g, "");
+  return { bucketName: parts[0], basePrefix };
+}

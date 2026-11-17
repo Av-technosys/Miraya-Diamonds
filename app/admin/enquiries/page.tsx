@@ -6,15 +6,14 @@ import { ArrowUpRight, ChevronLeft, ChevronRight, Inbox, Loader2, RefreshCw, Sea
 import { getAdminEnquiries } from "@/lib/actions/enquiries";
 import { enquiryStatuses } from "@/lib/enquiries";
 import type { AdminEnquiry, EnquiryListResult, EnquiryStatus } from "@/lib/enquiries";
-import { EnquiryDetails, enquiryDate, statusStyles } from "./enquiry-details";
+import { useEnquiryCount } from "@/components/admin/layout/admin-shell";
+import { EnquiryDetails, enquiryDate, statusStyles } from "@/components/admin/enquiries/enquiry-details";
 
 const controlClass = "h-10 rounded-lg border border-[#e5dfd9] bg-[#ffffff] px-3 text-xs text-[#555d50] outline-none focus:border-[#214e34] focus:ring-1 focus:ring-[#214e34]";
 
-export function EnquiriesTable({ initialResult, onPendingCountChange }: {
-  initialResult: EnquiryListResult;
-  onPendingCountChange: (count: number) => void;
-}) {
-  const [result, setResult] = useState(initialResult);
+export default function EnquiriesPage() {
+  const onPendingCountChange = useEnquiryCount();
+  const [result, setResult] = useState<EnquiryListResult>({ success: false, error: "Loading enquiries…" });
   const [search, setSearch] = useState("");
   const [debouncedSearch] = useDebounce(search, 300);
   const [status, setStatus] = useState<EnquiryStatus | "all">("all");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useTransition } from "react";
+import { useState, useMemo, useTransition, useEffect } from "react";
 import {
   Search,
   CheckCircle2,
@@ -21,20 +21,26 @@ import {
   type AdminUserView,
 } from "@/lib/actions/users";
 import { validateAndFormatPhone } from "@/lib/account-profile";
-import { SuccessModal } from "./success-modal";
-import { ConfirmDeleteModal } from "./confirm-delete-modal";
+import { SuccessModal } from "@/components/admin/shared/success-modal";
+import { ConfirmDeleteModal } from "@/components/admin/shared/confirm-delete-modal";
 
-interface UsersTableProps {
-  initialUsers?: AdminUserView[];
-}
-
-export function UsersTable({ initialUsers = [] }: UsersTableProps) {
-  const [users, setUsers] = useState<AdminUserView[]>(initialUsers);
+export default function UsersTable() {
+  const [users, setUsers] = useState<AdminUserView[]>([]);
   const [search, setSearch] = useState("");
   const [verifiedFilter, setVerifiedFilter] = useState<string>("All");
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Edit Modal State
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState("");
+  useEffect(() => {
+    let cancelled = false;
+    getAdminUsers().then((data) => { if (!cancelled) setUsers(data); })
+      .catch(() => { if (!cancelled) setLoadError("Users could not be loaded. Refresh to try again."); })
+      .finally(() => { if (!cancelled) setLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  // Edit state
   const [editingUser, setEditingUser] = useState<AdminUserView | null>(null);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -218,6 +224,9 @@ export function UsersTable({ initialUsers = [] }: UsersTableProps) {
 
   const verifiedCount = users.filter((u) => u.emailVerified).length;
   const unverifiedCount = users.filter((u) => !u.emailVerified).length;
+
+  if (loading) return <p role="status" className="py-16 text-center text-sm text-[#817b70]">Loading…</p>;
+  if (loadError) return <p role="alert" className="py-16 text-center text-sm text-red-700">{loadError}</p>;
 
   return (
     <div className="space-y-6">

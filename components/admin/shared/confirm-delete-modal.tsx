@@ -1,6 +1,6 @@
 "use client";
 
-import { Trash2, AlertTriangle, Loader2, X } from "lucide-react";
+import { Trash2, Loader2, X } from "lucide-react";
 
 export interface ConfirmDeleteModalProps {
   isOpen: boolean;

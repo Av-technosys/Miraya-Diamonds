@@ -301,7 +301,7 @@ export function DirectInquirySection() {
           {/* Bottom Buttons */}
           <div className="pt-[18px]">
             <div className="border-t-[1.13px] border-[#214E3433] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
-              <a href="mailto:miraya.diamond23@gmail.com?subject=Jewellery%20consultation" className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
+              <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation" className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
                 <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Discuss a Call</span>
                 <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
               </a>

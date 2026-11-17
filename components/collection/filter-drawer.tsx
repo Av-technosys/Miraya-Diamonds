@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
-import { filterSections, priceRanges, type FilterGroup, type Filters } from "./filter-state";
+import { type FilterSection, type FilterGroup, type Filters, type priceRanges } from "./filter-state";
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(true);
@@ -17,9 +17,12 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 export function FilterDrawer({
-  filters, categoryCounts, previewCount, onChange, onApply, onReset, onClose,
+  filters, sections, ranges, totalCount, categoryCounts, previewCount, onChange, onApply, onReset, onClose,
 }: {
   filters: Filters;
+  sections: FilterSection[];
+  ranges: typeof priceRanges;
+  totalCount: number;
   categoryCounts: Record<string, number>;
   previewCount: number;
   onChange: (filters: Filters) => void;
@@ -54,7 +57,7 @@ export function FilterDrawer({
 
   function toggle(key: "categories" | FilterGroup, value: string) {
     const selected = filters[key];
-    onChange({ ...filters, [key]: selected.includes(value) ? selected.filter((item) => item !== value) : [...selected, value] });
+    onChange({ ...filters, [key]: selected.some((item) => item.toLowerCase() === value.toLowerCase()) ? selected.filter((item) => item.toLowerCase() !== value.toLowerCase()) : [...selected, value] });
   }
 
   return (
@@ -67,7 +70,7 @@ export function FilterDrawer({
 
         <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <Section title="Category">
-            {[["All Jewellery", Object.values(categoryCounts).reduce((sum, count) => sum + count, 0)], ...Object.entries(categoryCounts)].map(([label, count]) => {
+            {[["All Jewellery", totalCount], ...Object.entries(categoryCounts)].map(([label, count]) => {
               const selected = label === "All Jewellery" ? filters.categories.length === 0 : filters.categories.includes(String(label));
               return <label key={label} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
                 <input type="checkbox" checked={selected} onChange={() => label === "All Jewellery" ? onChange({ ...filters, categories: [] }) : toggle("categories", String(label))} className="size-3.5 accent-[#214E34]" />
@@ -76,16 +79,16 @@ export function FilterDrawer({
             })}
           </Section>
 
-          <Section title="Price Range">
-            {priceRanges.map((range) => <label key={range.value} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
+          {ranges.length > 0 && <Section title="Price Range">
+            {ranges.map((range) => <label key={range.value} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
               <input type="radio" name="collection-price" checked={filters.price === range.value} onChange={() => onChange({ ...filters, price: range.value })} className="size-3.5 accent-[#214E34]" />{range.label}
             </label>)}
             {filters.price && <button type="button" onClick={() => onChange({ ...filters, price: "" })} className="pl-6 text-[11px] text-[#214E34] underline">Clear price</button>}
-          </Section>
+          </Section>}
 
-          {filterSections.map((section) => <Section key={section.key} title={section.label}>
+          {sections.map((section) => <Section key={section.key} title={section.label}>
             {section.options.map((option) => <label key={option} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
-              <input type="checkbox" checked={filters[section.key].includes(option)} onChange={() => toggle(section.key, option)} className="size-3.5 accent-[#214E34]" />{option}
+              <input type="checkbox" checked={filters[section.key].some((value) => value.toLowerCase() === option.toLowerCase())} onChange={() => toggle(section.key, option)} className="size-3.5 accent-[#214E34]" />{option}
             </label>)}
           </Section>)}
         </div>

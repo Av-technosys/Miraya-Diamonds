@@ -70,7 +70,7 @@ export function CustomizeContactSection() {
                   Ready to Discuss Your Design?
                 </h3>
                 <p className="mt-2 max-w-[340px] font-sans text-sm text-[#666666]">
-                  Please send your design brief to miraya.diamond23@gmail.com
+                  Please send your design brief to Sales.mirayadiamonds@gmail.com
                   or call +91 9869698984 to discuss your enquiry.
                 </p>
                 <button

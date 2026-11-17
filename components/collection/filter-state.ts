@@ -1,30 +1,11 @@
-export type FilterGroup = "material" | "stone" | "occasion" | "collection" | "style" | "karatage" | "shopFor";
+import type { PublicCollectionProduct } from "@/lib/actions/products";
 
-export type Filters = {
-  categories: string[];
-  price: string;
-  material: string[];
-  stone: string[];
-  occasion: string[];
-  collection: string[];
-  style: string[];
-  karatage: string[];
-  shopFor: string[];
-};
+export type FilterGroup = "material" | "stone" | "karatage" | "diamondGrade" | "size";
+export type Filters = { categories: string[]; price: string } & Record<FilterGroup, string[]>;
+export type FilterSection = { key: FilterGroup; label: string; options: string[] };
 
-export const emptyFilters: Filters = {
-  categories: [], price: "", material: [], stone: [], occasion: [], collection: [], style: [], karatage: [], shopFor: [],
-};
-
-export const filterSections: { key: FilterGroup; label: string; options: string[] }[] = [
-  { key: "material", label: "Material", options: ["Gold", "Rose Gold", "White Gold", "Sterling Silver", "Plain Gold"] },
-  { key: "stone", label: "Stone", options: ["Diamond", "Emerald", "Pearl", "Ruby", "Cubic Zirconia", "Gemstone"] },
-  { key: "occasion", label: "Occasion", options: ["Everyday", "Wedding", "Party", "Gifting", "Workwear", "Proposal", "Engagement"] },
-  { key: "collection", label: "Collection", options: ["New Arrivals", "Best Sellers", "Trending"] },
-  { key: "style", label: "Style", options: ["Cocktail", "Couple Bands", "Modern", "Open", "Vanki"] },
-  { key: "karatage", label: "Karatage", options: ["9kt", "14kt", "18kt", "22kt"] },
-  { key: "shopFor", label: "Shop For", options: ["Women", "Men", "Unisex", "Kids"] },
-];
+export const filterGroups: FilterGroup[] = ["material", "stone", "karatage", "diamondGrade", "size"];
+export const emptyFilters: Filters = { categories: [], price: "", material: [], stone: [], karatage: [], diamondGrade: [], size: [] };
 
 export const budgetRanges = [
   { value: "25000-50000", label: "Rs. 25k to 50k" },
@@ -34,10 +15,11 @@ export const budgetRanges = [
 ];
 
 export const priceRanges = [
+  { value: "under-25000", label: "Under ₹25,000" },
   ...budgetRanges,
   { value: "under-5000", label: "Under ₹5,000" },
-  { value: "5000-10000", label: "₹5,000 - ₹10,000" },
-  { value: "10000-25000", label: "₹10,000 - ₹25,000" },
+  { value: "5000-10000", label: "₹5,000 – ₹10,000" },
+  { value: "10000-25000", label: "₹10,000 – ₹25,000" },
   { value: "25000-plus", label: "₹25,000+" },
   { value: "under-10000", label: "Under ₹10,000" },
   { value: "under-15000", label: "Under ₹15,000" },
@@ -48,47 +30,74 @@ export const priceRanges = [
   { value: "90000-plus", label: "Above ₹90,000" },
 ];
 
-export const categoryOptions = [
-  "Rings",
-  "Earrings",
-  "Necklaces",
-  "Bracelets",
-  "Bangles",
-  "Pendants",
-  "Solitaires",
-  "Kids Jewellery",
-];
+const canonicalPriceRanges = priceRanges.slice(0, 5);
+const normalized = (value: string) => value.trim().toLowerCase();
+function categoryKey(value: string) {
+  const key = normalized(value).replace(/[-_]/g, " ");
+  const aliases: Record<string, string> = { rings: "ring", earrings: "earring", necklaces: "necklace", bracelets: "bracelet", bangles: "bangle", pendants: "pendant", solitaires: "solitaire", "kids jewellery": "kids" };
+  return aliases[key] || key;
+}
 
-export function parseCollectionFilters(params: Record<string, string | string[] | undefined>): Filters {
-  const read = (key: string) => {
-    const value = params[key];
-    return typeof value === "string" ? value : undefined;
-  };
-  const parseList = (key: string, options: string[]) => {
-    const value = read(key);
-    return value ? value.split(",").filter((item) => options.includes(item)) : [];
-  };
+export function matchesPrice(price: number, range: string) {
+  if (!range) return true;
+  if (price <= 0) return false;
+  if (range.startsWith("under-")) return price < Number(range.slice(6));
+  if (range.endsWith("-plus")) return price >= Number(range.slice(0, -5));
+  const [min, max] = range.split("-").map(Number);
+  return Number.isFinite(min) && Number.isFinite(max) && price >= min && price < max;
+}
 
+export function filterValues(product: PublicCollectionProduct, group: FilterGroup): string[] {
+  switch (group) {
+    case "material": return product.materials;
+    case "stone": return product.stone ? [product.stone] : [];
+    case "karatage": return product.goldPurities;
+    case "diamondGrade": return product.diamondGrades;
+    case "size": return product.sizes;
+  }
+}
+
+export function matchesFilters(product: PublicCollectionProduct, filters: Filters) {
+  if (filters.categories.length && !filters.categories.some((value) => product.categoryAliases.some((alias) => categoryKey(alias) === categoryKey(value)))) return false;
+  if (!matchesPrice(product.price, filters.price)) return false;
+  return filterGroups.every((group) => !filters[group].length || filters[group].some((selected) => filterValues(product, group).some((value) => (group === "material" && normalized(selected) === "gold" ? /gold$/i.test(value) : normalized(value) === normalized(selected)))));
+}
+
+export function getCollectionFilterOptions(products: PublicCollectionProduct[]) {
+  const unique = (values: string[]) => [...new Map(values.filter(Boolean).map((value) => [normalized(value), value])).values()].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+  const definitions: { key: FilterGroup; label: string }[] = [
+    { key: "material", label: "Gold colour" }, { key: "karatage", label: "Metal purity" },
+    { key: "diamondGrade", label: "Diamond grade" }, { key: "size", label: "Size" }, { key: "stone", label: "Stone" },
+  ];
   return {
-    categories: parseList("category", categoryOptions),
-    price: priceRanges.some((range) => range.value === read("price")) ? read("price")! : "",
-    material: parseList("material", filterSections[0].options),
-    stone: parseList("stone", filterSections[1].options),
-    occasion: parseList("occasion", filterSections[2].options),
-    collection: parseList("collection", filterSections[3].options),
-    style: parseList("style", filterSections[4].options),
-    karatage: parseList("karatage", filterSections[5].options),
-    shopFor: parseList("shopFor", filterSections[6].options),
+    categories: unique(products.map((product) => product.type)),
+    sections: definitions.map((section) => ({ ...section, options: unique(products.flatMap((product) => filterValues(product, section.key))) })).filter((section) => section.options.length),
+    prices: canonicalPriceRanges.filter((range) => products.some((product) => matchesPrice(product.price, range.value))),
+  };
+}
+
+export function parseCollectionFilters(params: Record<string, string | string[] | undefined>, products: PublicCollectionProduct[] = []): Filters {
+  const readList = (key: string) => {
+    const values = params[key];
+    const knownValues = key === "category" ? products.flatMap((product) => product.categoryAliases) : filterGroups.includes(key as FilterGroup) ? products.flatMap((product) => filterValues(product, key as FilterGroup)) : [];
+    return [...new Set((Array.isArray(values) ? values : typeof values === "string" ? [values] : []).flatMap((value) => knownValues.some((known) => normalized(known) === normalized(value)) ? [value] : value.split(",")).map((value) => value.trim()).filter((value) => value && value.length <= 100))].slice(0, 50);
+  };
+  const readGroup = (key: FilterGroup) => {
+    const choices = products.flatMap((product) => filterValues(product, key));
+    return [...new Set(readList(key).map((value) => choices.find((choice) => normalized(choice) === normalized(value)) || value))];
+  };
+  const price = Array.isArray(params.price) ? params.price[0] : params.price;
+  return {
+    categories: [...new Set(readList("category").map((value) => products.find((product) => product.categoryAliases.some((alias) => categoryKey(alias) === categoryKey(value)))?.type || value))], price: priceRanges.some((range) => range.value === price) ? price! : "",
+    material: readGroup("material"), stone: readGroup("stone"), karatage: readGroup("karatage"), diamondGrade: readGroup("diamondGrade"), size: readGroup("size"),
   };
 }
 
 export function collectionFilterUrl(filters: Filters) {
   const params = new URLSearchParams();
-  if (filters.categories.length) params.set("category", filters.categories.join(","));
+  if (filters.categories.length) filters.categories.forEach((value) => params.append("category", value));
   if (filters.price) params.set("price", filters.price);
-  for (const key of ["material", "stone", "occasion", "collection", "style", "karatage", "shopFor"] as const) {
-    if (filters[key].length) params.set(key, filters[key].join(","));
-  }
+  for (const key of filterGroups) if (filters[key].length) filters[key].forEach((value) => params.append(key, value));
   const query = params.toString();
   return `/collection${query ? `?${query}` : ""}`;
 }

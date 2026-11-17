@@ -11,8 +11,6 @@ export const product = {
   sku: "#MR-84920",
   badge: "Diamond Jewellery",
   price: "Enquire for Pricing",
-  oldPrice: "",
-  discount: "",
 
   emi: "Contact our team to confirm pricing and payment arrangements.",
   gallery: [
