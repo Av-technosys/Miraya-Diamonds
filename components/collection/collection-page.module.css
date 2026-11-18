@@ -1,0 +1,6 @@
+@media (min-width: 1024px) {
+  :global(html):has(.page),
+  :global(body):has(.page) {
+    overflow-x: clip;
+  }
+}

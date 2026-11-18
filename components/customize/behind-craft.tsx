@@ -35,10 +35,10 @@ export function BehindTheCraft() {
         
         {/* Header */}
         <div className="mx-auto mb-10 max-w-[620px] text-center sm:mb-14 lg:mb-16">
-          <h2 className="font-serif text-[32px] font-bold leading-tight text-white sm:text-[38px] lg:text-[42px]">
+          <h2 className="font-serif text-white text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
             Behind the Craft
           </h2>
-          <p className="mt-3 font-sans text-[13px] leading-relaxed text-[#D6D3D1] sm:text-[14px]">
+          <p className="mt-3 font-sans text-[#D6D3D1] text-xs leading-relaxed sm:text-sm">
             Every piece is meticulously crafted by skilled artisans, blending
             precision, passion, and timeless elegance to bring your vision to life.
           </p>
@@ -71,7 +71,7 @@ export function BehindTheCraft() {
               </div>
 
               {/* Card Label */}
-              <h3 className="mt-3.5 text-center font-sans text-[13px] font-medium leading-snug text-[#E7E5E4] sm:mt-4 sm:text-[14px]">
+              <h3 className="mt-3.5 text-center font-sans text-[13px] font-medium leading-snug text-[#E7E5E4] sm:mt-4 sm:text-sm">
                 {step.name}
               </h3>
             </motion.div>

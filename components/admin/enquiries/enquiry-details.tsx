@@ -88,7 +88,7 @@ export function EnquiryDetails({ enquiry, onClose, onSaved }: {
             </section>
             <section>
               <h3 className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8c7754]">Customer requirements</h3>
-              <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-7 text-[#5b6157]">{enquiry.message || "No additional requirements provided."}</p>
+              <p className="mt-3 whitespace-pre-wrap break-words text-sm leading-7 text-[#5b6157]">{enquiry.message ? enquiry.message.split(/(https?:\/\/[^\s]+)/g).map((part, index) => /^https?:\/\//.test(part) ? <a key={index} href={part} target="_blank" rel="noopener noreferrer nofollow" className="text-[#214E34] underline underline-offset-4">{part}</a> : part) : "No additional requirements provided."}</p>
             </section>
             <section className="border-t border-[#e9e4df] pt-6">
               <label htmlFor="enquiry-status" className="text-[10px] font-semibold uppercase tracking-[0.14em] text-[#8c7754]">Enquiry status</label>

@@ -123,7 +123,7 @@ export function HomeTestimonialsAnimated({ reviews }: { reviews: Review[] }) {
               </div>
             ))}
           </div>
-          <h2 className="mt-1 font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525]">The Miraya Edit</h2>
+          <h2 className="mt-1 font-infant text-[31px] font-semibold leading-none text-[#252525]">The Miraya Edit</h2>
           <p className="mt-1.5 text-xs text-[#898989]">Jewellery inspiration for your story</p>
         </div>
         <div className="relative hidden h-[400px] w-full sm:block md:h-[460px] lg:h-[520px]">
@@ -150,7 +150,7 @@ export function HomeTestimonialsAnimated({ reviews }: { reviews: Review[] }) {
           })}
 
           <div className="absolute inset-x-0 bottom-[28%] z-10 text-center">
-            <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">The Miraya Edit</h2>
+            <h2 className="font-infant text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">The Miraya Edit</h2>
             <p className="mt-1.5 text-xs text-[#898989] sm:text-sm">Jewellery inspiration for your story</p>
           </div>
         </div>

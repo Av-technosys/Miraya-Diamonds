@@ -1,96 +1,36 @@
 import Image from "next/image";
+import Link from "next/link";
 import { BadgeCheck, Clock, ChevronRight } from "lucide-react";
+import { Container } from "@/components/common/container";
 
 export function ContactHero() {
   return (
-    <section className="w-full bg-white pt-[16px] md:pt-[30px] pb-[60px] lg:pb-[80px] px-4 md:px-8">
-      {/* Inner Container */}
-      <div className="w-full max-w-[1240px] mx-auto">
-
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-4 md:mb-[60px] text-[#757575] font-sans text-sm">
-          <span>Home</span>
-          <ChevronRight className="w-4 h-4 text-[#214E34]" />
-          <span>Contact Us</span>
-        </div>
-
-        {/* Main Content Layout */}
-        <div className="flex flex-col lg:flex-row justify-between lg:items-start gap-1 md:gap-[31.5px]">
-
-          {/* Left Side Content */}
-          <div className="flex flex-col justify-center w-full lg:w-[607px] lg:pr-[54px]">
-
-            {/* Top Pill */}
-            <div className="inline-flex items-center w-fit bg-[#FDECEF] px-[10px] md:px-[12px] py-[4px] md:py-[6px] rounded-full mb-4 md:mb-6">
-              <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase tracking-wide">
-                Client Concierge & Assistance
-              </span>
-            </div>
-
-            {/* Heading */}
-            <h1 className="font-serif font-bold text-[40px] md:text-[64px] leading-[44px] md:leading-[71px] tracking-[-1px] md:tracking-[-1.57px] text-[#313030] mb-3 md:mb-6">
-              We Are Here<br />
-              <span
-                className="italic font-serif font-bold text-[40px] md:text-[96px] md:leading-[71px] text-[#214E34] block mt-[-4px] md:-mt-[15px] align-middle"
-                style={{ letterSpacing: "-1.57px" }}
-              >
-                To Assist You
-              </span>
-            </h1>
-
-            {/* Paragraph */}
-            <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] tracking-[0.09px] text-[#757575] max-w-[490px] mb-3 md:mb-8">
-              Explore a collection, ask about a diamond or discuss a custom design. The Miraya Diamonds team is here to help you find a piece that feels right for you.
-            </p>
-
-            {/* Features */}
-            {/* Scrollable on mobile to match image 1 */}
-            <div className="flex flex-row items-center gap-[25px] md:gap-8 mt-3 md:mt-auto pb-4 md:pb-4 overflow-x-auto whitespace-nowrap scrollbar-hide snap-x -mr-4 pr-4 md:mr-0 md:pr-0">
-              <div className="flex items-center gap-[4px] md:gap-[6px] shrink-0 snap-start">
-                <BadgeCheck className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#214E34] shrink-0" strokeWidth={1.5} />
-                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase">
-                  Personal Jewellery Guidance
-                </span>
-              </div>
-              <div className="flex items-center gap-[4px] md:gap-[6px] shrink-0 snap-start">
-                <Clock className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] text-[#214E34] shrink-0" strokeWidth={1.5} />
-                <span className="font-sans font-semibold text-[11px] md:text-[12px] leading-[14px] md:leading-[18px] text-[#214E34] uppercase">
-                  Enquiries Welcome
-                </span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Side Image */}
-          <div className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full lg:w-[538px] h-[260px] md:h-[348.5px] rounded-[16px] md:rounded-[22.74px] shadow-[0px_11.37px_14.21px_-8.53px_rgba(0,0,0,0.1),0px_28.42px_35.53px_-7.11px_rgba(0,0,0,0.1)] flex-shrink-0 mt-0 lg:mt-0 z-0">
-            {/* Image Wrapper */}
-            <div className="absolute inset-0 rounded-[16px] md:rounded-[22.74px] overflow-hidden">
-              <Image
-                src="/contact/heroSection.jpg"
-                alt="Miraya Diamonds"
-                fill
-                className="object-cover object-center"
-                priority
-              />
-            </div>
-
-            {/* Floating Glass Card Overlay */}
-            <div className="absolute -bottom-[20px] left-4 md:left-auto md:right-[15px] w-[280px] sm:w-[314px] h-[64px] sm:h-[72px] bg-white rounded-[8px] shadow-[0px_2.84px_5.68px_-2.84px_rgba(0,0,0,0.1),0px_5.68px_8.53px_-1.42px_rgba(0,0,0,0.1)] px-[16px] sm:px-[18px] py-[10px] sm:py-[12px] flex justify-between items-center z-10">
-              <div className="flex flex-col justify-center gap-0.5">
-                <span className="font-sans font-semibold text-[12px] sm:text-[14px] leading-[18px] sm:leading-[22.74px] text-[#861632] uppercase">
-                  Miraya Diamonds
-                </span>
-                <span className="font-sans font-normal text-[11px] sm:text-[14px] leading-[16px] sm:leading-[28.42px] text-[#1C1B1B]">
-                  Jaipur, India
-                </span>
-              </div>
-              <Image src="/contact/Lock_Icon.png" alt="Lock" width={20} height={26} style={{ width: '20px', height: '26px' }} className="object-contain shrink-0" />
+    <section className="bg-white py-6 pb-10 sm:pb-14">
+      <Container>
+        <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-xs text-[#757575] sm:mb-10">
+          <Link href="/" className="transition-colors hover:text-[#214E34]">Home</Link>
+          <ChevronRight size={14} aria-hidden="true" />
+          <span aria-current="page">Contact Us</span>
+        </nav>
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#214E34]">Client Concierge &amp; Assistance</p>
+            <h1 className="font-serif text-[40px] font-semibold leading-[1.05] sm:text-[52px]">We Are Here<br /><span className="italic text-[#214E34]">To Assist You</span></h1>
+            <p className="mt-5 max-w-lg text-sm leading-6 text-[#757575]">Explore a collection, ask about a diamond or discuss a custom design. The Miraya Diamonds team is here to help you find a piece that feels right for you.</p>
+            <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-[#214E34]">
+              <span className="flex items-center gap-2"><BadgeCheck size={18} strokeWidth={1.5} aria-hidden="true" />Personal Jewellery Guidance</span>
+              <span className="flex items-center gap-2"><Clock size={18} strokeWidth={1.5} aria-hidden="true" />Enquiries Welcome</span>
             </div>
           </div>
-
+          <div className="relative aspect-[538/349] overflow-hidden rounded-xl">
+            <Image src="/contact/heroSection.jpg" alt="Miraya Diamonds jewellery" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" priority />
+            <div className="absolute inset-x-4 bottom-4 flex items-center justify-between gap-3 rounded-lg bg-white/95 px-4 py-3 sm:left-auto sm:min-w-64">
+              <div><p className="text-xs font-semibold uppercase tracking-wide text-[#214E34]">Miraya Diamonds</p><p className="mt-1 text-xs leading-5 text-[#757575]">Jaipur, India</p></div>
+              <Image src="/contact/Lock_Icon.png" alt="" width={20} height={26} className="shrink-0 object-contain" />
+            </div>
+          </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

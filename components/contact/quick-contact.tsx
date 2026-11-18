@@ -1,87 +1,29 @@
 import Image from "next/image";
 import { ArrowRight, Calendar } from "lucide-react";
+import { Container } from "@/components/common/container";
+
+const contacts = [
+  { icon: "/contact/phone_icon.png", label: "Call Miraya Diamonds", title: "+91 9869698984", description: "Speak with our team about collections, custom designs and your jewellery questions.", href: "tel:+919869698984", action: "Call now" },
+  { icon: "/contact/mail_icon.png", label: "Email Miraya Diamonds", title: "Sales.mirayadiamonds@gmail.com", description: "Share your design ideas, product questions or requests for diamond documentation.", href: "mailto:Sales.mirayadiamonds@gmail.com", action: "Send Email" },
+  { icon: "/contact/video_icon.png", label: "1-on-1 Virtual Experience", title: "Personal Jewellery Guidance", description: "Contact us to discuss a remote consultation and the details you would like to explore.", href: "mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation", action: "Discuss a Consultation" },
+];
 
 export function QuickContact() {
   return (
-    <section className="w-full bg-[#F7FFF7] py-[54px] px-4 md:px-[100px]">
-      <div className="w-full max-w-[1240px] mx-auto flex flex-row overflow-x-auto lg:overflow-visible gap-[17px] justify-start lg:justify-between snap-x snap-mandatory pb-4 lg:pb-0 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-        
-        {/* Card 1 */}
-        <div className="w-[78vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
-          {/* Icon Container */}
-          <div className="w-[63px] h-[63px] bg-[#F7FFF7] rounded-full flex items-center justify-center mb-5">
-            <Image src="/contact/phone_icon.png" alt="Phone" width={22} height={22} className="object-contain" />
+    <section className="bg-[#F7FFF7] py-10 sm:py-14">
+      <Container className="grid gap-4 lg:grid-cols-3 lg:gap-6">
+        {contacts.map((contact) => (
+          <div key={contact.label} className="flex min-w-0 flex-col rounded-2xl border border-[#214E34]/10 bg-white p-5 sm:p-6">
+            <span className="mb-5 grid size-12 place-items-center rounded-full bg-[#F7FFF7] text-[#214E34]"><Image src={contact.icon} alt="" width={22} height={22} className="object-contain" /></span>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#214E34]">{contact.label}</p>
+            <h2 className={`mt-3 break-words text-xl font-semibold leading-tight sm:text-[27px] ${contact.href.startsWith("tel:") ? "font-infant" : "font-serif"}`}>{contact.title}</h2>
+            <p className="mt-3 flex-1 text-sm leading-6 text-[#757575]">{contact.description}</p>
+            <a href={contact.href} className="mt-6 inline-flex min-h-11 w-fit items-center justify-center gap-2 rounded-full bg-[#214E34] px-5 py-3 text-xs font-semibold text-white transition-colors hover:bg-[#173d28] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">
+              {contact.action}{contact.icon === "/contact/video_icon.png" ? <Calendar size={15} aria-hidden="true" /> : <ArrowRight size={15} aria-hidden="true" />}
+            </a>
           </div>
-
-          {/* Subheading */}
-          <span className="font-sans font-semibold text-[14px] md:text-[14px] leading-[20px] md:leading-[18px] tracking-[0px] md:tracking-[1.24px] text-[#214E34] uppercase mb-4 whitespace-nowrap">
-            Call Miraya Diamonds
-          </span>
-
-          {/* Heading */}
-          <h3 className="font-serif font-semibold break-words text-[18px] md:text-[21px] leading-[20px] md:leading-[33.75px] tracking-[0.25px] text-[#1C1B1B] mb-2 lining-nums">
-            +91 9869698984
-          </h3>
-
-          {/* Text */}
-          <p className="font-sans font-normal text-[14px] leading-[20px] text-[#757575] mb-auto">
-            Speak with our team about collections, custom designs and your jewellery questions.
-          </p>
-
-          {/* Button */}
-          <a href="tel:+919869698984" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
-            <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[0px] text-white uppercase">
-              Call now
-            </span>
-            <ArrowRight className="w-3 h-3 text-white" strokeWidth={2} />
-          </a>
-        </div>
-
-        {/* Card 2 */}
-        <div className="w-[78vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
-          <div className="w-[63px] h-[63px] bg-[#F7FFF7] rounded-full flex items-center justify-center mb-5">
-            <Image src="/contact/mail_icon.png" alt="Mail" width={22} height={22} className="object-contain" />
-          </div>
-          <span className="font-sans font-semibold text-[14px] md:text-[14px] leading-[20px] md:leading-[18px] tracking-[0px] md:tracking-[1.24px] text-[#214E34] uppercase mb-4 whitespace-nowrap">
-            Email Miraya Diamonds
-          </span>
-          <h3 className="font-serif font-semibold break-words text-[18px] md:text-[21px] leading-[20px] md:leading-[33.75px] tracking-[0.25px] text-[#1C1B1B] mb-2 lining-nums">
-            Sales.mirayadiamonds@gmail.com
-          </h3>
-          <p className="font-sans font-normal text-[14px] leading-[20px] text-[#757575] mb-auto">
-            Share your design ideas, product questions or requests for diamond documentation.
-          </p>
-          <a href="mailto:Sales.mirayadiamonds@gmail.com" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
-            <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[0px] text-white uppercase">
-              Send Email
-            </span>
-            <ArrowRight className="w-3 h-3 text-white" strokeWidth={2} />
-          </a>
-        </div>
-
-        {/* Card 3 */}
-        <div className="w-[78vw] sm:w-[320px] lg:w-[402px] shrink-0 snap-center h-auto lg:h-[342px] bg-white rounded-[18px] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] p-[24px] lg:p-[31px] flex flex-col">
-          <div className="w-[63px] h-[63px] bg-[#F7FFF7] rounded-full flex items-center justify-center mb-5">
-            <Image src="/contact/video_icon.png" alt="Video" width={22} height={22} className="object-contain" />
-          </div>
-          <span className="font-sans font-semibold text-[14px] md:text-[14px] leading-[20px] md:leading-[18px] tracking-[0px] md:tracking-[1.24px] text-[#214E34] uppercase mb-4 whitespace-nowrap">
-            1-on-1 Virtual Experience
-          </span>
-          <h3 className="font-serif font-semibold break-words text-[18px] md:text-[21px] leading-[20px] md:leading-[33.75px] tracking-[0.25px] text-[#1C1B1B] mb-2 lining-nums">
-            Personal Jewellery Guidance
-          </h3>
-          <p className="font-sans font-normal text-[14px] leading-[20px] text-[#757575] mb-auto">
-            Contact us to discuss a remote consultation and the details you would like to explore.
-          </p>
-          <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation" className="mt-6 flex items-center justify-center gap-[10px] bg-[#214E34] w-fit h-[40px] px-[17px] rounded-[8px]">
-            <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[0px] text-white uppercase">
-              Discuss a Consultation
-            </span>
-            <Calendar className="w-3 h-3 text-white" strokeWidth={2} />
-          </a>
-        </div>
-
-      </div>
+        ))}
+      </Container>
     </section>
   );
 }

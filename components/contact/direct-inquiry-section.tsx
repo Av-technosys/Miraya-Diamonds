@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Container } from "@/components/common/container";
 import { ArrowRight, CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 import { submitContactMessage } from "@/lib/actions/contact";
 
@@ -52,54 +53,53 @@ export function DirectInquirySection() {
 
   return (
     <section
-      className="w-full pt-0 pb-0 lg:pb-[90px] md:py-[90px] px-4 md:px-[100px]"
-      style={{ backgroundColor: "#FCF9F8" }}
+      className="bg-[#F7FFF7] py-10 sm:py-14"
     >
-      <div className="w-full max-w-[1240px] mx-auto flex flex-col lg:flex-row gap-[40px] lg:gap-[60px]">
+      <Container className="grid items-stretch gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-8">
 
         {/* Left Column: Interactive Form */}
         <div
-          className="relative w-full lg:w-[685px] lg:h-[730px] lg:rounded-[18px] lg:bg-white lg:shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] shrink-0"
+          className="relative flex min-w-0 flex-col rounded-2xl border border-[#214E34]/10 bg-white"
         >
           {/* Shadow overlay */}
           <div className="absolute inset-0 rounded-[18px] bg-[#FFFFFF01] pointer-events-none hidden lg:block" />
 
           {/* Inner content */}
-          <div className="relative z-10 w-full max-w-[597px] mx-auto py-0 lg:py-[47px] px-0 lg:px-[44px] flex flex-col gap-8 md:gap-[69px]">
+          <div className="relative z-10 flex min-w-0 flex-1 flex-col gap-6 p-5 sm:p-8">
 
             {/* Top Section: Eyebrow + Heading + Description */}
             <div className="flex flex-col gap-[7.31px] pt-0 lg:pt-[6.19px]">
               {/* Eyebrow */}
-              <span className="font-[family-name:var(--font-jakarta)] font-semibold text-[12.38px] leading-[18px] tracking-[2.48px] text-[#214E34] uppercase">
+              <span className="font-inter font-semibold text-xs leading-[18px] tracking-[2.48px] text-[#214E34] uppercase">
                 DIRECT ENQUIRY
               </span>
 
               {/* Heading */}
-              <h2 className="font-[family-name:var(--font-playfair)] font-normal text-[40px] leading-[54px] text-[#1C1B1B] whitespace-nowrap" style={{ letterSpacing: "-0.45px" }}>
+              <h2 className=" font-serif text-[31px] font-semibold leading-[1.1] text-[#353333] sm:text-[38px]" style={{ letterSpacing: "-0.45px" }}>
                 Send Us a Message
               </h2>
 
               {/* Description */}
-              <p className="font-sans font-normal text-[14px] leading-[24.75px] text-[#757575] pt-[1.69px]">
+              <p className="text-[#757575] pt-[1.69px] text-sm leading-6">
                 Ask about a piece, share a design idea or get help choosing jewellery for a special moment.
               </p>
             </div>
 
             {/* Form Section */}
-            <form onSubmit={handleSubmit} className="flex flex-col">
+            <form onSubmit={handleSubmit} className="flex flex-1 flex-col">
               {/* Status Alert */}
               {status && (
                 <div
                   className={`mb-4 flex items-center gap-2.5 rounded-lg p-3 text-xs font-medium ${
                     status.type === "success"
                       ? "border border-emerald-200 bg-emerald-50 text-emerald-800"
-                      : "border border-rose-200 bg-rose-50 text-rose-800"
+                      : "border border-red-200 bg-red-50 text-red-800"
                   }`}
                 >
                   {status.type === "success" ? (
                     <CheckCircle2 size={16} className="text-emerald-600 shrink-0" />
                   ) : (
-                    <AlertCircle size={16} className="text-rose-600 shrink-0" />
+                    <AlertCircle size={16} className="text-red-600 shrink-0" />
                   )}
                   <span>{status.text}</span>
                 </div>
@@ -108,9 +108,9 @@ export function DirectInquirySection() {
               {/* Row 1: Full Name + Email Address */}
               <div className="flex flex-col sm:flex-row gap-[18px]">
                 {/* Full Name */}
-                <div className="flex-1 flex flex-col">
+                <div className="min-w-0 flex-1 flex flex-col">
                   <div className="pb-[4.5px]">
-                    <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
+                    <label className="font-inter font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
                       FULL NAME <span className="text-[#214E34]">*</span>
                     </label>
                   </div>
@@ -120,13 +120,13 @@ export function DirectInquirySection() {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Maharani Gayatri Devi"
-                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
+                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-inter placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
                 </div>
                 {/* Email Address */}
-                <div className="flex-1 flex flex-col">
+                <div className="min-w-0 flex-1 flex flex-col">
                   <div className="pb-[4.5px]">
-                    <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
+                    <label className="font-inter font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
                       EMAIL ADDRESS <span className="text-[#214E34]">*</span>
                     </label>
                   </div>
@@ -136,7 +136,7 @@ export function DirectInquirySection() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
-                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
+                    className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-inter placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                   />
                 </div>
               </div>
@@ -144,7 +144,7 @@ export function DirectInquirySection() {
               {/* Row 2: Phone Number */}
               <div className="flex flex-col mt-[18px]">
                 <div className="pb-[4.5px]">
-                  <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
+                  <label className="font-inter font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
                     PHONE NUMBER <span className="font-normal text-[#A8A29E]">(OPTIONAL)</span>
                   </label>
                 </div>
@@ -153,14 +153,14 @@ export function DirectInquirySection() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Your mobile number"
-                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
+                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-inter placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34]"
                 />
               </div>
 
               {/* Row 3: Message / Inquiry */}
               <div className="flex flex-col mt-[18px]">
                 <div className="pb-[4.5px]">
-                  <label className="font-sans font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
+                  <label className="font-inter font-semibold text-[12px] leading-[18px] text-[#1C1B1B] uppercase">
                     MESSAGE / ENQUIRY <span className="text-[#214E34]">*</span>
                   </label>
                 </div>
@@ -170,24 +170,24 @@ export function DirectInquirySection() {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Describe the piece you envision, preferred gemstones, or any bespoke design requests..."
-                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-sans placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] resize-none"
+                  className="w-full bg-[#F5F5F4] rounded-[9px] py-[14.63px] px-[18px] text-[14px] font-inter placeholder:text-[#A8A29E] text-[#292524] outline-none focus:ring-1 ring-[#214E34] resize-none"
                 />
               </div>
 
               {/* Bottom: Button + Confidential */}
-              <div className="pt-8 lg:pt-[18px]">
-                <div className="flex flex-col lg:flex-row items-center lg:justify-between gap-4 lg:gap-0 pt-[9px]">
+              <div className="mt-auto pt-6 sm:pt-8">
+                <div className="flex flex-wrap items-center justify-between gap-4">
                   {/* Connect Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="bg-[#214E34] hover:bg-[#183b28] disabled:opacity-50 transition-colors rounded-[49px] py-[15.75px] px-[54px] flex items-center justify-center gap-[13.5px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] cursor-pointer"
+                    className="inline-flex min-h-11 w-full items-center justify-center gap-3 rounded-full bg-[#214E34] px-6 py-3.5 text-white transition-colors hover:bg-[#173d28] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] disabled:cursor-wait disabled:opacity-50 sm:w-auto"
                   >
                     {isSubmitting ? (
                       <Loader2 className="w-[14px] h-[14px] text-white animate-spin" />
                     ) : (
                       <>
-                        <span className="font-sans font-semibold text-[14px] leading-[18px] text-white text-center whitespace-nowrap">
+                        <span className="font-inter font-semibold text-[14px] leading-[18px] text-white text-center whitespace-nowrap">
                           Connect With Miraya
                         </span>
                         <ArrowRight className="w-[12px] h-[12px] text-white shrink-0" strokeWidth={2} />
@@ -197,8 +197,8 @@ export function DirectInquirySection() {
 
                   {/* Jewellery Enquiry */}
                   <div className="flex items-center justify-center gap-[6.75px]">
-                    <Image src="/contact/inquiry-lock_icon.png" alt="Lock" width={12} height={16} style={{ width: '12px', height: '15.75px' }} className="object-contain" />
-                    <span className="font-sans font-normal text-[12px] leading-[20.25px] text-[#574143]" style={{ letterSpacing: "0.13px" }}>
+                    <Image src="/contact/inquiry-lock_icon.png" alt="" width={12} height={16} className="shrink-0 object-contain" />
+                    <span className="font-inter font-normal text-[12px] leading-[20.25px] text-[#757575]" style={{ letterSpacing: "0.13px" }}>
                       Jewellery Enquiry
                     </span>
                   </div>
@@ -211,109 +211,109 @@ export function DirectInquirySection() {
 
         {/* Right Column: Virtual Jewellery Consultation */}
         <div
-          className="w-full lg:w-[495px] lg:h-[730px] rounded-[18px] border-[1.13px] border-[#DEBFC166] bg-[#F7FFF7] shadow-[0px_8px_24px_0px_rgba(0,0,0,0.05)] py-5 px-3 lg:p-[31.5px] flex flex-col justify-between shrink-0"
+          className="flex min-w-0 flex-col justify-between rounded-2xl border border-[#214E34]/10 bg-white p-5 sm:p-6"
         >
           {/* Top Content */}
           <div className="flex flex-col gap-[8.21px] pt-[2.25px] pb-[18px]">
             {/* Badge */}
             <div className="flex">
               <div className="bg-white rounded-full px-[13.5px] py-[4.5px] flex items-center justify-center">
-                <span className="font-sans font-medium text-[12px] leading-[18px] text-[#214E34] uppercase">
-                  CONNECT FROM HOME
+                <span className="font-inter font-medium text-[12px] leading-[18px] text-[#214E34] uppercase">
+                  100% DIGITAL EXPERIENCE
                 </span>
               </div>
             </div>
 
             {/* Heading */}
-            <h3 className="font-[family-name:var(--font-playfair)] font-medium text-[31.5px] leading-[40.5px] text-[#1C1B1B] pt-[5.29px]">
+            <h3 className="font-serif text-[28px] font-semibold leading-tight text-[#353333]">
               Virtual Jewellery Consultation
             </h3>
 
             {/* Description */}
-            <p className="font-[family-name:var(--font-jakarta)] font-normal text-[14px] leading-[20px] text-[#574143] pl-[1px]">
-              Explore fine jewellery from wherever you are. Contact our team to discuss designs, diamond details and available consultation options.
+            <p className="text-[#757575] pl-[1px] text-sm leading-6">
+              Experience luxury fine jewellery from the comfort of your home. We ship fully insured worldwide directly from our master craft studio.
             </p>
           </div>
 
           {/* Feature Cards */}
           <div className="flex flex-col gap-[13.5px]">
             {/* Feature 1 */}
-            <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
+            <div className="bg-[#F7FFF7] rounded-xl p-4 flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
-                <Image src="/contact/video_icon.png" alt="Video" width={19} height={15} className="object-contain" />
+                <Image src="/contact/video_icon.png" alt="" width={19} height={15} className="shrink-0 object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
-                <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Explore the Details
+                <h4 className="font-serif text-xl font-semibold leading-tight text-[#353333]">
+                  4K Live Video Appointments
                 </h4>
-                <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Ask for more information about a design, setting or diamond before making your choice.
+                <p className="text-[#757575] text-sm leading-6">
+                  View diamonds &amp; bespoke pieces live under high magnification with our gemmologists.
                 </p>
               </div>
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
+            <div className="bg-[#F7FFF7] rounded-xl p-4 flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
-                <Image src="/contact/van-icon.png" alt="Delivery" width={19} height={15} className="object-contain" />
+                <Image src="/contact/van-icon.png" alt="" width={19} height={15} className="shrink-0 object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
-                <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Find Your Fit
+                <h4 className="font-serif text-xl font-semibold leading-tight text-[#353333]">
+                  Complimentary At-Home Try-On
                 </h4>
-                <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Get help with sizing and discuss the options available for your selected piece.
+                <p className="text-[#757575] text-sm leading-6">
+                  Doorstep white-glove insured delivery and return pickup across India.
                 </p>
               </div>
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
+            <div className="bg-[#F7FFF7] rounded-xl p-4 flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
-                <Image src="/contact/pen-icon.png" alt="Custom" width={19} height={15} className="object-contain" />
+                <Image src="/contact/pen-icon.png" alt="" width={19} height={15} className="shrink-0 object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
-                <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Discuss a Custom Design
+                <h4 className="font-serif text-xl font-semibold leading-tight text-[#353333]">
+                  Direct Master Jeweller Consultation
                 </h4>
-                <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Share your ideas and ask our team which design details can be personalised.
+                <p className="text-[#757575] text-sm leading-6">
+                  Custom 3D CAD renders and bespoke heirloom custom pieces crafted easily online.
                 </p>
               </div>
             </div>
 
             {/* Feature 4 */}
-            <div className="bg-white rounded-[13.5px] py-[12px] px-[15px] flex items-start gap-[13.5px]">
+            <div className="bg-[#F7FFF7] rounded-xl p-4 flex items-start gap-[13.5px]">
               <div className="w-[45px] h-[45px] rounded-full bg-[#F7FFF7] flex items-center justify-center shrink-0">
-                <Image src="/contact/Lock_Icon.png" alt="Jewellery details" width={19} height={15} className="object-contain" />
+                <Image src="/contact/hallmark.png" alt="" width={20} height={20} className="shrink-0 object-contain" />
               </div>
               <div className="flex flex-col gap-[1.41px]">
-                <h4 className="font-serif font-bold text-[16px] leading-[25.31px] text-[#1C1B1B]">
-                  Understand Your Jewellery
+                <h4 className="font-serif text-xl font-semibold leading-tight text-[#353333]">
+                  Certified &amp; Hallmarked
                 </h4>
-                <p className="font-sans font-normal text-[12px] leading-[18.56px] text-[#757575]">
-                  Confirm diamond origin, grading documentation and metal purity with our team.
+                <p className="text-[#757575] text-sm leading-6">
+                  100% IGI/GIA certified solitaires and 18KT/22KT BIS hallmarked gold delivered to your doorstep.
                 </p>
               </div>
             </div>
           </div>
 
           {/* Bottom Buttons */}
-          <div className="pt-[18px]">
-            <div className="border-t-[1.13px] border-[#214E3433] pt-[17px] flex items-center justify-between gap-[6px] sm:gap-[13.5px]">
-              <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation" className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] w-[56%] lg:w-auto lg:flex-1">
-                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Discuss a Call</span>
-                <Image src="/contact/calendar-icon.png" alt="Calendar" width={14} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-3.5 sm:h-3.5" />
+          <div className="pt-5">
+            <div className="border-t border-[#214E34]/15 pt-5 flex flex-wrap items-center gap-3">
+              <a href="mailto:Sales.mirayadiamonds@gmail.com?subject=Jewellery%20consultation" className="bg-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-2 sm:px-[18px] lg:px-[24px] flex items-center justify-center gap-1.5 sm:gap-[10px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] min-h-11 flex-1">
+                <span className="font-inter font-semibold text-[11px] sm:text-[14px] leading-[18px] tracking-[0.5px] text-white capitalize whitespace-nowrap">Schedule Live Call</span>
+                <Image src="/contact/calendar-icon.png" alt="" width={14} height={15} className="shrink-0 object-contain" />
               </a>
-              <a href="https://wa.me/919869698984" target="_blank" rel="noopener noreferrer" className="bg-white border-[1.13px] border-[#DEBFC1] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] w-[41%] lg:w-auto lg:flex-none">
-                <span className="font-sans font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#214E34] whitespace-nowrap">WhatsApp</span>
-                <Image src="/contact/message-icon.png" alt="Message" width={15} height={15} className="object-contain shrink-0 w-3 h-3 sm:w-[15px] sm:h-[15px]" />
+              <a href="https://wa.me/919869698984" target="_blank" rel="noopener noreferrer" className="bg-white border-[1.13px] border-[#214E34] rounded-[54px] py-3 lg:py-[13.5px] px-[16px] sm:px-[18px] lg:px-[32px] flex items-center justify-center gap-1.5 sm:gap-[6.74px] min-h-11 flex-1">
+                <span className="font-inter font-semibold text-[11px] sm:text-[14px] leading-[18px] text-[#214E34] whitespace-nowrap">WhatsApp</span>
+                <Image src="/contact/message-icon.png" alt="" width={15} height={15} className="shrink-0 object-contain" />
               </a>
             </div>
           </div>
         </div>
 
-      </div>
+      </Container>
     </section>
   );
 }

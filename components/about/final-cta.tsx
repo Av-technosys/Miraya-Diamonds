@@ -1,50 +1,20 @@
 import Link from "next/link";
+import { Container } from "@/components/common/container";
 
 export function FinalCTA() {
   return (
-    <section className="w-full bg-white md:bg-[#FBEFF3]/70 py-[30px] md:py-[60px] px-[12px] md:px-[216px] flex items-center justify-center">
-      <div 
-        className="w-full max-w-[1003px] bg-[#FFF1F266] md:bg-[#FFFDFC] border-[1px] border-[#FFE4E6] md:border-[#E7FFE6] md:border-[1.05px] rounded-[16px] md:rounded-[25.32px] flex flex-col items-center text-center pt-[30px] md:pt-[73px] pb-[30px] md:pb-[67px] px-[16px] md:px-[67px]"
-        style={{ boxShadow: "0px 21.1px 47.47px -15.82px rgba(201, 111, 145, 0.12)" }}
-      >
-        {/* Label */}
-        <span className="font-sans font-medium text-[10px] md:text-[12.66px] leading-[16.88px] tracking-[2px] md:tracking-[3.16px] uppercase text-[#214E34] mb-[8px]">
-          YOUR JOURNEY BEGINS HERE
-        </span>
-        
-        {/* Heading */}
-        <h2 className="font-serif font-medium md:font-bold text-[18px] md:text-[40px] leading-[24px] md:leading-[50.64px] tracking-[-0.51px] text-[#111827] md:text-[#454545] mb-[12px] md:mb-[15px] whitespace-nowrap">
-          Find Something That Feels Like You
-        </h2>
-        
-        {/* Description */}
-        <p className="font-sans font-light md:font-normal text-[11px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#6B7280] md:text-[#757575] max-w-[320px] md:max-w-[507px] mb-[20px] md:mb-[25px] px-[10px] md:px-0">
-          Explore jewellery designed to celebrate your story and your most cherished moments.
-        </p>
-
-        {/* Buttons */}
-        <div className="flex flex-row items-center justify-center gap-[8px] md:gap-[16.88px] pt-[2px] md:pt-[16px] w-full max-w-[340px] md:max-w-none">
-          <Link
-            href="/collection"
-            className="flex-1 md:flex-none inline-flex items-center justify-center rounded-full bg-[#214E34] text-white py-[12px] md:py-[16.88px] px-[10px] md:px-[33.76px]"
-            style={{ boxShadow: "0px 21.1px 47.47px -15.82px rgba(201, 111, 145, 0.12)" }}
-          >
-            <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[16.88px] whitespace-nowrap">
-              Explore Jewellery
-            </span>
-          </Link>
-          
-          <Link
-            href="/contact"
-            className="flex-1 md:flex-none inline-flex items-center justify-center rounded-full border-[1.05px] border-[#D1D5DB] md:border-[#454545] text-[#111827] md:text-[#454545] py-[12px] md:py-[16.88px] px-[10px] md:px-[33.76px]"
-          >
-            <span className="font-sans font-medium text-[12px] md:text-[14px] leading-[16px] md:leading-[16.88px] whitespace-nowrap">
-              Contact Us
-            </span>
-          </Link>
+    <section className="bg-[#F7FFF7] py-10 sm:py-14">
+      <Container>
+        <div className="rounded-xl border border-[#214E34]/15 bg-white px-5 py-10 text-center sm:px-10 sm:py-14">
+          <p className="font-inter text-xs font-semibold uppercase tracking-[0.2em] text-[#214E34]">Your journey begins here</p>
+          <h2 className="mt-3 font-serif text-[31px] font-semibold leading-[1.1] text-[#353333] sm:text-[38px]">Find Something That Feels Like You</h2>
+          <p className="mx-auto mt-4 max-w-lg font-inter text-sm leading-6 text-[#757575]">Explore jewellery designed to celebrate your story and your most cherished moments.</p>
+          <div className="mt-6 flex flex-col justify-center gap-3 font-inter text-sm font-medium sm:flex-row sm:gap-4">
+            <Link href="/collection" className="inline-flex min-h-11 items-center justify-center rounded-full bg-[#214E34] px-6 py-3 text-white transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34]">Explore Jewellery</Link>
+            <Link href="/contact" className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#214E34] px-6 py-3 text-[#214E34] transition-colors hover:bg-[#F7FFF7] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34]">Contact Us</Link>
+          </div>
         </div>
-
-      </div>
+      </Container>
     </section>
   );
 }

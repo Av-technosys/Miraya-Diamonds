@@ -1,99 +1,33 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { Container } from "@/components/common/container";
 
 export function TestimonialsHero() {
   return (
-    <section className="w-full bg-white">
-      <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 pt-[13px] md:pt-[40px]">
-
-        {/* Breadcrumb */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-[10px]">
-            <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575]">
-              Home
-            </span>
-            <ChevronRight className="w-[12px] h-[12px] text-[#214E34]" strokeWidth={2.5} />
-            <span className="font-sans font-medium text-[14px] leading-[100%] tracking-[-0.02em] text-[#757575]">
-              Testimonials
-            </span>
+    <section className="bg-white py-6 pb-10 sm:pb-14">
+      <Container>
+        <nav aria-label="Breadcrumb" className="mb-8 flex items-center gap-2 text-xs text-[#757575] sm:mb-10">
+          <Link href="/" className="transition-colors hover:text-[#214E34]">Home</Link>
+          <ChevronRight size={14} aria-hidden="true" />
+          <span aria-current="page">Testimonials</span>
+        </nav>
+        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-14">
+          <div className="min-w-0">
+            <p className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-[#214E34]">Customer Stories</p>
+            <h1 className="font-serif text-[40px] font-semibold leading-[1.05] sm:text-[52px]">Loved, Worn &amp;<br /><span className="italic text-[#214E34]">Cherished</span></h1>
+            <p className="mt-5 max-w-lg text-sm leading-6 text-[#757575]">Every piece can hold a personal meaning. Share the moments and memories you celebrate with Miraya Diamonds.</p>
+            <p className="mt-4 text-sm leading-6 text-[#214E34]">A space for experiences shared by our customers.</p>
           </div>
-        </div>
-
-        {/* Hero Section */}
-        <div className="relative mt-[6px] flex flex-col lg:flex-row justify-between items-start">
-
-          {/* Left Hero Content */}
-          <div className="w-full lg:w-[553px] pt-[16px] md:pt-[32px] flex flex-col gap-[12px] md:gap-[27px]">
-            {/* Top Content */}
-            <div className="flex flex-col gap-[8px] md:gap-[20px] max-w-[553px]">
-              {/* Badge */}
-              <div className="flex">
-                <div className="bg-[#E7FFE6] rounded-full px-[10px] md:px-[13.5px] py-[3px] md:py-[4.5px] flex items-center justify-center">
-                  <span className="font-sans font-semibold text-[10px] md:text-[12px] leading-[18px] text-[#214E34] uppercase">
-                    Customer Stories
-                  </span>
-                </div>
-              </div>
-
-              {/* Heading */}
-              <h1 className="flex flex-col gap-0">
-                <span className="font-serif font-bold text-[32px] md:text-[64px] leading-[34px] md:leading-[63px] text-[#454545] block" style={{ letterSpacing: "-1.57px" }}>
-                  Loved, Worn &
-                </span>
-                <span className="font-serif font-bold italic text-[32px] md:text-[64px] leading-[34px] md:leading-[72px] text-[#214E34] block mt-[-4px] md:mt-0" style={{ letterSpacing: "-1.57px" }}>
-                  Cherished
-                </span>
-              </h1>
-
-              {/* Description */}
-              <p className="font-sans font-normal text-[13px] md:text-[14px] leading-[18px] md:leading-[20px] text-[#757575] max-w-[553px] mt-[4px] md:mt-0">
-                Every piece can hold a personal meaning. Share the moments and memories you celebrate with Miraya Diamonds.
-              </p>
-            </div>
-
-            <p className="text-sm leading-relaxed text-[#214E34]">A space for experiences shared by our customers.</p>
-          </div>
-
-          {/* Right Hero Editorial Visual */}
-          <div className="relative w-full lg:w-[588px] mt-[8px] lg:mt-0">
-            {/* Background + Image */}
-            <div
-              className="relative w-full h-[260px] md:h-[346px] rounded-[16px] md:rounded-[15.89px] bg-[#F3ECE8] overflow-hidden"
-              style={{ boxShadow: "0px 0.99px 1.99px 0px rgba(0,0,0,0.05)" }}
-            >
-              <Image
-                src="/testimonials/hero.jpg"
-                alt="Solitaire diamond rings and fine rose gold jewellery"
-                fill
-                className="object-cover"
-              />
-
-              {/* Right Gradient Overlay */}
-              <div
-                className="absolute top-0 right-0 w-full md:w-[588px] h-full pointer-events-none"
-                style={{
-                  background: "linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, rgba(250,247,246,0.4) 100%)",
-                }}
-              />
-
-              {/* Editorial Floating Typography Card */}
-              <div
-                className="absolute bottom-[16px] md:bottom-[30px] right-[16px] md:right-[20px] flex flex-col gap-[6px] md:gap-[7.95px] pt-[12px] md:pt-[15.89px] pr-[16px] md:pr-[23.84px] pb-[12px] md:pb-[15.89px] pl-[16px] md:pl-[23.84px] rounded-[6px] md:rounded-[7.95px] border-[0.99px] border-[#EDE5E1] bg-[#FFFFFFF2]"
-                style={{
-                  boxShadow: "0px 0.99px 1.99px 0px rgba(0,0,0,0.05)",
-                  backdropFilter: "blur(3.97px)",
-                }}
-              >
-                <p className="font-sans font-medium text-[8px] md:text-xs leading-[12px] md:leading-[16.14px] tracking-[1.5px] md:tracking-[2.48px] text-[#554E4A] text-right uppercase w-[70px] md:w-[86px]">
-                  MORE THAN JEWELLERY A PART OF YOUR STORY
-                </p>
-                {/* Horizontal Divider */}
-                <div className="w-[20px] md:w-[31.78px] h-[1.5px] md:h-[1.99px] bg-[#A8354C] self-end" />
-              </div>
+          <div className="relative aspect-[588/346] overflow-hidden rounded-xl bg-[#F7FFF7]">
+            <Image src="/testimonials/hero.jpg" alt="Solitaire diamond rings and fine rose gold jewellery" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" priority />
+            <div className="absolute bottom-4 right-4 max-w-40 rounded-lg border border-[#214E34]/10 bg-white/95 p-4 sm:bottom-6 sm:right-6">
+              <p className="text-right text-[10px] font-medium uppercase leading-5 tracking-[0.12em] text-[#353333] sm:text-xs">More than jewellery a part of your story</p>
+              <div className="ml-auto mt-3 h-px w-8 bg-[#214E34]" />
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

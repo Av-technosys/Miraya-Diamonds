@@ -8,13 +8,7 @@ import { Header } from "@/components/common/header";
 import { ConditionalFooter } from "@/components/common/conditional-footer";
 import { SmoothScroll } from "@/components/common/smooth-scroll";
 import { cn } from "@/lib/utils";
-
-const geist = localFont({
-  src: "./fonts/geist.woff2",
-  weight: "100 900",
-  variable: "--font-sans",
-  display: "swap",
-});
+import { WhatsAppButton } from "@/components/common/whatsapp-button";
 
 const inter = localFont({
   src: "./fonts/inter.woff2",
@@ -23,40 +17,12 @@ const inter = localFont({
   display: "swap",
 });
 
-const cormorantGaramond = localFont({
+const cormorantInfant = localFont({
   src: [
-    { path: "./fonts/cormorant-garamond.woff2", weight: "300 700", style: "normal" },
-    { path: "./fonts/cormorant-garamond-italic.woff2", weight: "300 700", style: "italic" },
+    { path: "./fonts/cormorant-infant.woff2", weight: "300 700", style: "normal" },
+    { path: "./fonts/cormorant-infant-italic.woff2", weight: "300 700", style: "italic" },
   ],
-  variable: "--font-cormorant-garamond",
-  display: "swap",
-});
-
-const montserrat = localFont({
-  src: "./fonts/montserrat.woff2",
-  weight: "100 900",
-  variable: "--font-montserrat",
-  display: "swap",
-});
-
-const alexBrush = localFont({
-  src: "./fonts/alex-brush.woff2",
-  weight: "400",
-  variable: "--font-great-vibes",
-  display: "swap",
-});
-
-const playfairDisplay = localFont({
-  src: "./fonts/playfair-display.woff2",
-  weight: "400 900",
-  variable: "--font-playfair",
-  display: "swap",
-});
-
-const plusJakartaSans = localFont({
-  src: "./fonts/plus-jakarta-sans.woff2",
-  weight: "200 800",
-  variable: "--font-jakarta",
+  variable: "--font-cormorant-infant",
   display: "swap",
 });
 
@@ -70,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={cn("h-full", "antialiased", inter.variable, cormorantGaramond.variable, montserrat.variable, alexBrush.variable, playfairDisplay.variable, plusJakartaSans.variable, "font-sans", geist.variable)}
+      className={cn("h-full", "antialiased", inter.variable, cormorantInfant.variable, "font-sans")}
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
@@ -87,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Header />
           <div className="flex-1">{children}</div>
           <ConditionalFooter />
+          <WhatsAppButton />
         </ClerkProvider>
       </body>
     </html>

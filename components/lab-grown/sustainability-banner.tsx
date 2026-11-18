@@ -58,13 +58,13 @@ export function SustainabilityBanner() {
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col items-start"
             >
-              <span className="font-[family-name:var(--font-montserrat)] text-[10px] font-semibold uppercase tracking-[0.24em] text-white/85 sm:text-[11px] md:text-[11.5px]">
+              <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.24em] text-white/85 sm:text-[11px] md:text-[11.5px]">
                 SAME BRILLIANCE
                 <br />
                 A DIFFERENT ORIGIN
               </span>
 
-              <h2 className="mt-2.5 font-serif text-[26px] font-normal leading-[1.08] tracking-[-0.01em] text-white sm:mt-3 sm:text-[34px] md:text-[40px] lg:text-[46px] xl:text-[50px]">
+              <h2 className="mt-2.5 font-serif tracking-[-0.01em] text-white sm:mt-3 text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
                 <span className="block whitespace-nowrap">Beauty Today.</span>
                 <span className="block whitespace-nowrap">Your Personal Choice.</span>
               </h2>

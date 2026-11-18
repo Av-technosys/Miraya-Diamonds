@@ -21,17 +21,16 @@ const shopLinks = [
 const aboutLinks = [
   { label: "Our Story", href: "/about" },
   { label: "Testimonials", href: "/testimonials" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms-and-conditions" },
-  { label: "Warranty", href: "/warranty" },
+  { label: "FAQs", href: "/contact#faq" },
+  { label: "Contact Us", href: "/contact" },
 ];
 
 const policyLinks = [
-  { label: "FAQs", href: "/contact#faq" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "Terms & Conditions", href: "/terms-and-conditions" },
   { label: "Shipping & Delivery", href: "/shipping-and-delivery" },
   { label: "Returns & Exchange", href: "/return-policy" },
-  { label: "Order Support", href: "/contact" },
-  { label: "Contact Us", href: "/contact" },
+  { label: "Warranty", href: "/warranty" },
 ];
 
 function FooterItem({ item }: { item: { label: string; href?: string } }) {
@@ -59,7 +58,7 @@ function FooterColumn({
 }) {
   return (
     <div className={className}>
-      <h3 className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.19em] text-[#E2BD60] md:text-[15px]">
+      <h3 className="font-inter text-[14px] font-bold uppercase leading-none tracking-[0.19em] text-[#E2BD60] md:text-[15px]">
         {title}
       </h3>
       <div className="mt-5">{children}</div>
@@ -94,7 +93,7 @@ function MobileFooterSection({
           }
         }}
       >
-        <span className="font-[family-name:var(--font-montserrat)] text-[14px] font-bold uppercase leading-none tracking-[0.2em] text-[#E2BD60]">
+        <span className="font-inter text-[14px] font-bold uppercase leading-none tracking-[0.2em] text-[#E2BD60]">
           {title}
         </span>
         <ChevronDown
@@ -142,7 +141,7 @@ export function Footer() {
       <div ref={ringTrigger} aria-hidden="true" className="pointer-events-none absolute bottom-[240px] left-1/2 size-px" />
 
       <motion.div
-        className="absolute bottom-[-220px] left-1/2 z-[2] hidden w-[980px] max-w-[112vw] -translate-x-1/2 lg:block xl:bottom-[-150px] xl:w-[1053px] xl:max-w-[118vw]"
+        className="absolute bottom-[-245px] left-1/2 z-[2] hidden w-[980px] max-w-[112vw] -translate-x-1/2 lg:block xl:bottom-[-175px] xl:w-[1053px] xl:max-w-[118vw]"
         initial={false}
         animate={{ y: ringInView || reduceMotion ? 0 : 260, opacity: ringInView || reduceMotion ? 1 : 0.15 }}
         transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
@@ -195,7 +194,7 @@ export function Footer() {
           Discover fine diamond jewellery, thoughtfully crafted to celebrate your story. From everyday elegance to cherished milestones, find a piece to treasure with Miraya Diamonds.
         </p>
 
-        <div className="mt-[52px] flex items-center gap-[26px] text-white">
+        <div className="mt-[52px] flex items-center justify-end gap-[26px] text-white">
           <a
             href={INSTAGRAM_URL}
             target="_blank"
@@ -217,18 +216,18 @@ export function Footer() {
               ))}
             </ul>
           </MobileFooterSection>
-          <MobileFooterSection title="Policies" isOpen={openSection === "Policies"} onToggle={() => toggleSection("Policies")}>
-            <ul className="space-y-[16px] pb-[14px] font-sans text-[14px] leading-none">
-              {policyLinks.map((item) => (
+          <MobileFooterSection title="About" isOpen={openSection === "About"} onToggle={() => toggleSection("About")}>
+            <ul className="space-y-[18px] pb-[14px] font-sans text-[14px] leading-none">
+              {aboutLinks.map((item) => (
                 <li key={item.label}>
                   <FooterItem item={item} />
                 </li>
               ))}
             </ul>
           </MobileFooterSection>
-          <MobileFooterSection title="About" isOpen={openSection === "About"} onToggle={() => toggleSection("About")}>
-            <ul className="space-y-[18px] pb-[14px] font-sans text-[14px] leading-none">
-              {aboutLinks.map((item) => (
+          <MobileFooterSection title="Policies" isOpen={openSection === "Policies"} onToggle={() => toggleSection("Policies")}>
+            <ul className="space-y-[16px] pb-[14px] font-sans text-[14px] leading-none">
+              {policyLinks.map((item) => (
                 <li key={item.label}>
                   <FooterItem item={item} />
                 </li>
@@ -270,17 +269,7 @@ export function Footer() {
           <p className="mt-7 max-w-[260px] font-sans text-[13px] leading-[1.28] tracking-[-0.02em] text-white xl:max-w-[300px] xl:text-[15px]">
             Discover fine diamond jewellery, thoughtfully crafted to celebrate your story. From everyday elegance to cherished milestones, find a piece to treasure with Miraya Diamonds.
           </p>
-          <div className="mt-10 flex items-center gap-7 text-white xl:mt-12 xl:gap-8">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow Miraya Diamonds on Instagram"
-              className="flex h-[30px] w-[30px] items-center justify-center text-white transition-colors hover:text-[#E2BD60] xl:h-[34px] xl:w-[34px]"
-            >
-              <IconBrandInstagram className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" stroke={2.15} />
-            </a>
-          </div>
+
         </div>
 
         <FooterColumn title="Shop" className="border-[#E2BD60] lg:border-l lg:pl-6 xl:pl-8">
@@ -335,6 +324,17 @@ export function Footer() {
               <span>Jaipur, India</span>
             </li>
           </ul>
+          <div className="mt-6 flex items-center text-white xl:mt-7">
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Follow Miraya Diamonds on Instagram"
+              className="flex h-[30px] w-[30px] items-center justify-center text-white transition-colors hover:text-[#E2BD60] xl:h-[34px] xl:w-[34px]"
+            >
+              <IconBrandInstagram className="h-[30px] w-[30px] xl:h-[34px] xl:w-[34px]" stroke={2.15} />
+            </a>
+          </div>
         </FooterColumn>
       </div>
     </footer>

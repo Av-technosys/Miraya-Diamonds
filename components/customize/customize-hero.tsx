@@ -21,19 +21,19 @@ export function CustomizeHero() {
             className="flex flex-col items-start"
           >
             {/* Eyebrow Label */}
-            <span className="font-[family-name:var(--font-montserrat)] text-[11px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[13px]">
+            <span className="font-inter text-[11px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[13px]">
               CUSTOMISED JUST FOR YOU
             </span>
 
             {/* Main Heading */}
-            <h1 className="mt-4 font-serif text-[38px] font-bold leading-[1.08] tracking-[-0.02em] text-[#454545] sm:mt-5 sm:text-[48px] md:text-[54px] lg:text-[58px] xl:text-[62px]">
+            <h1 className="mt-4 font-serif tracking-[-0.02em] text-[#454545] sm:mt-5 text-[40px] sm:text-[52px] font-semibold leading-[1.1]">
               Your Vision,
               <br />
               Our <span className="font-normal italic">Craftsmanship</span>
             </h1>
 
             {/* Description */}
-            <p className="mt-4 max-w-[440px] font-sans text-[14px] leading-[1.65] text-[#57534E] sm:mt-5 sm:text-[15px] lg:text-[16px]">
+            <p className="mt-4 max-w-[440px] font-sans text-[#57534E] sm:mt-5 text-xs leading-relaxed sm:text-sm">
               Turn your ideas into timeless jewellery. From the first sketch to
               the final sparkle, we bring your story to life with precision,
               passion and care.

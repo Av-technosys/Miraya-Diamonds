@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useId, useRef, useState } from "react";
 import type { FormEvent } from "react";
-import { Loader2, Send, Sparkles } from "lucide-react";
+import { Loader2, Pencil, Send, Sparkles } from "lucide-react";
 import { submitProductEnquiry } from "@/lib/actions/enquiries";
 
 import type { ProductSelection } from "@/lib/enquiries";
@@ -11,12 +11,15 @@ type Props = {
   options: ProductSelection;
   sku: string;
   selection: string[];
+  onEngravingChange: (requested: boolean) => void;
+  onEngravingTextChange: (text: string) => void;
 };
 
 const fieldClass = "mt-1.5 w-full rounded-md border border-[#d8e2d9] bg-white px-3 py-2.5 text-xs font-normal normal-case tracking-normal text-[#304c39] outline-none placeholder:text-[#98a69b] focus:border-[#214E34] focus:ring-1 focus:ring-[#214E34]";
 const labelClass = "block min-w-0 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#304c39]";
 
-export function ProductEnquiryForm({ options, sku, selection }: Props) {
+export function ProductEnquiryForm({ options, sku, selection, onEngravingChange, onEngravingTextChange }: Props) {
+  const engravingId = useId();
   const submitting = useRef(false);
   const [pending, setPending] = useState(false);
   const [status, setStatus] = useState<{ success: boolean; text: string } | null>(null);
@@ -40,7 +43,11 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
         sku,
       });
       setStatus({ success: result.success, text: result.message || result.error || "Please try again." });
-      if (result.success) form.reset();
+      if (result.success) {
+        form.reset();
+        onEngravingChange(false);
+        onEngravingTextChange("");
+      }
     } catch {
       setStatus({ success: false, text: "We couldn't send your enquiry. Please try again." });
     } finally {
@@ -54,7 +61,7 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
       <div className="flex items-start gap-2.5">
         <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-[#d5e5d6] text-[#214E34]"><Sparkles size={13} /></span>
         <div>
-          <h2 id="product-enquiry-title" className="font-[family-name:var(--font-cormorant-garamond)] text-[23px] font-semibold leading-tight text-[#253c2e]">Enquire About This Product</h2>
+          <h2 id="product-enquiry-title" className="font-infant text-[23px] font-semibold leading-tight text-[#253c2e]">Enquire About This Product</h2>
           <p className="mt-1 text-xs leading-[1.5] text-[#607565]">Ask our team about availability, pricing, diamond details and customisation options.</p>
         </div>
       </div>
@@ -80,6 +87,17 @@ export function ProductEnquiryForm({ options, sku, selection }: Props) {
           <label className={labelClass}>Message / requirements (optional)
             <textarea name="message" rows={3} maxLength={3000} placeholder="Tell us your requirements (ring size, customization, budget, etc.)" className={`${fieldClass} min-h-[68px] resize-y`} />
           </label>
+          <div>
+            <label className="flex cursor-pointer items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#304c39]">
+              <input type="checkbox" name="engravingRequested" checked={options.engravingRequested} onChange={(event) => onEngravingChange(event.target.checked)} aria-controls={options.engravingRequested ? engravingId : undefined} className="size-3.5 accent-[#214E34]" />
+              <Pencil size={13} className="shrink-0 text-[#214E34]" aria-hidden="true" />
+              Request engraving details
+            </label>
+            {options.engravingRequested && <label className={`${labelClass} mt-3`}>
+              Engraving text (optional)
+              <input id={engravingId} name="engravingText" type="text" value={options.engravingText} onChange={(event) => onEngravingTextChange(event.target.value)} maxLength={24} placeholder="Your engraving, up to 24 characters" className={fieldClass} />
+            </label>}
+          </div>
           <button type="submit" className="inline-flex min-h-9 items-center justify-center gap-1.5 rounded-full bg-[#214E34] px-6 py-2 text-[10px] font-semibold uppercase tracking-[0.03em] text-white shadow-[0_3px_10px_#214e3438] transition hover:bg-[#183b28] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] disabled:cursor-wait">
             {pending ? <Loader2 size={13} className="animate-spin" /> : <Send size={13} />}{pending ? "Sending enquiry…" : "Send enquiry"}
           </button>

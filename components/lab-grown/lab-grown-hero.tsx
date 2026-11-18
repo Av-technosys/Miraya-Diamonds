@@ -90,18 +90,18 @@ export function LabGrownHero() {
             className="flex max-w-[520px] flex-col items-start"
           >
             {/* Eyebrow Label */}
-            <span className="font-[family-name:var(--font-montserrat)] text-[10px] font-semibold uppercase tracking-[0.24em] text-[#44403C] sm:text-[11px] md:text-[12px]">
+            <span className="font-inter text-[10px] font-semibold uppercase tracking-[0.24em] text-[#44403C] sm:text-[11px] md:text-[12px]">
               A MODERN WAY TO SHINE
             </span>
 
             {/* Main Heading */}
-            <h1 className="mt-3.5 font-serif text-[40px] font-normal leading-[1.02] tracking-[-0.01em] text-[#14120E] sm:mt-4 sm:text-[50px] md:text-[58px] lg:text-[66px]">
+            <h1 className="mt-3.5 font-serif tracking-[-0.01em] text-[#14120E] sm:mt-4 text-[40px] sm:text-[52px] font-semibold leading-[1.1]">
               <span className="block font-medium">Lab-Grown</span>
               <span className="block font-normal italic">Diamonds</span>
             </h1>
 
             {/* Subtitle / Description */}
-            <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-relaxed text-[#44403C] sm:mt-5 sm:text-[14px] md:text-[15px]">
+            <p className="mt-4 font-[family-name:var(--font-inter)] text-[#44403C] sm:mt-5 text-xs leading-relaxed sm:text-sm">
               The same brilliance.
               <br />
               A different origin.
@@ -155,7 +155,7 @@ export function LabGrownHero() {
                 </h3>
 
                 {/* Feature Description */}
-                <p className="mt-1 font-[family-name:var(--font-inter)] text-[11px] leading-tight text-[#57534E] sm:mt-1.5 sm:text-[13px] sm:leading-relaxed">
+                <p className="mt-1 font-[family-name:var(--font-inter)] text-[#57534E] sm:mt-1.5 text-xs leading-relaxed sm:text-sm">
                   {item.description}
                 </p>
               </div>

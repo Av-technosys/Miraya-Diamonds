@@ -77,14 +77,14 @@ export function LabVsNatural() {
 
           {/* Center VS Badge (Desktop) */}
           <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 hidden lg:flex">
-            <span className="flex size-13 items-center justify-center rounded-full border border-black/5 bg-white font-[family-name:var(--font-montserrat)] text-xs font-bold tracking-widest text-[#1C1917] shadow-[0_8px_24px_rgba(0,0,0,0.15)] xl:size-14 xl:text-sm">
+            <span className="flex size-13 items-center justify-center rounded-full border border-black/5 bg-white font-inter text-xs font-bold tracking-widest text-[#1C1917] shadow-[0_8px_24px_rgba(0,0,0,0.15)] xl:size-14 xl:text-sm">
               VS
             </span>
           </div>
 
           {/* Mobile VS Badge (visible when stacked) */}
           <div className="flex items-center justify-center py-1 lg:hidden">
-            <span className="flex size-11 items-center justify-center rounded-full border border-black/5 bg-white font-[family-name:var(--font-montserrat)] text-xs font-bold tracking-widest text-[#1C1917] shadow-[0_4px_18px_rgba(0,0,0,0.12)]">
+            <span className="flex size-11 items-center justify-center rounded-full border border-black/5 bg-white font-inter text-xs font-bold tracking-widest text-[#1C1917] shadow-[0_4px_18px_rgba(0,0,0,0.12)]">
               VS
             </span>
           </div>
@@ -122,7 +122,7 @@ export function LabVsNatural() {
                     <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-[#1C3F29] text-white sm:size-5.5">
                       <Check size={12} strokeWidth={2.8} />
                     </span>
-                    <span className="font-[family-name:var(--font-inter)] text-[13px] font-medium leading-tight text-[#292524] sm:text-[14px] md:text-[14.5px]">
+                    <span className="font-[family-name:var(--font-inter)] text-[13px] font-medium leading-tight text-[#292524] sm:text-sm">
                       {feature}
                     </span>
                   </li>
@@ -143,11 +143,11 @@ export function LabVsNatural() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col"
         >
-          <h3 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
+          <h3 className="font-serif text-[31px] font-semibold leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[38px]">
             Lab-Grown vs Natural Diamonds
           </h3>
 
-          <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
+          <p className="mt-4 font-[family-name:var(--font-inter)] text-[#57534E] sm:mt-5 text-xs leading-relaxed sm:text-sm">
               Natural and lab-grown diamonds are chemically and structurally identical, offering similar beauty and strength. The primary difference lies in their origin. Natural diamonds are formed over billions of years beneath the earth&apos;s surface, making their rarity a defining part of their value and appeal. Lab-grown diamonds are created using advanced technology in controlled environments, offering a different option for buyers while still delivering brilliance, beauty, and durability in fine jewellery.
             </p>
         </motion.div>
@@ -160,11 +160,11 @@ export function LabVsNatural() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mt-12 flex flex-col sm:mt-16 lg:mt-20"
         >
-          <h3 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
+          <h3 className="font-serif text-[31px] font-semibold leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[38px]">
             Are Lab-Grown Diamonds Real Diamonds?
           </h3>
 
-          <div className="mt-4 space-y-3.5 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
+          <div className="mt-4 space-y-3.5 font-[family-name:var(--font-inter)] text-xs leading-relaxed text-[#57534E] sm:mt-5 sm:text-sm">
             <p>
               Yes. Lab-grown diamonds are genuine diamonds, not imitations. They consist of crystalline carbon and possess the defining material properties that distinguish diamond from other gemstones. Their hardness, crystal structure and optical behaviour are fundamentally comparable to those of natural diamonds. This is why a lab-grown diamond can display the same captivating brilliance and beauty.
             </p>
