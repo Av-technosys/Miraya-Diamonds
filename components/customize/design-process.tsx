@@ -45,10 +45,10 @@ export function DesignProcess() {
         
         {/* Section Header */}
         <div className="mx-auto mb-10 max-w-[620px] text-center sm:mb-14 lg:mb-16">
-          <h2 className="font-serif text-[32px] font-bold leading-tight text-[#1C1B1B] sm:text-[38px] lg:text-[42px]">
+          <h2 className="font-serif text-[#1C1B1B] text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
             The Design Process
           </h2>
-          <p className="mt-3 font-sans text-[13px] leading-relaxed text-[#757575] sm:text-[14px]">
+          <p className="mt-3 font-sans text-[#757575] text-xs leading-relaxed sm:text-sm">
             From an idea to a one-of-a-kind piece — we guide you through every step
             with care, expertise and attention to detail.
           </p>
@@ -90,10 +90,10 @@ export function DesignProcess() {
 
               {/* Step Info */}
               <div className="mt-4 flex flex-col sm:mt-5">
-                <h3 className="font-serif text-[17px] font-semibold leading-snug text-[#252525] sm:text-[18px]">
+                <h3 className="font-serif font-semibold leading-snug text-[#252525] text-xl sm:text-[27px]">
                   {item.title}
                 </h3>
-                <p className="mt-1.5 font-sans text-[12px] leading-[1.55] text-[#757575] sm:text-[13px]">
+                <p className="mt-1.5 font-sans text-[#757575] text-xs leading-relaxed sm:text-sm">
                   {item.desc}
                 </p>
               </div>

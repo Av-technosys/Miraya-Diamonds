@@ -1,157 +1,50 @@
 import Image from "next/image";
+import { Container } from "@/components/common/container";
 
-const timelineSteps = [
-  { num: "01", title: "Vision", sub: "Sketches", highlighted: false },
-  { num: "02", title: "Craft", sub: "Karigari", highlighted: false },
-  { num: "03", title: "Detail", sub: "Precision", highlighted: false },
-  { num: "04", title: "You", sub: "Heirloom", highlighted: true },
+const milestones = [
+  { title: "30+ years", description: "Jewellery experience" },
+  { title: "16+ years", description: "CVD diamond technology" },
 ];
 
 export function OurStoryAndTimeline() {
   return (
-    <section className="w-full bg-[#FCF9F8] border-t-[1.05px] border-[#F3E5EC] py-[30px]">
-      <div className="w-full max-w-[1240px] mx-auto px-4 md:px-0 flex flex-col lg:flex-row items-center gap-10 lg:gap-[60px]">
-
-        {/* Left Content */}
-        <div className="w-full lg:w-[598px] flex flex-col gap-[21px]">
-          {/* Label */}
-          <div className="flex items-center gap-[8px]">
-            <div className="w-[34px] h-[1px] bg-[#214E34]" />
-            <span className="font-sans font-semibold text-[12px] leading-[17px] tracking-[3.16px] uppercase text-[#214E34]">
-              ORIGIN &amp; HERITAGE
-            </span>
-          </div>
-
-          {/* Heading */}
-          <h2 className="font-serif font-bold text-[32px] md:text-[40px] leading-[42.2px] text-[#454545]">
-            The Story Behind <span className="text-[#214E34]">Miraya</span>
-          </h2>
-
-          {/* Mobile Description */}
-          <p className="md:hidden font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
-            Miraya Diamonds brings together the brilliance of exceptional diamonds with thoughtful design and timeless Indian craftsmanship.
+    <section className="bg-[#F7FFF7] py-10 sm:py-14">
+      <Container className="grid items-start gap-8 lg:grid-cols-2 lg:gap-14">
+        <div className="min-w-0">
+          <p className="mb-3 font-inter text-xs font-semibold uppercase tracking-[0.2em] text-[#214E34]">
+            Origin &amp; heritage
           </p>
-
-          {/* Desktop Description */}
-          <div className="hidden md:block">
-            <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px] mb-[21px]">
-              Miraya Diamonds was created with a simple vision — to bring together the brilliance of exceptional diamonds with thoughtful design and timeless craftsmanship. Our journey is driven by a passion for creating jewellery that feels personal, sophisticated, and effortlessly beautiful.
-            </p>
-            <p className="font-sans font-light text-[14px] leading-[20px] text-[#757575] max-w-[595px]">
-              From the first sketch to the final polish, every detail is carefully considered to create pieces celebrating life&apos;s most meaningful milestones.
-            </p>
+          <h2 className="font-serif text-[31px] font-semibold leading-[1.1] text-[#353333] sm:text-[38px]">
+            Experience That Shapes Every Piece
+          </h2>
+          <div className="mt-5 space-y-4 font-inter text-sm leading-6 text-[#757575]">
+            <p>Sixteen years ago, we entered the world of lab-grown diamonds through a unique technology called CVD, when the industry was still in its early stages.</p>
+            <p>During this journey, we were involved in research and development, machine design, process improvement and commercial production of CVD diamonds.</p>
+            <p>This gave us valuable experience and a deeper understanding of how lab-grown diamonds are created.</p>
+            <p>Today, we bring these two areas of experience together—our long-standing jewellery background and our knowledge of diamonds.</p>
+            <p>Our goal is simple: to create beautiful, modern and meaningful diamond jewellery by combining skilled craftsmanship with advanced technology.</p>
+            <p>Every piece is designed with attention to quality, detail and timeless beauty.</p>
+            <p>What started with our family’s jewellery business has now grown into a new generation of jewellery, built on years of experience and a passion for diamonds.</p>
           </div>
-
-          {/* OUR CREATIVE JOURNEY */}
-          <div className="flex flex-col gap-[12.66px] pt-[17px]">
-            <span className="hidden md:block font-sans font-bold text-[12px] leading-[17px] tracking-[1.27px] uppercase text-[#454545]">
-              OUR CREATIVE JOURNEY
-            </span>
-
-            {/* Timeline cards */}
-            <div className="flex items-center gap-[6px] md:gap-[10.55px] w-full">
-              {timelineSteps.map((step) => (
-                <div
-                  key={step.num}
-                  className={`flex flex-col flex-1 items-center gap-[2px] md:w-[142px] pt-[16px] md:pt-[21px] px-[2px] md:px-[15px] pb-[12px] md:pb-[15px] rounded-[10px] md:rounded-[13px] border-[1.05px] ${
-                    step.highlighted
-                      ? "bg-[#F7E6ECCC] border-[#FF86B466]"
-                      : "bg-[#F7E6ECCC] md:bg-[#FFFDFC] border-[#FF86B466] md:border-[#F3E5EC]"
-                  }`}
-                  style={{
-                    boxShadow: "0px 10.55px 31.65px -10.55px #3B2A300D",
-                  }}
-                >
-                  <span className="font-serif font-bold text-[18px] md:text-[20px] leading-[1] md:leading-[17px] text-[#214E34] text-center">
-                    {step.num}
-                  </span>
-                  <div className="pt-[4px] md:pt-[2px]">
-                    <span className="font-serif font-bold text-[13px] md:text-[16px] leading-[1] md:leading-[21px] tracking-[-0.15px] text-[#454545] text-center block">
-                      {step.title}
-                    </span>
-                  </div>
-                  <span className={`font-sans text-[9px] md:text-[12px] leading-[14px] md:leading-[16px] text-[#214E34] text-center ${step.highlighted ? "font-medium" : "font-normal"} mt-1 md:mt-0`}>
-                    {step.sub}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
+          <dl className="mt-6 grid grid-cols-2 gap-4 border-t border-[#214E34]/15 pt-6">
+            {milestones.map((milestone) => (
+              <div key={milestone.title}>
+                <dt className="font-serif text-[28px] font-semibold leading-tight text-[#214E34] sm:text-[32px]">{milestone.title}</dt>
+                <dd className="mt-1 font-inter text-xs leading-5 text-[#757575]">{milestone.description}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
-
-        {/* Right Image */}
-        <div className="w-full lg:w-[582px] relative pb-[25px]">
-          {/* Image with border */}
-          <div className="relative w-[calc(100%+16px)] -mx-2 md:mx-0 md:w-full aspect-[582/489] rounded-[20px] md:rounded-[12px] overflow-hidden border-[1.05px] border-[#E7FFE6]">
-            {/* Mobile Image */}
-            <Image
-              src="/about/intro.jpg"
-              alt="Mobile hero"
-              fill
-              className="object-cover md:hidden"
-              sizes="100vw"
-            />
-            {/* Desktop Image */}
-            <Image
-              src="/about/master.jpg"
-              alt="Master artisan jeweller setting diamond into rose gold ring"
-              fill
-              className="object-cover hidden md:block"
-              sizes="(max-width: 1024px) 100vw, 582px"
-            />
-          </div>
-
-          {/* Floating Badge (Bottom Right) - Mobile only */}
-          <div
-            className="md:hidden absolute -bottom-[15px] right-[10px] flex flex-col items-center justify-center w-[84px] h-[84px] rounded-full bg-[#FFFDFC] border-[1.05px] border-[#F3E5EC] z-20 shadow-sm"
-          >
-            <span className="text-[19px] leading-[29.5px] text-[#214E34]">✨</span>
-            <span className="font-sans font-semibold text-[8.44px] leading-[12.66px] tracking-[0.84px] uppercase text-[#3B2A30]">
-              High-end
-            </span>
-          </div>
-
-          {/* Floating card - HANDMADE IN INDIA - Desktop only */}
-          <div
-            className="hidden md:flex absolute bottom-0 right-[16px] items-center gap-[12.66px] p-[17px] rounded-[17px] border-[1.05px] border-[#E7FFE6] max-w-[264px] z-20"
-            style={{
-              background: "#FFFDFCD1",
-              backdropFilter: "blur(14.77px)",
-              boxShadow: "0px 26.37px 52.75px -12.66px #C96F912E",
-            }}
-          >
-            {/* Tick icon circle */}
-            <div className="w-[34px] h-[34px] rounded-full bg-[#E7FFE6] flex items-center justify-center shrink-0">
-              <svg
-                width="13"
-                height="13"
-                viewBox="0 0 13 13"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2 6.5L5.5 10L11 3"
-                  stroke="#214E34"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-
-            {/* Card text */}
-            <div className="flex flex-col">
-              <span className="font-sans font-bold text-[12px] leading-[17px] tracking-[0.58px] uppercase text-[#454545]">
-                HANDMADE IN INDIA
-              </span>
-              <span className="font-sans font-normal text-[12px] leading-[16px] text-[#757575]">
-                Where thoughtful design meets the art of jewellery
-              </span>
-            </div>
-          </div>
+        <div className="relative aspect-[582/489] overflow-hidden rounded-xl">
+          <Image
+            src="/about/master.jpg"
+            alt="Jeweller carefully setting a diamond into a ring"
+            fill
+            sizes="(max-width: 1023px) 100vw, 50vw"
+            className="object-cover"
+          />
         </div>
-
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,51 +1,24 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Container } from "@/components/common/container";
 
 export function HeirloomBanner() {
   return (
-    <section className="w-full pt-4 pb-10 lg:pt-[30px] lg:pb-[60px] px-4 lg:px-[100px] bg-white">
-      <div
-        className="relative w-full max-w-[1240px] mx-auto flex flex-col lg:flex-row items-center justify-between lg:h-[540px] lg:rounded-[18px] lg:bg-[#F7FFF7] lg:shadow-[0px_4.5px_6.75px_-4.5px_rgba(0,0,0,0.1),0px_11.25px_16.88px_-3.38px_rgba(0,0,0,0.1)] gap-8 lg:gap-0 lg:p-[54px]"
-      >
-        {/* Left Text Content (Bottom on mobile) */}
-        <div className="order-2 lg:order-1 flex flex-col gap-6 lg:gap-[98px] w-full lg:w-[470px]">
-          {/* Text Block */}
-          <div className="flex flex-col gap-2 lg:gap-[7px]">
-            {/* Eyebrow */}
-            <span className="font-sans font-semibold text-[12px] leading-[18px] tracking-[3.09px] text-[#214E34] uppercase">
-              HEIRLOOM COMMISSIONS
-            </span>
-
-            {/* Heading */}
-            <h3 className="font-serif font-bold text-[32px] sm:text-[40px] leading-[1.1] lg:leading-[44px] text-[#454545]">
-              Made Just for Your Story
-            </h3>
-
-            {/* Description */}
-            <p className="font-sans font-normal text-[14px] leading-[24.75px] text-[#757575] lg:pt-[1.69px] lg:pb-[10.69px]">
-              Create a piece that feels uniquely yours. From personal details to meaningful occasions, we craft jewellery designed to celebrate the moments that matter most.
-            </p>
+    <section className="bg-white py-10 sm:py-14">
+      <Container>
+        <div className="grid items-center gap-8 rounded-2xl bg-[#F7FFF7] p-5 sm:p-8 lg:grid-cols-2 lg:gap-14 lg:p-10">
+          <div className="order-2 min-w-0 lg:order-1">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#214E34]">Heirloom Commissions</p>
+            <h2 className="mt-3 font-serif text-[31px] font-semibold leading-[1.1] sm:text-[38px]">Made Just for Your Story</h2>
+            <p className="mt-4 max-w-lg text-sm leading-6 text-[#757575]">Create a piece that feels uniquely yours. From personal details to meaningful occasions, we craft jewellery designed to celebrate the moments that matter most.</p>
+            <Link href="/customize" className="group mt-6 inline-flex items-center justify-center gap-3 rounded-full bg-[#214E34] px-7 py-3.5 text-xs font-semibold text-white shadow-[0_6px_22px_rgba(33,78,52,0.22)] transition-all duration-300 hover:bg-[#173d28] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] sm:px-8 sm:py-4 sm:text-sm">Create Your Piece <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-1" /></Link>
           </div>
-
-          {/* Button */}
-          <button className="w-[205px] h-[46px] bg-[#214E34] rounded-[50px] py-[13.5px] px-[31.5px] flex items-center justify-center gap-[9px] shadow-[0px_1.13px_2.25px_0px_rgba(0,0,0,0.05)] transition-transform hover:scale-105">
-            <span className="font-sans font-semibold text-[14px] leading-[18px] text-white capitalize">Create Your Piece</span>
-            <ArrowRight className="w-[12px] h-[12px] text-white" strokeWidth={2} />
-          </button>
+          <div className="relative order-1 aspect-square overflow-hidden rounded-xl lg:order-2">
+            <Image src="/contact/heirloom.jpg" alt="Heirloom Commissions" fill sizes="(max-width: 1023px) 100vw, 50vw" className="object-cover" />
+          </div>
         </div>
-
-        {/* Right Image (Top on mobile) */}
-        <div
-          className="order-1 lg:order-2 relative w-full aspect-square lg:w-[432px] lg:h-[432px] rounded-[13.5px] overflow-hidden lg:shadow-[0px_2.25px_4.5px_-2.25px_rgba(0,0,0,0.1),0px_4.5px_6.75px_-1.13px_rgba(0,0,0,0.1)]"
-        >
-          <Image
-            src="/contact/heirloom.jpg"
-            alt="Heirloom Commissions"
-            fill
-            className="object-cover"
-          />
-        </div>
-      </div>
+      </Container>
     </section>
   );
 }

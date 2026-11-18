@@ -1,11 +1,11 @@
 "use client";
 
-import { jewelleryFaqs } from "@/lib/jewellery-faqs";
+import { FaqSection } from "@/components/common/faq-section";
 
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ChevronDown, Gem, Heart, Leaf, Tag } from "lucide-react";
+import { ArrowLeft, ArrowRight, Gem, Heart, Leaf, Tag } from "lucide-react";
 import { Container } from "@/components/common/container";
 import type { PublicCollectionProduct } from "@/lib/actions/products";
 import { formatCataloguePrice } from "@/lib/product-catalog";
@@ -27,7 +27,6 @@ const categories = [
 ];
 const tabs = ["All", "Rings", "Necklaces", "Bracelets", "Earrings", "Bangles"] as const;
 type CollectionTab = (typeof tabs)[number];
-type CollectionCategory = Exclude<CollectionTab, "All">;
 const lovedImages = ["mostloved1.png", "mostloved3.png", "mostloved2.png"];
 const signature = [
   { name: "Warm & Romantic", metal: "Rose Gold", image: "Signature1.png", swatch: "linear-gradient(135deg, #E4A494, #F4C5B8 50%, #E3A393)", edge: "linear-gradient(135deg, #A86F62, #F9E5DE 22%, #C68778 40%, #FFF9F6 53%, #D49A8B 75%, #9E675F)", button: "linear-gradient(100deg, #C67970, #EDB5A8)", shadow: "0 5px 14px rgba(180, 113, 100, 0.13)", copy: "A soft pink hue that adds a touch of romance. Ideal for those who love subtle uniqueness." },
@@ -48,7 +47,7 @@ const reviews = [
   { name: "Personal Style", text: "Find jewellery that feels like you, from delicate accents to a statement piece." },
 ];
 function SectionHeading({ title, subtitle }: { title: string; subtitle: string }) {
-  return <div className="mb-7 text-center sm:mb-9"><h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">{title}</h2><p className="mt-1.5 text-xs text-[#898989] sm:text-sm">{subtitle}</p></div>;
+  return <div className="mb-7 text-center sm:mb-9"><h2 className="font-infant text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">{title}</h2><p className="mt-1.5 text-xs text-[#898989] sm:text-sm">{subtitle}</p></div>;
 }
 
 function RoundArrow({ direction, onClick, label }: { direction: "left" | "right"; onClick: () => void; label: string }) {
@@ -68,10 +67,6 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
   const collectionItems = products;
   const [loved, setLoved] = useState(0);
   const [collectionTab, setCollectionTab] = useState<CollectionTab>("All");
-  const [faqTab, setFaqTab] = useState<CollectionCategory>("Rings");
-  const faqs = jewelleryFaqs.filter(
-    (item) => item.category === faqTab,
-  );
   const newArrivalsRef = useRef<HTMLDivElement>(null);
   const collectionRef = useRef<HTMLDivElement>(null);
   const shownItems = collectionTab === "All"
@@ -97,7 +92,7 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
           <Link key={item.name} href={item.href} className={`group relative aspect-square overflow-hidden rounded-lg ${index < 2 ? "sm:col-span-2 sm:aspect-[1672/941]" : ""}`}>
             <Image src={`/Home/${item.image}`} alt={`${item.name} jewellery`} fill sizes={index < 2 ? "(max-width: 640px) 46vw, (max-width: 1024px) 46vw, 600px" : "(max-width: 640px) 46vw, (max-width: 1024px) 23vw, 300px"} className={`object-cover ${item.name === "Kids" ? "object-[65%_center]" : ""}`} />
             <span aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-linear-to-t from-black/65 to-transparent" />
-            <span className={`absolute bottom-3 left-3 font-[family-name:var(--font-cormorant-garamond)] text-lg font-semibold text-white underline decoration-white/80 underline-offset-4 sm:bottom-5 sm:left-6 ${index < 2 ? "sm:text-2xl" : "sm:text-xl"}`}>{item.name}</span>
+            <span className={`absolute bottom-3 left-3 font-infant text-lg font-semibold text-white underline decoration-white/80 underline-offset-4 sm:bottom-5 sm:left-6 ${index < 2 ? "sm:text-2xl" : "sm:text-xl"}`}>{item.name}</span>
           </Link>
         ))}
       </div>
@@ -161,7 +156,7 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
     <section className="bg-[#F7FFF7] py-14 sm:py-16">
       <Container>
         <div className="mb-5 text-center sm:mb-6">
-          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">Discover Your Signature Style</h2>
+          <h2 className="font-infant text-[31px] font-semibold leading-none text-[#252525] sm:text-[38px]">Discover Your Signature Style</h2>
           <p className="mx-auto mt-1.5 max-w-[720px] text-xs leading-relaxed text-[#898989] sm:text-sm">Explore timeless designs in rose gold, yellow gold, and white gold — crafted to reflect your unique elegance.</p>
         </div>
         <div className="-mx-4 flex gap-3 overflow-x-auto px-4 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-3 sm:overflow-visible sm:px-0 lg:grid-cols-3">
@@ -169,7 +164,7 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
             <div className="relative aspect-[296/330] overflow-hidden rounded-t-full sm:[border-radius:50%_50%_0_0/150px_150px_0_0]"><Image src={`/Home/${item.image}`} alt={`${item.metal} diamond jewellery`} fill sizes="(max-width: 640px) 48vw, (max-width: 1024px) 44vw, (max-width: 1280px) 30vw, 380px" className="object-cover" /></div>
             <div className="relative flex min-h-[190px] flex-1 flex-col items-center px-1 pb-4 pt-7 sm:min-h-[212px] sm:px-3 sm:pb-6 sm:pt-10">
               <span className="absolute left-1/2 top-0 size-[36px] -translate-x-1/2 -translate-y-1/2 rounded-full border-[3px] border-white shadow-[0_3px_8px_rgba(0,0,0,0.16)] sm:size-[50px]" style={{ background: item.swatch }} />
-              <h3 className="font-[family-name:var(--font-cormorant-garamond)] text-xl font-semibold leading-none text-[#252525] sm:text-[27px]">{item.name}</h3>
+              <h3 className="font-infant text-xl font-semibold leading-none text-[#252525] sm:text-[27px]">{item.name}</h3>
               <p className="mx-auto mt-3 max-w-[245px] text-[11px] leading-[1.4] text-[#676767]">{item.copy}</p>
               <Link href={`/collection?material=${encodeURIComponent(item.metal)}`} className="mt-auto inline-flex min-w-[120px] items-center justify-center gap-2 rounded-full px-3 py-2 text-[10px] font-semibold text-white transition-[filter] hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] sm:min-w-[140px] sm:gap-3 sm:px-5 sm:text-[11px]" style={{ background: item.button }}>{item.metal}<ArrowRight size={14} /></Link>
             </div>
@@ -184,8 +179,8 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
       </div>
       <Container className="relative z-10 py-8 md:py-9 lg:py-10">
         <div className="max-w-[460px] text-[#214532] md:w-[45%]">
-          <h2 id="diamond-comparison-heading" className="font-[family-name:var(--font-cormorant-garamond)] text-[38px] font-semibold leading-[0.95] sm:text-[44px] lg:text-[50px]">Natural or Lab-Grown<br />Diamonds?</h2>
-          <p className="mt-4 font-[family-name:var(--font-cormorant-garamond)] text-base font-semibold italic text-[#66665e] lg:text-lg">Different origins. The same timeless brilliance.</p>
+          <h2 id="diamond-comparison-heading" className="font-infant text-[38px] font-semibold leading-[0.95] sm:text-[44px] lg:text-[50px]">Natural or Lab-Grown<br />Diamonds?</h2>
+          <p className="mt-4 font-infant text-base font-semibold italic text-[#66665e] lg:text-lg">Different origins. The same timeless brilliance.</p>
           <ul className="mt-5 grid max-w-[400px] grid-cols-4">
             {[
               { icon: Gem, first: "Real", second: "Brilliance" },
@@ -215,7 +210,7 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
       <Image src={stayInTouchBanner} alt="Diamond ring from Miraya Diamonds" fill sizes="100vw" className="object-cover" />
       <Container className="relative z-10 py-8 text-white sm:py-10">
         <div className="flex max-w-[290px] flex-col items-start sm:max-w-[390px]">
-          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[30px] font-semibold uppercase leading-none sm:text-[40px]">Stay in Touch</h2>
+          <h2 className="font-infant text-[30px] font-semibold uppercase leading-none sm:text-[40px]">Stay in Touch</h2>
           <p className="mt-3 text-xs leading-tight sm:text-sm">Have a piece or design in mind?<br />Talk to the Miraya Diamonds team.</p>
           <div className="mt-10 flex min-h-11 w-full max-w-[280px] items-center rounded-full bg-white p-1 pl-5 text-[#555] focus-within:ring-2 focus-within:ring-white/60 focus-within:ring-offset-2 focus-within:ring-offset-[#214E34] sm:max-w-[300px]">
             <span className="min-w-0 flex-1 text-xs">Let&apos;s find your next piece</span>
@@ -227,40 +222,6 @@ export function HomePage({ products }: { products: PublicCollectionProduct[] }) 
       </Container>
     </section>
 
-    <section className="py-10 sm:py-14 lg:py-16">
-      <Container className="grid items-start gap-8 md:grid-cols-[minmax(0,0.44fr)_minmax(0,1fr)] md:gap-10 lg:gap-14">
-        <div className="relative mx-auto aspect-[4/5] w-full max-w-[350px] overflow-hidden rounded-lg md:max-w-none">
-          <Image src="/Home/FAQ.png" alt="Diamond ring worn on a hand beside a lace sleeve" fill sizes="(max-width: 767px) 350px, (max-width: 1280px) 28vw, 355px" className="object-cover" />
-        </div>
-        <div className="min-w-0 md:pt-6 lg:pt-8">
-          <SectionHeading title="Frequently Asked Questions" subtitle="Find answers to your jewellery questions." />
-          <div className="mb-4 flex gap-2 overflow-x-auto pb-2" role="group" aria-label="FAQ categories">
-            {tabs.filter((tab) => tab !== "All").map((tab) => (
-              <button
-                key={tab}
-                type="button"
-                onClick={() => setFaqTab(tab)}
-                aria-pressed={faqTab === tab}
-                aria-controls="home-faq-items"
-                className={`shrink-0 cursor-pointer rounded-full border border-[#214E34] px-4 py-2 text-xs transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34] ${faqTab === tab ? "bg-[#214E34] font-semibold text-white" : "bg-white text-[#214E34] hover:bg-[#F7FFF7]"}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-          <div id="home-faq-items" key={faqTab}>
-            {faqs.map((item, index) => (
-              <details key={item.question} name="home-faq" className="group border-b border-[#898989]">
-                <summary className="flex min-h-[60px] cursor-pointer list-none items-center justify-between gap-4 py-4 text-xs focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#214E34] sm:text-sm [&::-webkit-details-marker]:hidden">
-                  <span className="flex gap-2"><span>{index + 1}.</span><span>{item.question}</span></span>
-                  <ChevronDown size={14} className="shrink-0 transition-transform group-open:rotate-180 motion-reduce:transition-none" />
-                </summary>
-                <p className="pb-5 pl-5 pr-7 text-xs leading-relaxed text-[#666] sm:text-sm">{item.answer}</p>
-              </details>
-            ))}
-          </div>
-        </div>
-      </Container>
-    </section>
+    <FaqSection />
   </main>;
 }

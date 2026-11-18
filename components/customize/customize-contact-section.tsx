@@ -33,17 +33,17 @@ export function CustomizeContactSection() {
           
           {/* Left Column: Information */}
           <div className="flex flex-col">
-            <span className="font-[family-name:var(--font-montserrat)] text-[11px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[12px]">
+            <span className="font-inter text-[11px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[12px]">
               LET&apos;S CREATE SOMETHING MEANINGFUL
             </span>
 
-            <h2 className="mt-4 font-serif text-[36px] font-bold leading-[1.1] text-[#252525] sm:mt-5 sm:text-[44px] lg:text-[50px]">
+            <h2 className="mt-4 font-serif text-[#252525] sm:mt-5 text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
               Your Vision, Our
               <br />
               <span className="font-normal italic">Craftsmanship</span>
             </h2>
 
-            <p className="mt-5 font-sans text-[14px] leading-[1.7] text-[#555555] sm:text-[15px]">
+            <p className="mt-5 font-sans text-[#555555] text-xs leading-relaxed sm:text-sm">
               Every meaningful piece begins with a vision. Our jewellery
               specialists are here to help you explore designs, discover the
               right diamond, and create jewellery that reflects your personal style.
@@ -69,7 +69,7 @@ export function CustomizeContactSection() {
                 <h3 className="mt-4 font-serif text-[28px] font-bold text-[#1C1B1B]">
                   Ready to Discuss Your Design?
                 </h3>
-                <p className="mt-2 max-w-[340px] font-sans text-sm text-[#666666]">
+                <p className="mt-2 max-w-[340px] font-sans text-[#666666] text-xs leading-relaxed sm:text-sm">
                   Please send your design brief to Sales.mirayadiamonds@gmail.com
                   or call +91 9869698984 to discuss your enquiry.
                 </p>
@@ -90,7 +90,7 @@ export function CustomizeContactSection() {
                   <h3 className="font-serif text-[28px] font-bold leading-tight text-[#1C1B1B] sm:text-[32px]">
                     Prepare Your Design Brief
                   </h3>
-                  <p className="mt-1.5 font-sans text-[13px] text-[#757575]">
+                  <p className="mt-1.5 font-sans text-[#757575] text-xs leading-relaxed sm:text-sm">
                     Use these fields to organise your ideas, then contact our team. This form does not send a message or upload your reference file.
                   </p>
                 </div>
@@ -250,10 +250,10 @@ export function CustomizeContactSection() {
                       ) : (
                         <>
                           <Upload size={22} className="text-[#333333]" strokeWidth={1.8} />
-                          <p className="mt-2 font-sans text-xs font-semibold text-[#333333]">
+                          <p className="mt-2 font-sans text-xs font-semibold text-[#333333] leading-relaxed sm:text-sm">
                             Choose a file or drag it here
                           </p>
-                          <p className="mt-1 font-sans text-[10px] text-[#94A3B8] sm:text-[11px]">
+                          <p className="mt-1 font-sans text-[#94A3B8] text-xs leading-relaxed sm:text-sm">
                             Supported formats: JPG, JPEG, PNG, GIF, SVG.
                           </p>
                         </>

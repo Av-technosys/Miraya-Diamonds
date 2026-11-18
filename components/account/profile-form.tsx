@@ -178,7 +178,7 @@ function ProfileForm({
     <form onSubmit={submit} className="space-y-6">
       <section className="rounded-xl bg-white p-5 shadow-[0_6px_20px_rgba(33,78,52,0.025)] sm:p-7">
         <div className="mb-7 flex items-center justify-between gap-3">
-          <h1 className="font-serif text-[27px] font-medium text-[#3c3936]">My Profile</h1>
+          <h1 className="font-serif text-[31px] font-semibold leading-tight sm:text-[38px] text-[#3c3936]">My Profile</h1>
           <button
             type="submit"
             disabled={!!saving}
@@ -341,7 +341,7 @@ function ProfileForm({
 
       <section className="flex flex-col items-center rounded-xl bg-white px-5 py-9 text-center shadow-[0_6px_20px_rgba(33,78,52,0.025)] sm:px-8 sm:py-11">
         <Image src="/Dashboard/Giftbox.png" alt="Gift box" width={144} height={112} className="h-[90px] w-[116px] object-contain" />
-        <h2 className="mt-7 font-serif text-[27px] font-medium text-[#45403d]">Your Special Dates</h2>
+        <h2 className="mt-7 font-serif text-[31px] font-semibold leading-tight sm:text-[38px] text-[#45403d]">Your Special Dates</h2>
         <p className="mt-2 max-w-[410px] text-xs leading-relaxed text-[#214E34]">Share your special dates, and we&apos;ll create personalised experiences<br className="hidden sm:block" /> just for you.</p>
         <div className="mt-8 grid w-full max-w-[560px] gap-5 sm:grid-cols-2">
           <label className="flex min-w-0 flex-col gap-2 text-left text-[11px] text-[#555]">Your Birthday<input type="date" name="birthday" max={today} value={values.birthday} disabled={!!saving} onChange={event => change("birthday", event.target.value)} className={`${fieldClass} bg-[#f5f3f0] text-[#8b8282]`} /></label>

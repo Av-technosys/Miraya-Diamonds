@@ -44,7 +44,7 @@ export function HowItsMade() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-10 flex flex-col gap-3 sm:mb-14 sm:flex-row sm:items-center sm:justify-between lg:mb-16"
         >
-          <h2 className="shrink-0 font-serif text-[32px] font-normal tracking-[-0.01em] text-[#1C1917] sm:text-[38px] lg:text-[44px]">
+          <h2 className="shrink-0 font-serif tracking-[-0.01em] text-[#1C1917] text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
             How It&apos;s Made
           </h2>
 
@@ -53,7 +53,7 @@ export function HowItsMade() {
             className="hidden h-px flex-1 bg-[#E2DBD1] sm:mx-6 sm:block lg:mx-8"
           />
 
-          <span className="shrink-0 font-[family-name:var(--font-montserrat)] text-[10.5px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[11.5px] lg:text-[12px]">
+          <span className="shrink-0 font-inter text-[10.5px] font-semibold uppercase tracking-[0.22em] text-[#78716C] sm:text-[11.5px] lg:text-[12px]">
             FROM SCIENCE TO A STUNNING DIAMOND
           </span>
         </motion.div>
@@ -84,18 +84,18 @@ export function HowItsMade() {
                 />
 
                 {/* Circular Number Badge */}
-                <span className="absolute bottom-3 right-3 z-10 flex size-9 items-center justify-center rounded-full bg-white font-[family-name:var(--font-montserrat)] text-xs font-bold text-[#1C1917] shadow-[0_4px_14px_rgba(0,0,0,0.14)] sm:bottom-4 sm:right-4 sm:size-10 sm:text-sm">
+                <span className="absolute bottom-3 right-3 z-10 flex size-9 items-center justify-center rounded-full bg-white font-inter text-xs font-bold text-[#1C1917] shadow-[0_4px_14px_rgba(0,0,0,0.14)] sm:bottom-4 sm:right-4 sm:size-10 sm:text-sm">
                   {step.number}
                 </span>
               </div>
 
               {/* Step Title */}
-              <h3 className="mt-4 font-serif text-[20px] font-normal text-[#1C1917] sm:mt-5 sm:text-[22px] md:text-[24px]">
+              <h3 className="mt-4 font-serif font-normal text-[#1C1917] sm:mt-5 text-xl sm:text-[27px]">
                 {step.title}
               </h3>
 
               {/* Step Description */}
-              <p className="mt-1.5 font-[family-name:var(--font-inter)] text-[12.5px] leading-relaxed text-[#57534E] sm:text-[13px]">
+              <p className="mt-1.5 font-[family-name:var(--font-inter)] text-[#57534E] text-xs leading-relaxed sm:text-sm">
                 {step.description}
               </p>
             </motion.div>

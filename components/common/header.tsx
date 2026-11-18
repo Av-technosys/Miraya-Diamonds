@@ -9,6 +9,7 @@ import { Container } from "./container";
 import { AccountButton } from "@/components/auth/account-button";
 import { collectionMenuHref } from "@/lib/collection-navigation";
 import { budgetRanges } from "@/components/collection/filter-state";
+import { useWishlist } from "@/lib/use-wishlist";
 import ringImage from "@/public/Images/Header_ring.png";
 import earringImage from "@/public/Images/Header_earring.png";
 import braceletImage from "@/public/Images/Header_bracelet.png";
@@ -57,6 +58,9 @@ function SearchField({ onSubmit }: { onSubmit?: () => void }) {
 
 export function Header() {
   const pathname = usePathname();
+  const { items: wishlistItems, ready: wishlistReady } = useWishlist();
+  const wishlistCount = wishlistReady ? wishlistItems.length : 0;
+  const wishlistLabel = `Your wishlist, ${wishlistCount} saved ${wishlistCount === 1 ? "design" : "designs"}`;
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [expandedMobileMenu, setExpandedMobileMenu] = useState<string | null>(null);
@@ -67,10 +71,6 @@ export function Header() {
   function closeDrawer() {
     setIsMobileMenuOpen(false);
     setExpandedMobileMenu(null);
-  }
-
-  if (pathname?.startsWith("/admin")) {
-    return null;
   }
 
   useEffect(() => {
@@ -94,6 +94,10 @@ export function Header() {
     };
   }, [isMobileMenuOpen]);
 
+  if (pathname?.startsWith("/admin")) {
+    return null;
+  }
+
   return (
     <>
       <header data-site-header className="relative z-40 w-full bg-white">
@@ -102,14 +106,17 @@ export function Header() {
             <div className="flex items-center justify-between gap-3 lg:hidden">
               <button type="button" aria-label="Open navigation" aria-haspopup="dialog" aria-expanded={isMobileMenuOpen} onClick={() => setIsMobileMenuOpen(true)} className="grid size-10 shrink-0 place-items-center text-white"><Menu size={23} /></button>
               <Logo compact />
-              <Suspense fallback={<span className="size-10 shrink-0" />}><AccountButton /></Suspense>
+              <div className="flex items-center gap-1">
+                <Link href="/wishlist" aria-label={wishlistLabel} className="relative grid size-10 place-items-center rounded-full text-white hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-2"><Heart size={20} strokeWidth={1.5} />{wishlistCount > 0 && <span aria-hidden="true" className="absolute right-0 top-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E2BD60] px-1 text-[9px] font-semibold leading-none tabular-nums text-[#214E34]">{wishlistCount}</span>}</Link>
+                <Suspense fallback={<span className="size-10 shrink-0" />}><AccountButton /></Suspense>
+              </div>
             </div>
             <div className="hidden items-center justify-between gap-8 lg:flex">
               <Logo />
               <div className="mx-auto w-full max-w-[560px]"><SearchField /></div>
               <div className="flex shrink-0 items-center gap-5 text-white">
                 <Suspense fallback={<span className="size-10 shrink-0" />}><AccountButton /></Suspense>
-                <button type="button" aria-label="Your wishlist" className="rounded-full hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4"><Heart size={20} strokeWidth={1.5} /></button>
+                <Link href="/wishlist" aria-label={wishlistLabel} className="relative rounded-full hover:opacity-75 focus-visible:outline-2 focus-visible:outline-offset-4"><Heart size={20} strokeWidth={1.5} />{wishlistCount > 0 && <span aria-hidden="true" className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#E2BD60] px-1 text-[9px] font-semibold leading-none tabular-nums text-[#214E34]">{wishlistCount}</span>}</Link>
                 <Link href="/contact#consultation-booking" className="inline-flex min-h-9 items-center gap-2 rounded-full bg-white px-4 text-xs font-medium text-[#214E34] hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"><PhoneCall size={15} strokeWidth={1.5} />Schedule a Call<ChevronRight size={14} /></Link>
               </div>
             </div>
@@ -156,7 +163,7 @@ export function Header() {
                     ))}
                     <div className="relative aspect-[4/5] overflow-hidden rounded-xl">
                       <Image key={activeCategory.image.src} src={activeCategory.image} alt={`${activeCategory.label} by Miraya Diamonds`} fill sizes="(max-width: 1280px) 25vw, 320px" className="object-cover" />
-                      <Link href="/contact" onClick={() => setActiveMenu(null)} className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34] transition-colors hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">Customise</Link>
+                      <Link href="/customize" onClick={() => setActiveMenu(null)} className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34] transition-colors hover:bg-[#f2f6f3] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#214E34]">Customise</Link>
                     </div>
                   </div>
                 </div>
@@ -185,7 +192,7 @@ export function Header() {
                         <ul>{group.items.map((item) => <li key={item}><Link href={collectionMenuHref(category.nav, group.title, item)} onClick={closeDrawer} className="block py-2 text-sm text-[#555]">{item}</Link></li>)}</ul>
                       </div>
                     ))}
-                    <Link href="/contact" onClick={closeDrawer} className="relative block overflow-hidden rounded-xl">
+                    <Link href="/customize" onClick={closeDrawer} className="relative block overflow-hidden rounded-xl">
                       <Image src={category.image} alt={`${category.label} by Miraya Diamonds`} sizes="330px" className="h-auto w-full" />
                       <span className="absolute inset-x-4 bottom-4 rounded-full bg-white px-4 py-3 text-center text-sm font-semibold text-[#214E34]">Customise</span>
                     </Link>
@@ -197,6 +204,7 @@ export function Header() {
               <button type="button" aria-expanded={expandedMobileMenu === "budget"} aria-controls="mobile-budget" onClick={() => setExpandedMobileMenu(expandedMobileMenu === "budget" ? null : "budget")} className="flex min-h-14 w-full items-center justify-between px-5 text-sm font-semibold text-[#214E34]">Shop by Budget<ChevronDown size={16} className={expandedMobileMenu === "budget" ? "rotate-180" : ""} /></button>
               {expandedMobileMenu === "budget" && <ul id="mobile-budget" className="px-5 pb-4">{budgetRanges.map((range) => <li key={range.value}><Link href={`/collection?price=${range.value}`} onClick={closeDrawer} className="block py-3 text-sm text-[#555]">{range.label}</Link></li>)}</ul>}
             </div>
+            <Link href="/wishlist" onClick={closeDrawer} className="flex items-center gap-2 border-b border-[#eee] px-5 py-4 text-sm font-semibold text-[#214E34]"><Heart size={17} />Your Wishlist</Link>
             <Link href="/collection" onClick={closeDrawer} className="block border-b border-[#eee] px-5 py-4 text-sm font-semibold text-[#214E34]">Diwali</Link>
           </div>
           <Link href="/contact#consultation-booking" onClick={closeDrawer} className="m-5 inline-flex shrink-0 items-center justify-center gap-3 rounded-full bg-[#214E34] px-5 py-3 text-sm font-medium text-white"><PhoneCall size={16} />Schedule a Call<ChevronRight size={16} /></Link>

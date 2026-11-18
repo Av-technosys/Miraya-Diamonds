@@ -3,8 +3,8 @@ import { getPublicProducts } from "@/lib/actions/products";
 import { HomePage } from "@/components/home/home-page";
 
 export const metadata: Metadata = {
-  title: "Miraya Diamonds | Fine Jewellery for Every Moment",
-  description: "Explore diamond rings, earrings, necklaces and fine jewellery at Miraya Diamonds.",
+  title: "Customise Diamond & Gold Jewellery in Jaipur | Miraya Diamonds",
+  description: "Shop ready-to-wear diamond & 22KT gold jewellery, or get a design customised just for you. Rings, earrings, pendants and bracelets from Jaipur, Rajasthan.",
 };
 
 export const dynamic = "force-dynamic";

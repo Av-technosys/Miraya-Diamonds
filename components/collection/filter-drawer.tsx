@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import { ChevronDown, X } from "lucide-react";
 import { type FilterSection, type FilterGroup, type Filters, type priceRanges } from "./filter-state";
 
@@ -8,7 +8,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   const [open, setOpen] = useState(true);
   return (
     <section className="pb-5">
-      <button type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="flex w-full items-center justify-between py-4 text-left font-[family-name:var(--font-cormorant-garamond)] text-[16px] font-semibold text-[#292929]">
+      <button type="button" aria-expanded={open} onClick={() => setOpen((value) => !value)} className="flex w-full items-center justify-between py-4 text-left font-infant text-[16px] font-semibold text-[#292929]">
         {title}<ChevronDown size={15} className={`transition-transform ${open ? "rotate-180" : ""}`} />
       </button>
       {open && <div className="space-y-2.5">{children}</div>}
@@ -16,9 +16,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-export function FilterDrawer({
-  filters, sections, ranges, totalCount, categoryCounts, previewCount, onChange, onApply, onReset, onClose,
-}: {
+export type FilterPanelProps = {
   filters: Filters;
   sections: FilterSection[];
   ranges: typeof priceRanges;
@@ -26,10 +24,61 @@ export function FilterDrawer({
   categoryCounts: Record<string, number>;
   previewCount: number;
   onChange: (filters: Filters) => void;
-  onApply: () => void;
+  onApply?: () => void;
   onReset: () => void;
-  onClose: () => void;
-}) {
+  onClose?: () => void;
+};
+
+export function FilterPanel({ filters, sections, ranges, totalCount, categoryCounts, previewCount, onChange, onApply, onReset, onClose }: FilterPanelProps) {
+  const priceGroupId = useId();
+
+  function toggle(key: "categories" | FilterGroup, value: string) {
+    const selected = filters[key];
+    onChange({ ...filters, [key]: selected.some((item) => item.toLowerCase() === value.toLowerCase()) ? selected.filter((item) => item.toLowerCase() !== value.toLowerCase()) : [...selected, value] });
+  }
+
+  return (
+    <div className={`flex min-h-0 flex-col bg-white ${onClose ? "h-full" : "max-h-[calc(100dvh-3rem)]"}`}>
+      <div className="flex shrink-0 items-center justify-between px-5 pb-2 pt-5">
+        <h2 className="font-infant text-[26px] font-semibold leading-none">Filter</h2>
+        {onClose && <button type="button" autoFocus aria-label="Close filters" onClick={onClose} className="grid size-8 place-items-center text-[#292929] hover:text-[#214E34]"><X size={17} /></button>}
+      </div>
+
+      <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <Section title="Category">
+          {[["All Jewellery", totalCount], ...Object.entries(categoryCounts)].map(([label, count]) => {
+            const selected = label === "All Jewellery" ? filters.categories.length === 0 : filters.categories.includes(String(label));
+            return <label key={label} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
+              <input type="checkbox" checked={selected} onChange={() => label === "All Jewellery" ? onChange({ ...filters, categories: [] }) : toggle("categories", String(label))} className="size-3.5 accent-[#214E34]" />
+              <span>{label} ({count})</span>
+            </label>;
+          })}
+        </Section>
+
+        {ranges.length > 0 && <Section title="Price Range">
+          {ranges.map((range) => <label key={range.value} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
+            <input type="radio" name={priceGroupId} checked={filters.price === range.value} onChange={() => onChange({ ...filters, price: range.value })} className="size-3.5 accent-[#214E34]" />{range.label}
+          </label>)}
+          {filters.price && <button type="button" onClick={() => onChange({ ...filters, price: "" })} className="pl-6 text-[11px] text-[#214E34] underline">Clear price</button>}
+        </Section>}
+
+        {sections.map((section) => <Section key={section.key} title={section.label}>
+          {section.options.map((option) => <label key={option} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
+            <input type="checkbox" checked={filters[section.key].some((value) => value.toLowerCase() === option.toLowerCase())} onChange={() => toggle(section.key, option)} className="size-3.5 accent-[#214E34]" />{option}
+          </label>)}
+        </Section>)}
+      </div>
+
+      <div className="shrink-0 bg-white px-4 py-3">
+        {onApply && <button type="button" onClick={onApply} className="h-10 w-full rounded-full bg-[#214E34] text-xs font-semibold text-white hover:bg-[#183b28]">Apply Filters ({previewCount})</button>}
+        <button type="button" onClick={onReset} className="mt-2 h-10 w-full rounded-full border border-[#214E34] text-xs font-semibold text-[#214E34] hover:bg-[#F7FFF7]">Reset</button>
+      </div>
+    </div>
+  );
+}
+
+export function FilterDrawer(props: FilterPanelProps & { onClose: () => void }) {
+  const { onClose } = props;
   const panelRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -47,56 +96,22 @@ export function FilterDrawer({
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     };
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => { if (desktop.matches) onClose(); };
+    desktop.addEventListener("change", closeOnDesktop);
     window.addEventListener("keydown", onKeyDown);
     return () => {
       document.body.style.overflow = previousBody;
       document.documentElement.style.overflow = previousRoot;
       window.removeEventListener("keydown", onKeyDown);
+      desktop.removeEventListener("change", closeOnDesktop);
     };
   }, [onClose]);
 
-  function toggle(key: "categories" | FilterGroup, value: string) {
-    const selected = filters[key];
-    onChange({ ...filters, [key]: selected.some((item) => item.toLowerCase() === value.toLowerCase()) ? selected.filter((item) => item.toLowerCase() !== value.toLowerCase()) : [...selected, value] });
-  }
-
   return (
     <div className="fixed inset-0 z-[100] bg-black/35" onClick={(event) => { if (event.target === event.currentTarget) onClose(); }}>
-      <aside ref={panelRef} id="collection-filters" role="dialog" aria-modal="true" aria-label="Filter products" className="flex h-dvh w-[min(280px,85vw)] flex-col bg-white shadow-[8px_0_28px_rgba(0,0,0,0.14)]">
-        <div className="flex shrink-0 items-center justify-between px-5 pb-2 pt-5">
-          <h2 className="font-[family-name:var(--font-cormorant-garamond)] text-[26px] font-semibold leading-none">Filter</h2>
-          <button type="button" autoFocus aria-label="Close filters" onClick={onClose} className="grid size-8 place-items-center text-[#292929] hover:text-[#214E34]"><X size={17} /></button>
-        </div>
-
-        <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <Section title="Category">
-            {[["All Jewellery", totalCount], ...Object.entries(categoryCounts)].map(([label, count]) => {
-              const selected = label === "All Jewellery" ? filters.categories.length === 0 : filters.categories.includes(String(label));
-              return <label key={label} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
-                <input type="checkbox" checked={selected} onChange={() => label === "All Jewellery" ? onChange({ ...filters, categories: [] }) : toggle("categories", String(label))} className="size-3.5 accent-[#214E34]" />
-                <span>{label} ({count})</span>
-              </label>;
-            })}
-          </Section>
-
-          {ranges.length > 0 && <Section title="Price Range">
-            {ranges.map((range) => <label key={range.value} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
-              <input type="radio" name="collection-price" checked={filters.price === range.value} onChange={() => onChange({ ...filters, price: range.value })} className="size-3.5 accent-[#214E34]" />{range.label}
-            </label>)}
-            {filters.price && <button type="button" onClick={() => onChange({ ...filters, price: "" })} className="pl-6 text-[11px] text-[#214E34] underline">Clear price</button>}
-          </Section>}
-
-          {sections.map((section) => <Section key={section.key} title={section.label}>
-            {section.options.map((option) => <label key={option} className="flex cursor-pointer items-center gap-2.5 text-[12px] text-[#444]">
-              <input type="checkbox" checked={filters[section.key].some((value) => value.toLowerCase() === option.toLowerCase())} onChange={() => toggle(section.key, option)} className="size-3.5 accent-[#214E34]" />{option}
-            </label>)}
-          </Section>)}
-        </div>
-
-        <div className="shrink-0 bg-white px-4 py-3">
-          <button type="button" onClick={onApply} className="h-10 w-full rounded-full bg-[#214E34] text-xs font-semibold text-white hover:bg-[#183b28]">Apply Filters ({previewCount})</button>
-          <button type="button" onClick={onReset} className="mt-2 h-10 w-full rounded-full border border-[#214E34] text-xs font-semibold text-[#214E34] hover:bg-[#F7FFF7]">Reset</button>
-        </div>
+      <aside ref={panelRef} id="collection-filters" role="dialog" aria-modal="true" aria-label="Filter products" className="h-dvh w-[min(280px,85vw)] shadow-[8px_0_28px_rgba(0,0,0,0.14)]">
+        <FilterPanel {...props} />
       </aside>
     </div>
   );

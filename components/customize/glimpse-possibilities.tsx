@@ -148,10 +148,10 @@ export function GlimpsePossibilities() {
     >
       {/* Section Header */}
       <div className="mx-auto mb-10 max-w-[620px] px-5 text-center sm:mb-14 lg:mb-16">
-        <h2 className="font-serif text-[32px] font-bold leading-tight text-[#1C1B1B] sm:text-[38px] lg:text-[42px]">
+        <h2 className="font-serif text-[#1C1B1B] text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
           A Glimpse of Possibilities
         </h2>
-        <p className="mt-3 font-sans text-[13px] leading-relaxed text-[#757575] sm:text-[14px]">
+        <p className="mt-3 font-sans text-[#757575] text-xs leading-relaxed sm:text-sm">
           Explore design ideas, settings and silhouettes to inspire your
           own personal piece.
         </p>

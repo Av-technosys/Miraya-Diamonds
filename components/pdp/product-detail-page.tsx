@@ -7,22 +7,18 @@ import type { ReactNode } from "react";
 import {
   ArrowRight,
   BadgeCheck,
-  Check,
   ChevronLeft,
   ChevronRight,
   Gem,
   Heart,
-  Pencil,
   Ruler,
   Share2,
   ShieldCheck,
-  MessageCircle,
-  Truck,
   Video,
   X,
   ZoomIn,
 } from "lucide-react";
-import { CustomizationDialog } from "./customization-dialog";
+import { useWishlist } from "@/lib/use-wishlist";
 import { ProductEnquiryForm } from "./product-enquiry-form";
 import { Container } from "@/components/common/container";
 import { getInitialProductSelection, goldColourLabel, formatCataloguePrice } from "@/lib/product-catalog";
@@ -65,7 +61,7 @@ function InfoDialog({ title, children, onClose, href, action }: {
     <div role="dialog" aria-modal="true" aria-label={title} className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4" onClick={onClose}>
       <div className="relative max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-lg bg-white p-6 shadow-xl" onClick={(event) => event.stopPropagation()}>
         <button type="button" autoFocus aria-label="Close dialog" onClick={onClose} className="absolute right-4 top-4 grid size-8 place-items-center text-[#214E34]"><X size={18} /></button>
-        <h2 className="pr-8 font-[family-name:var(--font-cormorant-garamond)] text-[28px] font-semibold leading-tight text-[#353333]">{title}</h2>
+        <h2 className="pr-8 font-infant text-[28px] font-semibold leading-tight text-[#353333]">{title}</h2>
         <div className="mt-3 text-xs leading-5 text-[#4a4646]">{children}</div>
         {href && action && <Link href={href} className="mt-5 flex h-10 items-center justify-center gap-2 rounded-full bg-[#214E34] px-4 text-xs font-semibold text-white">{action} <ArrowRight size={14} /></Link>}
       </div>
@@ -102,7 +98,8 @@ function ProductHero({ product }: { product: ProductDetails }) {
   const [preferredVariantId, setPreferredVariantId] = useState(initial.variantId || "");
   const [activeImage, setActiveImage] = useState(0);
   const [zoomOpen, setZoomOpen] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const { isSaved, toggle, error: wishlistError } = useWishlist();
+  const liked = isSaved(product);
   const [metal, setMetal] = useState(initial.metalColour || "");
   const [quality, setQuality] = useState(initial.diamondGrade || "");
   const [carat, setCarat] = useState(initial.goldPurity || "");
@@ -132,8 +129,6 @@ function ProductHero({ product }: { product: ProductDetails }) {
   const availability = !product.variants.length ? "" : !selectedVariant ? "This combination is not listed. Enquire about alternatives." : selectedVariant.isInStock === false || selectedVariant.stock === 0 ? "Out of stock — enquire about availability" : selectedVariant.stock !== null && selectedVariant.stock > 0 ? `${selectedVariant.stock} available` : "";
   const [engraving, setEngraving] = useState(false);
   const [engravingText, setEngravingText] = useState("");
-  const [pincode, setPincode] = useState("");
-  const [deliveryMessage, setDeliveryMessage] = useState("");
   const [feedback, setFeedback] = useState("");
   const [infoDialog, setInfoDialog] = useState<"guide" | null>(null);
 
@@ -176,14 +171,8 @@ function ProductHero({ product }: { product: ProductDetails }) {
     ...(selectedVariant ? [`Variant SKU: ${selectedVariant.sku}`] : []),
     ...(engraving ? [`Engraving: ${engravingText.trim() || "Requested"}`] : []),
   ];
-  const whatsappMessage = `I'd like to enquire about ${product.name} (SKU: ${product.sku}).\n${selectedOptions.join(" · ")}`;
-  const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\D/g, "");
-  const whatsappClassName = "flex min-h-10 items-center justify-center gap-1.5 rounded-full bg-[#48c653] px-3 py-2 text-center text-xs font-semibold text-white transition hover:bg-[#36ae42] disabled:cursor-not-allowed disabled:opacity-60";
+  const enquiryOptions = { variantId: selectedVariant?.id || null, metalColour: metal, diamondGrade: quality, metalPurity: carat, size: ringSize, engravingRequested: engraving, engravingText };
 
-  function verifyPincode(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setDeliveryMessage(/^\d{6}$/.test(pincode) ? `Pincode ${pincode} has the correct format. Contact our team to confirm delivery availability.` : "Enter a valid 6-digit Indian pincode.");
-  }
 
   return (
     <>
@@ -217,7 +206,7 @@ function ProductHero({ product }: { product: ProductDetails }) {
               /> : <div className="grid size-full place-items-center bg-[#f7f6f2] text-sm text-neutral-500">Image unavailable</div>}
               <span className="absolute left-4 top-4 hidden rounded-full bg-white px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[#214E34] sm:block">{product.badge}</span>
               <div className="absolute right-4 top-4 hidden gap-2 sm:grid">
-                <button type="button" onClick={() => setLiked(!liked)} aria-label={liked ? "Remove from wishlist" : "Add to wishlist"} aria-pressed={liked} className="grid size-9 place-items-center bg-white text-[#353333]">
+                <button type="button" onClick={() => toggle(product)} aria-label={liked ? "Remove from wishlist" : "Add to wishlist"} aria-pressed={liked} className="grid size-9 place-items-center bg-white text-[#353333]">
                   <Heart size={18} fill={liked ? "#214E34" : "none"} />
                 </button>
                 <button type="button" onClick={shareProduct} aria-label="Share product" className="grid size-9 place-items-center bg-white text-[#353333]">
@@ -257,7 +246,7 @@ function ProductHero({ product }: { product: ProductDetails }) {
             <p className="text-[10px] font-bold uppercase tracking-[0.08em] text-[#214E34]">{product.categoryName}</p>
             <p className="shrink-0 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]">SKU: {product.sku}</p>
           </div>
-          <h1 className="font-[family-name:var(--font-cormorant-garamond)] text-[38px] font-semibold leading-[0.98] text-[#4a4646] sm:text-[38px] lg:text-[34px] xl:text-[38px]">
+          <h1 className="font-infant text-[31px] font-semibold leading-tight text-[#4a4646] sm:text-[38px]">
             {product.name}
           </h1>
           {product.description.trim() && <p className="mt-4 whitespace-pre-line text-sm leading-6 text-[#676767]">{product.description}</p>}
@@ -297,34 +286,12 @@ function ProductHero({ product }: { product: ProductDetails }) {
           {product.goldPurities.length > 0 && <Selector title="Gold purity" options={product.goldPurities} selected={carat} onSelect={(value) => { setPreferredVariantId(""); setCarat(value); setActiveImage(0); }} />}
           {product.sizes.length > 0 && <Selector title="Size" options={product.sizes} selected={ringSize} onSelect={(value) => { setPreferredVariantId(""); setRingSize(value); setActiveImage(0); }} onGuide={() => setInfoDialog("guide")} />}
 
-          <label className="mt-4 flex items-center gap-2 text-[10px] font-semibold uppercase text-neutral-600">
-            <input type="checkbox" checked={engraving} onChange={(event) => setEngraving(event.target.checked)} className="size-3.5 accent-[#214E34]" />
-            <Pencil size={13} color={green} /> Request Engraving Details
-          </label>
-          {engraving && <input type="text" value={engravingText} onChange={(event) => setEngravingText(event.target.value)} maxLength={24} aria-label="Engraving text" placeholder="Your engraving, up to 24 characters" className="mt-2 h-9 w-full rounded-md border border-[#214E34] px-3 text-xs outline-none focus:ring-1 focus:ring-[#214E34]" />}
-
-          <div className="mt-6 grid gap-2 min-[400px]:grid-cols-2">
-            <CustomizationDialog />
-            {whatsappNumber ? <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`} target="_blank" rel="noopener noreferrer" className={whatsappClassName}>
-              <MessageCircle size={15} className="shrink-0" /> Enquire via WhatsApp
-            </a> : <button type="button" disabled title="WhatsApp enquiries are currently unavailable" className={whatsappClassName}>
-              <MessageCircle size={15} className="shrink-0" /> Enquire via WhatsApp
-            </button>}
-          </div>
-          <ProductEnquiryForm sku={product.sku} selection={selectedOptions} options={{ variantId: selectedVariant?.id || null, metalColour: metal, diamondGrade: quality, metalPurity: carat, size: ringSize, engravingRequested: engraving, engravingText }} />
+          <ProductEnquiryForm sku={product.sku} selection={selectedOptions} onEngravingChange={setEngraving} onEngravingTextChange={setEngravingText} options={enquiryOptions} />
           <Link href="/contact#consultation-booking" className="mt-2 flex h-8 w-full items-center justify-center gap-2 rounded-md bg-[#F7FFF7] text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]">
             <Video size={14} color={green} /> Discuss a Jewellery Consultation
           </Link>
+          {wishlistError && <p role="alert" className="mt-2 text-xs text-[#214E34]">{wishlistError}</p>}
           {feedback && <p role="status" className="mt-2 text-xs text-[#214E34]">{feedback}</p>}
-
-          <div className="mt-3 rounded-md bg-[#F7FFF7] p-3">
-            <p className="mb-2 flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.04em] text-[#353333]"><Truck size={15} color={green} /> Delivery Enquiry</p>
-            <form onSubmit={verifyPincode} className="flex gap-2 rounded-full bg-white p-1.5">
-              <input value={pincode} onChange={(event) => setPincode(event.target.value.replace(/\D/g, ""))} className="min-w-0 flex-1 px-3 text-xs outline-none" aria-label="6-digit pincode" placeholder="Enter 6-digit Pincode" inputMode="numeric" maxLength={6} />
-              <button type="submit" className="rounded-full bg-[#214E34] px-5 text-xs font-semibold text-white">Check Format</button>
-            </form>
-            <p role="status" className="mt-3 flex gap-2 text-[10px] leading-relaxed text-[#214E34]"><Check size={13} className="shrink-0" /> {deliveryMessage || "Enter your pincode, then contact us to confirm delivery options."}</p>
-          </div>
 
           {highlights.length > 0 && <div className={`mt-3 grid gap-2 rounded-md bg-[#F7FFF7] px-2 py-3 text-center ${highlights.length === 3 ? "grid-cols-3" : highlights.length === 2 ? "grid-cols-2" : "grid-cols-1"}`}>
             {highlights.map((item) => <div key={item.label}><p className="text-[9px] font-semibold uppercase text-neutral-500">{item.label}</p><p className="mt-1 text-xs font-semibold text-[#214E34]">{item.value}</p></div>)}
@@ -392,7 +359,7 @@ function CategoryDimensions({ product }: { product: ProductDetails }) {
 
 function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
   const [bagItems, setBagItems] = useState<string[]>([]);
-  const [savedItems, setSavedItems] = useState<string[]>([]);
+  const { isSaved, toggle, error: wishlistError } = useWishlist();
   const [bagMessage, setBagMessage] = useState("");
 
   return (
@@ -410,7 +377,7 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
           <div className="mb-5 flex items-end justify-between gap-2 sm:mb-6 sm:gap-4">
             <div className="min-w-0">
               <p className="text-[9px] font-semibold uppercase tracking-[0.17em] text-[#A42D49] sm:text-[10px] sm:tracking-[0.25em] sm:text-[#214E34]">Design Inspiration</p>
-              <h2 className="mt-2 font-[family-name:var(--font-cormorant-garamond)] text-[23px] font-semibold leading-none sm:text-[30px]">Explore More Designs</h2>
+              <h2 className="mt-2 font-infant text-[31px] font-semibold leading-none sm:text-[38px]">Explore More Designs</h2>
             </div>
             <Link href="/collection" className="flex shrink-0 items-center gap-1 text-[9px] font-semibold text-[#A42D49] sm:text-[10px] sm:uppercase sm:tracking-[0.08em] sm:text-[#214E34]">Explore More <span className="hidden sm:inline">Jewellery</span> <ArrowRight size={13} className="text-[#A42D49]" /></Link>
           </div>
@@ -421,8 +388,8 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
                   {item.image ? <Image src={item.image} alt={item.name} fill sizes="(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 230px" className="h-full w-full object-fill" /> : <span className="absolute inset-0 grid place-items-center text-xs text-neutral-500">Image unavailable</span>}
                 </Link>
                 <div className="px-1 pb-1 pt-2">
-                  <p className="text-[11px] font-semibold leading-tight">{formatCataloguePrice(item)}</p>
-                  <p className="mt-0.5 truncate text-[10px] leading-tight text-neutral-600" title={item.name}>{item.name}</p>
+                  <p className="text-xs font-semibold leading-tight sm:text-sm">{formatCataloguePrice(item)}</p>
+                  <p className="mt-0.5 truncate text-[11px] leading-tight text-neutral-600 sm:text-xs" title={item.name}>{item.name}</p>
                   <div className="mt-3 flex gap-1">
                     <button type="button" onClick={() => {
                       if (bagItems.includes(item.image)) return;
@@ -433,12 +400,13 @@ function LegacyAndSuite({ products }: { products: PublicCollectionProduct[] }) {
                         setBagMessage("Could not save this selection in your browser.");
                       }
                     }} className="h-7 min-w-0 flex-1 rounded-full border border-[#214E34] text-[10px] font-medium text-[#214E34]">{bagItems.includes(item.image) ? "Added to Bag" : "Add to Bag"}</button>
-                    <button type="button" onClick={() => setSavedItems((items) => items.includes(item.image) ? items.filter((image) => image !== item.image) : [...items, item.image])} aria-label={`${savedItems.includes(item.image) ? "Remove" : "Add"} ${item.name} ${savedItems.includes(item.image) ? "from" : "to"} wishlist`} aria-pressed={savedItems.includes(item.image)} className="grid size-7 shrink-0 place-items-center rounded-full border border-[#214E34] text-[#214E34]"><Heart size={13} fill={savedItems.includes(item.image) ? "#214E34" : "none"} /></button>
+                    <button type="button" onClick={() => toggle(item)} aria-label={`${isSaved(item) ? "Remove" : "Add"} ${item.name} ${isSaved(item) ? "from" : "to"} wishlist`} aria-pressed={isSaved(item)} className="grid size-7 shrink-0 place-items-center rounded-full border border-[#214E34] text-[#214E34]"><Heart size={13} fill={isSaved(item) ? "#214E34" : "none"} /></button>
                   </div>
                 </div>
               </article>
             ))}
           </div>
+          {wishlistError && <p role="alert" className="mt-3 text-xs text-[#214E34]">{wishlistError}</p>}
           {bagMessage && <p role="status" className="mt-3 text-xs text-[#214E34]">{bagMessage}</p>}
         </Container>
       </section>}

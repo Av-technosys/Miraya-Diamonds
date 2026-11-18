@@ -35,11 +35,11 @@ export function DiscoverLabGrown() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col"
         >
-          <h2 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
+          <h2 className="font-serif tracking-[-0.01em] text-[#1C1917] text-[31px] sm:text-[38px] font-semibold leading-[1.1]">
             Discover the World of Lab-Grown Diamonds
           </h2>
 
-          <p className="mt-4 font-[family-name:var(--font-inter)] text-[13px] leading-[1.78] text-[#57534E] sm:mt-5 sm:text-[14px] md:text-[14.5px]">
+          <p className="mt-4 font-[family-name:var(--font-inter)] text-[#57534E] sm:mt-5 text-xs leading-relaxed sm:text-sm">
             Lab-grown diamonds bring together the timeless beauty of diamonds and
             the possibilities of modern science. Created in specialised
             laboratories, these gemstones develop through advanced processes that
@@ -62,11 +62,11 @@ export function DiscoverLabGrown() {
           transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
           className="mt-12 flex flex-col sm:mt-16 lg:mt-20"
         >
-          <h3 className="font-serif text-[28px] font-normal leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[34px] md:text-[38px] lg:text-[42px]">
+          <h3 className="font-serif text-[31px] font-semibold leading-tight tracking-[-0.01em] text-[#1C1917] sm:text-[38px]">
             Why Choose Lab-Grown Diamonds?
           </h3>
 
-          <p className="mt-3 font-[family-name:var(--font-inter)] text-[13px] leading-relaxed text-[#57534E] sm:mt-4 sm:text-[14px]">
+          <p className="mt-3 font-[family-name:var(--font-inter)] text-[#57534E] sm:mt-4 text-xs leading-relaxed sm:text-sm">
             Lab-grown diamonds combine timeless brilliance with modern technology,
             offering beauty and value for every preference.
           </p>
@@ -78,7 +78,7 @@ export function DiscoverLabGrown() {
                 <h4 className="font-[family-name:var(--font-inter)] text-[13.5px] font-medium text-[#1C1917] sm:text-[14.5px]">
                   {point.title}
                 </h4>
-                <p className="mt-0.5 font-[family-name:var(--font-inter)] text-[12.5px] text-[#57534E] sm:text-[13px]">
+                <p className="mt-0.5 font-[family-name:var(--font-inter)] text-[#57534E] text-xs leading-relaxed sm:text-sm">
                   {point.description}
                 </p>
               </div>
@@ -86,7 +86,7 @@ export function DiscoverLabGrown() {
           </div>
 
           {/* Bottom Note */}
-          <p className="mt-9 font-[family-name:var(--font-inter)] text-[12px] leading-relaxed text-[#57534E] sm:mt-11 sm:text-[13px]">
+          <p className="mt-9 font-[family-name:var(--font-inter)] text-[#57534E] sm:mt-11 text-xs leading-relaxed sm:text-sm">
             Like natural diamonds, lab-grown diamonds are evaluated using the 4Cs:
             Cut, Colour, Clarity and Carat Weight.
           </p>

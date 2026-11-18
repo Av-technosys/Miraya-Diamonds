@@ -4,7 +4,7 @@ import { DesignProcess } from "@/components/customize/design-process";
 import { BehindTheCraft } from "@/components/customize/behind-craft";
 import { GlimpsePossibilities } from "@/components/customize/glimpse-possibilities";
 import { CustomizeContactSection } from "@/components/customize/customize-contact-section";
-import { CustomizeFaq } from "@/components/customize/customize-faq";
+import { FaqSection } from "@/components/common/faq-section";
 
 export const metadata: Metadata = {
   title: "Customise Your Jewellery | Miraya Diamonds",
@@ -20,7 +20,7 @@ export default function CustomizePage() {
       <BehindTheCraft />
       <CustomizeContactSection />
       <GlimpsePossibilities />
-      <CustomizeFaq />
+      <FaqSection />
     </main>
   );
 }

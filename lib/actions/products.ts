@@ -19,6 +19,7 @@ import { getImageUrl, toRelativeKey } from "@/lib/imageUrl";
 
 export interface PublicCollectionProduct {
   id: string;
+  sku: string;
   slug: string;
   name: string;
   image: string;
@@ -244,6 +245,7 @@ export async function getPublicProducts(): Promise<PublicCollectionProduct[]> {
       return {
         id: p.id,
         slug,
+        sku: p.sku,
         name: p.name,
         image,
         type,
